@@ -163,7 +163,15 @@ Follow semantic versioning (e.g., v1.0.0 for major releases, v1.0.1 for minor up
 
 By following the steps and best practices outlined here, This cloud infrastructure will set up to scale and support the SireIQ platform efficiently, while ensuring security, performance, and reliability.
 
-============================================================================================================================================================================================================================================
+
+
+
+
+=========================================================================================
+
+
+
+
 
 
 Roadmap for developing and training the specific AI features of SireIQ, tailored to your platform’s capabilities:
