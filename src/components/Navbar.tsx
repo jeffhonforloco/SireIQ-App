@@ -23,6 +23,7 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-6">
             <a href="#features" className="text-sireiq-light/90 hover:text-sireiq-cyan transition-colors">Features</a>
             <a href="#how-it-works" className="text-sireiq-light/90 hover:text-sireiq-cyan transition-colors">How It Works</a>
+            <a href="#enterprise" className="text-sireiq-light/90 hover:text-sireiq-cyan transition-colors">Enterprise</a>
             <a href="#pricing" className="text-sireiq-light/90 hover:text-sireiq-cyan transition-colors">Pricing</a>
             <a href="#about" className="text-sireiq-light/90 hover:text-sireiq-cyan transition-colors">About</a>
             <Button 
@@ -64,6 +65,13 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
+              </a>
+              <a 
+                href="#enterprise" 
+                className="px-3 py-2 rounded-md hover:bg-sireiq-accent transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Enterprise
               </a>
               <a 
                 href="#pricing" 

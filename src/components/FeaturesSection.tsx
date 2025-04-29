@@ -7,7 +7,10 @@ import {
   Network, 
   Lightbulb, 
   LineChart, 
-  Lock 
+  Lock,
+  Slack,
+  Adobe,
+  Teams
 } from 'lucide-react';
 
 const FeaturesSection: React.FC = () => {
@@ -67,6 +70,41 @@ const FeaturesSection: React.FC = () => {
               description={feature.description}
             />
           ))}
+        </div>
+
+        {/* Integration partners section */}
+        <div className="mt-20">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-bold mb-4">
+              <span className="text-gradient">Seamless Integrations</span>
+            </h3>
+            <p className="text-sireiq-light/70 max-w-2xl mx-auto mb-8">
+              Connect SireIQ with your favorite tools to streamline your creative workflow
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-12 md:gap-16">
+            <div className="flex flex-col items-center group">
+              <div className="glass-effect rounded-full p-3 mb-2 group-hover:scale-110 transition-transform">
+                <Slack className="h-10 w-10 text-sireiq-cyan" />
+              </div>
+              <span className="text-sm text-sireiq-light/70 group-hover:text-sireiq-light/90 transition-colors">Slack</span>
+            </div>
+            
+            <div className="flex flex-col items-center group">
+              <div className="glass-effect rounded-full p-3 mb-2 group-hover:scale-110 transition-transform">
+                <Adobe className="h-10 w-10 text-sireiq-cyan" />
+              </div>
+              <span className="text-sm text-sireiq-light/70 group-hover:text-sireiq-light/90 transition-colors">Adobe</span>
+            </div>
+            
+            <div className="flex flex-col items-center group">
+              <div className="glass-effect rounded-full p-3 mb-2 group-hover:scale-110 transition-transform">
+                <Teams className="h-10 w-10 text-sireiq-cyan" />
+              </div>
+              <span className="text-sm text-sireiq-light/70 group-hover:text-sireiq-light/90 transition-colors">Teams</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
