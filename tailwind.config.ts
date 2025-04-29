@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// SireIQ custom colors
+				sireiq: {
+					dark: '#121827',  // Dark blue background
+					darker: '#0A0F1A', // Even darker shade
+					light: '#ffffff',  // Light text/elements
+					cyan: '#3CDFFF',   // Bright cyan from logo
+					cyan2: '#00A3C4',  // Secondary cyan
+					accent: '#1A2337', // Slightly lighter blue for contrast
 				}
 			},
 			borderRadius: {
@@ -84,11 +94,37 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				'glow': {
+					'0%, 100%': { opacity: '0.7' },
+					'50%': { opacity: '1' },
+				},
+				'gradientMove': {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 5s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite',
+				'gradient-move': 'gradientMove 8s ease infinite',
+			},
+			fontFamily: {
+				'sans': ['Inter', 'sans-serif'],
+				'display': ['Montserrat', 'sans-serif'],
+			},
+			backgroundImage: {
+				'hero-gradient': 'radial-gradient(circle at center, rgba(26, 35, 55, 0.8) 0%, rgba(10, 15, 26, 1) 100%)',
+				'card-gradient': 'linear-gradient(135deg, rgba(26, 35, 55, 0.7) 0%, rgba(10, 15, 26, 0.9) 100%)',
+				'cta-gradient': 'linear-gradient(135deg, #1A2337 0%, #0A0F1A 100%)',
+				'button-gradient': 'linear-gradient(90deg, #3CDFFF 0%, #00A3C4 100%)',
 			}
 		}
 	},
