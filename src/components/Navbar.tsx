@@ -13,20 +13,21 @@ const Navbar = () => {
   };
 
   return (
-    <header className="absolute top-0 left-0 w-full z-10 py-4">
+    <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold text-sireiq-light flex items-center">
-          <Logo className="mr-2" />
+        <Link to="/" className="text-4xl font-bold text-sireiq-cyan flex items-center">
+          <Logo />
           SireIQ
         </Link>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           <Link to="/features" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Features</Link>
-          <a href="#how-it-works" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</a>
-          <a href="#enterprise" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</a>
+          <Link to="/how-it-works" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
+          <Link to="/enterprise" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
           <Link to="/ai-workflows" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
+          <Link to="/try-advanced-ai" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
         </nav>
         
         {/* Mobile Navigation */}
@@ -38,9 +39,10 @@ const Navbar = () => {
           {isMenuOpen && (
             <div className="absolute top-full right-0 mt-2 w-48 bg-sireiq-darker border border-sireiq-accent/30 rounded-md shadow-lg py-2 px-3">
               <Link to="/features" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Features</Link>
-              <a href="#how-it-works" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</a>
-              <a href="#enterprise" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</a>
+              <Link to="/how-it-works" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
+              <Link to="/enterprise" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
               <Link to="/ai-workflows" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
+              <Link to="/try-advanced-ai" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
             </div>
           )}
         </div>
