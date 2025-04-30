@@ -2,7 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Adobe, Server, Database, Slack, Linkedin, Teams } from 'lucide-react';
+import { Server, Database, Slack } from 'lucide-react';
+import { AdobeIcon, TeamsIcon } from './CustomIcons';
 
 const EnterpriseSection: React.FC = () => {
   const enterpriseFeatures = [
@@ -19,7 +20,7 @@ const EnterpriseSection: React.FC = () => {
     {
       title: "SSO & Security",
       description: "Enterprise-grade security with Single Sign-On and advanced permissions",
-      icon: Linkedin,
+      icon: Slack,
     },
   ];
 
@@ -56,7 +57,7 @@ const EnterpriseSection: React.FC = () => {
           <h3 className="text-2xl font-bold mb-8">Integration Partners</h3>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             <div className="flex flex-col items-center">
-              <Adobe size={48} className="text-sireiq-light/70 hover:text-sireiq-cyan transition-colors" />
+              <AdobeIcon size={48} className="text-sireiq-light/70 hover:text-sireiq-cyan transition-colors" />
               <span className="mt-2 text-sm text-sireiq-light/50">Adobe</span>
             </div>
             <div className="flex flex-col items-center">
@@ -64,7 +65,7 @@ const EnterpriseSection: React.FC = () => {
               <span className="mt-2 text-sm text-sireiq-light/50">Slack</span>
             </div>
             <div className="flex flex-col items-center">
-              <Teams size={48} className="text-sireiq-light/70 hover:text-sireiq-cyan transition-colors" />
+              <TeamsIcon size={48} className="text-sireiq-light/70 hover:text-sireiq-cyan transition-colors" />
               <span className="mt-2 text-sm text-sireiq-light/50">Teams</span>
             </div>
           </div>

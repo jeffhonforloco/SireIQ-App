@@ -8,10 +8,9 @@ import {
   Lightbulb, 
   LineChart, 
   Lock,
-  Slack,
-  Adobe,
-  Teams
+  Slack
 } from 'lucide-react';
+import { AdobeIcon, TeamsIcon } from './CustomIcons';
 
 const FeaturesSection: React.FC = () => {
   const features = [
@@ -93,14 +92,14 @@ const FeaturesSection: React.FC = () => {
             
             <div className="flex flex-col items-center group">
               <div className="glass-effect rounded-full p-3 mb-2 group-hover:scale-110 transition-transform">
-                <Adobe className="h-10 w-10 text-sireiq-cyan" />
+                <AdobeIcon className="h-10 w-10 text-sireiq-cyan" />
               </div>
               <span className="text-sm text-sireiq-light/70 group-hover:text-sireiq-light/90 transition-colors">Adobe</span>
             </div>
             
             <div className="flex flex-col items-center group">
               <div className="glass-effect rounded-full p-3 mb-2 group-hover:scale-110 transition-transform">
-                <Teams className="h-10 w-10 text-sireiq-cyan" />
+                <TeamsIcon className="h-10 w-10 text-sireiq-cyan" />
               </div>
               <span className="text-sm text-sireiq-light/70 group-hover:text-sireiq-light/90 transition-colors">Teams</span>
             </div>
