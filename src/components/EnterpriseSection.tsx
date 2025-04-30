@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Server, Database, Slack } from 'lucide-react';
 import { AdobeIcon, TeamsIcon } from './CustomIcons';
+import { Link } from 'react-router-dom';
 
 const EnterpriseSection: React.FC = () => {
   const enterpriseFeatures = [
@@ -50,6 +51,30 @@ const EnterpriseSection: React.FC = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* New AI features callout */}
+        <div className="bg-gradient-to-r from-sireiq-accent/20 to-sireiq-accent/10 p-6 rounded-lg mb-16">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold mb-2">Advanced AI Workflows</h3>
+              <p className="text-sireiq-light/80 mb-4">
+                Design custom AI workflows with our new multi-agent system. Combine specialized AI agents, add personalized memory, and automate complex tasks.
+              </p>
+              <ul className="list-disc pl-5 text-sireiq-light/70 space-y-1 mb-4">
+                <li>Create workflows with specialized AI agents</li>
+                <li>Store and retrieve personalized context with memory system</li>
+                <li>Chain agents together for complex reasoning tasks</li>
+              </ul>
+            </div>
+            <div>
+              <Link to="/ai-workflows">
+                <Button className="bg-sireiq-cyan hover:bg-sireiq-cyan/90">
+                  Try AI Studio
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Integration partners */}
