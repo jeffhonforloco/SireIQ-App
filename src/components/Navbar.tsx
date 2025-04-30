@@ -16,9 +16,9 @@ const Navbar = () => {
     <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-4xl font-bold text-sireiq-cyan flex items-center">
-          <Logo />
-          SireIQ
+        <Link to="/" className="flex items-center">
+          <Logo className="mr-2" />
+          <span className="text-2xl font-bold text-sireiq-cyan">SireIQ</span>
         </Link>
         
         {/* Desktop Navigation */}
