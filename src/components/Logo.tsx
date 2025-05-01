@@ -9,9 +9,9 @@ const Logo: React.FC<LogoProps> = ({ className = '' }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <img 
-        src="/lovable-uploads/2ffbab81-0de1-410b-9a14-c7c0446680d9.png" 
+        src="/lovable-uploads/650ef573-eb4d-4913-8d70-592d1b24760a.png" 
         alt="SireIQ Logo" 
-        className="h-12 w-12" 
+        className="h-8 w-8" 
       />
     </div>
   );
