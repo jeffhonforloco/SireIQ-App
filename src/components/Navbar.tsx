@@ -22,11 +22,12 @@ const Navbar = () => {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-6">
           <Link to="/features" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Features</Link>
           <Link to="/how-it-works" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
           <Link to="/enterprise" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
           <Link to="/ai-workflows" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
+          <Link to="/trust-and-compliance" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Trust & Compliance</Link>
           <Link to="/try-advanced-ai" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
         </nav>
         
@@ -42,6 +43,7 @@ const Navbar = () => {
               <Link to="/how-it-works" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
               <Link to="/enterprise" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
               <Link to="/ai-workflows" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
+              <Link to="/trust-and-compliance" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Trust & Compliance</Link>
               <Link to="/try-advanced-ai" className="block py-2 text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
             </div>
           )}

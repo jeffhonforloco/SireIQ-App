@@ -11,6 +11,7 @@ import Features from "./pages/Features";
 import HowItWorks from "./pages/HowItWorks";
 import Enterprise from "./pages/Enterprise";
 import TryAdvancedAI from "./pages/TryAdvancedAI";
+import TrustAndCompliance from "./pages/TrustAndCompliance";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/enterprise" element={<Enterprise />} />
           <Route path="/try-advanced-ai" element={<TryAdvancedAI />} />
+          <Route path="/trust-and-compliance" element={<TrustAndCompliance />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
