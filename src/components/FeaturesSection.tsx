@@ -17,32 +17,38 @@ const FeaturesSection: React.FC = () => {
     {
       icon: BrainCircuit,
       title: "AI-Powered Creation",
-      description: "Leverage advanced neural networks to generate creative content that's indistinguishable from human-made work."
+      description: "Leverage advanced neural networks to generate creative content that's indistinguishable from human-made work.",
+      to: "/features/ai-powered-creation"
     },
     {
       icon: MessagesSquare,
       title: "Personality Engine",
-      description: "Create content with consistent tone, style, and voice that reflects your brand's unique personality."
+      description: "Create content with consistent tone, style, and voice that reflects your brand's unique personality.",
+      to: "/features/personality-engine"
     },
     {
       icon: Network,
       title: "Real-time Collaboration",
-      description: "Work seamlessly with your team in real-time, sharing ideas and refining content together."
+      description: "Work seamlessly with your team in real-time, sharing ideas and refining content together.",
+      to: "/features/real-time-collaboration"
     },
     {
       icon: Lightbulb,
       title: "Idea Generation",
-      description: "Overcome creative blocks with AI-assisted brainstorming that sparks innovative concepts."
+      description: "Overcome creative blocks with AI-assisted brainstorming that sparks innovative concepts.",
+      to: "/features/idea-generation"
     },
     {
       icon: LineChart,
       title: "Performance Analytics",
-      description: "Track content performance and audience engagement with comprehensive analytics dashboards."
+      description: "Track content performance and audience engagement with comprehensive analytics dashboards.",
+      to: "/features/performance-analytics"
     },
     {
       icon: Lock,
       title: "Enterprise Security",
-      description: "Rest easy with bank-level encryption and robust privacy controls protecting your creative assets."
+      description: "Rest easy with bank-level encryption and robust privacy controls protecting your creative assets.",
+      to: "/features/enterprise-security"
     }
   ];
 
@@ -67,6 +73,7 @@ const FeaturesSection: React.FC = () => {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
+              to={feature.to}
             />
           ))}
         </div>

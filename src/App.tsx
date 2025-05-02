@@ -15,6 +15,12 @@ import TryAdvancedAI from "./pages/TryAdvancedAI";
 import TrustAndCompliance from "./pages/TrustAndCompliance";
 import SignIn from "./pages/SignIn";
 import GetStarted from "./pages/GetStarted";
+import AIPoweredCreation from "./pages/features/AIPoweredCreation";
+import PersonalityEngine from "./pages/features/PersonalityEngine";
+import RealTimeCollaboration from "./pages/features/RealTimeCollaboration";
+import IdeaGeneration from "./pages/features/IdeaGeneration";
+import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
+import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +41,13 @@ const App = () => (
             <Route path="/trust-and-compliance" element={<TrustAndCompliance />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/get-started" element={<GetStarted />} />
+            {/* Feature detail pages */}
+            <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
+            <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+            <Route path="/features/real-time-collaboration" element={<RealTimeCollaboration />} />
+            <Route path="/features/idea-generation" element={<IdeaGeneration />} />
+            <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
+            <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
