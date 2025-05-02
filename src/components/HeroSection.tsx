@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
           {/* Left column: Hero text */}
           <div className="lg:w-1/2 mb-12 lg:mb-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Transform Your <span className="text-gradient glow">Creative Process</span> with AI
+              <span className="text-gradient glow">Think it. Build it.</span> With SireIQ.
             </h1>
             
             <p className="text-xl text-sireiq-light/80 mb-8 max-w-lg">
