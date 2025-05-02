@@ -21,6 +21,7 @@ import RealTimeCollaboration from "./pages/features/RealTimeCollaboration";
 import IdeaGeneration from "./pages/features/IdeaGeneration";
 import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
 import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
+import Integrations from "./pages/Integrations";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/trust-and-compliance" element={<TrustAndCompliance />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/get-started" element={<GetStarted />} />
+            <Route path="/integrations" element={<Integrations />} />
             {/* Feature detail pages */}
             <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
             <Route path="/features/personality-engine" element={<PersonalityEngine />} />

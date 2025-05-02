@@ -15,6 +15,7 @@ const Navbar = () => {
       <Link to="/features" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Features</Link>
       <Link to="/how-it-works" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
       <Link to="/enterprise" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
+      <Link to="/integrations" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Integrations</Link>
       <Link to="/ai-workflows" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
       <Link to="/trust-and-compliance" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Trust & Compliance</Link>
       <Link to="/try-advanced-ai" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
