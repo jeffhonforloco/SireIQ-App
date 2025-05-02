@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Link } from 'react-router-dom';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
@@ -33,6 +35,11 @@ const HowItWorks = () => {
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>About SireIQ | Empowering the Future of Intelligent Creation</title>
+        <meta name="description" content="Learn how SireIQ empowers creators with advanced AI tools, agent-based reasoning, and edge-aware deployment to build next-generation applications." />
+      </Helmet>
+      
       <ParticleBackground />
       <Navbar />
       

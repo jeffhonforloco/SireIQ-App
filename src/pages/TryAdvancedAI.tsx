@@ -1,5 +1,5 @@
-
-import React, { useState } from 'react';
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -51,6 +51,11 @@ const TryAdvancedAI = () => {
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>Start Building with SireIQ | AI Tools for Modern Creators</title>
+        <meta name="description" content="Get started with SireIQ and bring your ideas to life. Use intelligent workflows and AI-native tools to build faster, smarter digital experiences." />
+      </Helmet>
+      
       <ParticleBackground />
       <Navbar />
       

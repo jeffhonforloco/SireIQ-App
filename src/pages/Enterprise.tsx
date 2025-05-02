@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -54,6 +54,11 @@ const Enterprise = () => {
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>SireIQ Enterprise | AI-Powered Solutions for Business Growth</title>
+        <meta name="description" content="Discover how SireIQ's enterprise solutions can transform your business with AI-powered tools, advanced security, and scalable workflows." />
+      </Helmet>
+      
       <ParticleBackground />
       <Navbar />
       

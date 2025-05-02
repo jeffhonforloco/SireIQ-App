@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -11,6 +12,11 @@ import { ArrowRight, Check } from 'lucide-react';
 const Features = () => {
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>SireIQ Features | Intelligent Tools for Smarter App Development</title>
+        <meta name="description" content="Explore SireIQ's AI-powered features including persistent memory, real-time collaboration, creative workflows, and more—designed for creators and builders." />
+      </Helmet>
+      
       {/* Particle effect background */}
       <ParticleBackground />
       

@@ -1,5 +1,5 @@
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -19,7 +19,7 @@ import {
   deleteWorkflowStep 
 } from '@/lib/ai/workflows';
 
-const WorkflowEditor: React.FC = () => {
+const AIWorkflows: React.FC = () => {
   const { toast } = useToast();
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [currentWorkflow, setCurrentWorkflow] = useState<Workflow | null>(null);
@@ -147,6 +147,11 @@ const WorkflowEditor: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>SireIQ Community | Build Together with AI-Driven Innovation</title>
+        <meta name="description" content="Join a vibrant community of developers, creators, and thinkers building innovative applications using SireIQ's AI-first development platform." />
+      </Helmet>
+      
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">AI Studio</h1>
         
@@ -319,4 +324,4 @@ const WorkflowEditor: React.FC = () => {
   );
 };
 
-export default WorkflowEditor;
+export default AIWorkflows;

@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Shield, CheckCircle, FileCheck } from 'lucide-react';
@@ -30,6 +30,11 @@ const TrustAndCompliance = () => {
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+      <Helmet>
+        <title>SireIQ Trust & Compliance | Security You Can Count On</title>
+        <meta name="description" content="Learn about SireIQ's commitment to security, compliance, and data protection standards that keep your creative projects and business data safe." />
+      </Helmet>
+      
       <ParticleBackground />
       <Navbar />
 
