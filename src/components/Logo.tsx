@@ -11,7 +11,7 @@ const Logo: React.FC<LogoProps> = ({ className = '' }) => {
       <img 
         src="/lovable-uploads/5a32017e-bddc-4e56-b9a8-8f233099e02a.png" 
         alt="SireIQ Logo" 
-        className="h-14 w-14" 
+        className="h-16 w-16" 
       />
     </div>
   );

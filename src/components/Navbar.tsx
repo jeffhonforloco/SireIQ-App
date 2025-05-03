@@ -24,32 +24,32 @@ const Navbar = () => {
 
   return (
     <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo */}
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        {/* Logo - Increased size and moved to edge */}
         <Link to="/" className="flex items-center">
-          <Logo />
+          <Logo className="mr-8" />
         </Link>
         
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 items-center">
+        {/* Desktop Navigation - Centered */}
+        <nav className="hidden md:flex flex-1 justify-center space-x-6 items-center">
           <NavLinks />
-          
-          {/* Auth Buttons */}
-          <div className="flex items-center ml-6 space-x-4">
-            <Link 
-              to="/signin" 
-              className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
-            >
-              Sign In
-            </Link>
-            
-            <Link to="/get-started">
-              <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-2 h-auto">
-                Get Started
-              </Button>
-            </Link>
-          </div>
         </nav>
+        
+        {/* Auth Buttons - Moved to right edge */}
+        <div className="hidden md:flex items-center space-x-4">
+          <Link 
+            to="/signin" 
+            className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
+          >
+            Sign In
+          </Link>
+          
+          <Link to="/get-started">
+            <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-2 h-auto">
+              Get Started
+            </Button>
+          </Link>
+        </div>
         
         {/* Mobile Navigation */}
         {isMobile && (
