@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Navigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useRole } from '@/contexts/RoleContext';
@@ -9,23 +8,27 @@ import UserDashboard from '@/components/dashboards/UserDashboard';
 import DeveloperDashboard from '@/components/dashboards/DeveloperDashboard';
 import EnterpriseDashboard from '@/components/dashboards/EnterpriseDashboard';
 import RoleSelection from '@/components/onboarding/RoleSelection';
+import QuickPreferences from '@/components/onboarding/QuickPreferences';
+import StartPlatform from '@/components/onboarding/StartPlatform';
 
 const Dashboard = () => {
-  const { role, isFirstTimeUser } = useRole();
+  const { role, isFirstTimeUser, onboardingStep } = useRole();
 
-  // If user hasn't selected a role yet, show role selection
+  // If user is in onboarding process
   if (isFirstTimeUser || !role) {
     return (
       <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
         <Helmet>
-          <title>Welcome to SireIQ | Select Your Role</title>
-          <meta name="description" content="Choose how you'd like to use SireIQ to customize your experience." />
+          <title>Welcome to SireIQ | Onboarding</title>
+          <meta name="description" content="Set up your SireIQ experience with a few quick steps." />
         </Helmet>
         
         <Navbar />
         
         <main className="container mx-auto pt-32 pb-20">
-          <RoleSelection />
+          {onboardingStep === 1 && <RoleSelection />}
+          {onboardingStep === 2 && <QuickPreferences />}
+          {onboardingStep === 3 && <StartPlatform />}
         </main>
         
         <Footer />

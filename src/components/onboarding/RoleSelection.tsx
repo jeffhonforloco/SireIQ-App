@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -8,14 +7,12 @@ import { useRole } from '@/contexts/RoleContext';
 import { User, Code, Building2 } from 'lucide-react';
 
 const RoleSelection = () => {
-  const { setRole, setIsFirstTimeUser } = useRole();
+  const { setRole, setOnboardingStep } = useRole();
   const [selectedRole, setSelectedRole] = React.useState<'user' | 'developer' | 'enterprise'>('user');
-  const navigate = useNavigate();
 
   const handleContinue = () => {
     setRole(selectedRole);
-    setIsFirstTimeUser(false);
-    navigate('/dashboard');
+    setOnboardingStep(2);
   };
 
   return (
