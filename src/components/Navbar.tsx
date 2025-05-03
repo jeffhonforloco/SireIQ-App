@@ -24,10 +24,10 @@ const Navbar = () => {
 
   return (
     <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo - Increased size and moved to edge */}
-        <Link to="/" className="flex items-center">
-          <Logo className="mr-8" />
+      <div className="container mx-auto flex items-center justify-between px-2">
+        {/* Logo - Moved further to the edge */}
+        <Link to="/" className="flex items-center ml-0 sm:ml-0">
+          <Logo className="mr-4 sm:mr-8" />
         </Link>
         
         {/* Desktop Navigation - Centered */}
@@ -35,8 +35,8 @@ const Navbar = () => {
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons - Moved to right edge */}
-        <div className="hidden md:flex items-center space-x-4">
+        {/* Auth Buttons - Moved further to the edge */}
+        <div className="hidden md:flex items-center space-x-4 mr-0 sm:mr-0">
           <Link 
             to="/signin" 
             className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
