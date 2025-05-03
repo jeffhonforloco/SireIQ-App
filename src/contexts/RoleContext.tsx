@@ -16,6 +16,8 @@ type RoleContextType = {
     darkMode: boolean;
     notifications: boolean;
     aiModel: string;
+    codeAutoComplete?: boolean; // Added for developer role
+    teamUpdates?: boolean; // Added for enterprise role
   };
   setPreferences: (prefs: Partial<RoleContextType['preferences']>) => void;
 };
@@ -46,6 +48,8 @@ export const RoleProvider = ({ children }: { children: React.ReactNode }) => {
           darkMode: true,
           notifications: true,
           aiModel: 'balanced',
+          codeAutoComplete: true, // Default value for developer
+          teamUpdates: true, // Default value for enterprise
         };
   });
   
