@@ -13,7 +13,7 @@ const Logo: React.FC<LogoProps> = ({ className = '' }) => {
         alt="SireIQ Logo" 
         className="h-20 w-20" 
       />
-      <span className="text-sireiq-cyan text-3xl font-display font-bold ml-2">SireIQ</span>
+      <span className="text-sireiq-cyan text-3xl font-display font-bold self-center">SireIQ</span>
     </div>
   );
 };
