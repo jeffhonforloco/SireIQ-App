@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { RoleProvider } from "./contexts/RoleContext";
+import MobileBottomNav from "./components/MobileBottomNav";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AIWorkflows from "./pages/AIWorkflows";
@@ -57,6 +58,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <MobileBottomNav />
           </BrowserRouter>
         </RoleProvider>
       </HelmetProvider>
