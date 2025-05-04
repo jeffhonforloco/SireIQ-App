@@ -24,10 +24,10 @@ const Navbar = () => {
 
   return (
     <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
-      <div className="container mx-auto flex items-center justify-between px-2">
-        {/* Logo - Moved further to the edge */}
-        <Link to="/" className="flex items-center ml-0 sm:ml-0">
-          <Logo className="mr-4 sm:mr-8" />
+      <div className="w-full flex items-center justify-between px-0">
+        {/* Logo - Moved all the way to the left edge */}
+        <Link to="/" className="flex items-center pl-4 md:pl-6">
+          <Logo className="mr-0" />
         </Link>
         
         {/* Desktop Navigation - Centered */}
@@ -35,8 +35,8 @@ const Navbar = () => {
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons - Moved further to the edge */}
-        <div className="hidden md:flex items-center space-x-4 mr-0 sm:mr-0">
+        {/* Auth Buttons - Moved all the way to the right edge */}
+        <div className="hidden md:flex items-center space-x-4 pr-4 md:pr-6">
           <Link 
             to="/signin" 
             className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
@@ -55,7 +55,7 @@ const Navbar = () => {
         {isMobile && (
           <Sheet>
             <SheetTrigger asChild>
-              <button className="md:hidden text-sireiq-light hover:text-sireiq-cyan focus:outline-none">
+              <button className="md:hidden text-sireiq-light hover:text-sireiq-cyan focus:outline-none pr-4">
                 <Menu className="h-8 w-8" />
               </button>
             </SheetTrigger>
