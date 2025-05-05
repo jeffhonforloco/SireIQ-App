@@ -22,8 +22,9 @@ const CTASection: React.FC = () => {
       toast.success("Thank you! You're already enrolled in early access.");
       navigate('/dashboard');
     } else {
-      // User needs to register
+      // User needs to register - redirect to get started with email pre-filled
       toast.success("Thank you for your interest! Please complete registration.");
+      // In a real app, you might pass the email as a query parameter or state
       navigate('/get-started');
     }
   };

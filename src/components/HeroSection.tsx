@@ -5,17 +5,26 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 import WhySireIQCallout from './WhySireIQCallout';
 import { toast } from './ui/sonner';
+import { useRole } from '@/contexts/RoleContext';
 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
+  const { role } = useRole();
   
   const handleGetStarted = () => {
     navigate('/get-started');
   };
   
   const handleBookDemo = () => {
-    // In a real app, this would navigate to a scheduling page or open a dialog
     toast.success("Demo request submitted! Our team will contact you soon.");
+    
+    // If the user is authenticated, don't change the route
+    if (!role) {
+      // After 2 seconds, redirect to the get started page for non-authenticated users
+      setTimeout(() => {
+        navigate('/get-started');
+      }, 2000);
+    }
   };
 
   return (
