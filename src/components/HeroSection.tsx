@@ -1,10 +1,23 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
 import WhySireIQCallout from './WhySireIQCallout';
+import { toast } from './ui/sonner';
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+  
+  const handleGetStarted = () => {
+    navigate('/get-started');
+  };
+  
+  const handleBookDemo = () => {
+    // In a real app, this would navigate to a scheduling page or open a dialog
+    toast.success("Demo request submitted! Our team will contact you soon.");
+  };
+
   return (
     <section className="pt-40 pb-20 relative">
       <div className="container mx-auto px-4 md:px-6">
@@ -21,11 +34,18 @@ const HeroSection: React.FC = () => {
             
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto">
+              <Button 
+                className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto"
+                onClick={handleGetStarted}
+              >
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               
-              <Button variant="outline" className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-3 h-auto">
+              <Button 
+                variant="outline" 
+                className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-3 h-auto"
+                onClick={handleBookDemo}
+              >
                 Book a Demo
               </Button>
             </div>

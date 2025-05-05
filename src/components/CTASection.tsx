@@ -1,9 +1,33 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from './ui/sonner';
+import { useRole } from '@/contexts/RoleContext';
 
 const CTASection: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  const { role } = useRole();
+
+  const handleGetEarlyAccess = () => {
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    
+    if (role) {
+      // User is already signed in
+      toast.success("Thank you! You're already enrolled in early access.");
+      navigate('/dashboard');
+    } else {
+      // User needs to register
+      toast.success("Thank you for your interest! Please complete registration.");
+      navigate('/get-started');
+    }
+  };
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -27,10 +51,13 @@ const CTASection: React.FC = () => {
               <input
                 type="email"
                 placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 px-4 py-3 rounded-lg bg-sireiq-darker/50 border border-sireiq-cyan/30 focus:border-sireiq-cyan focus:ring focus:ring-sireiq-cyan/20 focus:outline-none text-sireiq-light"
               />
               <Button 
                 className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 transition-opacity px-6"
+                onClick={handleGetEarlyAccess}
               >
                 Get Early Access <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

@@ -1,12 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { useRole } from '@/contexts/RoleContext';
+import { toast } from '@/components/ui/sonner';
 
 const GetStarted = () => {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
+  const navigate = useNavigate();
+
+  const handleCreateAccount = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Simple validation
+    if (!fullName || !email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    
+    // For demo purposes, we'll set the user role and start onboarding
+    setRole('user');
+    setIsFirstTimeUser(true);
+    setOnboardingStep(1);
+    toast.success("Account created successfully!");
+    navigate('/dashboard');
+  };
+
+  const handleScheduleDemo = () => {
+    // In a real app, this would navigate to a scheduling page or open a dialog
+    toast.success("Demo request submitted! Our team will contact you soon.");
+  };
+
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
@@ -32,10 +63,12 @@ const GetStarted = () => {
               <p className="mb-6 text-sireiq-light/80">
                 Sign up for free and start exploring SireIQ's AI-powered tools and creative workflows.
               </p>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleCreateAccount}>
                 <div>
                   <input
                     type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                     className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
                     placeholder="Full Name"
                   />
@@ -43,6 +76,8 @@ const GetStarted = () => {
                 <div>
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
                     placeholder="Email Address"
                   />
@@ -50,11 +85,13 @@ const GetStarted = () => {
                 <div>
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
                     placeholder="Create Password"
                   />
                 </div>
-                <Button className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
+                <Button type="submit" className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
                   Create Free Account
                 </Button>
               </form>
@@ -85,7 +122,11 @@ const GetStarted = () => {
                   </li>
                 </ul>
               </div>
-              <Button variant="outline" className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 mt-4">
+              <Button 
+                onClick={handleScheduleDemo}
+                variant="outline" 
+                className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 mt-4"
+              >
                 Schedule a Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
