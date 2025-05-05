@@ -39,7 +39,7 @@ const HeroSection: React.FC = () => {
             <div className="relative">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 rounded-2xl blur opacity-30"></div>
               <img 
-                src="/lovable-uploads/c3e0c182-65f5-4612-a523-35da753a98a4.png" 
+                src="/lovable-uploads/207b3383-58aa-491c-8000-d56fca868602.png" 
                 alt="SireIQ Platform Interface" 
                 className="relative rounded-2xl shadow-2xl glow-image border border-sireiq-accent/20 w-full max-w-lg"
               />
