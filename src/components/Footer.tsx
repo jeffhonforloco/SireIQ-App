@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Github, Twitter, Instagram, Linkedin } from 'lucide-react';
 
@@ -11,7 +10,7 @@ const Footer: React.FC = () => {
           <div>
             <div className="flex items-center mb-4 space-x-2">
               <img 
-                src="/lovable-uploads/c3e0c182-65f5-4612-a523-35da753a98a4.png" 
+                src="/lovable-uploads/207b3383-58aa-491c-8000-d56fca868602.png" 
                 alt="SireIQ Logo" 
                 className="h-8 w-8" 
               />
