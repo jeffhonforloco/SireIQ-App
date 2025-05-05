@@ -2,9 +2,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HomeIcon, Search, Settings, User, Layers } from 'lucide-react';
+import { useRole } from '@/contexts/RoleContext';
 
 const MobileBottomNav = () => {
   const location = useLocation();
+  const { role } = useRole();
+  
+  // Only show bottom nav when user is logged in (has a role)
+  if (!role) return null;
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -46,11 +51,11 @@ const MobileBottomNav = () => {
         </Link>
         
         <Link 
-          to="/enterprise" 
-          className={`flex flex-col items-center justify-center p-2 ${isActive('/enterprise') ? 'text-sireiq-cyan' : 'text-sireiq-light'}`}
+          to="/dashboard" 
+          className={`flex flex-col items-center justify-center p-2 ${isActive('/dashboard') ? 'text-sireiq-cyan' : 'text-sireiq-light'}`}
         >
           <Settings size={24} />
-          <span className="text-xs mt-1">Enterprise</span>
+          <span className="text-xs mt-1">Dashboard</span>
         </Link>
       </nav>
     </div>
