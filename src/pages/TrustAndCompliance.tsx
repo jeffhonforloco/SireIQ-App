@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -92,11 +91,12 @@ const TrustAndCompliance = () => {
       <ParticleBackground />
       <Navbar />
 
-      <main className="pt-24 pb-16">
+      <main className="pt-32 pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <header className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="text-sireiq-light">Trust & </span><span className="text-gradient">Compliance</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 mt-6">
+              <span className="text-sireiq-light inline-block">Trust & </span>
+              <span className="text-gradient inline-block">Compliance</span>
             </h1>
             <p className="text-xl text-sireiq-light/70 max-w-2xl mx-auto">
               Secure, transparent, and compliant. Your data and creative assets are protected with enterprise-grade security.
