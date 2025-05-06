@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import { tailwindThemeExtensions } from "./src/styles/tailwind-design-system";
 
 export default {
   darkMode: ["class"],
@@ -19,19 +20,9 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Montserrat", "sans-serif"],
-      },
+      ...tailwindThemeExtensions.extend,
       colors: {
-        sireiq: {
-          dark: "#0d1117",
-          darker: "#080a0f",
-          light: "#f3f6fc",
-          accent: "#3CDFFF",
-          cyan: "#3CDFFF",
-          cyan2: "#00A3C4",
-        },
+        ...tailwindThemeExtensions.extend.colors,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
