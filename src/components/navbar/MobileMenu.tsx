@@ -75,6 +75,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
               Voice Assistant
             </Link>
             <Link 
+              to="/features/performance-analytics"
+              className={`py-3 px-4 rounded-md ml-4 text-sm ${isActive('/features/performance-analytics') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+              onClick={() => setIsSheetOpen(false)}
+            >
+              Performance Analytics
+            </Link>
+            <Link 
               to="/pricing"
               className={`py-3 px-4 rounded-md ${isActive('/pricing') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light'}`}
               onClick={() => setIsSheetOpen(false)}

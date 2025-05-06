@@ -18,12 +18,30 @@ const NavLinks: React.FC = () => {
 
   return (
     <>
-      <Link 
-        to="/features" 
-        className={`text-sireiq-light hover:text-sireiq-cyan transition-colors ${isActive('/features') ? 'text-sireiq-cyan' : ''}`}
-      >
-        Features
-      </Link>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="flex items-center text-sireiq-light hover:text-sireiq-cyan transition-colors">
+            Features <ChevronDown className="ml-1 h-4 w-4" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-sireiq-darker border-sireiq-accent/30 w-48">
+          <DropdownMenuItem asChild>
+            <Link to="/features" className="cursor-pointer">All Features</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/features/idea-generation" className="cursor-pointer">Idea Generation</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/features/personality-engine" className="cursor-pointer">Personality Engine</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/features/voice-assistant" className="cursor-pointer">Voice Assistant</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/features/performance-analytics" className="cursor-pointer">Performance Analytics</Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
