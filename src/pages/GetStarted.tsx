@@ -15,7 +15,7 @@ const GetStarted = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedRole, setSelectedRole] = useState<'user' | 'developer'>('user');
+  const [selectedRole, setSelectedRole] = useState<'user' | 'developer' | 'enterprise'>('user');
   const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
   const navigate = useNavigate();
 
@@ -99,8 +99,8 @@ const GetStarted = () => {
                   <p className="text-sm font-medium mb-2">I am signing up as a:</p>
                   <RadioGroup 
                     defaultValue="user" 
-                    className="flex space-x-4"
-                    onValueChange={(value) => setSelectedRole(value as 'user' | 'developer')}
+                    className="flex flex-wrap gap-4"
+                    onValueChange={(value) => setSelectedRole(value as 'user' | 'developer' | 'enterprise')}
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="user" id="user-role" />
@@ -109,6 +109,10 @@ const GetStarted = () => {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="developer" id="developer-role" />
                       <Label htmlFor="developer-role">Developer</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="enterprise" id="enterprise-role" />
+                      <Label htmlFor="enterprise-role">Enterprise</Label>
                     </div>
                   </RadioGroup>
                 </div>
