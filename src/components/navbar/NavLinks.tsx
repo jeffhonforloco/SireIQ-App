@@ -43,6 +43,9 @@ const NavLinks: React.FC = () => {
           <DropdownMenuItem asChild>
             <Link to="/features/performance-analytics" className="cursor-pointer">Performance Analytics</Link>
           </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to="/features/seo-analyzer" className="cursor-pointer">SEO Analyzer</Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       

@@ -25,6 +25,7 @@ import VoiceAssistant from '@/pages/features/VoiceAssistant';
 import SimpleVoiceAssistantDemo from '@/pages/features/SimpleVoiceAssistantDemo';
 import PerformanceAnalytics from '@/pages/features/PerformanceAnalytics';
 import AIPoweredCreation from '@/pages/features/AIPoweredCreation';
+import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
                 <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
                 <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
+                <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="*" element={<NotFound />} />
