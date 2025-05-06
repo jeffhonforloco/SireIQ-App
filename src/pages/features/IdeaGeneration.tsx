@@ -199,7 +199,6 @@ const IdeaGeneration = () => {
                     </div>
                   ))
                 ) : (
-                  // Default examples
                   <>
                     <div className="glass-effect rounded-lg p-4 border border-sireiq-accent/20">
                       <h4 className="font-bold text-sireiq-cyan mb-1">"30 Days, New You" Challenge</h4>
