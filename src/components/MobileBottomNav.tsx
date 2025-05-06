@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon, Search, Settings, User, Layers } from 'lucide-react';
+import { HomeIcon, Layers, Settings } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 
 const MobileBottomNav = () => {
@@ -32,22 +32,6 @@ const MobileBottomNav = () => {
         >
           <Layers size={24} />
           <span className="text-xs mt-1">Features</span>
-        </Link>
-        
-        <Link 
-          to="/ai-workflows" 
-          className={`flex flex-col items-center justify-center p-2 ${isActive('/ai-workflows') ? 'text-sireiq-cyan' : 'text-sireiq-light'}`}
-        >
-          <Search size={24} />
-          <span className="text-xs mt-1">AI Tools</span>
-        </Link>
-        
-        <Link 
-          to="/get-started" 
-          className={`flex flex-col items-center justify-center p-2 ${isActive('/get-started') ? 'text-sireiq-cyan' : 'text-sireiq-light'}`}
-        >
-          <User size={24} />
-          <span className="text-xs mt-1">Get Started</span>
         </Link>
         
         <Link 
