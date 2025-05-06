@@ -1,0 +1,68 @@
+
+@tailwind utilities;
+
+/* Custom utilities */
+@layer components {
+  /* Glass effect styling */
+  .glass-effect {
+    @apply bg-opacity-10 backdrop-blur-lg border border-white/10 bg-white/5;
+  }
+
+  /* Text gradient effect */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2;
+  }
+
+  /* Glow effect */
+  .glow {
+    text-shadow: 0 0 15px rgba(60, 223, 255, 0.5);
+  }
+
+  /* Glow effect for images */
+  .glow-image {
+    filter: drop-shadow(0 0 8px rgba(60, 223, 255, 0.5));
+  }
+
+  /* Gradient border */
+  .gradient-border {
+    position: relative;
+  }
+  
+  .gradient-border::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(90deg, #3CDFFF, #00A3C4);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 px-6 py-2 rounded-md transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors;
+  }
+  
+  .btn-danger {
+    @apply bg-transparent border border-red-500/50 hover:bg-red-500/10 text-red-400 px-6 py-2 rounded-md transition-colors;
+  }
+
+  /* Card variants */
+  .card-base {
+    @apply bg-card border border-sireiq-accent/30 rounded-xl p-6;
+  }
+  
+  .card-interactive {
+    @apply card-base hover:border-sireiq-cyan/50 transition-all hover:shadow-[0_0_15px_rgba(60,223,255,0.15)];
+  }
+  
+  .card-glass {
+    @apply glass-effect rounded-xl p-6;
+  }
+}
