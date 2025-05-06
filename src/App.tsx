@@ -16,6 +16,7 @@ import Pricing from '@/pages/Pricing';
 import Dashboard from '@/pages/Dashboard';
 import Features from '@/pages/Features';
 import Enterprise from '@/pages/Enterprise';
+import SignIn from '@/pages/SignIn';
 
 // Import feature pages
 import IdeaGeneration from '@/pages/features/IdeaGeneration';
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
                 <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
                 <Route path="/enterprise" element={<Enterprise />} />
+                <Route path="/signin" element={<SignIn />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <MobileBottomNav />
