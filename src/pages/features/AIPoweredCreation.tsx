@@ -8,9 +8,9 @@ import { ArrowRight, BrainCircuit, Check, Sparkles, Copy, FileText } from 'lucid
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import PageHeader from '@/components/trust/PageHeader';
 
 const AIPoweredCreation = () => {
   const [prompt, setPrompt] = useState('');
@@ -105,26 +105,71 @@ const AIPoweredCreation = () => {
       <main className="pt-32 pb-20">
         {/* Hero section */}
         <section className="container mx-auto px-4 mb-20">
-          <div className="text-center mb-16">
-            <div className="glass-effect inline-flex rounded-full p-3 mb-4">
-              <BrainCircuit className="h-8 w-8 text-sireiq-cyan" />
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              <span className="text-gradient glow">AI-Powered</span> Creation
-            </h1>
-            <p className="text-xl md:text-2xl text-sireiq-light/70 max-w-3xl mx-auto">
-              Leverage advanced neural networks to generate creative content that's indistinguishable from human-made work.
-            </p>
-          </div>
+          <PageHeader 
+            title="AI-Powered Creation"
+            subtitle="Leverage advanced neural networks to generate creative content that's indistinguishable from human-made work."
+            icon={<BrainCircuit className="h-8 w-8 text-sireiq-cyan" />}
+          />
           
           <div className="flex justify-center">
             <div className="relative w-full max-w-4xl aspect-video rounded-lg overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-sireiq-cyan/20 to-sireiq-accent/10"></div>
-              <img 
-                src="/lovable-uploads/c3e0c182-65f5-4612-a523-35da753a98a4.png" 
-                alt="AI Content Generation" 
-                className="w-full h-full object-cover opacity-70" 
-              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="creative-pulse-animation flex items-center justify-center w-32 h-32 bg-sireiq-accent/30 rounded-full">
+                  <BrainCircuit className="h-16 w-16 text-sireiq-cyan animate-pulse" />
+                </div>
+                <div className="absolute w-full h-full flex items-center justify-center">
+                  <div className="creative-orbit">
+                    <div className="orbit-item bg-sireiq-cyan/60"></div>
+                    <div className="orbit-item bg-sireiq-accent/60" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="orbit-item bg-sireiq-cyan/40" style={{ animationDelay: '1s' }}></div>
+                    <div className="orbit-item bg-sireiq-accent/40" style={{ animationDelay: '1.5s' }}></div>
+                  </div>
+                </div>
+              </div>
+              <style jsx>{`
+                .creative-orbit {
+                  position: absolute;
+                  width: 300px;
+                  height: 300px;
+                  border: 1px dashed rgba(255,255,255,0.2);
+                  border-radius: 50%;
+                  animation: rotate 20s linear infinite;
+                }
+                .orbit-item {
+                  position: absolute;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  transform: translate(-50%, -50%);
+                  animation: orbit 10s linear infinite;
+                }
+                @keyframes rotate {
+                  from { transform: rotate(0deg); }
+                  to { transform: rotate(360deg); }
+                }
+                @keyframes orbit {
+                  0% { left: 50%; top: 0%; }
+                  25% { left: 100%; top: 50%; }
+                  50% { left: 50%; top: 100%; }
+                  75% { left: 0%; top: 50%; }
+                  100% { left: 50%; top: 0%; }
+                }
+                .creative-pulse-animation {
+                  animation: pulse-shadow 3s ease infinite;
+                }
+                @keyframes pulse-shadow {
+                  0% {
+                    box-shadow: 0 0 0 0 rgba(107, 217, 227, 0.4);
+                  }
+                  70% {
+                    box-shadow: 0 0 0 30px rgba(107, 217, 227, 0);
+                  }
+                  100% {
+                    box-shadow: 0 0 0 0 rgba(107, 217, 227, 0);
+                  }
+                }
+              `}</style>
             </div>
           </div>
         </section>
