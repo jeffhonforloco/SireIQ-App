@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -11,9 +11,9 @@ import { toast } from '@/components/ui/sonner';
 // Mock user database for demo purposes
 // In a real app, this would be fetched from a backend
 const mockUsers = [
-  { email: 'user@example.com', password: 'password', role: 'user' },
-  { email: 'dev@example.com', password: 'password', role: 'developer' },
-  { email: 'enterprise@example.com', password: 'password', role: 'user' } // All users start as regular users
+  { email: 'user@example.com', password: 'password', role: 'user', verified: true },
+  { email: 'dev@example.com', password: 'password', role: 'developer', verified: true },
+  { email: 'enterprise@example.com', password: 'password', role: 'user', verified: true } // All users start as regular users
 ];
 
 const SignIn = () => {
@@ -36,17 +36,19 @@ const SignIn = () => {
     const user = mockUsers.find(user => user.email === email && user.password === password);
     
     if (user) {
+      if (!user.verified) {
+        // In a real app, this would send a verification email
+        toast.error("Your email is not verified. Please check your email for a verification link.");
+        return;
+      }
+
       // Set the appropriate role based on the user account
       setRole(user.role as 'user' | 'developer');
       setIsFirstTimeUser(false);
       toast.success(`Signed in successfully as ${user.role}!`);
       navigate('/dashboard');
     } else {
-      // For demo purposes, we'll accept any credentials not in our mock database as a regular user
-      setRole('user');
-      setIsFirstTimeUser(false);
-      toast.success("Signed in successfully as a regular user!");
-      navigate('/dashboard');
+      toast.error("Invalid email or password");
     }
   };
 
@@ -110,7 +112,7 @@ const SignIn = () => {
           
           <p className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <a href="/get-started" className="text-sireiq-cyan hover:underline">Get Started</a>
+            <Link to="/get-started" className="text-sireiq-cyan hover:underline">Get Started</Link>
           </p>
         </div>
       </main>
