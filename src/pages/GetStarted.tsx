@@ -8,11 +8,14 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 import { toast } from '@/components/ui/sonner';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 const GetStarted = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState<'user' | 'developer'>('user');
   const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
   const navigate = useNavigate();
 
@@ -25,8 +28,8 @@ const GetStarted = () => {
       return;
     }
     
-    // For demo purposes, we'll set the user role and start onboarding
-    setRole('user');
+    // Set the user role based on selection and start onboarding
+    setRole(selectedRole);
     setIsFirstTimeUser(true);
     setOnboardingStep(1);
     toast.success("Account created successfully!");
@@ -91,6 +94,25 @@ const GetStarted = () => {
                     placeholder="Create Password"
                   />
                 </div>
+                
+                <div className="pt-2">
+                  <p className="text-sm font-medium mb-2">I am signing up as a:</p>
+                  <RadioGroup 
+                    defaultValue="user" 
+                    className="flex space-x-4"
+                    onValueChange={(value) => setSelectedRole(value as 'user' | 'developer')}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="user" id="user-role" />
+                      <Label htmlFor="user-role">Regular User</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="developer" id="developer-role" />
+                      <Label htmlFor="developer-role">Developer</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+                
                 <Button type="submit" className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]">
                   Create Free Account
                 </Button>
