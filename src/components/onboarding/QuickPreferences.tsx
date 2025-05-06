@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Settings, Bell, Zap, Code, Users } from 'lucide-react';
-import { useRole } from '@/contexts/RoleContext';
+import { useRole, AIModel } from '@/contexts/RoleContext';
 
 const QuickPreferences = () => {
   const { role, preferences, setPreferences, setOnboardingStep } = useRole();
