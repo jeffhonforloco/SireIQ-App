@@ -1,16 +1,35 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Lock, Check, Shield, Key } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
 import DemoRequestModal from '@/components/enterprise/DemoRequestModal';
+import SecurityDashboardCard from '@/components/enterprise/SecurityDashboardCard';
+import SecurityEventsCard from '@/components/enterprise/SecurityEventsCard';
+import SecurityHealthCard from '@/components/enterprise/SecurityHealthCard';
+import ComplianceStatusCard from '@/components/enterprise/ComplianceStatusCard';
+import { toast } from 'sonner';
 
 const EnterpriseSecurity = () => {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1500);
+  }, []);
+
+  const handleCertificateClick = (cert: string) => {
+    toast.info(`${cert} details`, {
+      description: `Viewing detailed information about ${cert} certification.`
+    });
+  };
 
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
@@ -57,7 +76,11 @@ const EnterpriseSecurity = () => {
                   description: "Granular permission controls for team security"
                 }
               ].map((feature, index) => (
-                <div key={index} className="glass-effect rounded-lg p-6 border border-sireiq-accent/20 text-center">
+                <div 
+                  key={index} 
+                  className="glass-effect rounded-lg p-6 border border-sireiq-accent/20 text-center hover:border-sireiq-cyan/30 hover:translate-y-[-5px] transition-all cursor-pointer"
+                  onClick={() => toast.info(feature.title, { description: feature.description })}
+                >
                   <div className="w-12 h-12 rounded-full bg-sireiq-cyan/20 flex items-center justify-center mx-auto mb-4">
                     <feature.icon className="h-6 w-6 text-sireiq-cyan" />
                   </div>
@@ -77,65 +100,113 @@ const EnterpriseSecurity = () => {
           
           <div className="flex flex-wrap justify-center gap-6 md:gap-12">
             {["SOC 2 Type II", "GDPR Compliant", "HIPAA Compliant", "ISO 27001", "CCPA Compliant"].map((cert, index) => (
-              <div key={index} className="glass-effect rounded-lg px-5 py-3 border border-sireiq-accent/20">
+              <div 
+                key={index} 
+                className="glass-effect rounded-lg px-5 py-3 border border-sireiq-accent/20 cursor-pointer hover:border-sireiq-cyan/40 hover:bg-sireiq-accent/10 transition-all"
+                onClick={() => handleCertificateClick(cert)}
+              >
                 <span className="font-medium">{cert}</span>
               </div>
             ))}
           </div>
         </section>
         
-        {/* Features grid */}
+        {/* Security Dashboard Tabs */}
         <section className="container mx-auto px-4 mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="glass-effect rounded-2xl p-6 border border-sireiq-accent/30">
-              <h3 className="text-xl font-bold mb-6 flex items-center">
-                <Shield className="h-5 w-5 text-sireiq-cyan mr-2" />
-                Security Dashboard
-              </h3>
+          <Tabs 
+            defaultValue="overview" 
+            className="w-full" 
+            value={activeTab}
+            onValueChange={(value) => {
+              setActiveTab(value);
+              setIsLoading(true);
+              setTimeout(() => setIsLoading(false), 800);
+            }}
+          >
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold">
+                <span className="text-gradient">Security</span> Dashboard
+              </h2>
               
-              <div className="space-y-6">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">Security Score</span>
-                    <span className="text-green-400 font-bold">98/100</span>
-                  </div>
-                  <div className="w-full h-2 bg-sireiq-accent/20 rounded-full overflow-hidden">
-                    <div className="h-full bg-green-400 rounded-full" style={{ width: "98%" }}></div>
-                  </div>
+              <TabsList className="bg-sireiq-accent/10">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="compliance">Compliance</TabsTrigger>
+                <TabsTrigger value="activity">Activity</TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <div className={`transition-opacity duration-500 ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
+              <TabsContent value="overview" className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <SecurityDashboardCard />
+                  <SecurityEventsCard />
                 </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { name: "2FA Enabled", status: "Enabled", color: "text-green-400" },
-                    { name: "SSO Integration", status: "Active", color: "text-green-400" },
-                    { name: "Data Encryption", status: "Enabled", color: "text-green-400" },
-                    { name: "Last Security Scan", status: "Today", color: "text-green-400" }
-                  ].map((item, i) => (
-                    <div key={i} className="bg-sireiq-darker rounded-lg p-3">
-                      <p className="text-xs text-sireiq-light/50 mb-1">{item.name}</p>
-                      <p className={`font-medium ${item.color}`}>{item.status}</p>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="bg-sireiq-darker rounded-lg p-4">
-                  <h4 className="text-sm font-medium mb-2">Recent Activity</h4>
-                  <div className="space-y-3">
+              </TabsContent>
+              
+              <TabsContent value="compliance" className="space-y-6">
+                <ComplianceStatusCard />
+                <div className="glass-effect rounded-xl p-6 border border-sireiq-accent/30">
+                  <h3 className="text-xl font-bold mb-6">Regulatory Documentation</h3>
+                  <p className="mb-4 text-sireiq-light/70">
+                    Access and download our latest regulatory compliance documentation and certifications.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[
-                      { event: "Security scan completed", time: "Today, 09:45 AM" },
-                      { event: "Admin login from new IP", time: "Yesterday, 02:15 PM" },
-                      { event: "Password policy updated", time: "Jun 15, 2023, 11:30 AM" }
-                    ].map((activity, i) => (
-                      <div key={i} className="flex justify-between items-center text-sm">
-                        <p className="text-sireiq-light/80">{activity.event}</p>
-                        <p className="text-xs text-sireiq-light/50">{activity.time}</p>
+                      { name: "GDPR Compliance Statement", date: "Updated May 2025" },
+                      { name: "HIPAA Security Assessment", date: "Updated March 2025" },
+                      { name: "SOC 2 Type II Report", date: "Updated January 2025" },
+                      { name: "ISO 27001 Certification", date: "Valid until December 2026" }
+                    ].map((doc, i) => (
+                      <div key={i} className="p-4 border border-sireiq-accent/20 rounded-md hover:bg-sireiq-accent/5 cursor-pointer transition-colors" onClick={() => toast.success(`Downloading ${doc.name}...`)}>
+                        <h4 className="font-medium">{doc.name}</h4>
+                        <p className="text-xs text-sireiq-light/50">{doc.date}</p>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
+              </TabsContent>
+              
+              <TabsContent value="activity" className="space-y-6">
+                <SecurityHealthCard />
+                <div className="glass-effect rounded-xl p-6 border border-sireiq-accent/30">
+                  <h3 className="text-xl font-bold mb-4">Security Alerts</h3>
+                  <div className="space-y-4">
+                    {[
+                      { title: "System update scheduled", message: "Security patches will be applied on May 15", severity: "info" },
+                      { title: "New login location detected", message: "If this wasn't you, contact support immediately", severity: "warning" },
+                      { title: "Data backup completed", message: "Automatic backup completed successfully", severity: "success" }
+                    ].map((alert, i) => (
+                      <div 
+                        key={i} 
+                        className={`p-4 rounded-md ${
+                          alert.severity === 'warning' ? 'bg-yellow-500/10 border border-yellow-500/30' : 
+                          alert.severity === 'info' ? 'bg-blue-500/10 border border-blue-500/30' : 
+                          'bg-green-500/10 border border-green-500/30'
+                        }`}
+                      >
+                        <h4 className="font-medium mb-1">{alert.title}</h4>
+                        <p className="text-sm text-sireiq-light/70">{alert.message}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 w-full border-sireiq-accent/30 hover:bg-sireiq-accent/10"
+                    onClick={() => toast.info("Security alert settings opened")}
+                  >
+                    Configure Alert Settings
+                  </Button>
+                </div>
+              </TabsContent>
             </div>
-            
+          </Tabs>
+        </section>
+        
+        {/* Features grid */}
+        <section className="container mx-auto px-4 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 <span className="text-gradient">Enterprise-Grade</span> Protection
@@ -152,8 +223,8 @@ const EnterpriseSecurity = () => {
                   "Detailed security audit logs",
                   "Customer-managed encryption keys"
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="h-6 w-6 text-sireiq-cyan mr-3 flex-shrink-0" />
+                  <li key={index} className="flex items-start group">
+                    <Check className="h-6 w-6 text-sireiq-cyan mr-3 flex-shrink-0 group-hover:scale-110 transition-transform" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -165,6 +236,42 @@ const EnterpriseSecurity = () => {
               >
                 Request Security Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
+            </div>
+            
+            <div className="glass-effect rounded-2xl p-8 border border-sireiq-accent/30 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-sireiq-cyan/20 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-28 h-28 bg-sireiq-cyan/10 rounded-full blur-3xl"></div>
+              
+              <h3 className="text-xl font-bold mb-6 flex items-center">
+                <Shield className="h-5 w-5 text-sireiq-cyan mr-2" />
+                Enterprise Security Features
+              </h3>
+              
+              <div className="space-y-6">
+                {[
+                  {
+                    title: "Private Cloud Deployment",
+                    description: "Dedicated infrastructure isolated from other clients with enhanced security measures."
+                  },
+                  {
+                    title: "Advanced Data Protection",
+                    description: "Multiple encryption layers with customer-managed keys for maximum data security."
+                  },
+                  {
+                    title: "Continuous Monitoring",
+                    description: "24/7 security monitoring with automated threat detection and response."
+                  },
+                  {
+                    title: "Custom Security Policies",
+                    description: "Tailor security controls to match your organization's specific requirements."
+                  }
+                ].map((feature, i) => (
+                  <div key={i} className="p-4 border border-sireiq-accent/20 rounded-lg hover:bg-sireiq-accent/5 transition-colors cursor-pointer" onClick={() => toast.info(feature.title, { description: feature.description })}>
+                    <h4 className="font-bold mb-1">{feature.title}</h4>
+                    <p className="text-sm text-sireiq-light/70">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -199,7 +306,11 @@ const EnterpriseSecurity = () => {
                   description: "Appropriate safeguards for educational institutions working with student data and records."
                 }
               ].map((item, index) => (
-                <div key={index} className="bg-sireiq-darker rounded-lg p-4 border border-sireiq-accent/20">
+                <div 
+                  key={index} 
+                  className="bg-sireiq-darker rounded-lg p-4 border border-sireiq-accent/20 hover:border-sireiq-cyan/30 hover:bg-sireiq-accent/5 transition-all cursor-pointer"
+                  onClick={() => toast.info(`${item.regulation} Compliance Details`, { description: item.description })}
+                >
                   <h3 className="font-bold mb-2">{item.regulation}</h3>
                   <p className="text-sm text-sireiq-light/70">{item.description}</p>
                 </div>
