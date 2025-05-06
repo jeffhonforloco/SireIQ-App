@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon, Layers, Settings } from 'lucide-react';
+import { HomeIcon, Layers, Settings, Mic } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 
 const MobileBottomNav = () => {
@@ -32,6 +32,14 @@ const MobileBottomNav = () => {
         >
           <Layers size={24} />
           <span className="text-xs mt-1">Features</span>
+        </Link>
+        
+        <Link 
+          to="/features/voice-assistant" 
+          className={`flex flex-col items-center justify-center p-2 ${isActive('/features/voice-assistant') ? 'text-sireiq-cyan' : 'text-sireiq-light'}`}
+        >
+          <Mic size={24} />
+          <span className="text-xs mt-1">Voice</span>
         </Link>
         
         <Link 

@@ -1,97 +1,193 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import FeaturesSection from '@/components/FeaturesSection';
+import { Link } from 'react-router-dom';
+import { Rocket, BarChart4, BookOpen, Code, Image, LayoutDashboard, Lightbulb, MessagesSquare, Search } from 'lucide-react';
+import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Check } from 'lucide-react';
+// Add this import
+import { Mic } from 'lucide-react';
 
 const Features = () => {
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
-        <title>SireIQ Features | Intelligent Tools for Smarter App Development</title>
-        <meta name="description" content="Explore SireIQ's AI-powered features including persistent memory, real-time collaboration, creative workflows, and more—designed for creators and builders." />
+        <title>Features | SireIQ</title>
+        <meta name="description" content="Explore the powerful AI features offered by SireIQ to enhance your business and creativity." />
       </Helmet>
       
-      {/* Particle effect background */}
       <ParticleBackground />
       
-      {/* Navigation */}
       <Navbar />
       
-      {/* Hero section for the features page */}
-      <section className="pt-32 pb-10">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-5xl font-bold mb-6">
-              <span className="text-gradient glow">Powerful Features</span> for Creative Excellence
+      <main className="pt-32 pb-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              Powerful <span className="text-gradient glow">AI Features</span> for Your Business
             </h1>
-            <p className="text-xl text-sireiq-light/70 max-w-2xl mx-auto mb-8">
-              Discover all the tools and capabilities that make SireIQ the leading platform for AI-powered content creation.
+            <p className="text-xl md:text-2xl text-sireiq-light/70 max-w-3xl mx-auto">
+              Explore our full suite of AI-powered tools and features designed to transform your workflow.
             </p>
           </div>
-        </div>
-      </section>
-      
-      {/* Include the main features section */}
-      <FeaturesSection />
-      
-      {/* Additional features sections */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-6">
-                <span className="text-gradient">Advanced AI Generation</span>
-              </h2>
-              <p className="text-lg text-sireiq-light/70 mb-8">
-                Our state-of-the-art neural networks create content with unprecedented quality and creativity, adapting to your specific needs and preferences.
-              </p>
-              
-              <ul className="space-y-4">
-                {["Multi-modal content generation", "Style transfer across formats", "Semantic understanding", "Context-aware responses"].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="h-6 w-6 text-sireiq-cyan mr-3 flex-shrink-0" />
-                    <span className="text-lg">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <Link to="/features/real-time-collaboration">
-                <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 mt-8 h-auto">
-                  Try Collaboration Features <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="glass-effect rounded-2xl p-6 border border-sireiq-accent/30">
-              <div className="aspect-video rounded-lg bg-sireiq-darker mb-4 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-sireiq-cyan/30 to-sireiq-accent/10 flex items-center justify-center">
-                  <img 
-                    src="/lovable-uploads/c3e0c182-65f5-4612-a523-35da753a98a4.png" 
-                    alt="AI Generation Visualization" 
-                    className="w-24 h-24 opacity-90" 
-                  />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Feature Card: Idea Generation */}
+            <Link to="/features/idea-generation" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Lightbulb className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Idea Generation</h3>
                 </div>
+                <p className="text-sireiq-light/70">
+                  Overcome creative blocks with AI-assisted brainstorming that sparks innovative concepts.
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-2">Neural Network Visualization</h3>
-              <p className="text-sireiq-light/70">
-                Watch our AI in action as it processes and generates content tailored to your specifications.
-              </p>
-            </div>
+            </Link>
+            
+            {/* Feature Card: Personality Engine */}
+            <Link to="/features/personality-engine" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <MessagesSquare className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Personality Engine</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Create content with consistent tone, style, and voice that reflects your brand's unique personality.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: SEO Analyzer */}
+            <Link to="/features/seo-analyzer" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Search className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">SEO Analyzer</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Optimize your content for search engines with AI-driven insights and recommendations.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: Content Summarizer */}
+            <Link to="/features/content-summarizer" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <BookOpen className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Content Summarizer</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Quickly condense lengthy articles and documents into concise summaries for efficient information consumption.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: Code Generator */}
+            <Link to="/features/code-generator" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Code className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Code Generator</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Automate code creation with AI that understands your specifications and generates clean, functional code.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: Image Enhancer */}
+            <Link to="/features/image-enhancer" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Image className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Image Enhancer</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Improve the quality of your images with AI-powered enhancement tools that sharpen details and reduce noise.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: AI Assistant */}
+            <Link to="/features/ai-assistant" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Rocket className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">AI Assistant</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Your personal AI assistant is here to help you with any task.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: Data Analysis */}
+            <Link to="/features/data-analysis" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <BarChart4 className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Data Analysis</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Analyze your data with AI-powered insights and recommendations.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Feature Card: Dashboard */}
+            <Link to="/dashboard" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <LayoutDashboard className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Dashboard</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Track your progress and manage your AI-powered tools.
+                </p>
+              </div>
+            </Link>
+            
+            {/* Add Voice Assistant feature card */}
+            <Link to="/features/voice-assistant" className="group">
+              <div className="glass-effect border border-sireiq-accent/30 hover:border-sireiq-cyan/50 rounded-xl p-6 transition-all h-full">
+                <div className="flex items-center mb-4">
+                  <div className="rounded-full p-2 bg-sireiq-cyan/20 mr-3">
+                    <Mic className="h-6 w-6 text-sireiq-cyan" />
+                  </div>
+                  <h3 className="text-xl font-bold">Voice Assistant</h3>
+                </div>
+                <p className="text-sireiq-light/70">
+                  Interact naturally with SireIQ through voice commands. Ask questions, get insights, and accomplish tasks using just your voice.
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
-      </section>
+      </main>
       
-      {/* Call to action section */}
       <CTASection />
       
-      {/* Footer */}
       <Footer />
     </div>
   );
