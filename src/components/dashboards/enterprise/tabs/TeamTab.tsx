@@ -1,12 +1,10 @@
 
 import React, { useState } from 'react';
 import { toast } from '@/components/ui/sonner';
-import TeamManagementDialog, { TeamMember } from '../TeamManagementDialog';
-import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
-import TeamMembersCard from './team/TeamMembersCard';
-import TeamPermissionsCard from './team/TeamPermissionsCard';
-import ActiveSessionsCard from './team/ActiveSessionsCard';
-import PermissionsSheet from './team/PermissionsSheet';
+import { TeamMember } from '../TeamManagementDialog';
+import TeamMembersSection from './team/TeamMembersSection';
+import TeamPermissionsSection from './team/TeamPermissionsSection';
+import ActiveSessionsSection from './team/ActiveSessionsSection';
 
 const TeamTab = () => {
   // Team members state
@@ -23,13 +21,6 @@ const TeamTab = () => {
     { user: 'Maria Garcia', device: 'Windows PC', location: 'Austin, US', time: '45 minutes' },
     { user: 'David Kim', device: 'iPhone 16', location: 'New York, US', time: '30 minutes' }
   ];
-
-  // Dialog states
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedMember, setSelectedMember] = useState<TeamMember | undefined>(undefined);
-  const [isPermissionsSheetOpen, setIsPermissionsSheetOpen] = useState(false);
 
   // Add a new team member
   const handleAddMember = (memberData: Omit<TeamMember, 'id' | 'lastActive' | 'status'>) => {
@@ -59,73 +50,26 @@ const TeamTab = () => {
     
     setTeamMembers(teamMembers.filter(member => member.id !== selectedMember.id));
     toast.success('Team member removed successfully');
-    setIsDeleteDialogOpen(false);
-    setSelectedMember(undefined);
   };
 
-  // Select a member for editing
-  const handleSelectForEdit = (member: TeamMember) => {
-    setSelectedMember(member);
-    setIsEditDialogOpen(true);
-  };
+  // Selected member and dialog states
+  const [selectedMember, setSelectedMember] = useState<TeamMember | undefined>(undefined);
 
-  // Select a member for deletion
-  const handleSelectForDelete = (member: TeamMember) => {
-    setSelectedMember(member);
-    setIsDeleteDialogOpen(true);
-  };
-  
   return (
     <>
-      <TeamMembersCard 
+      <TeamMembersSection 
         teamMembers={teamMembers}
-        onAddMember={() => setIsAddDialogOpen(true)}
-        onEditMember={handleSelectForEdit}
-        onDeleteMember={handleSelectForDelete}
+        selectedMember={selectedMember}
+        setSelectedMember={setSelectedMember}
+        onAddMember={handleAddMember}
+        onUpdateMember={handleUpdateMember}
+        onDeleteMember={handleDeleteMember}
       />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <TeamPermissionsCard onOpenPermissionsSheet={() => setIsPermissionsSheetOpen(true)} />
-        <ActiveSessionsCard sessions={activeSessions} />
+        <TeamPermissionsSection />
+        <ActiveSessionsSection sessions={activeSessions} />
       </div>
-
-      {/* Add Member Dialog */}
-      <TeamManagementDialog 
-        isOpen={isAddDialogOpen}
-        onClose={() => setIsAddDialogOpen(false)}
-        onSave={handleAddMember}
-        mode="add"
-      />
-      
-      {/* Edit Member Dialog */}
-      <TeamManagementDialog 
-        isOpen={isEditDialogOpen}
-        onClose={() => {
-          setIsEditDialogOpen(false);
-          setSelectedMember(undefined);
-        }}
-        member={selectedMember}
-        onSave={handleUpdateMember}
-        mode="edit"
-      />
-      
-      {/* Delete Confirmation Dialog */}
-      <DeleteConfirmationDialog 
-        isOpen={isDeleteDialogOpen}
-        onClose={() => {
-          setIsDeleteDialogOpen(false);
-          setSelectedMember(undefined);
-        }}
-        onConfirm={handleDeleteMember}
-        title="Remove Team Member"
-        description={`Are you sure you want to remove ${selectedMember?.name} from the team? This action cannot be undone.`}
-      />
-      
-      {/* Permissions Sheet */}
-      <PermissionsSheet 
-        isOpen={isPermissionsSheetOpen}
-        onOpenChange={setIsPermissionsSheetOpen}
-      />
     </>
   );
 };
