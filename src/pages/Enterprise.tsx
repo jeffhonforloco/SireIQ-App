@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
@@ -9,8 +9,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ShieldCheck, Users, Lock, Workflow, Server, Database, Globe, BarChart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DemoRequestModal from '@/components/enterprise/DemoRequestModal';
 
 const Enterprise = () => {
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+  
   const solutions = [
     {
       icon: Users,
@@ -83,6 +86,12 @@ const Enterprise = () => {
               <p className="text-xl text-sireiq-light/70 max-w-2xl mx-auto">
                 Scale creative excellence across your organization with SireIQ's enterprise-grade AI platform designed for large teams and complex workflows.
               </p>
+              <Button 
+                className="mt-8 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto"
+                onClick={() => setDemoModalOpen(true)}
+              >
+                Request Enterprise Demo
+              </Button>
             </div>
           </div>
         </section>
@@ -139,7 +148,10 @@ const Enterprise = () => {
                   </div>
                 </div>
                 
-                <Button className="mt-8 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto">
+                <Button 
+                  className="mt-8 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto"
+                  onClick={() => setDemoModalOpen(true)}
+                >
                   Request Enterprise Demo
                 </Button>
               </div>
@@ -176,6 +188,9 @@ const Enterprise = () => {
       </main>
       
       <Footer />
+      
+      {/* Demo Request Modal */}
+      <DemoRequestModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
     </div>
   );
 };

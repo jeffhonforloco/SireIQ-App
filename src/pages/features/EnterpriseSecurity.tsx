@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -7,8 +7,11 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Lock, Check, Shield, Key } from 'lucide-react';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
+import DemoRequestModal from '@/components/enterprise/DemoRequestModal';
 
 const EnterpriseSecurity = () => {
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
@@ -156,8 +159,11 @@ const EnterpriseSecurity = () => {
                 ))}
               </ul>
               
-              <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
-                Security Whitepaper <ArrowRight className="ml-2 h-4 w-4" />
+              <Button 
+                className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
+                onClick={() => setDemoModalOpen(true)}
+              >
+                Request Security Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -206,6 +212,9 @@ const EnterpriseSecurity = () => {
       <CTASection />
       
       <Footer />
+      
+      {/* Demo Request Modal */}
+      <DemoRequestModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
     </div>
   );
 };
