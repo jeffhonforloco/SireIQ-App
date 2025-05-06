@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail, CheckCircle, Info } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 import { toast } from '@/components/ui/sonner';
 import { 
@@ -14,6 +14,9 @@ import {
   InputOTPSlot 
 } from "@/components/ui/input-otp";
 import { Input } from '@/components/ui/input';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const GetStarted = () => {
   const [fullName, setFullName] = useState('');
@@ -24,6 +27,7 @@ const GetStarted = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
   const navigate = useNavigate();
+  const demoCode = '123456'; // Fixed demo code for easier testing
 
   const handleCreateAccount = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,12 +62,11 @@ const GetStarted = () => {
     setStep(2);
     
     // In a real app, this would send an actual verification code via email
-    console.log("Verification code for demo: 123456");
+    console.log(`Verification code for demo: ${demoCode}`);
   };
 
   const handleVerifyEmail = () => {
-    // In a real app, this would verify the code against a stored value
-    // For demo, we'll accept any 6-digit code
+    // For demo purposes, we accept either the demo code or any 6-digit code
     if (verificationCode.length !== 6) {
       toast.error("Please enter a valid 6-digit code");
       return;
@@ -80,6 +83,11 @@ const GetStarted = () => {
   const handleResendCode = () => {
     // In a real app, this would resend the verification code
     toast.success("Verification code resent to your email!");
+  };
+
+  const handleUseDemoCode = () => {
+    setVerificationCode(demoCode);
+    toast.success("Demo code applied!");
   };
 
   return (
@@ -102,14 +110,19 @@ const GetStarted = () => {
           </p>
           
           <div className="max-w-md mx-auto">
-            <div className="bg-sireiq-darker p-8 rounded-lg border border-sireiq-accent/20">
-              {step === 1 && (
-                <>
-                  <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
-                  <p className="mb-6 text-sireiq-light/80">
-                    Sign up for free and start exploring SireIQ's AI-powered tools and creative workflows.
-                    You can upgrade to Developer or Enterprise plans later.
-                  </p>
+            <Card className="bg-sireiq-darker border border-sireiq-accent/20">
+              <CardHeader className={step === 2 ? "pb-2" : "pb-6"}>
+                <CardTitle>{step === 1 ? "Create an Account" : "Verify Your Email"}</CardTitle>
+                <CardDescription className="text-sireiq-light/80">
+                  {step === 1 
+                    ? "Sign up for free and start exploring SireIQ's AI-powered tools and creative workflows."
+                    : `We've sent a verification code to ${email}.`
+                  }
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                {step === 1 && (
                   <form className="space-y-4" onSubmit={handleCreateAccount}>
                     <div>
                       <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name</label>
@@ -160,22 +173,23 @@ const GetStarted = () => {
                       Create Free Account
                     </Button>
                   </form>
-                </>
-              )}
+                )}
 
-              {step === 2 && (
-                <>
-                  <div className="text-center">
-                    <div className="flex justify-center mb-4">
+                {step === 2 && (
+                  <>
+                    <Alert className="mb-6 bg-sireiq-dark/70 border-sireiq-accent">
+                      <Info className="h-5 w-5 text-sireiq-cyan" />
+                      <AlertTitle className="text-sireiq-cyan">DEMO MODE</AlertTitle>
+                      <AlertDescription className="text-sireiq-light/90">
+                        Use the verification code <Badge variant="outline" className="font-mono text-sireiq-cyan border-sireiq-cyan">{demoCode}</Badge> or any 6-digit number to proceed.
+                      </AlertDescription>
+                    </Alert>
+
+                    <div className="flex items-center justify-center mb-4">
                       <Mail className="h-12 w-12 text-sireiq-cyan" />
                     </div>
-                    <h2 className="text-2xl font-bold mb-2">Verify Your Email</h2>
-                    <p className="mb-6 text-sireiq-light/80">
-                      We've sent a verification code to <span className="text-sireiq-cyan">{email}</span>. 
-                      Please enter the 6-digit code to complete your registration.
-                    </p>
                     
-                    <div className="my-8">
+                    <div className="mb-6">
                       <InputOTP 
                         value={verificationCode} 
                         onChange={setVerificationCode}
@@ -193,30 +207,37 @@ const GetStarted = () => {
                       </InputOTP>
                     </div>
                     
-                    <Button 
-                      onClick={handleVerifyEmail}
-                      className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] mb-4"
-                    >
-                      Verify Email & Continue
-                    </Button>
-                    
-                    <p className="text-sm text-sireiq-light/70">
-                      Didn't receive the code?{" "}
-                      <button 
-                        onClick={handleResendCode}
-                        className="text-sireiq-cyan hover:underline"
+                    <div className="flex flex-col space-y-3">
+                      <Button 
+                        onClick={handleVerifyEmail}
+                        className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]"
                       >
-                        Resend
-                      </button>
-                    </p>
-                    
-                    <p className="text-xs mt-4 text-sireiq-light/50">
-                      For demo purposes, you can enter any 6-digit code to proceed.
-                    </p>
-                  </div>
-                </>
+                        <CheckCircle className="mr-1" /> Verify Email & Continue
+                      </Button>
+                      
+                      <Button
+                        onClick={handleUseDemoCode}
+                        variant="outline"
+                        className="w-full border-sireiq-accent/30 hover:bg-sireiq-dark/50"
+                      >
+                        Use Demo Code
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </CardContent>
+
+              {step === 2 && (
+                <CardFooter className="flex justify-center pt-2 border-t border-sireiq-accent/10">
+                  <button 
+                    onClick={handleResendCode}
+                    className="text-sm text-sireiq-cyan hover:underline"
+                  >
+                    Resend verification code
+                  </button>
+                </CardFooter>
               )}
-            </div>
+            </Card>
           </div>
         </div>
       </main>
