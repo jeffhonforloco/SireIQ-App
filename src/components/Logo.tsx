@@ -23,7 +23,7 @@ const Logo: React.FC<LogoProps> = ({ className = '', size = 'md', showText = tru
   return (
     <div className={`flex items-center ${className}`}>
       <img 
-        src="/lovable-uploads/207b3383-58aa-491c-8000-d56fca868602.png" 
+        src="/lovable-uploads/632c4f0b-ba29-449a-b90e-7f8516581db2.png" 
         alt="SireIQ Logo" 
         className={sizeClasses[size]} 
       />
