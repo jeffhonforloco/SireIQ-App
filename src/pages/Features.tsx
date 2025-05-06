@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -61,9 +62,11 @@ const Features = () => {
                 ))}
               </ul>
               
-              <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 mt-8 h-auto">
-                Try Advanced AI <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/features/real-time-collaboration">
+                <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 mt-8 h-auto">
+                  Try Collaboration Features <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
             </div>
             
             <div className="glass-effect rounded-2xl p-6 border border-sireiq-accent/30">
