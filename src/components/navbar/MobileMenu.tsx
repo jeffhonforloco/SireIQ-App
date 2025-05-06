@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/Logo';
 import AuthButtons from './MobileAuthButtons';
@@ -14,6 +14,8 @@ interface MobileMenuProps {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) => {
   const location = useLocation();
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -46,41 +48,95 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
             >
               Home
             </Link>
-            <Link 
-              to="/features"
-              className={`py-3 px-4 rounded-md ${isActive('/features') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light'}`}
-              onClick={() => setIsSheetOpen(false)}
-            >
-              Features
-            </Link>
-            <Link 
-              to="/features/idea-generation"
-              className={`py-3 px-4 rounded-md ml-4 text-sm ${isActive('/features/idea-generation') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
-              onClick={() => setIsSheetOpen(false)}
-            >
-              Idea Generation
-            </Link>
-            <Link 
-              to="/features/personality-engine"
-              className={`py-3 px-4 rounded-md ml-4 text-sm ${isActive('/features/personality-engine') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
-              onClick={() => setIsSheetOpen(false)}
-            >
-              Personality Engine
-            </Link>
-            <Link 
-              to="/features/voice-assistant"
-              className={`py-3 px-4 rounded-md ml-4 text-sm ${isActive('/features/voice-assistant') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
-              onClick={() => setIsSheetOpen(false)}
-            >
-              Voice Assistant
-            </Link>
-            <Link 
-              to="/features/performance-analytics"
-              className={`py-3 px-4 rounded-md ml-4 text-sm ${isActive('/features/performance-analytics') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
-              onClick={() => setIsSheetOpen(false)}
-            >
-              Performance Analytics
-            </Link>
+            
+            {/* Features Section with Collapsible Menu */}
+            <div className="rounded-md">
+              <button
+                onClick={() => setFeaturesOpen(!featuresOpen)}
+                className={`w-full flex justify-between items-center py-3 px-4 rounded-md ${location.pathname.startsWith('/features') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light'}`}
+              >
+                <span>Features</span>
+                {featuresOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+              </button>
+              
+              {featuresOpen && (
+                <div className="mt-1 space-y-1">
+                  <Link 
+                    to="/features"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    All Features
+                  </Link>
+                  <Link 
+                    to="/features/idea-generation"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/idea-generation') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Idea Generation
+                  </Link>
+                  <Link 
+                    to="/features/personality-engine"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/personality-engine') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Personality Engine
+                  </Link>
+                  <Link 
+                    to="/features/voice-assistant"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/voice-assistant') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Voice Assistant
+                  </Link>
+                  <Link 
+                    to="/features/performance-analytics"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/performance-analytics') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Performance Analytics
+                  </Link>
+                </div>
+              )}
+            </div>
+            
+            {/* Solutions Section with Collapsible Menu */}
+            <div className="rounded-md">
+              <button
+                onClick={() => setSolutionsOpen(!solutionsOpen)}
+                className={`w-full flex justify-between items-center py-3 px-4 rounded-md ${location.pathname.startsWith('/solutions') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light'}`}
+              >
+                <span>Solutions</span>
+                {solutionsOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+              </button>
+              
+              {solutionsOpen && (
+                <div className="mt-1 space-y-1">
+                  <Link 
+                    to="/features/idea-generation"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/idea-generation') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Idea Generation
+                  </Link>
+                  <Link 
+                    to="/features/personality-engine"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/personality-engine') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Personality Engine
+                  </Link>
+                  <Link 
+                    to="/features/voice-assistant"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/voice-assistant') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Voice Assistant
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link 
               to="/pricing"
               className={`py-3 px-4 rounded-md ${isActive('/pricing') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light'}`}
