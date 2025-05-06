@@ -1,30 +1,60 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Check } from 'lucide-react';
 import ChartPreviewCard from './ChartPreviewCard';
 
 const AnalyticsFeatureHighlight = () => {
+  const [monthlyData, setMonthlyData] = useState([
+    { name: 'Jan', value: 12 },
+    { name: 'Feb', value: 19 },
+    { name: 'Mar', value: 15 },
+    { name: 'Apr', value: 25 },
+  ]);
+  
+  const [trafficSourcesData, setTrafficSourcesData] = useState([
+    { name: "Organic Search", value: 42, color: "#33C3F0" },
+    { name: "Social Media", value: 28, color: "#8B5CF6" },
+    { name: "Direct", value: 18, color: "#D946EF" },
+    { name: "Referral", value: 12, color: "#F97316" },
+  ]);
+
+  // Simulate real-time data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Update monthly data with small random variations
+      setMonthlyData(prev => 
+        prev.map(item => ({
+          name: item.name,
+          value: Math.max(5, Math.min(35, item.value + Math.floor(Math.random() * 7) - 3))
+        }))
+      );
+      
+      // Slightly adjust traffic sources data
+      setTrafficSourcesData(prev => {
+        const newData = [...prev];
+        const randomIndex = Math.floor(Math.random() * newData.length);
+        const otherIndex = (randomIndex + 1) % newData.length;
+        
+        // Adjust values while keeping total at 100%
+        const change = Math.floor(Math.random() * 3) + 1;
+        if (newData[randomIndex].value > 10) {
+          newData[randomIndex].value -= change;
+          newData[otherIndex].value += change;
+        }
+        
+        return newData;
+      });
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   const dataVisualizationFeatures = [
     "Measure engagement across all channels", 
     "Track conversion metrics and attribute value", 
     "Identify content trends and audience preferences", 
     "Get AI-powered recommendations for optimization"
-  ];
-
-  const monthlyData = [
-    { name: 'Jan', value: 12 },
-    { name: 'Feb', value: 19 },
-    { name: 'Mar', value: 15 },
-    { name: 'Apr', value: 25 },
-  ];
-
-  const trafficSourcesData = [
-    { name: "Organic Search", value: 42, color: "#33C3F0" },
-    { name: "Social Media", value: 28, color: "#8B5CF6" },
-    { name: "Direct", value: 18, color: "#D946EF" },
-    { name: "Referral", value: 12, color: "#F97316" },
   ];
 
   return (
@@ -47,7 +77,7 @@ const AnalyticsFeatureHighlight = () => {
             ))}
           </ul>
           
-          <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
+          <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker animate-pulse">
             Explore Analytics <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
@@ -58,7 +88,7 @@ const AnalyticsFeatureHighlight = () => {
             icon="chart-bar"
             chartType="bar"
             data={monthlyData}
-            className="col-span-2"
+            className="col-span-2 hover:scale-[1.02] transition-transform"
           />
           
           <ChartPreviewCard 
@@ -66,6 +96,7 @@ const AnalyticsFeatureHighlight = () => {
             icon="chart-line"
             chartType="line"
             data={monthlyData}
+            className="hover:scale-[1.02] transition-transform"
           />
           
           <ChartPreviewCard 
@@ -73,6 +104,7 @@ const AnalyticsFeatureHighlight = () => {
             icon="chart-pie"
             chartType="pie"
             data={trafficSourcesData}
+            className="hover:scale-[1.02] transition-transform"
           />
         </div>
       </div>
