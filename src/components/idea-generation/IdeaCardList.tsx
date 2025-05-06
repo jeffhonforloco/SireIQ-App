@@ -32,19 +32,33 @@ const IdeaCardList = ({ ideas, isGenerating }: IdeaCardListProps) => {
 
   if (isGenerating) {
     return (
-      <div className="flex items-center justify-center py-10">
-        <div className="glass-effect rounded-full p-4 animate-pulse">
+      <div className="flex flex-col items-center justify-center py-10">
+        <div className="glass-effect rounded-full p-4 animate-pulse mb-4">
           <Sparkles className="h-8 w-8 text-sireiq-cyan" />
         </div>
+        <p className="text-sireiq-light/70 animate-pulse">Generating creative campaign ideas...</p>
       </div>
     );
   }
 
   // Show generated ideas if available, otherwise show sample ideas
   const displayIdeas = ideas.length > 0 ? ideas : sampleIdeas;
+  const hasGeneratedIdeas = ideas.length > 0;
 
   return (
     <div className="space-y-3">
+      {!hasGeneratedIdeas && (
+        <div className="mb-4 p-3 rounded-md bg-sireiq-accent/10 border border-sireiq-accent/20">
+          <p className="text-sireiq-light/70 text-sm italic">
+            These are example ideas. Enter a product or service above to generate custom campaign concepts.
+          </p>
+        </div>
+      )}
+      
+      {hasGeneratedIdeas && (
+        <h3 className="font-semibold text-sireiq-cyan mb-2">Generated Campaign Ideas:</h3>
+      )}
+      
       {displayIdeas.map((idea, index) => (
         <IdeaCard
           key={index}

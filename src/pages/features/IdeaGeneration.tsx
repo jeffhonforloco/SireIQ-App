@@ -25,30 +25,31 @@ const IdeaGeneration = () => {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const { toast } = useToast();
   
-  // Effect to clear ideas when product changes significantly
-  useEffect(() => {
-    if (ideas.length > 0) {
-      const timer = setTimeout(() => {}, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [ideas.length]);
-  
   const handleGenerateIdeas = async (product: string, industry: string, additionalContext: string) => {
     setIsGenerating(true);
     setIdeas([]); // Clear previous ideas
     
-    // Simulate API call with a delay
-    setTimeout(() => {
-      // Generate ideas based on the product and additional context
-      const generatedIdeas = generateCampaignIdeas(product, industry, additionalContext);
-      setIdeas(generatedIdeas);
+    try {
+      // Simulate API call with a delay
+      setTimeout(() => {
+        // Generate ideas based on the product and additional context
+        const generatedIdeas = generateCampaignIdeas(product, industry, additionalContext);
+        setIdeas(generatedIdeas);
+        setIsGenerating(false);
+        
+        toast({
+          title: "Ideas generated",
+          description: `Generated ${generatedIdeas.length} campaign ideas for ${product}`,
+        });
+      }, 1500);
+    } catch (error) {
       setIsGenerating(false);
-      
       toast({
-        title: "Ideas generated",
-        description: `Generated ${generatedIdeas.length} campaign ideas for ${product}`,
+        title: "Error generating ideas",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
       });
-    }, 1500);
+    }
   };
 
   return (
@@ -92,8 +93,8 @@ const IdeaGeneration = () => {
           </div>
         </section>
         
-        {/* Features section */}
-        <FeatureSection />
+        {/* Features section with visualizations */}
+        <FeatureSection ideas={ideas} />
         
         {/* Use Cases */}
         <UseCasesSection />

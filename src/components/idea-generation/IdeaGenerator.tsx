@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { Search, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react';
 
 interface IdeaGeneratorProps {
   onGenerateIdeas: (product: string, industry: string, additionalContext: string) => void;
@@ -31,45 +32,60 @@ const IdeaGenerator = ({ onGenerateIdeas, isGenerating }: IdeaGeneratorProps) =>
   };
 
   return (
-    <div className="mb-6">
-      <h3 className="text-xl font-bold mb-3">Campaign Idea Generator</h3>
-      <p className="text-sireiq-light/70 mb-4">Enter your product or service to generate campaign ideas</p>
+    <div className="mb-8">
+      <div className="flex items-center mb-3">
+        <div className="p-2 rounded-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 mr-3">
+          <Lightbulb className="h-5 w-5 text-sireiq-darker" />
+        </div>
+        <h3 className="text-xl font-bold">Campaign Idea Generator</h3>
+      </div>
       
-      <div className="flex gap-3 flex-col sm:flex-row mb-4">
+      <p className="text-sireiq-light/70 mb-5">Enter your product or service to generate campaign ideas tailored to your needs</p>
+      
+      <div className="relative mb-5">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <Search className="h-5 w-5 text-sireiq-light/50" />
+        </div>
         <Input 
           type="text" 
-          placeholder="e.g., Smart fitness tracker"
-          className="flex-1 bg-sireiq-darker border border-sireiq-accent/30 rounded-md px-4 py-2 text-sireiq-light"
+          placeholder="e.g., Smart fitness tracker, Organic coffee subscription, Online learning platform"
+          className="bg-sireiq-darker border border-sireiq-accent/30 rounded-md pl-10 py-6 text-sireiq-light"
           value={product}
           onChange={(e) => setProduct(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleGenerateIdeas()}
         />
+      </div>
+      
+      <div className="flex gap-3 flex-col sm:flex-row mb-5">
         <Button 
-          className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
+          className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker py-6"
           onClick={handleGenerateIdeas}
           disabled={isGenerating}
         >
           {isGenerating ? 'Generating...' : 'Generate Ideas'}
         </Button>
-      </div>
-      
-      <div className="mb-4">
+        
         <Button 
-          variant="link" 
-          className="text-sireiq-cyan p-0 h-auto"
+          variant="outline" 
+          className="border-sireiq-accent/30 text-sireiq-light flex items-center"
           onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
         >
-          {showAdvancedOptions ? 'Hide' : 'Show'} Advanced Options
+          Advanced Options
+          {showAdvancedOptions ? (
+            <ChevronUp className="ml-2 h-4 w-4" />
+          ) : (
+            <ChevronDown className="ml-2 h-4 w-4" />
+          )}
         </Button>
       </div>
       
       {showAdvancedOptions && (
-        <div className="space-y-4 animate-fade-in">
+        <div className="space-y-4 animate-fade-in p-4 bg-sireiq-accent/10 rounded-lg border border-sireiq-accent/20">
           <div>
-            <label className="block text-sm font-medium mb-1">Industry</label>
+            <label className="block text-sm font-medium mb-1 text-sireiq-light/70">Industry or Market</label>
             <Input
               type="text"
-              placeholder="e.g., Healthcare, Technology, Food"
+              placeholder="e.g., Healthcare, Technology, Food & Beverage"
               className="w-full bg-sireiq-darker border border-sireiq-accent/30 rounded-md px-4 py-2 text-sireiq-light"
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
@@ -77,9 +93,9 @@ const IdeaGenerator = ({ onGenerateIdeas, isGenerating }: IdeaGeneratorProps) =>
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-1">Additional Context</label>
+            <label className="block text-sm font-medium mb-1 text-sireiq-light/70">Additional Context or Constraints</label>
             <Textarea
-              placeholder="Add more details about your target audience, goals, etc."
+              placeholder="Add more details about your target audience, goals, budget constraints, etc."
               className="w-full bg-sireiq-darker border border-sireiq-accent/30 rounded-md px-4 py-2 text-sireiq-light"
               rows={3}
               value={additionalContext}
