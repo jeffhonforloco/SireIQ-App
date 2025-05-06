@@ -2,6 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface UserAvatarProps {
   name: string;
@@ -21,9 +22,9 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
   showStatus = true
 }) => {
   const sizeClasses = {
-    sm: 'w-6 h-6 text-xs',
-    md: 'w-8 h-8 text-sm',
-    lg: 'w-10 h-10 text-base'
+    sm: 'h-6 w-6 text-xs',
+    md: 'h-8 w-8 text-sm',
+    lg: 'h-10 w-10 text-base'
   };
 
   return (
@@ -31,12 +32,14 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="relative">
-            <div className={cn(
-              `rounded-full ${color} flex items-center justify-center font-medium border-2 border-sireiq-darker`,
+            <Avatar className={cn(
+              `border-2 border-sireiq-darker`,
               sizeClasses[size]
             )}>
-              {initial}
-            </div>
+              <AvatarFallback className={cn(color, "font-medium")}>
+                {initial}
+              </AvatarFallback>
+            </Avatar>
             {showStatus && (
               <div className={cn(
                 "absolute bottom-0 right-0 w-2 h-2 rounded-full border border-sireiq-darker",

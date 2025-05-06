@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useCollaboration } from '@/contexts/CollaborationContext';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, Save } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface CollaborativeDocumentProps {
   title: string;
@@ -15,18 +16,34 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
   content,
   lastEdit = '5 mins ago'
 }) => {
-  const { setSelectedContent, addComment } = useCollaboration();
+  const { setSelectedContent, addComment, currentUser } = useCollaboration();
   const [selectedText, setSelectedText] = useState('');
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [documentContent, setDocumentContent] = useState(content);
+  const [selection, setSelection] = useState<{ start: number, end: number } | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleSelection = () => {
-    const selection = window.getSelection();
-    if (selection && selection.toString()) {
-      setSelectedText(selection.toString());
-      setSelectedContent(selection.toString());
+    const windowSelection = window.getSelection();
+    if (windowSelection && windowSelection.toString()) {
+      const text = windowSelection.toString();
+      setSelectedText(text);
+      setSelectedContent(text);
+      
+      if (contentRef.current) {
+        // Calculate the selection range within the content
+        const range = windowSelection.getRangeAt(0);
+        const preSelectionRange = range.cloneRange();
+        preSelectionRange.selectNodeContents(contentRef.current);
+        preSelectionRange.setEnd(range.startContainer, range.startOffset);
+        const start = preSelectionRange.toString().length;
+        const end = start + text.length;
+        
+        setSelection({ start, end });
+      }
+      
       setShowCommentInput(true);
     }
   };
@@ -36,8 +53,54 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
       addComment(commentText);
       setCommentText('');
       setShowCommentInput(false);
+      setSelection(null);
     }
   };
+
+  const handleSaveChanges = () => {
+    setIsEditing(false);
+    toast({
+      title: "Changes saved",
+      description: `Document "${title}" has been updated.`
+    });
+    
+    // In a real app, this would send the changes to a backend
+    console.log(`Document ${title} saved with content: ${documentContent}`);
+  };
+
+  // Highlight the selected text when selection exists
+  const highlightSelectedText = () => {
+    if (!selection || isEditing) return documentContent;
+    
+    const before = documentContent.substring(0, selection.start);
+    const selected = documentContent.substring(selection.start, selection.end);
+    const after = documentContent.substring(selection.end);
+    
+    return (
+      <>
+        {before}
+        <mark className="bg-sireiq-accent/30 text-sireiq-light">{selected}</mark>
+        {after}
+      </>
+    );
+  };
+
+  // Clear selection when editing or when user clicks elsewhere
+  useEffect(() => {
+    if (isEditing) {
+      setSelection(null);
+      setShowCommentInput(false);
+    }
+    
+    const handleClickOutside = (e: MouseEvent) => {
+      if (contentRef.current && !contentRef.current.contains(e.target as Node) && !showCommentInput) {
+        setSelection(null);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isEditing, showCommentInput]);
 
   return (
     <div className="bg-sireiq-darker rounded-lg p-4 mb-4 border border-sireiq-accent/20">
@@ -66,18 +129,19 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
             <Button 
               size="sm" 
               className="text-xs bg-sireiq-cyan text-sireiq-darker"
-              onClick={() => setIsEditing(false)}
+              onClick={handleSaveChanges}
             >
-              Save Changes
+              <Save className="h-3 w-3 mr-1" /> Save Changes
             </Button>
           </div>
         </div>
       ) : (
         <div 
+          ref={contentRef}
           className="text-sireiq-light/80 p-2 rounded-md bg-sireiq-dark/50 mb-4 min-h-[100px]"
           onMouseUp={handleSelection}
         >
-          {documentContent}
+          {selection ? highlightSelectedText() : documentContent}
         </div>
       )}
       
@@ -99,7 +163,10 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
               variant="outline" 
               size="sm" 
               className="text-xs mr-2"
-              onClick={() => setShowCommentInput(false)}
+              onClick={() => {
+                setShowCommentInput(false);
+                setSelection(null);
+              }}
             >
               Cancel
             </Button>

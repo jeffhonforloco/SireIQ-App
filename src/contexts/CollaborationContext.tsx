@@ -19,6 +19,16 @@ type Comment = {
   text: string;
   timestamp: Date;
   resolved: boolean;
+  replies?: Reply[];
+};
+
+type Reply = {
+  id: string;
+  userId: string;
+  userName: string;
+  userColor: string;
+  text: string;
+  timestamp: Date;
 };
 
 type CollaborationContextType = {
@@ -30,6 +40,7 @@ type CollaborationContextType = {
   resolveComment: (id: string) => void;
   setSelectedContent: (content: string | null) => void;
   currentUser: User;
+  addReplyToComment: (commentId: string, replyText: string) => void;
 };
 
 const MOCK_USERS: User[] = [
@@ -37,6 +48,8 @@ const MOCK_USERS: User[] = [
   { id: '2', name: 'Michael', avatar: 'M', color: 'bg-blue-500', isActive: true },
   { id: '3', name: 'Jamie', avatar: 'J', color: 'bg-amber-500', isActive: true },
   { id: '4', name: 'You', avatar: 'Y', color: 'bg-green-500', isActive: true },
+  { id: '5', name: 'Alex', avatar: 'A', color: 'bg-purple-500', isActive: false },
+  { id: '6', name: 'Taylor', avatar: 'T', color: 'bg-rose-500', isActive: true },
 ];
 
 const MOCK_COMMENTS: Comment[] = [
@@ -47,7 +60,8 @@ const MOCK_COMMENTS: Comment[] = [
     userColor: 'bg-pink-500', 
     text: "I've updated the introduction paragraph to better highlight our value proposition.", 
     timestamp: new Date(Date.now() - 120000), 
-    resolved: false 
+    resolved: false,
+    replies: []
   },
   { 
     id: '2', 
@@ -56,7 +70,8 @@ const MOCK_COMMENTS: Comment[] = [
     userColor: 'bg-blue-500', 
     text: 'Looks great! Could we also add something about our recent case study results?', 
     timestamp: new Date(Date.now() - 60000), 
-    resolved: false 
+    resolved: false,
+    replies: []
   }
 ];
 
@@ -69,7 +84,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
   const [selectedContent, setSelectedContent] = useState<string | null>(null);
   
   // Current user is always the last one in the list
-  const currentUser = users[users.length - 1];
+  const currentUser = users.find(user => user.name === 'You') || users[users.length - 1];
 
   // Filter active users
   const activeUsers = users.filter(user => user.isActive);
@@ -89,7 +104,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
     }, 30000); // Check every 30 seconds
     
     return () => clearInterval(interval);
-  }, []);
+  }, [currentUser.id]);
 
   const addComment = (text: string) => {
     if (!text.trim()) return;
@@ -102,6 +117,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
       text,
       timestamp: new Date(),
       resolved: false,
+      replies: []
     };
 
     setComments(prev => [...prev, newComment]);
@@ -123,6 +139,35 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const addReplyToComment = (commentId: string, replyText: string) => {
+    if (!replyText.trim()) return;
+
+    const newReply: Reply = {
+      id: Date.now().toString(),
+      userId: currentUser.id,
+      userName: currentUser.name,
+      userColor: currentUser.color,
+      text: replyText,
+      timestamp: new Date(),
+    };
+
+    setComments(prev => 
+      prev.map(comment => 
+        comment.id === commentId 
+          ? { 
+              ...comment, 
+              replies: [...(comment.replies || []), newReply] 
+            } 
+          : comment
+      )
+    );
+
+    toast({
+      title: "Reply added",
+      description: "Your reply has been added to the comment."
+    });
+  };
+
   return (
     <CollaborationContext.Provider
       value={{
@@ -134,6 +179,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
         resolveComment,
         setSelectedContent,
         currentUser,
+        addReplyToComment
       }}
     >
       {children}
