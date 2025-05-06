@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -60,7 +59,7 @@ const QuickPreferences = () => {
           
           <RadioGroup 
             value={preferences.aiModel}
-            onValueChange={(value) => setPreferences({ aiModel: value })}
+            onValueChange={(value) => setPreferences({ aiModel: value as AIModel })}
             className="flex flex-col space-y-2 ml-8"
           >
             <div className="flex items-center space-x-2">

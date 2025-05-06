@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HomeIcon, Layers, Settings, Mic, User } from 'lucide-react';
@@ -18,9 +17,8 @@ const MobileBottomNav = () => {
     // If RoleContext is not available, we'll just hide the bottom nav
   }
   
-  // Only show bottom nav when user is logged in (has a role) or for demo purposes
-  // For now, always show the bottom nav for demonstration
-  const showNav = true; // Previously: role !== null
+  // Only show bottom nav when user is logged in (has a role)
+  const showNav = role !== null;
   
   if (!showNav) return null;
   
