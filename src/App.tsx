@@ -19,30 +19,34 @@ import VoiceAssistant from './pages/features/VoiceAssistant';
 import { VoiceAssistantProvider } from './hooks/useVoiceAssistant';
 import NotFound from './pages/NotFound';
 import { PersonalityEngineProvider } from './contexts/PersonalityEngineContext';
+import MobileBottomNav from './components/MobileBottomNav';
 
 const App = () => {
   return (
     <BrowserRouter>
       <HelmetProvider>
         <ThemeProvider>
-          <Toaster />
+          <Toaster position="top-right" />
           <RoleProvider>
             <CollaborationProvider>
               <PersonalityEngineProvider>
                 <VoiceAssistantProvider>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/features" element={<Features />} />
-                    <Route path="/get-started" element={<GetStarted />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/enterprise" element={<EnterpriseDashboard />} />
-                    <Route path="/features/idea-generation" element={<IdeaGeneration />} />
-                    <Route path="/features/personality-engine" element={<PersonalityEngine />} />
-                    <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
+                  <div className="relative min-h-screen bg-sireiq-dark">
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/pricing" element={<Pricing />} />
+                      <Route path="/features" element={<Features />} />
+                      <Route path="/get-started" element={<GetStarted />} />
+                      <Route path="/signin" element={<SignIn />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/enterprise" element={<EnterpriseDashboard />} />
+                      <Route path="/features/idea-generation" element={<IdeaGeneration />} />
+                      <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+                      <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <MobileBottomNav />
+                  </div>
                 </VoiceAssistantProvider>
               </PersonalityEngineProvider>
             </CollaborationProvider>
