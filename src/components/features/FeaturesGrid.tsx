@@ -65,12 +65,6 @@ const FeaturesGrid: React.FC = () => {
       to: "/features/data-analysis"
     },
     {
-      title: "Dashboard",
-      description: "Track your progress and manage your AI-powered tools.",
-      icon: LayoutDashboard,
-      to: "/dashboard"
-    },
-    {
       title: "Voice Assistant",
       description: "Interact naturally with SireIQ through voice commands. Ask questions, get insights, and accomplish tasks using just your voice.",
       icon: Mic,
