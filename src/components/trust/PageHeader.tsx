@@ -3,7 +3,7 @@ import React from 'react';
 
 const PageHeader = () => {
   return (
-    <header className="text-center mb-16">
+    <header className="text-center mb-16 animate-fade-in">
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 mt-6">
         <span className="text-sireiq-light inline-block">Trust & </span>
         <span className="text-gradient inline-block">Compliance</span>
