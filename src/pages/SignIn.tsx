@@ -73,7 +73,7 @@ const SignIn = () => {
               <a href="#" className="text-sm text-sireiq-cyan hover:underline">Forgot password?</a>
             </div>
             
-            <Button type="submit" className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
+            <Button type="submit" className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]">
               Sign In
             </Button>
           </form>

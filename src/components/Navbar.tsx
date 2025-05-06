@@ -53,7 +53,7 @@ const Navbar = () => {
           {isAuthenticated ? (
             <Button 
               onClick={handleSignOut}
-              className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
+              className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
             >
               Sign Out
             </Button>
@@ -61,14 +61,14 @@ const Navbar = () => {
             <>
               <Link to="/signin">
                 <Button 
-                  className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
+                  className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
                 >
                   Sign In
                 </Button>
               </Link>
               
               <Link to="/get-started">
-                <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-2 h-auto">
+                <Button className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-2 h-auto">
                   Get Started
                 </Button>
               </Link>
@@ -93,7 +93,7 @@ const Navbar = () => {
                   {isAuthenticated ? (
                     <Button 
                       onClick={handleSignOut}
-                      className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center"
+                      className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center"
                     >
                       Sign Out
                     </Button>
@@ -101,14 +101,14 @@ const Navbar = () => {
                     <>
                       <Link to="/signin">
                         <Button 
-                          className="text-sireiq-cyan border border-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center w-full"
+                          className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center w-full"
                         >
                           Sign In
                         </Button>
                       </Link>
                       
                       <Link to="/get-started" className="w-full">
-                        <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-2 h-auto w-full">
+                        <Button className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-2 h-auto w-full">
                           Get Started
                         </Button>
                       </Link>

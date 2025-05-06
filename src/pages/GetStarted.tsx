@@ -91,7 +91,7 @@ const GetStarted = () => {
                     placeholder="Create Password"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
+                <Button type="submit" className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]">
                   Create Free Account
                 </Button>
               </form>
@@ -125,7 +125,7 @@ const GetStarted = () => {
               <Button 
                 onClick={handleScheduleDemo}
                 variant="outline" 
-                className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 mt-4"
+                className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 mt-4"
               >
                 Schedule a Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

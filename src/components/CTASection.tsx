@@ -57,7 +57,7 @@ const CTASection: React.FC = () => {
                 className="flex-1 px-4 py-3 rounded-lg bg-sireiq-darker/50 border border-sireiq-cyan/30 focus:border-sireiq-cyan focus:ring focus:ring-sireiq-cyan/20 focus:outline-none text-sireiq-light"
               />
               <Button 
-                className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 transition-opacity px-6"
+                className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-3 h-auto"
                 onClick={handleGetEarlyAccess}
               >
                 Get Early Access <ArrowRight className="ml-2 h-4 w-4" />

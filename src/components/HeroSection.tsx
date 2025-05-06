@@ -44,7 +44,7 @@ const HeroSection: React.FC = () => {
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Button 
-                className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6 py-3 h-auto"
+                className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-3 h-auto"
                 onClick={handleGetStarted}
               >
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
@@ -52,7 +52,7 @@ const HeroSection: React.FC = () => {
               
               <Button 
                 variant="outline" 
-                className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10 px-6 py-3 h-auto"
+                className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-3 h-auto"
                 onClick={handleBookDemo}
               >
                 Book a Demo
