@@ -29,7 +29,7 @@ const Logo: React.FC<LogoProps> = ({ className = '', size = 'md', showText = tru
       />
       {showText && (
         <span className={`ml-2 font-bold text-white ${textSizeClasses[size]}`}>
-          Assistant
+          SireIQ
         </span>
       )}
     </div>
