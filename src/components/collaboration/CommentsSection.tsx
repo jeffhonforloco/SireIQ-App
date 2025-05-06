@@ -6,10 +6,9 @@ import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 
 const CommentsSection: React.FC = () => {
-  const { comments } = useCollaboration();
+  const { comments, addComment } = useCollaboration();
   const [newComment, setNewComment] = useState('');
   const [showInput, setShowInput] = useState(false);
-  const { addComment } = useCollaboration();
   
   const handleAddComment = () => {
     if (newComment.trim()) {
@@ -40,6 +39,7 @@ const CommentsSection: React.FC = () => {
               text={comment.text}
               timestamp={comment.timestamp}
               resolved={comment.resolved}
+              replies={comment.replies}
             />
           ))
         )}

@@ -24,6 +24,7 @@ interface CommentCardProps {
   text: string;
   timestamp: Date;
   resolved: boolean;
+  replies?: ReplyType[];
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -33,27 +34,17 @@ const CommentCard: React.FC<CommentCardProps> = ({
   userColor,
   text,
   timestamp,
-  resolved
+  resolved,
+  replies = []
 }) => {
-  const { resolveComment } = useCollaboration();
+  const { resolveComment, addReplyToComment, currentUser } = useCollaboration();
   const [isReplying, setIsReplying] = useState(false);
   const [reply, setReply] = useState('');
-  const [replies, setReplies] = useState<ReplyType[]>([]);
 
   const handleReply = () => {
     if (isReplying && reply.trim()) {
       // Add the reply to the comment
-      const newReply: ReplyType = {
-        id: Date.now().toString(),
-        userId: 'current-user',
-        userName: 'You',
-        userAvatar: 'Y',
-        userColor: 'bg-green-500',
-        text: reply,
-        timestamp: new Date(),
-      };
-      
-      setReplies([...replies, newReply]);
+      addReplyToComment(id, reply);
       setReply('');
       setIsReplying(false);
     } else {

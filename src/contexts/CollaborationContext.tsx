@@ -11,24 +11,26 @@ type User = {
   isActive: boolean;
 };
 
-type Comment = {
-  id: string;
-  userId: string;
-  userName: string;
-  userColor: string;
-  text: string;
-  timestamp: Date;
-  resolved: boolean;
-  replies?: Reply[];
-};
-
 type Reply = {
   id: string;
   userId: string;
   userName: string;
+  userAvatar: string;
   userColor: string;
   text: string;
   timestamp: Date;
+};
+
+type Comment = {
+  id: string;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  userColor: string;
+  text: string;
+  timestamp: Date;
+  resolved: boolean;
+  replies: Reply[];
 };
 
 type CollaborationContextType = {
@@ -56,7 +58,8 @@ const MOCK_COMMENTS: Comment[] = [
   { 
     id: '1', 
     userId: '1', 
-    userName: 'Sarah', 
+    userName: 'Sarah',
+    userAvatar: 'S', 
     userColor: 'bg-pink-500', 
     text: "I've updated the introduction paragraph to better highlight our value proposition.", 
     timestamp: new Date(Date.now() - 120000), 
@@ -66,7 +69,8 @@ const MOCK_COMMENTS: Comment[] = [
   { 
     id: '2', 
     userId: '2', 
-    userName: 'Michael', 
+    userName: 'Michael',
+    userAvatar: 'M',
     userColor: 'bg-blue-500', 
     text: 'Looks great! Could we also add something about our recent case study results?', 
     timestamp: new Date(Date.now() - 60000), 
@@ -84,7 +88,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
   const [selectedContent, setSelectedContent] = useState<string | null>(null);
   
   // Current user is always the last one in the list
-  const currentUser = users.find(user => user.name === 'You') || users[users.length - 1];
+  const currentUser = users.find(user => user.name === 'You') || users[3];
 
   // Filter active users
   const activeUsers = users.filter(user => user.isActive);
@@ -113,6 +117,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
       id: Date.now().toString(),
       userId: currentUser.id,
       userName: currentUser.name,
+      userAvatar: currentUser.avatar,
       userColor: currentUser.color,
       text,
       timestamp: new Date(),
@@ -146,6 +151,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
       id: Date.now().toString(),
       userId: currentUser.id,
       userName: currentUser.name,
+      userAvatar: currentUser.avatar,
       userColor: currentUser.color,
       text: replyText,
       timestamp: new Date(),
@@ -156,7 +162,7 @@ export const CollaborationProvider: React.FC<{ children: React.ReactNode }> = ({
         comment.id === commentId 
           ? { 
               ...comment, 
-              replies: [...(comment.replies || []), newReply] 
+              replies: [...comment.replies, newReply] 
             } 
           : comment
       )

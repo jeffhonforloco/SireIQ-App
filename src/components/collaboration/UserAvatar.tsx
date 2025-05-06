@@ -27,28 +27,35 @@ const UserAvatar: React.FC<UserAvatarProps> = ({
     lg: 'h-10 w-10 text-base'
   };
 
+  const statusSizeClasses = {
+    sm: 'w-1.5 h-1.5',
+    md: 'w-2 h-2',
+    lg: 'w-2.5 h-2.5'
+  };
+
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
           <div className="relative">
             <Avatar className={cn(
               `border-2 border-sireiq-darker`,
               sizeClasses[size]
             )}>
-              <AvatarFallback className={cn(color, "font-medium")}>
+              <AvatarFallback className={cn(color, "font-medium text-sireiq-darker")}>
                 {initial}
               </AvatarFallback>
             </Avatar>
             {showStatus && (
               <div className={cn(
-                "absolute bottom-0 right-0 w-2 h-2 rounded-full border border-sireiq-darker",
+                "absolute bottom-0 right-0 rounded-full border border-sireiq-darker",
+                statusSizeClasses[size],
                 isActive ? "bg-green-500" : "bg-gray-400"
               )}></div>
             )}
           </div>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side="bottom" className="bg-sireiq-darker border-sireiq-accent/30 text-sireiq-light">
           <p>{name} {isActive ? '(online)' : '(away)'}</p>
         </TooltipContent>
       </Tooltip>

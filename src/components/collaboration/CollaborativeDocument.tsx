@@ -14,7 +14,7 @@ interface CollaborativeDocumentProps {
 const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({ 
   title, 
   content,
-  lastEdit = '5 mins ago'
+  lastEdit = 'just now'
 }) => {
   const { setSelectedContent, addComment, currentUser } = useCollaboration();
   const [selectedText, setSelectedText] = useState('');
@@ -27,7 +27,7 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
 
   const handleSelection = () => {
     const windowSelection = window.getSelection();
-    if (windowSelection && windowSelection.toString()) {
+    if (windowSelection && windowSelection.toString().trim() !== '') {
       const text = windowSelection.toString();
       setSelectedText(text);
       setSelectedContent(text);
@@ -54,6 +54,11 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
       setCommentText('');
       setShowCommentInput(false);
       setSelection(null);
+      
+      toast({
+        title: "Comment added",
+        description: "Your comment has been added to the document."
+      });
     }
   };
 
@@ -63,13 +68,10 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
       title: "Changes saved",
       description: `Document "${title}" has been updated.`
     });
-    
-    // In a real app, this would send the changes to a backend
-    console.log(`Document ${title} saved with content: ${documentContent}`);
   };
 
   // Highlight the selected text when selection exists
-  const highlightSelectedText = () => {
+  const renderContent = () => {
     if (!selection || isEditing) return documentContent;
     
     const before = documentContent.substring(0, selection.start);
@@ -93,7 +95,11 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
     }
     
     const handleClickOutside = (e: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(e.target as Node) && !showCommentInput) {
+      if (
+        contentRef.current && 
+        !contentRef.current.contains(e.target as Node) && 
+        !showCommentInput
+      ) {
         setSelection(null);
       }
     };
@@ -138,10 +144,10 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
       ) : (
         <div 
           ref={contentRef}
-          className="text-sireiq-light/80 p-2 rounded-md bg-sireiq-dark/50 mb-4 min-h-[100px]"
+          className="text-sireiq-light/80 p-2 rounded-md bg-sireiq-dark/50 mb-4 min-h-[100px] whitespace-pre-wrap"
           onMouseUp={handleSelection}
         >
-          {selection ? highlightSelectedText() : documentContent}
+          {renderContent()}
         </div>
       )}
       
@@ -149,7 +155,7 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
         <div className="mb-4 p-2 bg-sireiq-accent/10 rounded-md">
           <div className="flex items-center mb-2">
             <MessageCircle className="h-4 w-4 text-sireiq-cyan mr-2" />
-            <span className="text-sm">Add comment about: <i className="text-sireiq-cyan">"{selectedText}"</i></span>
+            <span className="text-sm">Comment on: <i className="text-sireiq-cyan">"{selectedText.length > 60 ? selectedText.substring(0, 60) + '...' : selectedText}"</i></span>
           </div>
           <textarea
             className="w-full p-2 bg-sireiq-dark border border-sireiq-accent/30 rounded-md text-sm"
@@ -157,6 +163,7 @@ const CollaborativeDocument: React.FC<CollaborativeDocumentProps> = ({
             rows={2}
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
+            autoFocus
           />
           <div className="flex justify-end mt-2">
             <Button 
