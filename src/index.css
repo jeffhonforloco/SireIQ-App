@@ -92,4 +92,42 @@
     mask-composite: exclude;
     pointer-events: none;
   }
+
+  /* New styles for the chat interface */
+  .chat-bubble-user {
+    @apply bg-sireiq-accent/30 rounded-2xl rounded-tr-sm;
+  }
+  
+  .chat-bubble-assistant {
+    @apply bg-gray-800 rounded-2xl rounded-tl-sm;
+  }
+  
+  .chat-input {
+    @apply bg-gray-800 border border-gray-700 rounded-full py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sireiq-accent;
+  }
+  
+  .action-button {
+    @apply flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-sm text-gray-200;
+  }
+  
+  .typing-indicator div {
+    @apply w-2 h-2 rounded-full bg-gray-400;
+  }
+  
+  .typing-indicator div:nth-child(1) {
+    animation: pulse 1s infinite;
+  }
+  
+  .typing-indicator div:nth-child(2) {
+    animation: pulse 1s infinite 0.2s;
+  }
+  
+  .typing-indicator div:nth-child(3) {
+    animation: pulse 1s infinite 0.4s;
+  }
+  
+  /* Dark theme specific styles */
+  .dark-theme {
+    @apply bg-black text-white;
+  }
 }
