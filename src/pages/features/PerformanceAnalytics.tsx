@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -7,6 +7,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, LineChart, Check, ChartBar, ChartPie } from 'lucide-react';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
+import PerformanceChart from '@/components/analytics/PerformanceChart';
+import MetricsPanel from '@/components/analytics/MetricsPanel';
+import RankedContentList from '@/components/analytics/RankedContentList';
+import TrafficSourcesPanel from '@/components/analytics/TrafficSourcesPanel';
 
 const PerformanceAnalytics = () => {
   // Sample data for charts
@@ -17,6 +21,30 @@ const PerformanceAnalytics = () => {
     { name: 'Apr', value: 25 },
     { name: 'May', value: 32 },
     { name: 'Jun', value: 29 },
+  ];
+  
+  // Metrics data
+  const metricsData = [
+    { label: "Engagement", value: "12,495", change: "+23%", isPositive: true },
+    { label: "Conversion Rate", value: "3.2%", change: "+0.5%", isPositive: true },
+    { label: "Avg. Session Time", value: "2:34", change: "-0:12", isPositive: false },
+  ];
+  
+  // Top content data
+  const topContentData = [
+    { title: "10 Ways to Boost Productivity", views: 3245, change: 1 },
+    { title: "Getting Started Guide", views: 2819, change: -1 },
+    { title: "Advanced Features Tutorial", views: 2103, change: 0 },
+    { title: "Content Strategy Masterclass", views: 1876, change: 1 },
+    { title: "AI for Beginners", views: 1654, change: 1 },
+  ];
+  
+  // Traffic sources data
+  const trafficSourcesData = [
+    { name: "Organic Search", value: 42, color: "#33C3F0" },
+    { name: "Social Media", value: 28, color: "#8B5CF6" },
+    { name: "Direct", value: 18, color: "#D946EF" },
+    { name: "Referral", value: 12, color: "#F97316" },
   ];
   
   return (
@@ -47,95 +75,13 @@ const PerformanceAnalytics = () => {
           
           <div className="flex justify-center">
             <div className="glass-effect rounded-2xl p-6 border border-sireiq-accent/30 max-w-4xl w-full">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold">Content Performance</h3>
-                <div className="flex gap-2">
-                  {["30 Days", "90 Days", "12 Months"].map((period, i) => (
-                    <Button 
-                      key={i} 
-                      variant={i === 0 ? "default" : "outline"} 
-                      size="sm"
-                      className={i === 0 ? "bg-sireiq-cyan text-sireiq-darker" : "border-sireiq-accent/30"}
-                    >
-                      {period}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+              <MetricsPanel initialMetrics={metricsData} />
               
-              <div className="bg-sireiq-darker rounded-lg p-4 mb-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  {[
-                    { label: "Engagement", value: "12,495", change: "+23%" },
-                    { label: "Conversion Rate", value: "3.2%", change: "+0.5%" },
-                    { label: "Avg. Session Time", value: "2:34", change: "+0:42" },
-                  ].map((metric, i) => (
-                    <div key={i} className="glass-effect rounded-lg p-3 border border-sireiq-accent/10">
-                      <p className="text-xs text-sireiq-light/50 mb-1">{metric.label}</p>
-                      <div className="flex justify-between items-baseline">
-                        <p className="text-xl font-bold">{metric.value}</p>
-                        <span className="text-xs font-medium text-green-400">{metric.change}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="h-40 relative">
-                  <div className="absolute inset-0 flex items-end">
-                    {monthlyData.map((item, i) => (
-                      <div key={i} className="flex-1 flex flex-col items-center">
-                        <div 
-                          className="w-5/6 bg-gradient-to-t from-sireiq-cyan to-sireiq-cyan2 rounded-t"
-                          style={{ height: `${item.value * 3}px` }}
-                        ></div>
-                        <p className="text-xs mt-2 text-sireiq-light/70">{item.name}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <PerformanceChart initialData={monthlyData} title="Content Performance" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-sireiq-darker rounded-lg p-4">
-                  <h4 className="text-sm font-medium mb-3">Top Performing Content</h4>
-                  <div className="space-y-2">
-                    {[
-                      { title: "10 Ways to Boost Productivity", views: "3,245" },
-                      { title: "Getting Started Guide", views: "2,819" },
-                      { title: "Advanced Features Tutorial", views: "2,103" },
-                    ].map((content, i) => (
-                      <div key={i} className="flex justify-between items-center">
-                        <p className="text-sm truncate">{content.title}</p>
-                        <p className="text-xs text-sireiq-light/70">{content.views}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="bg-sireiq-darker rounded-lg p-4">
-                  <h4 className="text-sm font-medium mb-3">Traffic Sources</h4>
-                  <div className="space-y-2">
-                    {[
-                      { source: "Organic Search", percentage: 42 },
-                      { source: "Social Media", percentage: 28 },
-                      { source: "Direct", percentage: 18 },
-                      { source: "Referral", percentage: 12 },
-                    ].map((source, i) => (
-                      <div key={i} className="space-y-1">
-                        <div className="flex justify-between text-xs">
-                          <span>{source.source}</span>
-                          <span>{source.percentage}%</span>
-                        </div>
-                        <div className="w-full h-1 bg-sireiq-accent/20 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2" 
-                            style={{ width: `${source.percentage}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <RankedContentList initialItems={topContentData} title="Top Performing Content" />
+                <TrafficSourcesPanel initialSources={trafficSourcesData} />
               </div>
             </div>
           </div>
@@ -178,9 +124,11 @@ const PerformanceAnalytics = () => {
                   <h3 className="font-bold">Content Performance</h3>
                 </div>
                 <div className="h-32 bg-sireiq-darker/50 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-sireiq-light/50">
-                    <p className="text-xs">Performance chart visualization</p>
-                  </div>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={monthlyData.slice(0, 4)}>
+                      <Bar dataKey="value" fill="#33C3F0" />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
               
@@ -190,9 +138,11 @@ const PerformanceAnalytics = () => {
                   <h3 className="font-bold">Trends</h3>
                 </div>
                 <div className="h-32 bg-sireiq-darker/50 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-sireiq-light/50">
-                    <p className="text-xs">Trend chart visualization</p>
-                  </div>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={monthlyData.slice(0, 4)}>
+                      <Line type="monotone" dataKey="value" stroke="#33C3F0" />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
               
@@ -202,9 +152,21 @@ const PerformanceAnalytics = () => {
                   <h3 className="font-bold">Distribution</h3>
                 </div>
                 <div className="h-32 bg-sireiq-darker/50 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-sireiq-light/50">
-                    <p className="text-xs">Distribution chart visualization</p>
-                  </div>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={trafficSourcesData}
+                        dataKey="value"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={40}
+                      >
+                        {trafficSourcesData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
@@ -232,7 +194,10 @@ const PerformanceAnalytics = () => {
                 description: "Measure the effectiveness of campaigns with comprehensive performance metrics."
               }
             ].map((report, index) => (
-              <div key={index} className="glass-effect rounded-lg p-6 border border-sireiq-accent/20">
+              <div 
+                key={index} 
+                className="glass-effect rounded-lg p-6 border border-sireiq-accent/20 transition-all hover:border-sireiq-cyan/30 hover:translate-y-[-5px]"
+              >
                 <h3 className="text-xl font-bold mb-3">{report.title}</h3>
                 <p className="text-sireiq-light/70">{report.description}</p>
               </div>
