@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="w-full flex items-center justify-between px-0">
         {/* Logo - Moved all the way to the left edge */}
         <Link to="/" className="flex items-center pl-4 md:pl-6">
-          <Logo className="mr-0" />
+          <Logo className="mr-0" showText={!isMobile} />
         </Link>
         
         {/* Desktop Navigation - Centered */}
