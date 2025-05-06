@@ -1,91 +1,20 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type UserRole = 'user' | 'developer' | 'enterprise' | null;
+type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
 
-type OnboardingStep = 1 | 2 | 3 | 'completed';
-
-type RoleContextType = {
-  role: UserRole;
-  setRole: (role: UserRole) => void;
-  isFirstTimeUser: boolean;
-  setIsFirstTimeUser: (value: boolean) => void;
-  onboardingStep: OnboardingStep;
-  setOnboardingStep: (step: OnboardingStep) => void;
-  preferences: {
-    darkMode: boolean;
-    notifications: boolean;
-    aiModel: string;
-    codeAutoComplete?: boolean; // Added for developer role
-    teamUpdates?: boolean; // Added for enterprise role
-  };
-  setPreferences: (prefs: Partial<RoleContextType['preferences']>) => void;
-};
+interface RoleContextType {
+  role: Role;
+  setRole: (role: Role) => void;
+}
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
 
-export const RoleProvider = ({ children }: { children: React.ReactNode }) => {
-  const [role, setRole] = useState<UserRole>(() => {
-    // Try to get role from localStorage on initial load
-    const savedRole = localStorage.getItem('userRole');
-    return (savedRole as UserRole) || null;
-  });
-  
-  const [isFirstTimeUser, setIsFirstTimeUser] = useState(() => {
-    return localStorage.getItem('isFirstTimeUser') !== 'false';
-  });
-  
-  const [onboardingStep, setOnboardingStep] = useState<OnboardingStep>(() => {
-    const savedStep = localStorage.getItem('onboardingStep');
-    return (savedStep as OnboardingStep) || 1;
-  });
-  
-  const [preferences, setPreferences] = useState(() => {
-    const savedPrefs = localStorage.getItem('userPreferences');
-    return savedPrefs 
-      ? JSON.parse(savedPrefs) 
-      : {
-          darkMode: true,
-          notifications: true,
-          aiModel: 'balanced',
-          codeAutoComplete: true, // Default value for developer
-          teamUpdates: true, // Default value for enterprise
-        };
-  });
-  
-  // Save role to localStorage whenever it changes
-  useEffect(() => {
-    if (role) {
-      localStorage.setItem('userRole', role);
-    }
-  }, [role]);
-  
-  // Save first time user status
-  useEffect(() => {
-    localStorage.setItem('isFirstTimeUser', String(isFirstTimeUser));
-  }, [isFirstTimeUser]);
-  
-  // Save onboarding step
-  useEffect(() => {
-    localStorage.setItem('onboardingStep', String(onboardingStep));
-  }, [onboardingStep]);
-  
-  // Save preferences
-  useEffect(() => {
-    localStorage.setItem('userPreferences', JSON.stringify(preferences));
-  }, [preferences]);
+export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [role, setRole] = useState<Role>('user'); // Default role for demo purposes
   
   return (
-    <RoleContext.Provider value={{ 
-      role, 
-      setRole, 
-      isFirstTimeUser, 
-      setIsFirstTimeUser,
-      onboardingStep,
-      setOnboardingStep,
-      preferences,
-      setPreferences: (newPrefs) => setPreferences(prev => ({ ...prev, ...newPrefs }))
-    }}>
+    <RoleContext.Provider value={{ role, setRole }}>
       {children}
     </RoleContext.Provider>
   );

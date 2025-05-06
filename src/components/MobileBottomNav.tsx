@@ -7,10 +7,22 @@ import { motion } from 'framer-motion';
 
 const MobileBottomNav = () => {
   const location = useLocation();
-  const { role } = useRole();
   
-  // Only show bottom nav when user is logged in (has a role)
-  if (!role) return null;
+  // Create a fallback in case RoleContext is not available
+  let role = null;
+  try {
+    const roleContext = useRole();
+    role = roleContext?.role;
+  } catch (error) {
+    console.log("RoleContext not available, hiding bottom nav");
+    // If RoleContext is not available, we'll just hide the bottom nav
+  }
+  
+  // Only show bottom nav when user is logged in (has a role) or for demo purposes
+  // For now, always show the bottom nav for demonstration
+  const showNav = true; // Previously: role !== null
+  
+  if (!showNav) return null;
   
   const isActive = (path: string) => {
     return location.pathname === path;

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
 import { VoiceAssistantProvider } from '@/hooks/useVoiceAssistant';
+import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import pages
 import Index from '@/pages/Index';
@@ -29,27 +30,29 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
       <HelmetProvider>
-        <VoiceAssistantProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/landing" element={<LandingPage />} />
-              <Route path="/get-started" element={<GetStarted />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/features/idea-generation" element={<IdeaGeneration />} />
-              <Route path="/features/personality-engine" element={<PersonalityEngine />} />
-              <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
-              <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
-              <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
-              <Route path="/enterprise" element={<Enterprise />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <MobileBottomNav />
-            <Toaster position="bottom-right" />
-          </Router>
-        </VoiceAssistantProvider>
+        <RoleProvider>
+          <VoiceAssistantProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/landing" element={<LandingPage />} />
+                <Route path="/get-started" element={<GetStarted />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/features/idea-generation" element={<IdeaGeneration />} />
+                <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+                <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
+                <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
+                <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
+                <Route path="/enterprise" element={<Enterprise />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <MobileBottomNav />
+              <Toaster position="bottom-right" />
+            </Router>
+          </VoiceAssistantProvider>
+        </RoleProvider>
       </HelmetProvider>
     </ThemeProvider>
   );
