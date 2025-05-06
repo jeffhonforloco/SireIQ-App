@@ -65,6 +65,28 @@ const Enterprise = () => {
     }
   ];
 
+  // New Enterprise Core Functionality
+  const coreFunctionality = [
+    {
+      icon: Users,
+      title: "Team Management",
+      description: "Centralized controls and permissions for your entire creative team.",
+      path: "/enterprise/team-management"
+    },
+    {
+      icon: Lock,
+      title: "Enterprise Security",
+      description: "Advanced security features including SSO, audit logs, and role-based access.",
+      path: "/enterprise/enterprise-security"
+    },
+    {
+      icon: Database,
+      title: "Custom Training",
+      description: "Train SireIQ on your brand assets and content for perfectly aligned outputs.",
+      path: "/enterprise/custom-training"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
@@ -96,9 +118,34 @@ const Enterprise = () => {
           </div>
         </section>
         
-        {/* Enterprise-Grade AI Section */}
+        {/* Enterprise Core Functionality */}
         <section className="py-16 bg-sireiq-darker">
           <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              <span className="text-gradient">Enterprise-Grade AI</span>
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              {coreFunctionality.map((item, index) => (
+                <Link to={item.path} key={index} className="group">
+                  <Card className="bg-transparent h-full border border-sireiq-accent/30 hover:border-sireiq-cyan/50 transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-6 flex flex-col h-full">
+                      <div className="bg-sireiq-accent/20 p-3 rounded-lg w-fit mb-4 text-sireiq-cyan group-hover:bg-sireiq-cyan/30 transition-all">
+                        <item.icon size={24} />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-sireiq-cyan transition-colors">{item.title}</h3>
+                      <p className="text-sireiq-light/70 mb-4 flex-1">{item.description}</p>
+                      <div className="flex justify-end">
+                        <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                          Learn More
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="glass-effect rounded-xl p-6 border border-sireiq-accent/30">
                 <img 

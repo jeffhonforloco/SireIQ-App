@@ -25,7 +25,7 @@ import IdeaGeneration from "./pages/features/IdeaGeneration";
 import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
 import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
 import Integrations from "./pages/Integrations";
-// Import new enterprise solution pages
+// Import enterprise solution pages
 import TeamCollaboration from "./pages/enterprise/TeamCollaboration";
 import CustomWorkflows from "./pages/enterprise/CustomWorkflows";
 import DedicatedInfrastructure from "./pages/enterprise/DedicatedInfrastructure";
@@ -33,6 +33,9 @@ import PrivateKnowledgeBase from "./pages/enterprise/PrivateKnowledgeBase";
 import GlobalDeployment from "./pages/enterprise/GlobalDeployment";
 import ComplianceControls from "./pages/enterprise/ComplianceControls";
 import AdvancedAnalytics from "./pages/enterprise/AdvancedAnalytics";
+// Import new enterprise functionality pages
+import TeamManagement from "./pages/enterprise/TeamManagement";
+import CustomTraining from "./pages/enterprise/CustomTraining";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +75,9 @@ const App = () => (
               <Route path="/enterprise/global-deployment" element={<GlobalDeployment />} />
               <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
               <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
+              {/* New enterprise functionality pages */}
+              <Route path="/enterprise/team-management" element={<TeamManagement />} />
+              <Route path="/enterprise/custom-training" element={<CustomTraining />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
