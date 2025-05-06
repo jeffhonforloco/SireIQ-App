@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from './components/ThemeProvider';
-import LandingPage from './pages/LandingPage';
+import { ThemeProvider } from './components/ui/theme-provider';
+import Index from './pages/Index';
 import Pricing from './pages/Pricing';
 import Features from './pages/Features';
 import GetStarted from './pages/GetStarted';
@@ -31,7 +31,7 @@ const App = () => {
               <PersonalityEngineProvider>
                 <VoiceAssistantProvider>
                   <Routes>
-                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/" element={<Index />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/features" element={<Features />} />
                     <Route path="/get-started" element={<GetStarted />} />
