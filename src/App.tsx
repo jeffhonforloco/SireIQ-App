@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +24,7 @@ import RealTimeCollaboration from "./pages/features/RealTimeCollaboration";
 import IdeaGeneration from "./pages/features/IdeaGeneration";
 import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
 import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
+import SecurityCompliance from "./pages/features/SecurityCompliance";
 import Integrations from "./pages/Integrations";
 // Import enterprise solution pages
 import TeamCollaboration from "./pages/enterprise/TeamCollaboration";
@@ -65,6 +67,7 @@ const App = () => (
               <Route path="/features/idea-generation" element={<IdeaGeneration />} />
               <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
               <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
+              <Route path="/features/security-compliance" element={<SecurityCompliance />} />
               {/* Enterprise solution pages */}
               <Route path="/enterprise/team-collaboration" element={<TeamCollaboration />} />
               <Route path="/enterprise/enterprise-security" element={<EnterpriseSecurity />} />
