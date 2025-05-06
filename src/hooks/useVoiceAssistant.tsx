@@ -1,35 +1,9 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-
-interface VoiceSettings {
-  voice: string;
-  volume: number;
-  rate: number;
-  pitch: number;
-  autoResponse: boolean;
-}
-
-interface VoiceAssistantContextType {
-  isListening: boolean;
-  isSpeaking: boolean;
-  transcript: string;
-  voiceSettings: VoiceSettings;
-  startListening: () => void;
-  stopListening: () => void;
-  resetTranscript: () => void;
-  speakText: (text: string) => void;
-  stopSpeaking: () => void;
-  updateVoiceSettings: (settings: Partial<VoiceSettings>) => void;
-  supportsSpeechRecognition: boolean;
-}
-
-const defaultVoiceSettings: VoiceSettings = {
-  voice: 'female',
-  volume: 1.0, // 0 to 1
-  rate: 1.0, // 0.1 to 2
-  pitch: 1.0, // 0.1 to 2
-  autoResponse: true
-};
+import { VoiceSettings, VoiceAssistantContextType } from '@/types/voice-assistant';
+import { initializeSpeechRecognition, setupRecognitionListeners } from '@/utils/speechRecognition';
+import { findVoice, createUtterance } from '@/utils/speechSynthesis';
+import { defaultVoiceSettings, loadSavedSettings, saveSettings } from '@/utils/voiceSettings';
 
 const VoiceAssistantContext = createContext<VoiceAssistantContextType | undefined>(undefined);
 
@@ -48,33 +22,18 @@ export const VoiceAssistantProvider: React.FC<VoiceAssistantProviderProps> = ({ 
   const [synth, setSynth] = useState<SpeechSynthesis | null>(null);
 
   useEffect(() => {
-    // Check if browser supports Web Speech API
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      // @ts-ignore - TypeScript doesn't recognize webkitSpeechRecognition
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognitionInstance = new SpeechRecognition();
-      
-      recognitionInstance.continuous = true;
-      recognitionInstance.interimResults = true;
-      recognitionInstance.lang = 'en-US';
-      
-      setRecognition(recognitionInstance);
-      setSupportsSpeechRecognition(true);
-    }
+    // Initialize speech recognition
+    const { recognition: recognitionInstance, supportsSpeechRecognition: supported } = initializeSpeechRecognition();
+    setRecognition(recognitionInstance);
+    setSupportsSpeechRecognition(supported);
     
+    // Initialize speech synthesis
     if ('speechSynthesis' in window) {
       setSynth(window.speechSynthesis);
     }
     
-    // Load saved settings from localStorage if available
-    const savedSettings = localStorage.getItem('voiceAssistantSettings');
-    if (savedSettings) {
-      try {
-        setVoiceSettings(JSON.parse(savedSettings));
-      } catch (e) {
-        console.error('Failed to parse saved voice settings');
-      }
-    }
+    // Load saved settings
+    setVoiceSettings(loadSavedSettings());
     
     return () => {
       stopListening();
@@ -85,31 +44,12 @@ export const VoiceAssistantProvider: React.FC<VoiceAssistantProviderProps> = ({ 
   }, []);
 
   useEffect(() => {
-    if (!recognition) return;
-    
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      let currentTranscript = '';
-      for (let i = 0; i < event.results.length; i++) {
-        if (event.results[i].isFinal) {
-          currentTranscript += event.results[i][0].transcript + ' ';
-        }
-      }
-      setTranscript(currentTranscript);
-    };
-    
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-    
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.error('Speech recognition error', event.error);
-      setIsListening(false);
-    };
+    setupRecognitionListeners(recognition, setTranscript, setIsListening);
   }, [recognition]);
 
   // Save settings to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('voiceAssistantSettings', JSON.stringify(voiceSettings));
+    saveSettings(voiceSettings);
   }, [voiceSettings]);
 
   const startListening = useCallback(() => {
@@ -142,34 +82,12 @@ export const VoiceAssistantProvider: React.FC<VoiceAssistantProviderProps> = ({ 
       synth.cancel();
     }
     
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Apply voice settings
-    utterance.volume = voiceSettings.volume;
-    utterance.rate = voiceSettings.rate;
-    utterance.pitch = voiceSettings.pitch;
+    const utterance = createUtterance(text, voiceSettings);
     
     // Try to find a matching voice based on settings
-    if (synth.getVoices().length > 0) {
-      const voices = synth.getVoices();
-      let selectedVoice;
-      
-      // Filter voices based on preference
-      if (voiceSettings.voice === 'male') {
-        selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('male'));
-      } else if (voiceSettings.voice === 'female') {
-        selectedVoice = voices.find(voice => voice.name.toLowerCase().includes('female'));
-      }
-      
-      // If no matching voice found, try to find one in the user's language
-      if (!selectedVoice) {
-        selectedVoice = voices.find(voice => voice.lang === 'en-US');
-      }
-      
-      // Fall back to the first voice if no match
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
-      }
+    const selectedVoice = findVoice(synth, voiceSettings.voice);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
     }
     
     synth.speak(utterance);
