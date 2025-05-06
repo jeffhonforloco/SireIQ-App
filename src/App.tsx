@@ -33,7 +33,7 @@ const App = () => {
             <CollaborationProvider>
               <PersonalityEngineProvider>
                 <VoiceAssistantProvider>
-                  <div className="relative min-h-screen bg-sireiq-dark">
+                  <div className="relative min-h-screen bg-background text-foreground">
                     <Routes>
                       <Route path="/" element={<Index />} />
                       <Route path="/pricing" element={<Pricing />} />

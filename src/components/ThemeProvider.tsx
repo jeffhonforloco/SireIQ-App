@@ -36,8 +36,14 @@ export function ThemeProvider({
 
     root.classList.remove("light", "dark");
     
-    // Always use dark mode for this application as it's the primary design
-    root.classList.add("dark");
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      root.classList.add(systemTheme);
+    } else {
+      root.classList.add(theme);
+    }
     
     // Store preference in localStorage
     localStorage.setItem(storageKey, theme);

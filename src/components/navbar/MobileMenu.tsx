@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/Logo';
 import AuthButtons from './MobileAuthButtons';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 interface MobileMenuProps {
   isSheetOpen: boolean;
@@ -29,9 +30,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
         <div className="flex flex-col h-full">
           <div className="flex justify-between items-center p-4 border-b border-sireiq-accent/20">
             <Logo showText={true} className="scale-75 origin-left" />
-            <button onClick={() => setIsSheetOpen(false)}>
-              <X className="h-5 w-5 text-sireiq-light" />
-            </button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <button onClick={() => setIsSheetOpen(false)}>
+                <X className="h-5 w-5 text-sireiq-light" />
+              </button>
+            </div>
           </div>
           
           <nav className="flex flex-col space-y-1 p-4">

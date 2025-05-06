@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import NavLinks from './navbar/NavLinks';
 import AuthButtons from './navbar/AuthButtons';
 import MobileMenu from './navbar/MobileMenu';
+import { ThemeToggle } from './ui/theme-toggle';
 
 const Navbar: React.FC = () => {
   const isMobile = useIsMobile();
@@ -35,8 +36,9 @@ const Navbar: React.FC = () => {
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons */}
+        {/* Auth Buttons and Theme Toggle */}
         <div className="hidden md:flex items-center space-x-4">
+          <ThemeToggle />
           <AuthButtons />
         </div>
         
