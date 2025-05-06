@@ -69,11 +69,6 @@ const GetStarted = () => {
     navigate('/dashboard');
   };
 
-  const handleScheduleDemo = () => {
-    // In a real app, this would navigate to a scheduling page or open a dialog
-    toast.success("Demo request submitted! Our team will contact you soon.");
-  };
-
   const handleResendCode = () => {
     // In a real app, this would resend the verification code
     toast.success("Verification code resent to your email!");
@@ -98,7 +93,7 @@ const GetStarted = () => {
             Join thousands of creators, developers, and innovators building the next generation of intelligent applications.
           </p>
           
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="max-w-md mx-auto">
             <div className="bg-sireiq-darker p-8 rounded-lg border border-sireiq-accent/20">
               {step === 1 && (
                 <>
@@ -196,40 +191,6 @@ const GetStarted = () => {
                   </div>
                 </>
               )}
-            </div>
-            
-            <div className="bg-sireiq-darker p-8 rounded-lg border border-sireiq-accent/20 flex flex-col justify-between">
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Enterprise Solutions</h2>
-                <p className="mb-6 text-sireiq-light/80">
-                  Discover how SireIQ can transform your organization with custom AI solutions and enterprise-grade features.
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-start">
-                    <div className="mr-2 text-sireiq-cyan">✓</div>
-                    <div>Custom AI model training</div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 text-sireiq-cyan">✓</div>
-                    <div>Advanced security and compliance</div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 text-sireiq-cyan">✓</div>
-                    <div>Dedicated support and onboarding</div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 text-sireiq-cyan">✓</div>
-                    <div>Custom integrations and workflows</div>
-                  </li>
-                </ul>
-              </div>
-              <Button 
-                onClick={handleScheduleDemo}
-                variant="outline" 
-                className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 mt-4"
-              >
-                Schedule a Demo <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
           </div>
         </div>
