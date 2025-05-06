@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
 type OnboardingStep = 1 | 2 | 3 | 'completed';
-export type AIModel = 'fast' | 'balanced' | 'powerful';
+type AIModel = 'fast' | 'balanced' | 'powerful';
 
 interface Preferences {
   darkMode: boolean;
