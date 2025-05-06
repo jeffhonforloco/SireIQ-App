@@ -1,17 +1,12 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Send, User } from 'lucide-react';
-import { toast } from '@/components/ui/sonner';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-
-interface Message {
-  id: string;
-  content: string;
-  role: 'user' | 'assistant' | 'system';
-  timestamp: Date;
-}
+import ChatMessage from './ChatMessage';
+import TypingIndicator from './TypingIndicator';
+import SignupPrompt from './SignupPrompt';
+import ChatInput from './ChatInput';
+import { Message } from './types';
 
 const MAX_FREE_MESSAGES = 3;
 
@@ -71,6 +66,10 @@ const HomepageChat: React.FC = () => {
     }
     
     // Simulate AI response after a short delay
+    simulateAIResponse();
+  };
+
+  const simulateAIResponse = () => {
     setTimeout(() => {
       const responses = [
         "I'm analyzing your request. SireIQ can help with that by leveraging our advanced AI tools.",
@@ -115,72 +114,16 @@ const HomepageChat: React.FC = () => {
       <CardContent>
         <div className="space-y-4 h-[400px] overflow-y-auto p-2">
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[80%] p-3 rounded-lg ${
-                  message.role === 'user'
-                    ? 'bg-sireiq-cyan/20 border border-sireiq-cyan/30 ml-12'
-                    : 'bg-sireiq-accent/10 border border-sireiq-accent/30 mr-12'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  {message.role !== 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-sireiq-cyan/20 border border-sireiq-cyan/30 flex items-center justify-center">
-                      <span className="text-sm">🤖</span>
-                    </div>
-                  )}
-                  
-                  <div className="flex-1">
-                    <p className="text-sm text-sireiq-light">{message.content}</p>
-                  </div>
-                  
-                  {message.role === 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-sireiq-darker flex items-center justify-center">
-                      <User className="h-4 w-4 text-sireiq-light" />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+            <ChatMessage key={message.id} message={message} />
           ))}
           
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="max-w-[80%] p-3 rounded-lg bg-sireiq-accent/10 border border-sireiq-accent/30">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-sireiq-light/50 rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-sireiq-light/50 rounded-full animate-pulse delay-75"></div>
-                  <div className="w-2 h-2 bg-sireiq-light/50 rounded-full animate-pulse delay-150"></div>
-                </div>
-              </div>
-            </div>
-          )}
+          {isTyping && <TypingIndicator />}
           
           {showSignupPrompt && (
-            <div className="bg-sireiq-accent/10 border border-sireiq-cyan/30 p-4 rounded-lg text-center">
-              <h4 className="text-lg font-medium mb-2">Continue the conversation</h4>
-              <p className="text-sm text-sireiq-light/80 mb-4">
-                You've reached the limit of free messages. Sign up to continue chatting with SireIQ and unlock all features.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button 
-                  onClick={handleSignUp}
-                  className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
-                >
-                  Sign Up
-                </Button>
-                <Button 
-                  onClick={handleSignIn}
-                  variant="outline"
-                  className="border-sireiq-cyan text-sireiq-cyan hover:bg-sireiq-cyan/10"
-                >
-                  Sign In
-                </Button>
-              </div>
-            </div>
+            <SignupPrompt 
+              onSignUp={handleSignUp} 
+              onSignIn={handleSignIn} 
+            />
           )}
           
           <div ref={messagesEndRef} />
@@ -188,23 +131,12 @@ const HomepageChat: React.FC = () => {
       </CardContent>
       
       <CardFooter>
-        <form onSubmit={handleSubmit} className="w-full flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask SireIQ something..."
-            disabled={showSignupPrompt}
-            className="flex-1 p-3 rounded-md bg-sireiq-accent/10 border border-sireiq-accent/30 text-sireiq-light focus:ring-1 focus:ring-sireiq-cyan focus:border-sireiq-cyan"
-          />
-          <Button 
-            type="submit" 
-            disabled={!input.trim() || showSignupPrompt}
-            className="bg-sireiq-cyan hover:bg-sireiq-cyan/80 text-sireiq-darker"
-          >
-            <Send className="h-5 w-5" />
-          </Button>
-        </form>
+        <ChatInput 
+          input={input}
+          setInput={setInput}
+          onSubmit={handleSubmit}
+          disabled={showSignupPrompt}
+        />
       </CardFooter>
     </Card>
   );
