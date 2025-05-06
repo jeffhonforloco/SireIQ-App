@@ -18,6 +18,7 @@ const AIPoweredCreation = () => {
   const [tone, setTone] = useState<'professional' | 'casual' | 'enthusiastic'>('professional');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState('');
+  const [previewContent, setPreviewContent] = useState('');
   const { toast } = useToast();
 
   // Sample content examples based on content type and tone
@@ -50,9 +51,21 @@ const AIPoweredCreation = () => {
     }
 
     setIsGenerating(true);
+    setPreviewContent(''); // Clear preview content first
+    
+    // Show typing animation in preview while generating
+    let typingIndex = 0;
+    const typingText = "Generating content";
+    const typingInterval = setInterval(() => {
+      typingIndex = (typingIndex + 1) % (typingText.length + 4);
+      const dots = ".".repeat(Math.min(typingIndex, 3));
+      setPreviewContent(`${typingText}${dots}`);
+    }, 300);
     
     // Simulate AI generation with a delay
     setTimeout(() => {
+      clearInterval(typingInterval);
+      
       // Get the appropriate example based on content type and tone
       const generatedExample = contentExamples[contentType][tone];
       
@@ -73,13 +86,24 @@ const AIPoweredCreation = () => {
         );
       }
       
-      setGeneratedContent(customizedContent);
-      setIsGenerating(false);
+      // Real-time content preview effect - show text appearing letter by letter
+      let displayIndex = 0;
+      setPreviewContent('');
       
-      toast({
-        title: "Content generated",
-        description: "Your AI-generated content is ready!",
-      });
+      const previewInterval = setInterval(() => {
+        if (displayIndex <= customizedContent.length) {
+          setPreviewContent(customizedContent.substring(0, displayIndex));
+          displayIndex += 5; // Show 5 characters at a time for faster display
+        } else {
+          clearInterval(previewInterval);
+          setGeneratedContent(customizedContent);
+          setIsGenerating(false);
+          toast({
+            title: "Content generated",
+            description: "Your AI-generated content is ready!",
+          });
+        }
+      }, 30);
     }, 1500);
   };
 
@@ -127,7 +151,8 @@ const AIPoweredCreation = () => {
                   </div>
                 </div>
               </div>
-              <style jsx>{`
+              <style>
+                {`
                 .creative-orbit {
                   position: absolute;
                   width: 300px;
@@ -169,7 +194,8 @@ const AIPoweredCreation = () => {
                     box-shadow: 0 0 0 0 rgba(107, 217, 227, 0);
                   }
                 }
-              `}</style>
+                `}
+              </style>
             </div>
           </div>
         </section>
@@ -243,20 +269,24 @@ const AIPoweredCreation = () => {
                 )}
               </Button>
               
-              {generatedContent && (
+              {/* Real-time content preview */}
+              {(previewContent || generatedContent) && (
                 <div className="mt-8 space-y-4 animate-fade-in">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-medium flex items-center">
                       <FileText className="h-5 w-5 text-sireiq-cyan mr-2" />
-                      Generated Content
+                      {isGenerating ? "Generating Content..." : "Generated Content"}
                     </h3>
-                    <Button variant="outline" size="sm" onClick={copyToClipboard} className="flex items-center">
-                      <Copy className="h-4 w-4 mr-1" /> Copy
-                    </Button>
+                    {generatedContent && !isGenerating && (
+                      <Button variant="outline" size="sm" onClick={copyToClipboard} className="flex items-center">
+                        <Copy className="h-4 w-4 mr-1" /> Copy
+                      </Button>
+                    )}
                   </div>
                   
-                  <div className="bg-sireiq-darker/50 border border-sireiq-accent/20 rounded-lg p-4 whitespace-pre-wrap">
-                    {generatedContent}
+                  <div className="bg-sireiq-darker/50 border border-sireiq-accent/20 rounded-lg p-4 whitespace-pre-wrap min-h-[100px]">
+                    {isGenerating ? previewContent : generatedContent}
+                    {isGenerating && <span className="animate-pulse">|</span>}
                   </div>
                 </div>
               )}
