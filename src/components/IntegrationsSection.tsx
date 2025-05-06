@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Share2, Webhook, Code, Database, PuzzlePiece } from 'lucide-react';
+import { ExternalLink, Share2, Webhook, Code, Database, Puzzle } from 'lucide-react';
 import { AdobeIcon, TeamsIcon } from './CustomIcons';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -101,7 +101,7 @@ const IntegrationsSection: React.FC = () => {
     },
     {
       name: 'Content Platforms',
-      icon: PuzzlePiece,
+      icon: Puzzle,
       description: 'Publish directly to WordPress, Medium, or other content platforms.',
       comingSoon: true,
       primaryColor: 'bg-[#21759B]'
