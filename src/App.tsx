@@ -20,6 +20,8 @@ import { VoiceAssistantProvider } from './hooks/useVoiceAssistant';
 import NotFound from './pages/NotFound';
 import { PersonalityEngineProvider } from './contexts/PersonalityEngineContext';
 import MobileBottomNav from './components/MobileBottomNav';
+import AdminDashboard from './components/dashboards/AdminDashboard';
+import PerformanceAnalytics from './pages/features/PerformanceAnalytics';
 
 const App = () => {
   return (
@@ -40,9 +42,11 @@ const App = () => {
                       <Route path="/signin" element={<SignIn />} />
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/enterprise" element={<EnterpriseDashboard />} />
+                      <Route path="/admin" element={<AdminDashboard />} />
                       <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                       <Route path="/features/personality-engine" element={<PersonalityEngine />} />
                       <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
+                      <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <MobileBottomNav />
