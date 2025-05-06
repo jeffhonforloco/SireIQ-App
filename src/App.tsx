@@ -25,6 +25,14 @@ import IdeaGeneration from "./pages/features/IdeaGeneration";
 import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
 import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
 import Integrations from "./pages/Integrations";
+// Import new enterprise solution pages
+import TeamCollaboration from "./pages/enterprise/TeamCollaboration";
+import CustomWorkflows from "./pages/enterprise/CustomWorkflows";
+import DedicatedInfrastructure from "./pages/enterprise/DedicatedInfrastructure";
+import PrivateKnowledgeBase from "./pages/enterprise/PrivateKnowledgeBase";
+import GlobalDeployment from "./pages/enterprise/GlobalDeployment";
+import ComplianceControls from "./pages/enterprise/ComplianceControls";
+import AdvancedAnalytics from "./pages/enterprise/AdvancedAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +63,15 @@ const App = () => (
               <Route path="/features/idea-generation" element={<IdeaGeneration />} />
               <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
               <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
+              {/* Enterprise solution pages */}
+              <Route path="/enterprise/team-collaboration" element={<TeamCollaboration />} />
+              <Route path="/enterprise/enterprise-security" element={<EnterpriseSecurity />} />
+              <Route path="/enterprise/custom-workflows" element={<CustomWorkflows />} />
+              <Route path="/enterprise/dedicated-infrastructure" element={<DedicatedInfrastructure />} />
+              <Route path="/enterprise/private-knowledge-base" element={<PrivateKnowledgeBase />} />
+              <Route path="/enterprise/global-deployment" element={<GlobalDeployment />} />
+              <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
+              <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
