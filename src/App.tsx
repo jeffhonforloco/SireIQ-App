@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from './components/ui/theme-provider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import Index from './pages/Index';
 import Pricing from './pages/Pricing';
 import Features from './pages/Features';
