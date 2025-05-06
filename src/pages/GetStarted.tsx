@@ -13,11 +13,13 @@ import {
   InputOTPGroup, 
   InputOTPSlot 
 } from "@/components/ui/input-otp";
+import { Input } from '@/components/ui/input';
 
 const GetStarted = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [step, setStep] = useState(1); // 1: registration form, 2: email verification, 3: success
   const [verificationCode, setVerificationCode] = useState('');
   const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
@@ -27,13 +29,19 @@ const GetStarted = () => {
     e.preventDefault();
     
     // Simple validation
-    if (!fullName || !email || !password) {
+    if (!fullName || !email || !password || !confirmPassword) {
       toast.error("Please fill in all fields");
       return;
     }
     
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    // Password confirmation check
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
     
@@ -104,30 +112,47 @@ const GetStarted = () => {
                   </p>
                   <form className="space-y-4" onSubmit={handleCreateAccount}>
                     <div>
-                      <input
+                      <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name</label>
+                      <Input
+                        id="fullName"
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
-                        placeholder="Full Name"
+                        className="bg-sireiq-dark text-sireiq-light border-sireiq-accent/20"
+                        placeholder="Enter your full name"
                       />
                     </div>
                     <div>
-                      <input
+                      <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
+                      <Input
+                        id="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
-                        placeholder="Email Address"
+                        className="bg-sireiq-dark text-sireiq-light border-sireiq-accent/20"
+                        placeholder="Enter your email address"
                       />
                     </div>
                     <div>
-                      <input
+                      <label htmlFor="password" className="block text-sm font-medium mb-1">Create Password</label>
+                      <Input
+                        id="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
-                        placeholder="Create Password (min 6 characters)"
+                        className="bg-sireiq-dark text-sireiq-light border-sireiq-accent/20"
+                        placeholder="Min 6 characters"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">Confirm Password</label>
+                      <Input
+                        id="confirmPassword"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="bg-sireiq-dark text-sireiq-light border-sireiq-accent/20"
+                        placeholder="Re-enter your password"
                       />
                     </div>
                     
