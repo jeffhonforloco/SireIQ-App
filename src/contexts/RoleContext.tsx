@@ -1,9 +1,9 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
-type OnboardingStep = 1 | 2 | 3 | 'completed';
-type AIModel = 'fast' | 'balanced' | 'powerful';
+export type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
+export type OnboardingStep = 1 | 2 | 3 | 'completed';
+export type AIModel = 'fast' | 'balanced' | 'powerful';
 
 interface Preferences {
   darkMode: boolean;
@@ -35,7 +35,7 @@ const initialPreferences: Preferences = {
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
 
 export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [role, setRole] = useState<Role>('user'); // Default role for demo purposes
+  const [role, setRole] = useState<Role>(null); // Initialize role to null to indicate not logged in
   const [isFirstTimeUser, setIsFirstTimeUser] = useState<boolean>(false);
   const [onboardingStep, setOnboardingStep] = useState<OnboardingStep>(1);
   const [preferences, setPreferencesState] = useState<Preferences>(initialPreferences);

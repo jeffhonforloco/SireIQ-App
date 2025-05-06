@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HomeIcon, Layers, Settings, Mic, User } from 'lucide-react';
@@ -6,21 +7,12 @@ import { motion } from 'framer-motion';
 
 const MobileBottomNav = () => {
   const location = useLocation();
+  const { role } = useRole();
   
-  // Create a fallback in case RoleContext is not available
-  let role = null;
-  try {
-    const roleContext = useRole();
-    role = roleContext?.role;
-  } catch (error) {
-    console.log("RoleContext not available, hiding bottom nav");
-    // If RoleContext is not available, we'll just hide the bottom nav
+  // Only show bottom nav when user is logged in (has a role other than null)
+  if (role === null) {
+    return null;
   }
-  
-  // Only show bottom nav when user is logged in (has a role)
-  const showNav = role !== null;
-  
-  if (!showNav) return null;
   
   const isActive = (path: string) => {
     return location.pathname === path;
