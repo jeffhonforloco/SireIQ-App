@@ -5,7 +5,6 @@ import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/landing/HeroSection';
-import TrustBadgesSection from '@/components/landing/TrustBadgesSection';
 import FeaturesHighlight from '@/components/landing/FeaturesHighlight';
 import HowItWorksSection from '@/components/landing/HowItWorksSection';
 import WhyChooseUsSection from '@/components/landing/WhyChooseUsSection';
@@ -29,9 +28,6 @@ const Index = () => {
       <main>
         {/* Hero Section */}
         <HeroSection />
-        
-        {/* Trust Badges Section */}
-        <TrustBadgesSection />
         
         {/* Features Highlights */}
         <FeaturesHighlight />
