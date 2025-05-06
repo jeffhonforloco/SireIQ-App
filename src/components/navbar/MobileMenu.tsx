@@ -90,6 +90,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
                     Voice Assistant
                   </Link>
                   <Link 
+                    to="/features/simple-voice"
+                    className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/simple-voice') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
+                    onClick={() => setIsSheetOpen(false)}
+                  >
+                    Simple Voice UI
+                  </Link>
+                  <Link 
                     to="/features/performance-analytics"
                     className={`py-2 px-4 rounded-md ml-4 block text-sm ${isActive('/features/performance-analytics') ? 'bg-sireiq-accent/20 text-sireiq-cyan' : 'text-sireiq-light/80'}`}
                     onClick={() => setIsSheetOpen(false)}

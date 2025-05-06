@@ -38,6 +38,9 @@ const NavLinks: React.FC = () => {
             <Link to="/features/voice-assistant" className="cursor-pointer">Voice Assistant</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
+            <Link to="/features/simple-voice" className="cursor-pointer">Simple Voice UI</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link to="/features/performance-analytics" className="cursor-pointer">Performance Analytics</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>

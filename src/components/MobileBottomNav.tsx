@@ -19,7 +19,7 @@ const MobileBottomNav = () => {
   const navItems = [
     { path: '/', icon: HomeIcon, label: 'Home' },
     { path: '/features', icon: Layers, label: 'Features' },
-    { path: '/features/voice-assistant', icon: Mic, label: 'Voice' },
+    { path: '/features/simple-voice', icon: Mic, label: 'Voice' },
     { path: '/dashboard', icon: Settings, label: 'Dashboard' }
   ];
   
