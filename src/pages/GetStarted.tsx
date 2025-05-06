@@ -8,14 +8,11 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 import { toast } from '@/components/ui/sonner';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
 
 const GetStarted = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedRole, setSelectedRole] = useState<'user' | 'developer'>('user');
   const { setRole, setIsFirstTimeUser, setOnboardingStep } = useRole();
   const navigate = useNavigate();
 
@@ -28,8 +25,8 @@ const GetStarted = () => {
       return;
     }
     
-    // Set the user role based on selection and start onboarding
-    setRole(selectedRole);
+    // All new users start with the basic user role
+    setRole('user');
     setIsFirstTimeUser(true);
     setOnboardingStep(1);
     toast.success("Account created successfully!");
@@ -65,6 +62,7 @@ const GetStarted = () => {
               <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
               <p className="mb-6 text-sireiq-light/80">
                 Sign up for free and start exploring SireIQ's AI-powered tools and creative workflows.
+                You can upgrade to Developer or Enterprise plans later.
               </p>
               <form className="space-y-4" onSubmit={handleCreateAccount}>
                 <div>
@@ -93,24 +91,6 @@ const GetStarted = () => {
                     className="w-full px-4 py-2 rounded-md border border-sireiq-accent/20 bg-sireiq-dark text-sireiq-light"
                     placeholder="Create Password"
                   />
-                </div>
-                
-                <div className="pt-2">
-                  <p className="text-sm font-medium mb-2">I am signing up as a:</p>
-                  <RadioGroup 
-                    defaultValue="user" 
-                    className="flex gap-4"
-                    onValueChange={(value) => setSelectedRole(value as 'user' | 'developer')}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="user" id="user-role" />
-                      <Label htmlFor="user-role">Regular User</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="developer" id="developer-role" />
-                      <Label htmlFor="developer-role">Developer</Label>
-                    </div>
-                  </RadioGroup>
                 </div>
                 
                 <Button type="submit" className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]">

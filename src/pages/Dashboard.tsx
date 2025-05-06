@@ -10,6 +10,7 @@ import EnterpriseDashboard from '@/components/dashboards/EnterpriseDashboard';
 import RoleSelection from '@/components/onboarding/RoleSelection';
 import QuickPreferences from '@/components/onboarding/QuickPreferences';
 import StartPlatform from '@/components/onboarding/StartPlatform';
+import AccountTypeSwitcher from '@/components/AccountTypeSwitcher';
 
 const Dashboard = () => {
   const { role, isFirstTimeUser, onboardingStep } = useRole();
@@ -47,6 +48,11 @@ const Dashboard = () => {
       <Navbar />
       
       <main className="container mx-auto pt-28 pb-20">
+        <div className="flex justify-between items-center mb-6 pb-4 border-b border-sireiq-accent/20">
+          <h1 className="text-2xl font-bold">Your {role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</h1>
+          <AccountTypeSwitcher />
+        </div>
+        
         {role === 'user' && <UserDashboard />}
         {role === 'developer' && <DeveloperDashboard />}
         {role === 'enterprise' && <EnterpriseDashboard />}

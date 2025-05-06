@@ -13,7 +13,7 @@ import { toast } from '@/components/ui/sonner';
 const mockUsers = [
   { email: 'user@example.com', password: 'password', role: 'user' },
   { email: 'dev@example.com', password: 'password', role: 'developer' },
-  { email: 'enterprise@example.com', password: 'password', role: 'user' } // Changed enterprise to user role
+  { email: 'enterprise@example.com', password: 'password', role: 'user' } // All users start as regular users
 ];
 
 const SignIn = () => {
@@ -103,6 +103,9 @@ const SignIn = () => {
               <p><span className="text-sireiq-cyan">User:</span> user@example.com / password</p>
               <p><span className="text-sireiq-cyan">Developer:</span> dev@example.com / password</p>
             </div>
+            <p className="text-xs text-center mt-3 text-sireiq-light/70">
+              After signing in, you can upgrade to Developer or Enterprise accounts from your dashboard.
+            </p>
           </div>
           
           <p className="mt-4 text-center text-sm">
