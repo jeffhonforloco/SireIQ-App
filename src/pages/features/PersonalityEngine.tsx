@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -7,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, MessagesSquare } from 'lucide-react';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
-import { PersonalityEngineProvider, usePersonalityEngine } from '@/contexts/PersonalityEngineContext';
+import { usePersonalityEngine } from '@/contexts/PersonalityEngineContext';
 import StyleCard from '@/components/personality/StyleCard';
 import ParameterSlider from '@/components/personality/ParameterSlider';
 import TextPreview from '@/components/personality/TextPreview';
@@ -164,9 +163,7 @@ const PersonalityEngine: React.FC = () => {
       <Navbar />
       
       <main className="pt-32 pb-20">
-        <PersonalityEngineProvider>
-          <PersonalityEngineContent />
-        </PersonalityEngineProvider>
+        <PersonalityEngineContent />
       </main>
       
       <CTASection />
