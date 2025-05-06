@@ -3,63 +3,33 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useRole } from '@/contexts/RoleContext';
-import { toast } from '@/components/ui/sonner';
-import { useNavigate } from 'react-router-dom';
 
-interface MobileAuthButtonsProps {
-  onClose?: () => void;
-}
-
-const MobileAuthButtons: React.FC<MobileAuthButtonsProps> = ({ onClose }) => {
-  const { role, setRole } = useRole();
-  const navigate = useNavigate();
-  const isAuthenticated = !!role;
+const MobileAuthButtons = () => {
+  const { role } = useRole();
   
-  const handleSignOut = () => {
-    setRole(null);
-    toast.success("Signed out successfully!");
-    navigate('/');
-    if (onClose) onClose();
-  };
-
-  if (isAuthenticated) {
+  if (role) {
     return (
-      <>
-        <Link 
-          to="/dashboard"
-          className="block w-full py-3 px-4 mb-3 bg-sireiq-accent/10 border border-sireiq-accent/30 rounded-md text-center text-sireiq-cyan"
-          onClick={onClose}
-        >
+      <Link to="/dashboard" className="w-full">
+        <Button className="w-full">
           Dashboard
-        </Link>
-        <Button 
-          onClick={handleSignOut}
-          className="w-full bg-transparent border border-red-500/50 hover:bg-red-500/10 text-red-400"
-          variant="outline"
-        >
-          Sign Out
         </Button>
-      </>
+      </Link>
     );
   }
-  
+
   return (
-    <>
-      <Link 
-        to="/signin"
-        className="block w-full py-3 px-4 mb-3 bg-transparent border border-sireiq-cyan text-center text-sireiq-cyan rounded-md"
-        onClick={onClose}
-      >
-        Sign In
+    <div className="flex flex-col space-y-2 w-full">
+      <Link to="/signin" className="w-full">
+        <Button variant="outline" className="w-full">
+          Sign In
+        </Button>
       </Link>
-      <Link 
-        to="/get-started"
-        className="block w-full py-3 px-4 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker text-center rounded-md font-medium"
-        onClick={onClose}
-      >
-        Get Started
+      <Link to="/get-started" className="w-full">
+        <Button className="w-full bg-white text-black hover:bg-gray-100 rounded-full">
+          Get Started
+        </Button>
       </Link>
-    </>
+    </div>
   );
 };
 
