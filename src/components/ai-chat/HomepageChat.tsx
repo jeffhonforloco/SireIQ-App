@@ -102,21 +102,21 @@ const HomepageChat: React.FC = () => {
   };
   
   return (
-    <Card className="w-full max-w-3xl border-2 border-sireiq-cyan glass-effect shadow-lg shadow-sireiq-cyan/20">
-      <CardHeader className="bg-gradient-to-r from-sireiq-cyan/30 to-transparent border-b border-sireiq-cyan/30">
+    <Card className="w-full max-w-3xl border-0 bg-gray-900 shadow-lg overflow-hidden">
+      <CardHeader className="bg-gray-800 border-b border-gray-700">
         <CardTitle className="text-xl flex items-center">
-          <div className="bg-sireiq-cyan p-2 rounded-full mr-3">
-            <MessageSquare className="h-5 w-5 text-sireiq-darker" />
+          <div className="bg-blue-600 p-2 rounded-full mr-3">
+            <MessageSquare className="h-5 w-5 text-white" />
           </div>
           <div>
-            <span>Chat with SireIQ</span>
-            <p className="text-xs font-normal text-sireiq-light/70 mt-1">Ask me anything about our platform</p>
+            <span className="text-white">Chat with SireIQ</span>
+            <p className="text-xs font-normal text-gray-400 mt-1">Ask me anything about our platform</p>
           </div>
         </CardTitle>
       </CardHeader>
       
-      <CardContent>
-        <div className="space-y-4 h-[400px] overflow-y-auto p-2 bg-sireiq-darker/40 rounded-lg border border-sireiq-accent/20 my-2">
+      <CardContent className="p-0">
+        <div className="space-y-4 h-[400px] overflow-y-auto p-4 bg-gray-900">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} />
           ))}
@@ -134,7 +134,7 @@ const HomepageChat: React.FC = () => {
         </div>
       </CardContent>
       
-      <CardFooter className="bg-gradient-to-r from-transparent to-sireiq-cyan/10 border-t border-sireiq-cyan/30">
+      <CardFooter className="bg-gray-800 border-t border-gray-700 p-4">
         <ChatInput 
           input={input}
           setInput={setInput}

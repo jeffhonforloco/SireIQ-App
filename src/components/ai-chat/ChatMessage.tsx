@@ -18,29 +18,29 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   
   return (
     <div
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}
     >
       <div
-        className={`max-w-[80%] p-3 rounded-lg shadow-sm ${
+        className={`max-w-[80%] p-4 ${
           isUser
-            ? 'bg-gradient-to-r from-sireiq-accent/30 to-sireiq-accent/20 border border-sireiq-accent/50 ml-12'
-            : 'bg-gradient-to-r from-sireiq-cyan/30 to-sireiq-cyan/10 border border-sireiq-cyan/50 mr-12'
+            ? 'bg-gray-700 rounded-2xl rounded-tr-sm ml-12'
+            : 'bg-gray-800 rounded-2xl rounded-tl-sm mr-12'
         }`}
       >
         <div className="flex items-start gap-3">
           {!isUser && (
-            <div className="w-8 h-8 rounded-full bg-sireiq-cyan border border-sireiq-cyan/70 flex items-center justify-center shadow-sm">
-              <MessageCircle className="h-4 w-4 text-sireiq-darker" />
+            <div className="w-8 h-8 rounded-full bg-blue-600 border border-blue-500 flex items-center justify-center shadow-sm">
+              <MessageCircle className="h-4 w-4 text-white" />
             </div>
           )}
           
           <div className="flex-1">
-            <p className="text-sm text-sireiq-light">{message.content}</p>
+            <p className="text-gray-100">{message.content}</p>
           </div>
           
           {isUser && (
-            <div className="w-8 h-8 rounded-full bg-sireiq-accent border border-sireiq-accent/70 flex items-center justify-center shadow-sm">
-              <User className="h-4 w-4 text-sireiq-light" />
+            <div className="w-8 h-8 rounded-full bg-gray-700 border border-gray-600 flex items-center justify-center shadow-sm">
+              <User className="h-4 w-4 text-gray-300" />
             </div>
           )}
         </div>

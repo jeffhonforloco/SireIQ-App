@@ -9,12 +9,12 @@ interface AssistantMessageProps {
 
 const AssistantMessage: React.FC<AssistantMessageProps> = ({ text }) => {
   return (
-    <div className="flex space-x-3">
-      <Avatar className="h-8 w-8 bg-sireiq-cyan border border-sireiq-cyan/70 flex items-center justify-center shadow-md">
-        <MessageCircle className="h-4 w-4 text-sireiq-darker" />
+    <div className="flex space-x-3 mb-4">
+      <Avatar className="h-8 w-8 bg-blue-600 border border-blue-500 flex items-center justify-center shadow-md">
+        <MessageCircle className="h-4 w-4 text-white" />
       </Avatar>
-      <div className="bg-gradient-to-r from-sireiq-cyan/30 to-sireiq-cyan/10 border border-sireiq-cyan/50 rounded-lg p-3 max-w-[80%] shadow-sm">
-        <p className="text-sireiq-light">{text}</p>
+      <div className="bg-gray-800 rounded-2xl rounded-tl-sm p-4 max-w-[80%] shadow-sm">
+        <p className="text-gray-100">{text}</p>
       </div>
     </div>
   );

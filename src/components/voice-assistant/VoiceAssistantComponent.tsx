@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff, Volume, VolumeX, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -145,17 +146,17 @@ const VoiceAssistantComponent: React.FC = () => {
   };
 
   return (
-    <div className={`glass-effect border-2 border-sireiq-cyan rounded-2xl p-6 transition-all ${
+    <div className={`bg-gray-900 border border-gray-800 rounded-2xl ${
       isFullScreen ? 'fixed inset-4 z-50 flex flex-col' : 'max-w-3xl w-full'
     }`}>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between p-4 border-b border-gray-800">
         <div className="flex items-center">
-          <div className="bg-sireiq-cyan/40 p-2 rounded-full mr-3">
-            <MessageSquare className="h-5 w-5 text-sireiq-light" />
+          <div className="bg-blue-600 p-2 rounded-full mr-3">
+            <MessageSquare className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">Sire Voice Assistant</h2>
-            <p className="text-sm text-sireiq-light/70">Chat with our AI assistant</p>
+            <h2 className="text-xl font-semibold text-white">Sire Voice Assistant</h2>
+            <p className="text-sm text-gray-400">Chat with our AI assistant</p>
           </div>
         </div>
         
@@ -163,10 +164,10 @@ const VoiceAssistantComponent: React.FC = () => {
           <Button
             variant="outline"
             size="icon"
-            className="border-sireiq-accent/30 hover:bg-sireiq-accent/10"
+            className="border-gray-700 bg-gray-800 hover:bg-gray-700"
             onClick={handleToggleSound}
           >
-            {isSpeaking ? <Volume className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+            {isSpeaking ? <Volume className="h-5 w-5 text-white" /> : <VolumeX className="h-5 w-5 text-white" />}
           </Button>
           
           <Drawer>
@@ -174,15 +175,15 @@ const VoiceAssistantComponent: React.FC = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="border-sireiq-accent/30 hover:bg-sireiq-accent/10"
+                className="border-gray-700 bg-gray-800 hover:bg-gray-700"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </Button>
             </DrawerTrigger>
-            <DrawerContent className="bg-sireiq-darker border-sireiq-accent/30">
+            <DrawerContent className="bg-gray-900 border-gray-800">
               <VoiceSettingsPanel />
             </DrawerContent>
           </Drawer>
@@ -190,10 +191,10 @@ const VoiceAssistantComponent: React.FC = () => {
           <Button
             variant="outline"
             size="icon"
-            className="border-sireiq-accent/30 hover:bg-sireiq-accent/10"
+            className="border-gray-700 bg-gray-800 hover:bg-gray-700"
             onClick={() => setIsFullScreen(!isFullScreen)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {isFullScreen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -204,7 +205,7 @@ const VoiceAssistantComponent: React.FC = () => {
         </div>
       </div>
       
-      <ScrollArea className={`flex-grow mb-4 rounded-lg bg-sireiq-darker/60 border border-sireiq-accent/30 p-4 ${isFullScreen ? 'h-full' : 'h-80'}`}>
+      <ScrollArea className={`flex-grow mb-4 p-4 ${isFullScreen ? 'h-full' : 'h-80'}`}>
         <div className="space-y-4">
           <WelcomeMessage />
           
@@ -219,26 +220,26 @@ const VoiceAssistantComponent: React.FC = () => {
         </div>
       </ScrollArea>
       
-      <div className="pt-4 mt-4 border-t border-sireiq-accent/30">
+      <div className="p-4 border-t border-gray-800">
         <div className="flex items-center">
           <Button
             className={`rounded-full p-3 mr-3 ${
               isListening 
                 ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                : 'bg-sireiq-cyan hover:bg-sireiq-cyan/80'
+                : 'bg-blue-600 hover:bg-blue-700'
             }`}
             size="icon"
             onClick={handleToggleMic}
           >
             {isListening ? (
-              <MicOff className="h-6 w-6" />
+              <MicOff className="h-6 w-6 text-white" />
             ) : (
-              <Mic className="h-6 w-6" />
+              <Mic className="h-6 w-6 text-white" />
             )}
           </Button>
           
-          <Card className="flex-grow bg-sireiq-accent/10 border-sireiq-accent/20">
-            <div className="p-3 text-sireiq-light/70">
+          <Card className="flex-grow bg-gray-800 border-gray-700">
+            <div className="p-3 text-gray-400">
               {isListening ? (
                 transcript || "Listening..."
               ) : (
