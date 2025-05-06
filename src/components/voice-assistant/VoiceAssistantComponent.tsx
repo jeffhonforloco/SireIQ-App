@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, MicOff, Volume, VolumeX } from 'lucide-react';
+import { Mic, MicOff, Volume, VolumeX, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
@@ -146,15 +145,18 @@ const VoiceAssistantComponent: React.FC = () => {
   };
 
   return (
-    <div className={`glass-effect border border-sireiq-accent/30 rounded-2xl p-6 transition-all ${
+    <div className={`glass-effect border-2 border-sireiq-cyan rounded-2xl p-6 transition-all ${
       isFullScreen ? 'fixed inset-4 z-50 flex flex-col' : 'max-w-3xl w-full'
     }`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <div className="bg-sireiq-accent/20 p-2 rounded-full mr-3">
-            <span className="text-2xl">🤖</span>
+          <div className="bg-sireiq-cyan/40 p-2 rounded-full mr-3">
+            <MessageSquare className="h-5 w-5 text-sireiq-light" />
           </div>
-          <h2 className="text-xl font-semibold">Sire Voice Assistant</h2>
+          <div>
+            <h2 className="text-xl font-semibold">Sire Voice Assistant</h2>
+            <p className="text-sm text-sireiq-light/70">Chat with our AI assistant</p>
+          </div>
         </div>
         
         <div className="flex space-x-2">
@@ -202,7 +204,7 @@ const VoiceAssistantComponent: React.FC = () => {
         </div>
       </div>
       
-      <ScrollArea className={`flex-grow pr-4 ${isFullScreen ? 'h-full' : 'h-80'}`}>
+      <ScrollArea className={`flex-grow mb-4 rounded-lg bg-sireiq-darker/60 border border-sireiq-accent/30 p-4 ${isFullScreen ? 'h-full' : 'h-80'}`}>
         <div className="space-y-4">
           <WelcomeMessage />
           

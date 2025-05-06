@@ -19,7 +19,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ input, setInput, onSubmit, disabl
         onChange={(e) => setInput(e.target.value)}
         placeholder="Ask SireIQ something..."
         disabled={disabled}
-        className="flex-1 p-3 rounded-md bg-sireiq-accent/10 border border-sireiq-accent/30 text-sireiq-light focus:ring-1 focus:ring-sireiq-cyan focus:border-sireiq-cyan"
+        className="flex-1 p-3 rounded-md bg-sireiq-darker border-2 border-sireiq-cyan/30 text-sireiq-light focus:ring-2 focus:ring-sireiq-cyan focus:border-sireiq-cyan placeholder:text-sireiq-light/50"
       />
       <Button 
         type="submit" 

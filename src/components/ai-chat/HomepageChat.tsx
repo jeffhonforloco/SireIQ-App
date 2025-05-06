@@ -6,6 +6,7 @@ import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
 import SignupPrompt from './SignupPrompt';
 import ChatInput from './ChatInput';
+import { MessageSquare } from 'lucide-react';
 import { Message } from './types';
 
 const MAX_FREE_MESSAGES = 3;
@@ -101,18 +102,21 @@ const HomepageChat: React.FC = () => {
   };
   
   return (
-    <Card className="w-full max-w-3xl border border-sireiq-accent/30 glass-effect">
-      <CardHeader>
+    <Card className="w-full max-w-3xl border-2 border-sireiq-cyan glass-effect shadow-lg shadow-sireiq-cyan/20">
+      <CardHeader className="bg-gradient-to-r from-sireiq-cyan/30 to-transparent border-b border-sireiq-cyan/30">
         <CardTitle className="text-xl flex items-center">
-          <div className="bg-sireiq-accent/20 p-2 rounded-full mr-3">
-            <span className="text-2xl">🤖</span>
+          <div className="bg-sireiq-cyan p-2 rounded-full mr-3">
+            <MessageSquare className="h-5 w-5 text-sireiq-darker" />
           </div>
-          Chat with SireIQ
+          <div>
+            <span>Chat with SireIQ</span>
+            <p className="text-xs font-normal text-sireiq-light/70 mt-1">Ask me anything about our platform</p>
+          </div>
         </CardTitle>
       </CardHeader>
       
       <CardContent>
-        <div className="space-y-4 h-[400px] overflow-y-auto p-2">
+        <div className="space-y-4 h-[400px] overflow-y-auto p-2 bg-sireiq-darker/40 rounded-lg border border-sireiq-accent/20 my-2">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} />
           ))}
@@ -130,7 +134,7 @@ const HomepageChat: React.FC = () => {
         </div>
       </CardContent>
       
-      <CardFooter>
+      <CardFooter className="bg-gradient-to-r from-transparent to-sireiq-cyan/10 border-t border-sireiq-cyan/30">
         <ChatInput 
           input={input}
           setInput={setInput}
