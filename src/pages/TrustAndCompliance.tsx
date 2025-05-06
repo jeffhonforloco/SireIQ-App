@@ -96,7 +96,7 @@ const TrustAndCompliance = () => {
         <div className="container mx-auto px-4 md:px-6">
           <header className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Trust & <span className="text-gradient">Compliance</span>
+              <span className="text-sireiq-light">Trust & </span><span className="text-gradient">Compliance</span>
             </h1>
             <p className="text-xl text-sireiq-light/70 max-w-2xl mx-auto">
               Secure, transparent, and compliant. Your data and creative assets are protected with enterprise-grade security.
