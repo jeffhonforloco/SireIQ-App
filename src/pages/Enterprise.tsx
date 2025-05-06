@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
@@ -156,19 +157,6 @@ const Enterprise = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          </div>
-        </section>
-        
-        {/* Enterprise Quote */}
-        <section className="py-16 bg-sireiq-darker">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="glass-effect rounded-xl p-8 border border-sireiq-accent/30 text-center">
-              <p className="text-2xl italic mb-6 text-sireiq-light/90">
-                "SireIQ has transformed how our global creative teams collaborate. We've seen a 3x increase in productivity and a significant improvement in content quality across all our brands."
-              </p>
-              <p className="font-bold">Sarah Johnson</p>
-              <p className="text-sireiq-light/70">Chief Creative Officer, Global Media Corp</p>
             </div>
           </div>
         </section>
