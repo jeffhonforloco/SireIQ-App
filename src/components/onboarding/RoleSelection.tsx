@@ -4,11 +4,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useRole } from '@/contexts/RoleContext';
-import { User, Code, Building2 } from 'lucide-react';
+import { User, Code } from 'lucide-react';
 
 const RoleSelection = () => {
   const { setRole, setOnboardingStep } = useRole();
-  const [selectedRole, setSelectedRole] = React.useState<'user' | 'developer' | 'enterprise'>('user');
+  const [selectedRole, setSelectedRole] = React.useState<'user' | 'developer'>('user');
 
   const handleContinue = () => {
     setRole(selectedRole);
@@ -26,9 +26,9 @@ const RoleSelection = () => {
       </p>
       
       <RadioGroup 
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full" 
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full" 
         defaultValue="user"
-        onValueChange={(value) => setSelectedRole(value as 'user' | 'developer' | 'enterprise')}
+        onValueChange={(value) => setSelectedRole(value as 'user' | 'developer')}
       >
         <div className={`relative flex flex-col items-center border rounded-lg p-6 cursor-pointer transition-all ${selectedRole === 'user' ? 'bg-sireiq-accent/20 border-sireiq-cyan' : 'bg-sireiq-darker border-sireiq-accent/20 hover:bg-sireiq-accent/10'}`}>
           <RadioGroupItem value="user" id="user" className="sr-only" />
@@ -45,15 +45,6 @@ const RoleSelection = () => {
           <Label htmlFor="developer" className="text-lg font-semibold mb-2">Developer</Label>
           <p className="text-sm text-center text-sireiq-light/70">
             Technical tools for coding, API access, and agent building
-          </p>
-        </div>
-        
-        <div className={`relative flex flex-col items-center border rounded-lg p-6 cursor-pointer transition-all ${selectedRole === 'enterprise' ? 'bg-sireiq-accent/20 border-sireiq-cyan' : 'bg-sireiq-darker border-sireiq-accent/20 hover:bg-sireiq-accent/10'}`}>
-          <RadioGroupItem value="enterprise" id="enterprise" className="sr-only" />
-          <Building2 className="h-10 w-10 mb-4 text-sireiq-cyan" />
-          <Label htmlFor="enterprise" className="text-lg font-semibold mb-2">Enterprise</Label>
-          <p className="text-sm text-center text-sireiq-light/70">
-            Team collaboration, knowledge sharing, and advanced workflows
           </p>
         </div>
       </RadioGroup>

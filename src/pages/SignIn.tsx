@@ -13,7 +13,7 @@ import { toast } from '@/components/ui/sonner';
 const mockUsers = [
   { email: 'user@example.com', password: 'password', role: 'user' },
   { email: 'dev@example.com', password: 'password', role: 'developer' },
-  { email: 'enterprise@example.com', password: 'password', role: 'enterprise' }
+  { email: 'enterprise@example.com', password: 'password', role: 'user' } // Changed enterprise to user role
 ];
 
 const SignIn = () => {
@@ -37,7 +37,7 @@ const SignIn = () => {
     
     if (user) {
       // Set the appropriate role based on the user account
-      setRole(user.role as 'user' | 'developer' | 'enterprise');
+      setRole(user.role as 'user' | 'developer');
       setIsFirstTimeUser(false);
       toast.success(`Signed in successfully as ${user.role}!`);
       navigate('/dashboard');
@@ -102,7 +102,6 @@ const SignIn = () => {
             <div className="space-y-1 text-sm">
               <p><span className="text-sireiq-cyan">User:</span> user@example.com / password</p>
               <p><span className="text-sireiq-cyan">Developer:</span> dev@example.com / password</p>
-              <p><span className="text-sireiq-cyan">Enterprise:</span> enterprise@example.com / password</p>
             </div>
           </div>
           
