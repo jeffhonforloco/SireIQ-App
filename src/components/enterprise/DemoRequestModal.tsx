@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import DemoRequestForm from './DemoRequestForm';
 import { Server, Shield, Database } from 'lucide-react';
+import { useToast } from "@/components/ui/use-toast";
 
 interface DemoRequestModalProps {
   open: boolean;
@@ -18,6 +19,16 @@ interface DemoRequestModalProps {
 }
 
 const DemoRequestModal: React.FC<DemoRequestModalProps> = ({ open, onOpenChange }) => {
+  const { toast } = useToast();
+  
+  const handleSuccess = () => {
+    toast({
+      title: "Demo Request Submitted",
+      description: "Our enterprise team will contact you within 1 business day.",
+    });
+    onOpenChange(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-sireiq-dark border-sireiq-accent/30">
@@ -51,7 +62,7 @@ const DemoRequestModal: React.FC<DemoRequestModalProps> = ({ open, onOpenChange 
           </div>
         </div>
 
-        <DemoRequestForm onSuccess={() => onOpenChange(false)} />
+        <DemoRequestForm onSuccess={handleSuccess} />
         
         <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0 mt-3 pt-3 border-t border-sireiq-accent/20">
           <p className="text-xs text-sireiq-light/60">
