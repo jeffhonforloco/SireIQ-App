@@ -6,11 +6,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BarChart, FileText } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import AnalyticsChart from '@/components/dashboards/enterprise/AnalyticsChart';
 
 const AnalyticsTab = () => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <AnalyticsChart title="Platform Activity" timeframe="week" />
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
         <Card className="bg-sireiq-accent/5 border-sireiq-accent/20 md:col-span-2">
           <CardHeader>
             <CardTitle className="text-base font-medium">Usage Trends</CardTitle>
@@ -53,7 +58,7 @@ const AnalyticsTab = () => {
         </Card>
       </div>
       
-      <Card className="bg-sireiq-accent/5 border-sireiq-accent/20">
+      <Card className="bg-sireiq-accent/5 border-sireiq-accent/20 mt-6">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <div>
             <CardTitle className="text-base font-medium">Reports</CardTitle>
