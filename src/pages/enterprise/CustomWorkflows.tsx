@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Workflow, Settings, Layers3, Grid3x3, Code, Repeat, FlowArrow, FileSpreadsheet } from 'lucide-react';
+import { ArrowRight, Workflow, Settings, Layers3, Grid3x3, Code, Repeat, ArrowRight as FlowIcon, FileSpreadsheet } from 'lucide-react';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
 
@@ -106,7 +106,7 @@ const CustomWorkflows = () => {
                   
                   <div className="flex items-center">
                     <div className="w-12 h-12 rounded-lg bg-sireiq-accent/30 flex items-center justify-center">
-                      <FlowArrow className="h-6 w-6 text-sireiq-cyan" />
+                      <FlowIcon className="h-6 w-6 text-sireiq-cyan" />
                     </div>
                     <div className="ml-6">
                       <div className="text-sm bg-sireiq-accent/10 rounded-lg px-3 py-2 border border-sireiq-accent/10">
