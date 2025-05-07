@@ -10,16 +10,16 @@
   }
   
   .chat-input {
-    @apply bg-gray-800 border border-gray-700 rounded-full py-2 sm:py-3 px-3 sm:px-4 text-white focus:outline-none focus:ring-2 focus:ring-sireiq-accent;
+    @apply bg-gray-800 border border-gray-700 rounded-full py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-sireiq-accent;
   }
   
   .action-button {
-    @apply flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-xs sm:text-sm text-gray-200;
+    @apply flex items-center gap-1 px-2 py-1 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-xs text-gray-200;
   }
   
   /* Typing indicator animation - smaller on mobile */
   .typing-indicator div {
-    @apply w-1 sm:w-1.5 md:w-2 h-1 sm:h-1.5 md:h-2 rounded-full bg-sireiq-cyan;
+    @apply w-1 h-1 rounded-full bg-sireiq-cyan;
     animation: pulse 1.4s infinite;
   }
   
