@@ -31,28 +31,29 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
     }
   };
 
+  // Show welcome screen if no messages or only welcome message
+  const showWelcome = messages.length === 0 || (messages.length === 1 && messages[0].id.includes('welcome'));
+
   return (
     <div 
       ref={containerRef}
-      className="messages-container" 
-      onClick={(e) => e.stopPropagation()}
+      className="messages-container"
     >
-      {/* Welcome section with quick suggestions */}
-      {messages.length === 1 && messages[0].id.includes('welcome') && (
+      {showWelcome ? (
         <ChatWelcomeSection 
           handleQuickSuggestion={handleQuickSuggestion} 
           isMobile={isMobile} 
         />
+      ) : (
+        <div className="space-y-0 w-full">
+          {messages.map((message) => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+        </div>
       )}
       
-      {/* Chat messages */}
-      <div className="space-y-4 w-full">
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-        {isTyping && <ChatTypingIndicator />}
-        <div ref={messagesEndRef} />
-      </div>
+      {isTyping && <ChatTypingIndicator />}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

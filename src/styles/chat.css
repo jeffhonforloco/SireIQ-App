@@ -1,63 +1,51 @@
 
 @layer components {
-  /* Chat container styles - fixed position and width */
+  /* Chat container - fixed position with rounded corners */
   .chat-container {
-    @apply flex flex-col w-full h-full max-w-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow;
-    max-width: 100vw !important; 
-    width: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
+    @apply flex flex-col h-full max-w-3xl mx-auto bg-gray-900 overflow-hidden rounded-2xl border border-gray-800;
+    max-height: calc(100vh - 32px);
   }
   
-  /* Messages container with fixed width */
+  /* Messages container */
   .messages-container {
-    @apply flex-grow overflow-y-auto overflow-x-hidden p-2 space-y-2;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
+    @apply flex-1 overflow-y-auto overflow-x-hidden pb-4 px-4;
+    scroll-behavior: smooth;
+    height: calc(100% - 110px);
   }
   
-  /* Chat bubble styles */
-  .chat-bubble-user {
-    @apply bg-gradient-to-r from-sireiq-accent/30 to-purple-500/30 rounded-2xl rounded-tr-sm text-white;
-    max-width: 85%;
-    width: auto !important;
-    text-align: left !important;
+  /* Welcome screen styles */
+  .welcome-container {
+    @apply flex flex-col items-center justify-center mt-8 px-4;
   }
   
-  .chat-bubble-assistant {
-    @apply bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl rounded-tl-sm text-white;
-    max-width: 85%;
-    width: auto !important;
-    text-align: left !important;
+  /* Message styles */
+  .message-container {
+    @apply py-4 border-b border-gray-800 last:border-none;
   }
   
-  /* Message alignment */
   .user-message-container {
-    @apply flex justify-end w-full;
+    @apply flex flex-col w-full;
   }
   
   .assistant-message-container {
-    @apply flex justify-start w-full;
+    @apply flex flex-col w-full;
   }
   
-  /* Chat input */
-  .chat-input {
-    @apply bg-gray-800 border border-gray-700 rounded-full py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-sireiq-accent;
-    width: 100% !important;
+  /* Message content */
+  .message-content {
+    @apply text-gray-200 whitespace-pre-wrap text-sm sm:text-base;
+    max-width: 100%;
   }
   
+  /* Chat input container */
   .chat-input-container {
-    @apply p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm w-full;
-    position: sticky !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
+    @apply p-3 border-t border-gray-800 bg-gray-900 w-full;
+    position: relative;
   }
   
-  /* Typing indicator animation */
+  /* Typing indicator */
   .typing-indicator div {
-    @apply w-1 h-1 rounded-full bg-sireiq-cyan;
+    @apply w-2 h-2 rounded-full bg-blue-500;
     animation: pulse 1.4s infinite;
   }
   
@@ -69,54 +57,41 @@
     animation-delay: -0.16s;
   }
   
-  /* Glow effect for elements */
-  .shadow-glow {
-    box-shadow: 0 0 20px rgba(96, 165, 250, 0.1), 
-                0 0 10px rgba(96, 165, 250, 0.05), 
-                0 0 5px rgba(96, 165, 250, 0.025);
+  /* Bottom disclaimer text */
+  .disclaimer-text {
+    @apply text-center text-xs text-gray-500 mt-2 px-4;
   }
   
-  .glow-text {
-    text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
+  /* Suggestion buttons */
+  .suggestion-button {
+    @apply flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800 
+           hover:bg-gray-700 transition-colors text-sm text-gray-300 
+           px-4 py-2 cursor-pointer;
   }
   
-  /* Fixed layout for mobile */
-  @media (max-width: 640px) {
-    .chat-container {
-      height: 100vh !important;
-      max-height: 100vh !important;
-      overflow: hidden;
-      width: 100vw !important;
-    }
+  /* Input textarea */
+  .chat-input-textarea {
+    @apply w-full px-3 py-2.5 bg-gray-800 rounded-2xl 
+           text-gray-200 placeholder-gray-400 text-sm sm:text-base
+           border border-gray-700 pr-10
+           focus:outline-none focus:border-gray-600 focus:ring-0 resize-none;
+    min-height: 24px;
+    max-height: 200px;
   }
   
-  /* Allow text selection ONLY in editable inputs */
-  .chat-container textarea,
-  .chat-container input {
-    user-select: text !important;
-    -webkit-user-select: text !important;
-    -moz-user-select: text !important;
-    -ms-user-select: text !important;
-    -webkit-touch-callout: text !important;
+  /* Allow text selection in messages and inputs */
+  .message-content {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
   }
   
-  * {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Prevent drag behaviors */
-  [draggable="false"] {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
+  .chat-input-textarea {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
   }
   
   @keyframes pulse {
@@ -128,5 +103,10 @@
       transform: scale(1);
       opacity: 1;
     }
+  }
+  
+  /* Quick suggestion buttons */
+  .quick-suggestion-grid {
+    @apply grid grid-cols-2 gap-2 mt-5 w-full max-w-lg mx-auto;
   }
 }

@@ -11,25 +11,26 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user';
   
   return (
-    <div className={`${isUser ? 'user-message-container' : 'assistant-message-container'} animate-fade-in w-full`} onClick={(e) => e.stopPropagation()}>
-      <div className={`flex items-start gap-1 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`message-container ${isUser ? 'user-message-container' : 'assistant-message-container'}`}>
+      <div className="flex items-start gap-3">
         {!isUser && (
-          <div className="h-5 w-5 rounded-full bg-gradient-to-r from-sireiq-cyan to-blue-500 flex items-center justify-center mt-1 shadow-glow flex-shrink-0">
-            <MessageSquare className="h-2.5 w-2.5 text-sireiq-darker" />
+          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+            <MessageSquare className="h-4 w-4 text-white" />
           </div>
         )}
         
-        <div className={`p-2 text-sm ${
-          isUser 
-            ? 'chat-bubble-user' 
-            : 'chat-bubble-assistant'
-        }`}>
-          <p className="text-gray-100 whitespace-pre-wrap">{message.content}</p>
+        <div className="flex-1">
+          <div className="font-medium text-sm mb-1 text-gray-400">
+            {isUser ? 'You' : 'SireIQ'}
+          </div>
+          <div className="message-content">
+            {message.content}
+          </div>
         </div>
         
         {isUser && (
-          <div className="h-5 w-5 rounded-full bg-gray-700 flex items-center justify-center mt-1 flex-shrink-0">
-            <User className="h-2.5 w-2.5 text-gray-300" />
+          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center flex-shrink-0">
+            <User className="h-4 w-4 text-gray-300" />
           </div>
         )}
       </div>

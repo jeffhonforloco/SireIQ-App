@@ -4,15 +4,21 @@ import { MessageSquare } from 'lucide-react';
 
 const ChatTypingIndicator: React.FC = () => {
   return (
-    <div className="flex items-start gap-1 animate-fade-in">
-      <div className="h-5 w-5 rounded-full bg-gradient-to-r from-sireiq-cyan to-blue-500 flex items-center justify-center mt-1 shadow-glow">
-        <MessageSquare className="h-2.5 w-2.5 text-sireiq-darker" />
-      </div>
-      <div className="p-1.5 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl rounded-tl-sm inline-flex">
-        <div className="typing-indicator flex space-x-0.5 items-center">
-          <div></div>
-          <div></div>
-          <div></div>
+    <div className="message-container assistant-message-container">
+      <div className="flex items-start gap-3">
+        <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+          <MessageSquare className="h-4 w-4 text-white" />
+        </div>
+        
+        <div className="flex-1">
+          <div className="font-medium text-sm mb-1 text-gray-400">
+            SireIQ
+          </div>
+          <div className="typing-indicator flex space-x-1.5 items-center p-1">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
     </div>

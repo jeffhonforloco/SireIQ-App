@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -8,49 +8,10 @@ import ChatMessagesContainer from './ChatMessagesContainer';
 import ChatInputForm from './ChatInputForm';
 
 const HomeChatExperience: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      content: "Hi there! I'm SireIQ, your intelligent AI assistant. I can help with content creation, data analysis, workflow optimization, and much more. How can I assist you today?",
-      role: 'assistant',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const isMobile = useIsMobile();
-  
-  // Prevent page scroll and handling
-  useEffect(() => {
-    const preventDefaultScroll = (e: TouchEvent) => {
-      if (
-        e.target instanceof Element && 
-        !['INPUT', 'TEXTAREA'].includes(e.target.tagName) &&
-        !e.target.closest('textarea') &&
-        !e.target.closest('input')
-      ) {
-        e.preventDefault();
-      }
-    };
-    
-    const preventDefaultClick = (e: MouseEvent) => {
-      if (e.target instanceof HTMLAnchorElement) {
-        e.preventDefault();
-      }
-    };
-    
-    document.addEventListener('touchmove', preventDefaultScroll, { passive: false });
-    document.addEventListener('click', preventDefaultClick);
-    
-    // Disable pull-to-refresh and browser navigation gestures on mobile
-    document.body.style.overscrollBehavior = 'none';
-    
-    return () => {
-      document.removeEventListener('touchmove', preventDefaultScroll);
-      document.removeEventListener('click', preventDefaultClick);
-      document.body.style.overscrollBehavior = '';
-    };
-  }, []);
   
   const handleSubmit = useCallback((e: React.FormEvent) => {
     if (e) {
@@ -58,7 +19,7 @@ const HomeChatExperience: React.FC = () => {
       e.stopPropagation();
     }
     
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
     
     // Add user message
     const userMessage: Message = {
@@ -76,7 +37,7 @@ const HomeChatExperience: React.FC = () => {
     setTimeout(() => {
       generateResponse(input);
     }, 1000);
-  }, [input]);
+  }, [input, isTyping]);
 
   const generateResponse = useCallback((userInput: string) => {
     // Add AI assistant message
@@ -108,14 +69,7 @@ const HomeChatExperience: React.FC = () => {
   }, []);
 
   const clearChat = useCallback(() => {
-    setMessages([
-      {
-        id: 'welcome-reset',
-        content: "Chat cleared. How else can I help you today?",
-        role: 'assistant',
-        timestamp: new Date(),
-      },
-    ]);
+    setMessages([]);
   }, []);
 
   return (
@@ -137,6 +91,7 @@ const HomeChatExperience: React.FC = () => {
         setInput={setInput}
         handleSubmit={handleSubmit}
         handleVoiceInput={handleVoiceInput}
+        isTyping={isTyping}
       />
     </div>
   );

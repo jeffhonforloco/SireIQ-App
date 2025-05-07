@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare, Plus, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ChatHeaderProps {
@@ -9,27 +9,26 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   return (
-    <div className="flex items-center justify-between p-2 sm:p-3 border-b border-gray-800 bg-black/50 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
+    <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-800 bg-gray-900">
       <div className="flex items-center">
-        <div className="bg-gradient-to-r from-sireiq-cyan to-blue-500 rounded-full p-1.5 mr-2 shadow-lg">
-          <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 text-sireiq-darker" />
-        </div>
-        <div className="flex flex-col">
-          <h2 className="text-sm sm:text-base font-medium text-white whitespace-nowrap">Chat with SireIQ</h2>
-          <p className="text-xs text-gray-400 hidden sm:block">Your intelligent AI assistant</p>
-        </div>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="h-8 w-8 text-gray-400 hover:text-white hover:bg-gray-800 mr-2"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+        <h2 className="text-base sm:text-lg font-semibold text-white">SireIQ</h2>
       </div>
+      
       <Button 
-        variant="ghost" 
-        size="icon" 
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          clearChat();
-        }}
-        className="h-6 w-6 sm:h-7 sm:w-7 text-gray-400 hover:text-white hover:bg-gray-800"
+        variant="outline" 
+        size="sm"
+        onClick={clearChat}
+        className="flex items-center gap-1 h-8 text-xs border-gray-700 hover:bg-gray-800 text-gray-300"
       >
-        <X className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+        <Plus className="h-3.5 w-3.5" />
+        <span>New chat</span>
       </Button>
     </div>
   );

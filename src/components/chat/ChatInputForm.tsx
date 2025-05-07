@@ -1,21 +1,21 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Send, Mic } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import { Send, Paperclip, CornerUpRight } from 'lucide-react';
 
 interface ChatInputFormProps {
   input: string;
   setInput: (value: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
   handleVoiceInput: () => void;
+  isTyping: boolean;
 }
 
 const ChatInputForm: React.FC<ChatInputFormProps> = ({
   input,
   setInput,
   handleSubmit,
-  handleVoiceInput
+  handleVoiceInput,
+  isTyping
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -24,7 +24,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
     // Auto adjust textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 60)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, [input]);
   
@@ -36,7 +36,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="chat-input-container">
+    <div className="px-3 pt-2 pb-4">
       <form 
         ref={formRef}
         onSubmit={(e) => {
@@ -44,43 +44,37 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           handleSubmit(e);
           return false;
         }} 
-        className="relative max-w-2xl mx-auto w-full"
+        className="relative max-w-3xl mx-auto w-full"
       >
-        <Textarea
+        <textarea
           ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask SireIQ anything..."
-          className="pr-14 resize-none min-h-[32px] max-h-[60px] text-xs sm:text-sm bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent py-1.5 px-2.5"
+          placeholder="Ask anything"
+          disabled={isTyping}
+          className="chat-input-textarea"
           rows={1}
         />
-        <div className="absolute bottom-0.5 right-0.5 flex items-center space-x-1">
-          <Button
-            type="button"
-            size="icon"
-            variant="ghost"
-            className="text-gray-400 hover:text-white hover:bg-gray-700 rounded-full h-5 w-5"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleVoiceInput();
-            }}
-          >
-            <Mic className="h-2.5 w-2.5" />
-          </Button>
-          <Button
+        
+        <div className="absolute right-2.5 bottom-1.5 flex items-center">
+          <button
             type="submit"
-            size="icon"
-            disabled={!input.trim()}
-            className={`rounded-full h-5 w-5 ${
-              input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'
+            disabled={!input.trim() || isTyping}
+            className={`p-1 rounded-md ${
+              input.trim() && !isTyping 
+                ? 'text-gray-300 hover:text-white' 
+                : 'text-gray-500'
             }`}
           >
-            <Send className="h-2.5 w-2.5" />
-          </Button>
+            <CornerUpRight className="h-4 w-4" />
+          </button>
         </div>
       </form>
+      
+      <div className="disclaimer-text">
+        By messaging SireIQ, you agree to our <a href="#" className="underline hover:text-gray-400">Terms</a> and have read our <a href="#" className="underline hover:text-gray-400">Privacy Policy</a>.
+      </div>
     </div>
   );
 };
