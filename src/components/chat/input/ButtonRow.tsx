@@ -56,13 +56,14 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
         <button
           type="button"
           onClick={handleVoiceInput}
-          className={`voice-button rounded-full p-1.5 ${
+          className={`flex items-center rounded-full px-3 py-1.5 ${
             isListening
-              ? 'bg-red-500 animate-pulse'
-              : 'bg-gray-700 hover:bg-gray-600'
+              ? 'bg-black text-white animate-pulse'
+              : 'bg-black text-white hover:bg-gray-800'
           }`}
         >
-          <Mic className="h-4 w-4" />
+          <Mic className="h-4 w-4 mr-1" />
+          <span className="text-xs font-medium">Voice</span>
         </button>
         
         <button
