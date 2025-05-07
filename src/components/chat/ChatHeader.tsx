@@ -14,8 +14,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         <div className="bg-gradient-to-r from-sireiq-cyan to-blue-500 rounded-full p-1.5 mr-2 shadow-lg">
           <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4 text-sireiq-darker" />
         </div>
-        <div>
-          <h2 className="text-sm sm:text-base font-medium text-white">Chat with SireIQ</h2>
+        <div className="flex flex-col">
+          <h2 className="text-sm sm:text-base font-medium text-white whitespace-nowrap">Chat with SireIQ</h2>
           <p className="text-xs text-gray-400 hidden sm:block">Your intelligent AI assistant</p>
         </div>
       </div>

@@ -20,7 +20,7 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({
 
   return (
     <div className="mb-2 animate-fade-in">
-      <h1 className="text-lg sm:text-xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
+      <h1 className="text-lg sm:text-xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 glow-text truncate">
         {isMobile ? "Chat with intelligent AI" : "Unleash your potential with intelligent AI"}
       </h1>
       <div className="grid grid-cols-1 gap-1.5">
