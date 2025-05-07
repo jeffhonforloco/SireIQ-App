@@ -51,14 +51,31 @@
     }
   }
   
-  /* Prevent default link behavior */
+  /* Prevent default link behaviors and navigation */
   a {
-    pointer-events: none;
+    pointer-events: none !important;
   }
   
   /* Remove hover effects */
   button:hover {
     transform: none !important;
+  }
+  
+  /* Prevent text selection */
+  * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Prevent drag behaviors */
+  [draggable="false"] {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
   }
   
   @keyframes pulse {

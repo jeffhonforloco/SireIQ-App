@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -20,8 +20,17 @@ const HomeChatExperience: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const isMobile = useIsMobile();
   
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Prevent any default browser behaviors that might cause page reloads
+  const preventReload = useCallback((e: React.MouseEvent | React.FormEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, []);
+  
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    preventReload(e);
+    
     if (!input.trim()) return;
     
     // Add user message
@@ -40,9 +49,9 @@ const HomeChatExperience: React.FC = () => {
     setTimeout(() => {
       generateResponse(input);
     }, 1000);
-  };
+  }, [input, preventReload]);
 
-  const generateResponse = (userInput: string) => {
+  const generateResponse = useCallback((userInput: string) => {
     // Add AI assistant message
     const responses = [
       `I've analyzed your question about ${userInput.toLowerCase()}. Based on our advanced AI models, here are some insights that might help you enhance your strategy or workflow.`,
@@ -60,18 +69,18 @@ const HomeChatExperience: React.FC = () => {
     
     setMessages(prev => [...prev, assistantMessage]);
     setIsTyping(false);
-  };
+  }, []);
 
-  const handleQuickSuggestion = (suggestion: string) => {
+  const handleQuickSuggestion = useCallback((suggestion: string) => {
     setInput(suggestion);
-  };
+  }, []);
 
-  const handleVoiceInput = () => {
+  const handleVoiceInput = useCallback(() => {
     toast.info("Voice recognition activated. Please speak clearly.");
     // This would integrate with your existing voice assistant functionality
-  };
+  }, []);
 
-  const clearChat = () => {
+  const clearChat = useCallback(() => {
     setMessages([
       {
         id: 'welcome-reset',
@@ -80,10 +89,14 @@ const HomeChatExperience: React.FC = () => {
         timestamp: new Date(),
       },
     ]);
-  };
+  }, []);
 
   return (
-    <div className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow" onClick={(e) => e.preventDefault()}>
+    <div 
+      className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow" 
+      onClick={preventReload}
+      onTouchStart={preventReload}
+    >
       {/* Header */}
       <ChatHeader clearChat={clearChat} />
       

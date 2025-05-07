@@ -30,13 +30,30 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      e.stopPropagation();
       handleSubmit(e);
     }
   };
 
+  const preventDefault = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
-    <div className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
-      <form onSubmit={handleSubmit} className="relative">
+    <div 
+      className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm" 
+      onClick={preventDefault}
+      onTouchStart={preventDefault}
+    >
+      <form 
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleSubmit(e);
+        }} 
+        className="relative"
+      >
         <Textarea
           ref={textareaRef}
           value={input}
@@ -45,6 +62,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           placeholder="Ask SireIQ anything..."
           className="pr-14 resize-none min-h-[32px] max-h-[60px] text-xs sm:text-sm bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent py-1.5 px-2.5"
           rows={1}
+          onClick={preventDefault}
+          onTouchStart={preventDefault}
         />
         <div className="absolute bottom-0.5 right-0.5 flex items-center space-x-1">
           <Button
@@ -52,7 +71,11 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             size="icon"
             variant="ghost"
             className="text-gray-400 hover:text-white hover:bg-gray-700 rounded-full h-5 w-5"
-            onClick={handleVoiceInput}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleVoiceInput();
+            }}
           >
             <Mic className="h-2.5 w-2.5" />
           </Button>
@@ -60,6 +83,11 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             type="submit"
             size="icon"
             disabled={!input.trim()}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (input.trim()) handleSubmit(e);
+            }}
             className={`rounded-full h-5 w-5 ${
               input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'
             }`}
