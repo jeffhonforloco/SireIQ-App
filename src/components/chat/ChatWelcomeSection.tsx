@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Lightbulb, Gift, BarChart2, Feather, ChevronRight, Code, Globe, Shield } from 'lucide-react';
+import { Lightbulb, Gift, BarChart2, Feather, ChevronRight, Code, Globe, Shield, MessageSquare } from 'lucide-react';
 
 interface ChatWelcomeSectionProps {
   handleQuickSuggestion: (suggestion: string) => void;
