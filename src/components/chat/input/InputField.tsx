@@ -48,11 +48,11 @@ const InputField: React.FC<InputFieldProps> = ({
         type="submit"
         disabled={!input.trim() || isTyping}
         aria-label="Send message"
-        className={`chat-input-button absolute right-4 top-4 transform rounded-full p-2 ${
+        className={`chat-input-button absolute right-4 top-4 transform rounded-full p-1.5 ${
           input.trim() && !isTyping ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700'
         }`}
       >
-        <ArrowUp className="h-5 w-5" />
+        <ArrowUp className="h-4 w-4" />
       </button>
     </div>
   );
