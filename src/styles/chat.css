@@ -193,9 +193,18 @@
   opacity: 0.9;
 }
 
+/* Feature buttons styling */
+.feature-buttons-container {
+  width: 100%;
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 640px) {
   .input-buttons-container {
     padding: 0.375rem 0;
+  }
+  
+  .feature-buttons-container .grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
