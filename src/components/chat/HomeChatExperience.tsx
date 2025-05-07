@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -20,16 +20,34 @@ const HomeChatExperience: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const isMobile = useIsMobile();
   
-  // Prevent any default browser behaviors that might cause page reloads
-  const preventReload = useCallback((e: React.MouseEvent | React.FormEvent | React.TouchEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+  // Prevent any default browser behaviors
+  useEffect(() => {
+    const container = document.querySelector('.chat-container');
+    if (container) {
+      const preventEvent = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+      
+      // Apply to this specific container
+      container.addEventListener('touchstart', preventEvent, { passive: false });
+      container.addEventListener('touchmove', preventEvent, { passive: false });
+      container.addEventListener('click', preventEvent);
+      
+      return () => {
+        container.removeEventListener('touchstart', preventEvent);
+        container.removeEventListener('touchmove', preventEvent);
+        container.removeEventListener('click', preventEvent);
+      };
     }
   }, []);
   
   const handleSubmit = useCallback((e: React.FormEvent) => {
-    preventReload(e);
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     
     if (!input.trim()) return;
     
@@ -49,7 +67,7 @@ const HomeChatExperience: React.FC = () => {
     setTimeout(() => {
       generateResponse(input);
     }, 1000);
-  }, [input, preventReload]);
+  }, [input]);
 
   const generateResponse = useCallback((userInput: string) => {
     // Add AI assistant message
@@ -91,11 +109,20 @@ const HomeChatExperience: React.FC = () => {
     ]);
   }, []);
 
+  const preventPropagation = (e: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
   return (
     <div 
-      className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow" 
-      onClick={preventReload}
-      onTouchStart={preventReload}
+      className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow chat-container" 
+      onClick={preventPropagation}
+      onTouchStart={preventPropagation}
+      onTouchMove={preventPropagation}
+      onContextMenu={preventPropagation}
     >
       {/* Header */}
       <ChatHeader clearChat={clearChat} />

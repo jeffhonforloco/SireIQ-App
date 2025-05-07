@@ -18,12 +18,30 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   handleVoiceInput
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     // Auto adjust textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 60)}px`;
+    }
+    
+    // Ensure the form doesn't trigger page reloads
+    if (formRef.current) {
+      const form = formRef.current;
+      
+      const preventFormSubmission = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+      
+      form.addEventListener('submit', preventFormSubmission);
+      
+      return () => {
+        form.removeEventListener('submit', preventFormSubmission);
+      };
     }
   }, [input]);
 
@@ -47,10 +65,12 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
       onTouchStart={preventDefault}
     >
       <form 
+        ref={formRef}
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
           handleSubmit(e);
+          return false;
         }} 
         className="relative"
       >
@@ -75,6 +95,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               e.preventDefault();
               e.stopPropagation();
               handleVoiceInput();
+              return false;
             }}
           >
             <Mic className="h-2.5 w-2.5" />
@@ -87,6 +108,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               e.preventDefault();
               e.stopPropagation();
               if (input.trim()) handleSubmit(e);
+              return false;
             }}
             className={`rounded-full h-5 w-5 ${
               input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'

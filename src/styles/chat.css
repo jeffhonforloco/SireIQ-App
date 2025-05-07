@@ -54,6 +54,7 @@
   /* Prevent default link behaviors and navigation */
   a {
     pointer-events: none !important;
+    text-decoration: none !important;
   }
   
   /* Remove hover effects */
@@ -63,10 +64,13 @@
   
   /* Prevent text selection */
   * {
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
+    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
   
   /* Prevent drag behaviors */
@@ -76,6 +80,29 @@
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
+  }
+  
+  /* Fix the inputs in the chat to ensure they don't cause layout shifts */
+  .chat-container input, .chat-container textarea {
+    -webkit-appearance: none;
+    border-radius: 0;
+    box-shadow: none !important;
+    -webkit-overflow-scrolling: touch;
+    position: static !important;
+    caret-color: white;
+  }
+  
+  /* Override pointer events for all interactive elements */
+  .chat-container * {
+    pointer-events: none;
+  }
+  
+  /* Only allow pointer events for specific interactive elements to function properly */
+  .chat-container button,
+  .chat-container textarea,
+  .chat-container input,
+  .chat-container a {
+    pointer-events: auto;
   }
   
   @keyframes pulse {

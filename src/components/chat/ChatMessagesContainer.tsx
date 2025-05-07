@@ -19,17 +19,51 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   isMobile
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollToBottom();
+    
+    // Prevent default behavior for all events within this container
+    if (containerRef.current) {
+      const container = containerRef.current;
+      
+      const preventEvent = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+      };
+      
+      container.addEventListener('touchstart', preventEvent, { passive: false });
+      container.addEventListener('touchmove', preventEvent, { passive: false });
+      
+      return () => {
+        container.removeEventListener('touchstart', preventEvent);
+        container.removeEventListener('touchmove', preventEvent);
+      };
+    }
   }, [messages, isTyping]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+  const preventPropagation = (e: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   };
 
   return (
-    <div className="flex-grow overflow-hidden p-2 space-y-2" onClick={(e) => e.stopPropagation()}>
+    <div 
+      ref={containerRef}
+      className="flex-grow overflow-hidden p-2 space-y-2" 
+      onClick={preventPropagation}
+      onTouchStart={preventPropagation}
+      onTouchMove={preventPropagation}
+    >
       {/* Welcome section with quick suggestions */}
       {messages.length === 1 && messages[0].id.includes('welcome') && (
         <ChatWelcomeSection 
