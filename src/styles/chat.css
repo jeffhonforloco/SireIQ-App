@@ -37,26 +37,50 @@
     max-width: 100%;
   }
   
-  /* Chat input container */
+  /* Chat input container - new rounded dark design */
   .chat-input-container {
-    @apply relative flex items-center w-full rounded-xl border border-gray-700/50;
-    border-radius: 24px;
-    background-color: #1a1d29;
+    @apply relative w-full rounded-full border border-gray-700/50 bg-[#1a1d29] p-2;
+  }
+  
+  /* Feature buttons area */
+  .feature-buttons-container {
+    @apply flex flex-wrap justify-center gap-2 mt-4 mb-2;
+  }
+  
+  .feature-button {
+    @apply flex items-center gap-2 px-4 py-2 rounded-full 
+           bg-[#1a1d29] border border-gray-700/50 
+           text-sm text-gray-300 hover:bg-gray-800 transition-colors;
+  }
+  
+  /* Input button styles */
+  .input-button {
+    @apply px-4 py-2 rounded-full flex items-center gap-2
+           bg-[#1a1d29] border border-gray-700/50
+           text-sm text-gray-300 hover:bg-gray-800 transition-colors;
+  }
+  
+  /* Voice button */
+  .voice-button {
+    @apply px-4 py-2 rounded-full flex items-center gap-2
+           bg-white text-black hover:bg-gray-200 transition-colors;
   }
   
   /* Input buttons container */
   .input-buttons-container {
-    @apply absolute left-2 bottom-2 flex items-center space-x-1;
+    @apply flex items-center gap-2 mb-4;
   }
   
-  /* Input icon button */
-  .input-icon-button {
-    @apply p-2 rounded-full hover:bg-gray-800 transition-colors flex items-center justify-center;
+  /* Chat input field */
+  .chat-input-field {
+    @apply w-full px-4 py-2 bg-[#1a1d29] rounded-full 
+           text-gray-200 placeholder-gray-400 text-sm
+           focus:outline-none focus:ring-0;
   }
   
   /* Submit button */
   .submit-button {
-    @apply absolute right-2 bottom-2 p-2 rounded-full transition-colors flex items-center justify-center;
+    @apply absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors flex items-center justify-center;
   }
   
   .submit-button.active {
@@ -97,24 +121,8 @@
            px-4 py-3 w-full cursor-pointer;
   }
   
-  /* Input textarea */
-  .chat-input-textarea {
-    @apply w-full px-12 py-3 bg-transparent rounded-2xl 
-           text-gray-200 placeholder-gray-400 text-sm sm:text-base
-           focus:outline-none focus:ring-0 resize-none;
-    min-height: 24px;
-    max-height: 200px;
-  }
-  
   /* Allow text selection in messages and inputs */
   .message-content {
-    user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-  }
-  
-  .chat-input-textarea {
     user-select: text;
     -webkit-user-select: text;
     -moz-user-select: text;

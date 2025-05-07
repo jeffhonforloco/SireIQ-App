@@ -30,6 +30,14 @@ const HomeChatExperience: React.FC = () => {
     decisions: [
       "To optimize your decision-making process, SireIQ recommends implementing a structured framework that quantifies both objective metrics and subjective factors. Our AI can help weight these elements based on your organizational priorities.",
       "SireIQ's decision optimization tool can integrate data from multiple sources to provide comprehensive scenario analysis. This reduces decision fatigue and ensures consistent quality across your organization."
+    ],
+    code: [
+      "Here's a code snippet based on your requirements:\n```javascript\nfunction optimizeWorkflow(tasks) {\n  return tasks.sort((a, b) => {\n    return (b.priority * b.impact) - (a.priority * a.impact);\n  });\n}\n```\nThis function prioritizes tasks with the highest combined priority and impact score.",
+      "I've analyzed your code structure. Consider this refactored approach:\n```javascript\nconst processData = async (input) => {\n  const results = await Promise.all(input.map(async item => {\n    const enriched = await enrichItem(item);\n    return transformItem(enriched);\n  }));\n  return aggregateResults(results);\n};\n```\nThis approach improves performance with parallel processing."
+    ],
+    brainstorm: [
+      "Let's brainstorm on this topic. SireIQ suggests considering these angles:\n1. Customer perspective: What unmet needs exist?\n2. Competitive landscape: Where are the gaps?\n3. Technology trends: What emerging tools can be leveraged?\n4. Resource optimization: How can existing assets be repurposed?\n5. Cross-industry inspiration: What successful models can be adapted?",
+      "For an effective brainstorming session, SireIQ recommends this structured approach:\n1. Define the challenge with specific parameters\n2. Generate quantity first (aim for 30+ ideas)\n3. Build on existing concepts with "yes, and..." thinking\n4. Categorize ideas into immediate, near-term, and moonshot groups\n5. Prioritize based on impact vs. effort analysis"
     ]
   };
   
@@ -76,6 +84,12 @@ const HomeChatExperience: React.FC = () => {
     }
     else if (lowerInput.includes("decision") || lowerInput.includes("optimize") || lowerInput.includes("process")) {
       responseContent = sireIQResponses.decisions[Math.floor(Math.random() * sireIQResponses.decisions.length)];
+    }
+    else if (lowerInput.includes("code") || lowerInput.includes("programming") || lowerInput.includes("function")) {
+      responseContent = sireIQResponses.code[Math.floor(Math.random() * sireIQResponses.code.length)];
+    }
+    else if (lowerInput.includes("brainstorm") || lowerInput.includes("ideas") || lowerInput.includes("think")) {
+      responseContent = sireIQResponses.brainstorm[Math.floor(Math.random() * sireIQResponses.brainstorm.length)];
     }
     else {
       const generalResponses = [

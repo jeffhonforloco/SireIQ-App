@@ -4,7 +4,6 @@ import { Message } from '@/components/ai-chat/types';
 import ChatMessage from './ChatMessage';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatWelcomeSection from './ChatWelcomeSection';
-import { MessageSquare } from 'lucide-react';
 
 interface ChatMessagesContainerProps {
   messages: Message[];
