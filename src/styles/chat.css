@@ -1,142 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@layer components {
-  /* Chat container - fixed position with rounded corners */
-  .chat-container {
-    @apply flex flex-col h-full max-w-3xl mx-auto bg-[#0f1117] overflow-hidden rounded-xl border border-gray-700/50 shadow-lg;
-    max-height: calc(100vh - 32px);
+/* Chat welcome section */
+.chat-welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+.chat-welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+}
+
+.chat-welcome-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+}
+
+.chat-welcome-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.chat-welcome-suggestion {
+  padding: 0.5rem 1rem;
+  background-color: rgba(31, 41, 55, 0.7);
+  border-radius: 0.375rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chat-welcome-suggestion:hover {
+  background-color: rgba(55, 65, 81, 0.7);
+}
+
+/* Chat message styling */
+.chat-message-container {
+  display: flex;
+  padding: 0.75rem 1rem;
+}
+
+.chat-message-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  margin-right: 0.75rem;
+  background-color: rgba(241, 245, 249, 0.1);
+}
+
+.chat-message-content {
+  flex: 1;
+}
+
+.chat-message-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.125rem;
+}
+
+.chat-message-text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5rem;
+}
+
+/* Chat input styling */
+.chat-input-container {
+  position: relative;
+}
+
+.chat-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 3rem;
+  border-radius: 0.375rem;
+  background-color: rgba(31, 41, 55, 0.7);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  outline: none;
+  border: none;
+}
+
+.chat-input::placeholder {
+  color: rgba(156, 163, 175, 0.7);
+}
+
+.chat-input-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  background-color: rgba(31, 41, 55, 0.7);
+  color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.2s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.chat-input-button:hover {
+  background-color: rgba(55, 65, 81, 0.7);
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+}
+
+.typing-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 9999px;
+  animation: pulse 1.5s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
   }
-  
-  /* Messages container */
-  .messages-container {
-    @apply flex-1 overflow-y-auto overflow-x-hidden pb-4 px-4;
-    scroll-behavior: smooth;
-    height: calc(100% - 110px);
+  50% {
+    opacity: 1;
   }
-  
-  /* Welcome screen styles */
-  .welcome-container {
-    @apply flex flex-col items-center justify-center py-8 px-4 max-w-2xl mx-auto;
+  100% {
+    opacity: 0.4;
   }
-  
-  /* Message styles */
-  .message-container {
-    @apply py-6 px-1 border-b border-gray-700/30 last:border-none;
-  }
-  
-  .user-message-container {
-    @apply flex flex-col w-full;
-  }
-  
-  .assistant-message-container {
-    @apply flex flex-col w-full;
-  }
-  
-  /* Message content */
-  .message-content {
-    @apply text-gray-200 whitespace-pre-wrap text-sm sm:text-base leading-relaxed;
-    max-width: 100%;
-  }
-  
-  /* Chat input container - new rounded dark design */
-  .chat-input-container {
-    @apply relative w-full rounded-full border border-gray-700/50 bg-[#1a1d29] p-2;
-  }
-  
-  /* Feature buttons area */
-  .feature-buttons-container {
-    @apply flex flex-wrap justify-center gap-2 mt-4 mb-2;
-  }
-  
-  .feature-button {
-    @apply flex items-center gap-2 px-4 py-2 rounded-full 
-           bg-[#1a1d29] border border-gray-700/50 
-           text-sm text-gray-300 hover:bg-gray-800 transition-colors;
-  }
-  
-  /* Input button styles */
-  .input-button {
-    @apply px-4 py-2 rounded-full flex items-center gap-2
-           bg-[#1a1d29] border border-gray-700/50
-           text-sm text-gray-300 hover:bg-gray-800 transition-colors;
-  }
-  
-  /* Voice button */
-  .voice-button {
-    @apply px-4 py-2 rounded-full flex items-center gap-2
-           bg-white text-black hover:bg-gray-200 transition-colors;
-  }
-  
-  /* Input buttons container */
+}
+
+/* Input styling */
+.input-buttons-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.input-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  background-color: rgba(31, 35, 40, 0.5);
+  border-radius: 0.375rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  transition: background-color 0.2s;
+}
+
+.input-button:hover {
+  background-color: rgba(48, 54, 61, 0.5);
+}
+
+.voice-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  background-color: rgba(59, 130, 246, 0.2);
+  border-radius: 0.375rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  transition: background-color 0.2s;
+}
+
+.voice-button:hover {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
   .input-buttons-container {
-    @apply flex items-center gap-2 mb-4;
+    padding: 0.375rem 0;
   }
   
-  /* Chat input field */
-  .chat-input-field {
-    @apply w-full px-4 py-2 bg-[#1a1d29] rounded-full 
-           text-gray-200 placeholder-gray-400 text-sm
-           focus:outline-none focus:ring-0;
-  }
-  
-  /* Submit button */
-  .submit-button {
-    @apply absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors flex items-center justify-center;
-  }
-  
-  .submit-button.active {
-    @apply bg-blue-600 text-white hover:bg-blue-700;
-  }
-  
-  .submit-button.inactive {
-    @apply bg-gray-700 text-gray-500 cursor-not-allowed;
-  }
-  
-  /* Typing indicator */
-  .typing-indicator {
-    @apply flex items-center gap-1 p-2 my-2;
-  }
-  
-  .typing-indicator div {
-    @apply w-2 h-2 rounded-full bg-blue-500;
-    animation: pulse 1.4s infinite;
-  }
-  
-  .typing-indicator div:nth-child(1) {
-    animation-delay: -0.32s;
-  }
-  
-  .typing-indicator div:nth-child(2) {
-    animation-delay: -0.16s;
-  }
-  
-  /* Bottom disclaimer text */
-  .disclaimer-text {
-    @apply text-center text-xs text-gray-500 mt-3;
-  }
-  
-  /* Suggestion buttons */
-  .suggestion-button {
-    @apply flex items-center justify-between gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 
-           hover:bg-gray-700/50 transition-colors text-sm text-gray-300 
-           px-4 py-3 w-full cursor-pointer;
-  }
-  
-  /* Allow text selection in messages and inputs */
-  .message-content {
-    user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-  }
-  
-  @keyframes pulse {
-    0%, 80%, 100% { 
-      transform: scale(0.6);
-      opacity: 0.6;
-    }
-    40% { 
-      transform: scale(1);
-      opacity: 1;
-    }
+  /* Add more space between buttons on mobile */
+  .input-buttons-container > button {
+    margin-right: 0.25rem;
   }
 }
