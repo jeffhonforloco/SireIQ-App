@@ -44,7 +44,7 @@ const InputField: React.FC<InputFieldProps> = ({
         className="chat-input"
       />
       <button 
-        className="up-arrow-button"
+        className="send-button"
         onClick={handleSubmit}
         disabled={isTyping}
         aria-label="Send message"

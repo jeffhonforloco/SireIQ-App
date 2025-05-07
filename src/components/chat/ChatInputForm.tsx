@@ -56,7 +56,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="px-4 py-4 bg-[#0f1117] border-t border-gray-800">
+    <div className="px-4 py-4 bg-[#121317] border-t border-gray-800">
       <div className="max-w-3xl mx-auto">
         <form 
           ref={formRef}

@@ -3,7 +3,7 @@ import React from 'react';
 
 const DisclaimerText: React.FC = () => {
   return (
-    <div className="text-center text-gray-500 text-xs mt-1">
+    <div className="text-center text-gray-500 text-xs">
       SireIQ helps with AI-powered insights, content creation, and workflow optimization.
     </div>
   );

@@ -3,12 +3,11 @@
 .chat-input-container {
   position: relative;
   width: 100%;
-  border-radius: 12px;
-  background-color: #1A1F2C;
+  border-radius: 8px;
+  background-color: #1E2330;
   overflow: hidden;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,7 +16,7 @@
 .chat-input {
   width: 100%;
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.125rem;
   line-height: 1.5rem;
   outline: none;
@@ -29,13 +28,7 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-.send-button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chat-input-button {
+.send-button {
   background-color: transparent;
   color: #8E9196;
   border: none;
@@ -44,22 +37,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
-  padding: 0.5rem;
+  transition: all 0.2s ease;
 }
 
-.chat-input-button:hover {
+.send-button:hover {
   color: #FFFFFF;
-}
-
-/* Up arrow button */
-.up-arrow-button {
-  color: #fff;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
