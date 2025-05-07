@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '../test-utils';
 import GetStarted from '@/pages/GetStarted';
 import { describe, test, expect, vi } from 'vitest';
+import '@testing-library/jest-dom';
 
 // Mock the components since we've tested them individually
 vi.mock('@/components/get-started/GetStartedCard', () => ({

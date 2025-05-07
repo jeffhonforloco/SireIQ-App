@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '../../test-utils';
 import EmailVerification from '@/components/get-started/EmailVerification';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
 
 describe('EmailVerification', () => {
   const mockSetVerificationCode = vi.fn();

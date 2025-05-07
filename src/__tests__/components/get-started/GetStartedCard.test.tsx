@@ -3,6 +3,7 @@ import React from 'react';
 import { render, screen } from '../../test-utils';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
 
 describe('GetStartedCard', () => {
   const mockSetVerificationCode = vi.fn();
