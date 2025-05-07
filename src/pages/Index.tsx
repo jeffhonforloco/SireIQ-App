@@ -4,16 +4,14 @@ import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
-import CTASection from '@/components/landing/CTASection';
+import HomeChatExperience from '@/components/chat/HomeChatExperience';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       <Helmet>
-        <title>SireIQ | Your Intelligent AI Assistant</title>
-        <meta name="description" content="An advanced AI platform that helps businesses and creative professionals enhance their workflows and productivity." />
+        <title>SireIQ | Your Intelligent Ecommerce AI Assistant</title>
+        <meta name="description" content="An advanced AI platform that helps ecommerce businesses leverage data for better insights and decision-making." />
       </Helmet>
       
       <ParticleBackground />
@@ -21,11 +19,9 @@ const Index = () => {
       {/* Navigation */}
       <Navbar />
       
-      {/* Main content */}
-      <main>
-        <HeroSection />
-        <FeaturesSection />
-        <CTASection />
+      {/* Main content with Chat Experience */}
+      <main className="container mx-auto px-4 py-16">
+        <HomeChatExperience />
       </main>
       
       {/* Footer */}
