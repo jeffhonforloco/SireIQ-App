@@ -1,12 +1,20 @@
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { useRole } from '@/contexts/RoleContext';
 import { toast } from '@/components/ui/sonner';
+
+// Mock user database for demo purposes
+// In a real app, this would be fetched from a backend
+const mockUsers = [
+  { email: 'user@example.com', password: 'password', role: 'user', verified: true },
+  { email: 'dev@example.com', password: 'password', role: 'developer', verified: true },
+  { email: 'enterprise@example.com', password: 'password', role: 'user', verified: true } // All users start as regular users
+];
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -23,12 +31,25 @@ const SignIn = () => {
       return;
     }
     
-    // For demo purposes, we'll accept any credentials
-    // In a real app, this would validate against a backend
-    setRole('user');
-    setIsFirstTimeUser(false);
-    toast.success("Signed in successfully!");
-    navigate('/dashboard');
+    // Mock authentication
+    // In a real app, this would be handled by a backend service
+    const user = mockUsers.find(user => user.email === email && user.password === password);
+    
+    if (user) {
+      if (!user.verified) {
+        // In a real app, this would send a verification email
+        toast.error("Your email is not verified. Please check your email for a verification link.");
+        return;
+      }
+
+      // Set the appropriate role based on the user account
+      setRole(user.role as 'user' | 'developer');
+      setIsFirstTimeUser(false);
+      toast.success(`Signed in successfully as ${user.role}!`);
+      navigate('/dashboard');
+    } else {
+      toast.error("Invalid email or password");
+    }
   };
 
   return (
@@ -78,9 +99,20 @@ const SignIn = () => {
             </Button>
           </form>
           
+          <div className="mt-6 pt-4 border-t border-sireiq-accent/20">
+            <p className="text-sm text-center mb-4">Demo accounts for testing:</p>
+            <div className="space-y-1 text-sm">
+              <p><span className="text-sireiq-cyan">User:</span> user@example.com / password</p>
+              <p><span className="text-sireiq-cyan">Developer:</span> dev@example.com / password</p>
+            </div>
+            <p className="text-xs text-center mt-3 text-sireiq-light/70">
+              After signing in, you can upgrade to Developer or Enterprise accounts from your dashboard.
+            </p>
+          </div>
+          
           <p className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <a href="/get-started" className="text-sireiq-cyan hover:underline">Get Started</a>
+            <Link to="/get-started" className="text-sireiq-cyan hover:underline">Get Started</Link>
           </p>
         </div>
       </main>

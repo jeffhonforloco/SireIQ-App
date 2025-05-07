@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -19,6 +20,7 @@ import {
   addWorkflowStep, 
   deleteWorkflowStep 
 } from '@/lib/ai/workflows';
+import Logo from '@/components/Logo';
 
 const AIWorkflows: React.FC = () => {
   const { toast } = useToast();
@@ -154,7 +156,13 @@ const AIWorkflows: React.FC = () => {
       </Helmet>
       
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">AI Studio</h1>
+        <div className="flex items-center justify-between mb-6">
+          <Link to="/" className="flex items-center">
+            <Logo className="mr-4" />
+          </Link>
+          <h1 className="text-2xl font-bold">AI Studio</h1>
+          <div className="w-[100px]"></div> {/* Spacer for balance */}
+        </div>
         
         <Tabs defaultValue="workflows" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="mb-6">

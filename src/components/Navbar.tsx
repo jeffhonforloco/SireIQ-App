@@ -1,123 +1,74 @@
 
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import { Menu } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-import { Button } from './ui/button';
-import { useRole } from '@/contexts/RoleContext';
-import { toast } from './ui/sonner';
+import NavLinks from './navbar/NavLinks';
+import AuthButtons from './navbar/AuthButtons';
+import MobileMenu from './navbar/MobileMenu';
+import { ThemeToggle } from './ui/theme-toggle';
+import BuildInfoSection from './navbar/BuildInfoSection';
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+} from "@/components/ui/menubar";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const isMobile = useIsMobile();
-  const { role, setRole, setIsFirstTimeUser } = useRole();
-  const navigate = useNavigate();
-
-  const isAuthenticated = !!role;
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [showBuildInfo, setShowBuildInfo] = useState(false);
   
-  const handleSignOut = () => {
-    // Clear authentication state
-    setRole(null);
-    toast.success("Signed out successfully!");
-    navigate('/');
-  };
-  
-  const NavLinks = () => (
-    <>
-      <Link to="/features" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Features</Link>
-      <Link to="/how-it-works" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">How it Works</Link>
-      <Link to="/enterprise" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Enterprise</Link>
-      <Link to="/integrations" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Integrations</Link>
-      <Link to="/ai-workflows" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">AI Workflows</Link>
-      <Link to="/trust-and-compliance" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Trust & Compliance</Link>
-      <Link to="/try-advanced-ai" className="text-sireiq-light hover:text-sireiq-cyan transition-colors">Try Advanced AI</Link>
-    </>
-  );
+  // Add scroll detection for glass effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="absolute top-0 left-0 w-full z-10 py-4 bg-sireiq-darker">
-      <div className="w-full flex items-center justify-between px-0">
-        {/* Logo - Moved all the way to the left edge */}
-        <Link to="/" className="flex items-center pl-4 md:pl-6">
-          <Logo className="mr-0" />
+    <header className={`fixed top-0 left-0 w-full z-50 py-4 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md shadow-md' : 'bg-black'}`}>
+      <div className="container mx-auto flex items-center justify-between px-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <Logo size="sm" />
         </Link>
         
-        {/* Desktop Navigation - Centered */}
-        <nav className="hidden md:flex flex-1 justify-center space-x-6 items-center">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex flex-1 justify-center items-center">
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons - Moved all the way to the right edge */}
-        <div className="hidden md:flex items-center space-x-4 pr-4 md:pr-6">
-          {isAuthenticated ? (
-            <Button 
-              onClick={handleSignOut}
-              className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
-            >
-              Sign Out
-            </Button>
-          ) : (
-            <>
-              <Link to="/signin">
-                <Button 
-                  className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors"
-                >
-                  Sign In
-                </Button>
-              </Link>
-              
-              <Link to="/get-started">
-                <Button className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-2 h-auto">
-                  Get Started
-                </Button>
-              </Link>
-            </>
-          )}
+        {/* Auth Buttons and Build Info Toggle */}
+        <div className="hidden md:flex items-center space-x-4">
+          <ThemeToggle />
+          
+          {/* "Build it" menu item */}
+          <Menubar className="bg-transparent border-0">
+            <MenubarMenu>
+              <MenubarTrigger className="cursor-pointer px-4 py-2 text-sireiq-light hover:text-sireiq-cyan focus:text-sireiq-cyan data-[state=open]:text-sireiq-cyan">
+                Build it
+              </MenubarTrigger>
+              <MenubarContent className="bg-black border-gray-800 w-[400px] p-0">
+                <BuildInfoSection />
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+          
+          <AuthButtons />
         </div>
         
         {/* Mobile Navigation */}
         {isMobile && (
-          <Sheet>
-            <SheetTrigger asChild>
-              <button className="md:hidden text-sireiq-light hover:text-sireiq-cyan focus:outline-none pr-4">
-                <Menu className="h-8 w-8" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-sireiq-darker border-sireiq-accent/30 w-[250px] p-6">
-              <nav className="flex flex-col space-y-4 mt-8">
-                <NavLinks />
-                
-                {/* Mobile Auth Buttons */}
-                <div className="flex flex-col space-y-4 pt-4 mt-4 border-t border-sireiq-accent/30">
-                  {isAuthenticated ? (
-                    <Button 
-                      onClick={handleSignOut}
-                      className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center"
-                    >
-                      Sign Out
-                    </Button>
-                  ) : (
-                    <>
-                      <Link to="/signin">
-                        <Button 
-                          className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors text-center w-full"
-                        >
-                          Sign In
-                        </Button>
-                      </Link>
-                      
-                      <Link to="/get-started" className="w-full">
-                        <Button className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-2 h-auto w-full">
-                          Get Started
-                        </Button>
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          <MobileMenu 
+            isSheetOpen={isSheetOpen}
+            setIsSheetOpen={setIsSheetOpen}
+          />
         )}
       </div>
     </header>
