@@ -1,0 +1,11 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import all chat component styles */
+@import './welcome.css';
+@import './messages.css';
+@import './input-field.css';
+@import './button-row.css';
+@import './features.css';

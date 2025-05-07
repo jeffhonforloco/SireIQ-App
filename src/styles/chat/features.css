@@ -1,0 +1,18 @@
+
+/* Feature buttons styling */
+.feature-buttons-container {
+  width: 100%;
+}
+
+.feature-buttons-container .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
+  .feature-buttons-container .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
