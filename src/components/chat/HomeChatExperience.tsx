@@ -1,10 +1,11 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, Mic, X, Sparkles, Zap, BrainCircuit } from 'lucide-react';
+import { MessageSquare, Send, Mic, X, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 import QuickSuggestionButton from './QuickSuggestionButton';
 import ChatMessage from './ChatMessage';
 import ChatTypingIndicator from './ChatTypingIndicator';
@@ -22,6 +23,7 @@ const HomeChatExperience: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isMobile = useIsMobile();
   
   const quickSuggestions = [
     "How can you enhance my workflow?",
@@ -124,37 +126,37 @@ const HomeChatExperience: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-7rem)] max-w-4xl w-full relative bg-gradient-to-br from-gray-900 via-black to-sireiq-darker rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm shadow-glow">
+    <div className="flex flex-col w-full h-[500px] sm:h-[600px] md:h-[calc(100vh-7rem)] relative bg-gradient-to-br from-gray-900 via-black to-sireiq-darker rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm shadow-glow">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-black/50">
+      <div className="flex items-center justify-between p-3 md:p-4 border-b border-gray-800 bg-black/50">
         <div className="flex items-center">
-          <div className="bg-gradient-to-r from-sireiq-cyan to-blue-500 rounded-full p-2 mr-3 shadow-lg">
-            <BrainCircuit className="h-5 w-5 text-sireiq-darker" />
+          <div className="bg-gradient-to-r from-sireiq-cyan to-blue-500 rounded-full p-1.5 md:p-2 mr-2 md:mr-3 shadow-lg">
+            <MessageSquare className="h-4 w-4 md:h-5 md:w-5 text-sireiq-darker" />
           </div>
           <div>
-            <h2 className="text-lg font-medium text-white">Chat with SireIQ</h2>
-            <p className="text-xs text-gray-400">Your intelligent AI assistant</p>
+            <h2 className="text-base md:text-lg font-medium text-white">Chat with SireIQ</h2>
+            <p className="text-xs text-gray-400 hidden sm:block">Your intelligent AI assistant</p>
           </div>
         </div>
         <Button 
           variant="ghost" 
           size="icon" 
           onClick={clearChat}
-          className="text-gray-400 hover:text-white hover:bg-gray-800"
+          className="h-8 w-8 text-gray-400 hover:text-white hover:bg-gray-800"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </Button>
       </div>
       
       {/* Messages container */}
-      <div className="flex-grow overflow-y-auto p-6 space-y-6">
+      <div className="flex-grow overflow-y-auto p-3 md:p-6 space-y-4 md:space-y-6">
         {/* Welcome section with quick suggestions */}
         {messages.length === 1 && messages[0].id.includes('welcome') && (
-          <div className="mb-8 animate-fade-in">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
-              Unleash your potential with intelligent AI
+          <div className="mb-6 animate-fade-in">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
+              {isMobile ? "Chat with intelligent AI" : "Unleash your potential with intelligent AI"}
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-1 gap-2 md:gap-3 mb-6">
               {quickSuggestions.map((suggestion, index) => (
                 <QuickSuggestionButton 
                   key={index}
@@ -167,7 +169,7 @@ const HomeChatExperience: React.FC = () => {
         )}
         
         {/* Chat messages */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} />
           ))}
@@ -177,7 +179,7 @@ const HomeChatExperience: React.FC = () => {
       </div>
       
       {/* Input area */}
-      <div className="p-4 border-t border-gray-800 bg-black/30">
+      <div className="p-3 md:p-4 border-t border-gray-800 bg-black/30">
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             ref={textareaRef}
@@ -185,33 +187,33 @@ const HomeChatExperience: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask SireIQ anything..."
-            className="pr-24 resize-none min-h-[50px] max-h-[200px] bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent"
+            className="pr-20 resize-none min-h-[40px] md:min-h-[50px] max-h-[120px] md:max-h-[200px] text-sm md:text-base bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent"
             rows={1}
           />
-          <div className="absolute bottom-2 right-2 flex items-center space-x-2">
+          <div className="absolute bottom-1.5 md:bottom-2 right-2 flex items-center space-x-1 md:space-x-2">
             <Button
               type="button"
               size="icon"
               variant="ghost"
-              className="text-gray-400 hover:text-white hover:bg-gray-700 rounded-full h-8 w-8"
+              className="text-gray-400 hover:text-white hover:bg-gray-700 rounded-full h-7 w-7 md:h-8 md:w-8"
               onClick={handleVoiceInput}
             >
-              <Mic className="h-4 w-4" />
+              <Mic className="h-3 w-3 md:h-4 md:w-4" />
             </Button>
             <Button
               type="submit"
               size="icon"
               disabled={!input.trim()}
-              className={`rounded-full h-8 w-8 ${
+              className={`rounded-full h-7 w-7 md:h-8 md:w-8 ${
                 input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'
               }`}
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-3 w-3 md:h-4 md:w-4" />
             </Button>
           </div>
         </form>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          SireIQ helps with AI-powered insights, content creation, and workflow optimization. Your conversations may be reviewed to improve our services.
+        <p className="text-xs text-gray-500 mt-2 text-center hidden sm:block">
+          SireIQ helps with AI-powered insights, content creation, and workflow optimization.
         </p>
       </div>
     </div>

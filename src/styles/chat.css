@@ -17,9 +17,9 @@
     @apply flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-sm text-gray-200;
   }
   
-  /* Typing indicator animation */
+  /* Typing indicator animation - smaller on mobile */
   .typing-indicator div {
-    @apply w-2 h-2 rounded-full bg-sireiq-cyan;
+    @apply w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-sireiq-cyan;
     animation: pulse 1.4s infinite;
   }
   
