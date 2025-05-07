@@ -39,7 +39,7 @@ const InputField: React.FC<InputFieldProps> = ({
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Ask anything"
+        placeholder="Type your message here..."
         disabled={isTyping}
         className="chat-input"
       />
@@ -49,6 +49,7 @@ const InputField: React.FC<InputFieldProps> = ({
         disabled={!input.trim() || isTyping}
         aria-label="Send message"
         className="chat-input-button"
+        onClick={(e) => handleSubmit(e)}
       >
         <ArrowUp className="h-5 w-5" />
       </button>
