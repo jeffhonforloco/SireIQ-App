@@ -64,7 +64,7 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({
   return (
     <div className="welcome-container">
       <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-        Unleash your potential with intelligent AI
+        Think it. Build it. With SireIQ
       </h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 w-full">
