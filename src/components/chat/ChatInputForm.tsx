@@ -84,10 +84,12 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           />
         </form>
         
-        <FeatureButtons 
-          isExpanded={isExpanded}
-          handleFeatureClick={handleFeatureClick}
-        />
+        {isExpanded && (
+          <FeatureButtons 
+            isExpanded={isExpanded}
+            handleFeatureClick={handleFeatureClick}
+          />
+        )}
         
         <DisclaimerText />
       </div>

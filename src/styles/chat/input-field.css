@@ -3,9 +3,10 @@
 .chat-input-container {
   position: relative;
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   background-color: #1A1F2C;
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .chat-input {

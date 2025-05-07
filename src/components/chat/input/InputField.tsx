@@ -32,7 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
   };
   
   return (
-    <div className="chat-input-container mb-2">
+    <div className="chat-input-container">
       <input
         ref={inputRef}
         type="text"
