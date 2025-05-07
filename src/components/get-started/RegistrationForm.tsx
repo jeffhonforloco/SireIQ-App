@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
 import { Shield, ShieldCheck, ShieldX } from 'lucide-react';
 
-type AccountType = 'personal' | 'business' | 'education';
+type AccountType = 'personal' | 'developer' | 'enterprise';
 
 interface RegistrationFormProps {
   onSuccess: (email: string) => void;
@@ -139,12 +139,12 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
             <Label htmlFor="personal" className="cursor-pointer">Personal</Label>
           </div>
           <div className="flex items-center space-x-2 bg-sireiq-dark/50 border border-sireiq-accent/20 px-3 py-2 rounded-md">
-            <RadioGroupItem value="business" id="business" />
-            <Label htmlFor="business" className="cursor-pointer">Business</Label>
+            <RadioGroupItem value="developer" id="developer" />
+            <Label htmlFor="developer" className="cursor-pointer">Developer</Label>
           </div>
           <div className="flex items-center space-x-2 bg-sireiq-dark/50 border border-sireiq-accent/20 px-3 py-2 rounded-md">
-            <RadioGroupItem value="education" id="education" />
-            <Label htmlFor="education" className="cursor-pointer">Education</Label>
+            <RadioGroupItem value="enterprise" id="enterprise" />
+            <Label htmlFor="enterprise" className="cursor-pointer">Enterprise</Label>
           </div>
         </RadioGroup>
       </div>
