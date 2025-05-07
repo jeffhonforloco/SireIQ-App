@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, BrainCircuit, Mic, X } from 'lucide-react';
+import { Paperclip, Search, BrainCircuit, Mic, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface ButtonRowProps {
   handleAttachClick: () => void;
@@ -71,7 +71,11 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="rounded-full p-1.5 bg-blue-600 hover:bg-blue-500"
           aria-label={isExpanded ? "Close features" : "Show features"}
         >
-          <X className="h-4 w-4 text-white" />
+          {isExpanded ? (
+            <ChevronDown className="h-4 w-4 text-white" />
+          ) : (
+            <ChevronUp className="h-4 w-4 text-white" />
+          )}
         </button>
       </div>
     </div>
