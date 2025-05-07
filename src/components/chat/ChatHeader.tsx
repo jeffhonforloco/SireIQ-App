@@ -36,7 +36,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
           <SheetContent side="left" className="bg-gray-900 border-gray-800 p-0 max-w-[250px]">
             <div className="flex flex-col h-full">
               <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-                <Logo size="sm" />
+                <Logo size="md" />
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -75,11 +75,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
           </SheetContent>
         </Sheet>
         <div className="flex items-center">
-          <Logo size="sm" />
-          <div className="ml-2 text-sm font-medium text-gray-200">
-            <div>Chat with SireIQ</div>
-            <div className="text-xs text-gray-400">Your Intelligent AI assistant</div>
-          </div>
+          <Logo size="md" />
         </div>
       </div>
       

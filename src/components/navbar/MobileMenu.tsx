@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
         </SheetTrigger>
         <SheetContent side="left" className="bg-black border-gray-800 flex flex-col">
           <div className="flex items-center justify-between">
-            <Logo size="sm" />
+            <Logo size="md" />
             <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
               <X className="h-5 w-5" />
             </Button>
