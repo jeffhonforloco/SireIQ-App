@@ -37,7 +37,7 @@ const HomeChatExperience: React.FC = () => {
     ],
     brainstorm: [
       "Let's brainstorm on this topic. SireIQ suggests considering these angles:\n1. Customer perspective: What unmet needs exist?\n2. Competitive landscape: Where are the gaps?\n3. Technology trends: What emerging tools can be leveraged?\n4. Resource optimization: How can existing assets be repurposed?\n5. Cross-industry inspiration: What successful models can be adapted?",
-      "For an effective brainstorming session, SireIQ recommends this structured approach:\n1. Define the challenge with specific parameters\n2. Generate quantity first (aim for 30+ ideas)\n3. Build on existing concepts with "yes, and..." thinking\n4. Categorize ideas into immediate, near-term, and moonshot groups\n5. Prioritize based on impact vs. effort analysis"
+      "For an effective brainstorming session, SireIQ recommends this structured approach:\n1. Define the challenge with specific parameters\n2. Generate quantity first (aim for 30+ ideas)\n3. Build on existing concepts with \"yes, and...\" thinking\n4. Categorize ideas into immediate, near-term, and moonshot groups\n5. Prioritize based on impact vs. effort analysis"
     ]
   };
   
