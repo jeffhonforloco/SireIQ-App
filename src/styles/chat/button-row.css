@@ -1,22 +1,30 @@
 
 /* Input styling */
-.input-buttons-container {
+.input-buttons-row {
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
+  justify-content: space-between;
 }
 
-.left-buttons, .right-buttons {
+.left-buttons {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.right-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .circle-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background-color: #1A1F2C;
   border-radius: 9999px;
@@ -30,6 +38,10 @@
 
 .circle-button:hover {
   background-color: #252D3C;
+}
+
+.circle-button span {
+  display: none;
 }
 
 .voice-button {
@@ -69,22 +81,16 @@
 
 /* Responsive adjustments for mobile */
 @media (max-width: 640px) {
-  .input-buttons-container {
-    flex-direction: column;
+  .input-buttons-row {
     gap: 0.5rem;
   }
   
   .left-buttons, .right-buttons {
-    width: 100%;
-    justify-content: space-between;
+    gap: 0.5rem;
   }
   
   .circle-button, .voice-button, .features-button {
-    padding: 0.5rem;
+    padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
-  }
-  
-  .circle-button span, .voice-button span {
-    display: none;
   }
 }

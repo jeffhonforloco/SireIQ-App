@@ -20,12 +20,13 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   isExpanded
 }) => {
   return (
-    <div className="input-buttons-container">
+    <div className="input-buttons-row">
       <div className="left-buttons">
         <button
           type="button"
           className="circle-button"
           onClick={handleAttachClick}
+          aria-label="Attach file"
         >
           <Paperclip className="h-5 w-5" />
           <span>Attach</span>
@@ -35,6 +36,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           type="button"
           className="circle-button"
           onClick={handleSearchClick}
+          aria-label="Search"
         >
           <Search className="h-5 w-5" />
           <span>Search</span>
@@ -44,6 +46,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           type="button"
           className="circle-button"
           onClick={handleReasonClick}
+          aria-label="Reason"
         >
           <Lightbulb className="h-5 w-5" />
           <span>Reason</span>
@@ -55,6 +58,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           type="button"
           className="voice-button"
           onClick={handleVoiceInput}
+          aria-label="Voice input"
         >
           <Mic className="h-5 w-5" />
           <span>Voice</span>
