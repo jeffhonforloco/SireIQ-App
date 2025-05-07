@@ -32,7 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
   };
   
   return (
-    <div className="chat-input-container">
+    <div className="chat-input-container mb-2">
       <input
         ref={inputRef}
         type="text"
@@ -41,15 +41,15 @@ const InputField: React.FC<InputFieldProps> = ({
         onKeyDown={handleKeyDown}
         placeholder="Ask anything"
         disabled={isTyping}
-        className="chat-input-field"
+        className="chat-input w-full rounded-full bg-gray-900 border border-gray-700 py-3 px-4"
       />
       
       <button
         type="submit"
         disabled={!input.trim() || isTyping}
         aria-label="Send message"
-        className={`submit-button ${
-          input.trim() && !isTyping ? 'active' : 'inactive'
+        className={`chat-input-button absolute right-2 top-1/2 transform -translate-y-1/2 rounded-full p-2 ${
+          input.trim() && !isTyping ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700'
         }`}
       >
         <ArrowUp className="h-5 w-5" />
