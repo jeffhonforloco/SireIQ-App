@@ -3,18 +3,18 @@
 .chat-input-container {
   position: relative;
   width: 100%;
-  border-radius: 16px;
-  background-color: #1A1F2C; /* Dark navy color as shown in image */
+  border-radius: 12px;
+  background-color: #1A1F2C;
   overflow: hidden;
-  padding: 0.75rem 3rem 0.75rem 1.25rem;
-  margin-bottom: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+  padding: 0.75rem 3.5rem 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .chat-input {
   width: 100%;
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.95); /* Brighter text */
+  color: rgba(255, 255, 255, 0.95);
   font-size: 1.125rem;
   line-height: 1.5rem;
   outline: none;
@@ -43,5 +43,5 @@
 }
 
 .chat-input-button:hover {
-  color: #FFFFFF; /* White on hover */
+  color: #FFFFFF;
 }
