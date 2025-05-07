@@ -53,16 +53,16 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
     }
   };
 
-  const preventDefault = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
+  // Only prevent default on click, but allow input interactions
+  const handleInputClick = (e: React.MouseEvent) => {
+    // Don't stop propagation for input field clicks
     e.stopPropagation();
   };
 
   return (
     <div 
       className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm" 
-      onClick={preventDefault}
-      onTouchStart={preventDefault}
+      onClick={(e) => e.stopPropagation()}
     >
       <form 
         ref={formRef}
@@ -79,11 +79,10 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          onClick={handleInputClick}
           placeholder="Ask SireIQ anything..."
           className="pr-14 resize-none min-h-[32px] max-h-[60px] text-xs sm:text-sm bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent py-1.5 px-2.5"
           rows={1}
-          onClick={preventDefault}
-          onTouchStart={preventDefault}
         />
         <div className="absolute bottom-0.5 right-0.5 flex items-center space-x-1">
           <Button

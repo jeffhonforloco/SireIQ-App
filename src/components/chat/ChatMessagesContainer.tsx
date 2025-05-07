@@ -23,24 +23,6 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
 
   useEffect(() => {
     scrollToBottom();
-    
-    // Prevent default behavior for all events within this container
-    if (containerRef.current) {
-      const container = containerRef.current;
-      
-      const preventEvent = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-      };
-      
-      container.addEventListener('touchstart', preventEvent, { passive: false });
-      container.addEventListener('touchmove', preventEvent, { passive: false });
-      
-      return () => {
-        container.removeEventListener('touchstart', preventEvent);
-        container.removeEventListener('touchmove', preventEvent);
-      };
-    }
   }, [messages, isTyping]);
 
   const scrollToBottom = () => {
@@ -49,20 +31,19 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
     }
   };
   
-  const preventPropagation = (e: React.MouseEvent | React.TouchEvent) => {
-    if (e) {
+  // Allow interaction within the messages container but prevent page reloads
+  const handleContainerClick = (e: React.MouseEvent) => {
+    // Only prevent default if clicked directly on the container
+    if (e.target === e.currentTarget) {
       e.preventDefault();
-      e.stopPropagation();
     }
   };
 
   return (
     <div 
       ref={containerRef}
-      className="flex-grow overflow-hidden p-2 space-y-2" 
-      onClick={preventPropagation}
-      onTouchStart={preventPropagation}
-      onTouchMove={preventPropagation}
+      className="flex-grow overflow-y-auto overflow-x-hidden p-2 space-y-2" 
+      onClick={handleContainerClick}
     >
       {/* Welcome section with quick suggestions */}
       {messages.length === 1 && messages[0].id.includes('welcome') && (

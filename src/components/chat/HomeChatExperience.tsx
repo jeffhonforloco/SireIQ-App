@@ -20,27 +20,25 @@ const HomeChatExperience: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const isMobile = useIsMobile();
   
-  // Prevent any default browser behaviors
+  // Prevent page scroll but allow input interactions
   useEffect(() => {
-    const container = document.querySelector('.chat-container');
-    if (container) {
-      const preventEvent = (e: Event) => {
+    const preventDefaultScroll = (e: TouchEvent) => {
+      // Only prevent default on document body, not on inputs and textareas
+      if (
+        e.target instanceof Element && 
+        !['INPUT', 'TEXTAREA'].includes(e.target.tagName) &&
+        !e.target.closest('textarea') &&
+        !e.target.closest('input')
+      ) {
         e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-      
-      // Apply to this specific container
-      container.addEventListener('touchstart', preventEvent, { passive: false });
-      container.addEventListener('touchmove', preventEvent, { passive: false });
-      container.addEventListener('click', preventEvent);
-      
-      return () => {
-        container.removeEventListener('touchstart', preventEvent);
-        container.removeEventListener('touchmove', preventEvent);
-        container.removeEventListener('click', preventEvent);
-      };
-    }
+      }
+    };
+    
+    document.addEventListener('touchmove', preventDefaultScroll, { passive: false });
+    
+    return () => {
+      document.removeEventListener('touchmove', preventDefaultScroll);
+    };
   }, []);
   
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -109,20 +107,18 @@ const HomeChatExperience: React.FC = () => {
     ]);
   }, []);
 
-  const preventPropagation = (e: React.MouseEvent | React.TouchEvent) => {
-    if (e) {
+  // Allow basic event propagation but prevent page reloads
+  const preventReload = (e: React.MouseEvent) => {
+    // Don't stop propagation completely to allow internal interactions
+    if (e.target === e.currentTarget) {
       e.preventDefault();
-      e.stopPropagation();
     }
   };
 
   return (
     <div 
       className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow chat-container" 
-      onClick={preventPropagation}
-      onTouchStart={preventPropagation}
-      onTouchMove={preventPropagation}
-      onContextMenu={preventPropagation}
+      onClick={preventReload}
     >
       {/* Header */}
       <ChatHeader clearChat={clearChat} />

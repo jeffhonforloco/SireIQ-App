@@ -92,17 +92,18 @@
     caret-color: white;
   }
   
-  /* Override pointer events for all interactive elements */
+  /* Allow pointer events for all elements */
   .chat-container * {
-    pointer-events: none;
+    pointer-events: auto;
   }
   
-  /* Only allow pointer events for specific interactive elements to function properly */
-  .chat-container button,
+  /* Make sure textarea and inputs are editable */
   .chat-container textarea,
-  .chat-container input,
-  .chat-container a {
-    pointer-events: auto;
+  .chat-container input {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
   }
   
   @keyframes pulse {
