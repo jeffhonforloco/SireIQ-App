@@ -26,6 +26,11 @@ import SimpleVoiceAssistantDemo from '@/pages/features/SimpleVoiceAssistantDemo'
 import PerformanceAnalytics from '@/pages/features/PerformanceAnalytics';
 import AIPoweredCreation from '@/pages/features/AIPoweredCreation';
 import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
+import DataAnalysis from '@/pages/features/DataAnalysis';
+import ContentCreation from '@/pages/features/ContentCreation';
+import CodeAssistance from '@/pages/features/CodeAssistance';
+import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
+import DecisionSupport from '@/pages/features/DecisionSupport';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -50,6 +55,11 @@ function App() {
                 <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
                 <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
                 <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
+                <Route path="/features/data-analysis" element={<DataAnalysis />} />
+                <Route path="/features/content-creation" element={<ContentCreation />} />
+                <Route path="/features/code-assistance" element={<CodeAssistance />} />
+                <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
+                <Route path="/features/decision-support" element={<DecisionSupport />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="*" element={<NotFound />} />

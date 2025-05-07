@@ -1,6 +1,16 @@
 
 import React from 'react';
-import { Lightbulb, Gift, BarChart2, Feather, ChevronRight, Code, Globe, Shield, MessageSquare } from 'lucide-react';
+import { 
+  BarChart2, 
+  Feather,
+  Lightbulb, 
+  Code, 
+  Globe, 
+  Shield, 
+  ChevronRight, 
+  MessageSquare 
+} from 'lucide-react';
+import ChatFeatureCard from './ChatFeatureCard';
 
 interface ChatWelcomeSectionProps {
   handleQuickSuggestion: (suggestion: string) => void;
@@ -11,6 +21,46 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({
   handleQuickSuggestion,
   isMobile 
 }) => {
+  // Feature cards data 
+  const featureCards = [
+    {
+      title: "Data Analysis",
+      description: "Extract insights from your data with advanced analytics",
+      icon: BarChart2,
+      path: "/features/data-analysis"
+    },
+    {
+      title: "Content Creation",
+      description: "Generate high-quality content for any purpose",
+      icon: Feather,
+      path: "/features/content-creation"
+    },
+    {
+      title: "Idea Generation",
+      description: "Unlock creative ideas and innovation opportunities",
+      icon: Lightbulb,
+      path: "/features/idea-generation"
+    },
+    {
+      title: "Code Assistance",
+      description: "Get help with coding, debugging and development",
+      icon: Code,
+      path: "/features/code-assistance"
+    },
+    {
+      title: "Workflow Optimization",
+      description: "Streamline your processes for maximum efficiency",
+      icon: Globe,
+      path: "/features/workflow-optimization"
+    },
+    {
+      title: "Decision Support",
+      description: "Get AI-powered insights for better decision making",
+      icon: Shield,
+      path: "/features/decision-support"
+    }
+  ];
+
   return (
     <div className="welcome-container">
       <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
@@ -69,53 +119,15 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({
       <div className="mt-10 w-full">
         <h2 className="text-lg font-medium text-gray-200 mb-3">SireIQ features</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <BarChart2 className="h-4 w-4 text-blue-400" />
-              <span className="font-medium text-gray-200">Data Analysis</span>
-            </div>
-            <p className="text-xs text-gray-400">Extract insights from your data with advanced analytics</p>
-          </div>
-          
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <Feather className="h-4 w-4 text-purple-400" />
-              <span className="font-medium text-gray-200">Content Creation</span>
-            </div>
-            <p className="text-xs text-gray-400">Generate high-quality content for any purpose</p>
-          </div>
-          
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <Lightbulb className="h-4 w-4 text-yellow-400" />
-              <span className="font-medium text-gray-200">Idea Generation</span>
-            </div>
-            <p className="text-xs text-gray-400">Unlock creative ideas and innovation opportunities</p>
-          </div>
-          
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <Code className="h-4 w-4 text-green-400" />
-              <span className="font-medium text-gray-200">Code Assistance</span>
-            </div>
-            <p className="text-xs text-gray-400">Get help with coding, debugging and development</p>
-          </div>
-          
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <Globe className="h-4 w-4 text-cyan-400" />
-              <span className="font-medium text-gray-200">Workflow Optimization</span>
-            </div>
-            <p className="text-xs text-gray-400">Streamline your processes for maximum efficiency</p>
-          </div>
-          
-          <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <Shield className="h-4 w-4 text-red-400" />
-              <span className="font-medium text-gray-200">Decision Support</span>
-            </div>
-            <p className="text-xs text-gray-400">Get AI-powered insights for better decision making</p>
-          </div>
+          {featureCards.map((feature) => (
+            <ChatFeatureCard
+              key={feature.title}
+              title={feature.title}
+              description={feature.description}
+              icon={feature.icon}
+              path={feature.path}
+            />
+          ))}
         </div>
       </div>
     </div>
