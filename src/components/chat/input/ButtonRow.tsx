@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, Lightbulb, Mic } from 'lucide-react';
+import { Paperclip, Search, Lightbulb, Mic, MicOff } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ButtonRowProps {
@@ -10,6 +10,7 @@ interface ButtonRowProps {
   handleVoiceInput: () => void;
   toggleFeatures: () => void;
   isExpanded: boolean;
+  isListening: boolean;
 }
 
 const ButtonRow: React.FC<ButtonRowProps> = ({
@@ -18,7 +19,8 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   handleReasonClick,
   handleVoiceInput,
   toggleFeatures,
-  isExpanded
+  isExpanded,
+  isListening
 }) => {
   const isMobile = useIsMobile();
   
@@ -58,11 +60,20 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
       <div className="flex gap-2 items-center">
         <button
           type="button"
-          className="voice-button rounded-full bg-white text-black py-2 px-4 flex items-center gap-2"
+          className={`voice-button rounded-full ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-white text-black'} py-2 px-4 flex items-center gap-2 transition-colors`}
           onClick={handleVoiceInput}
         >
-          <Mic className="h-4 w-4" />
-          <span>Voice</span>
+          {isListening ? (
+            <>
+              <MicOff className="h-4 w-4" />
+              <span>Stop</span>
+            </>
+          ) : (
+            <>
+              <Mic className="h-4 w-4" />
+              <span>Voice</span>
+            </>
+          )}
         </button>
         
         <button

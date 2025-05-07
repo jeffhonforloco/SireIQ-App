@@ -11,6 +11,7 @@ interface ChatInputFormProps {
   handleSubmit: (e: React.FormEvent) => void;
   handleVoiceInput: () => void;
   isTyping: boolean;
+  isListening: boolean;
 }
 
 const ChatInputForm: React.FC<ChatInputFormProps> = ({
@@ -18,7 +19,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   setInput,
   handleSubmit,
   handleVoiceInput,
-  isTyping
+  isTyping,
+  isListening
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -81,6 +83,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             handleVoiceInput={handleVoiceInput}
             toggleFeatures={toggleFeatures}
             isExpanded={isExpanded}
+            isListening={isListening}
           />
         </form>
         
