@@ -26,60 +26,31 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 60)}px`;
     }
-    
-    // Ensure the form doesn't trigger page reloads
-    if (formRef.current) {
-      const form = formRef.current;
-      
-      const preventFormSubmission = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-      
-      form.addEventListener('submit', preventFormSubmission);
-      
-      return () => {
-        form.removeEventListener('submit', preventFormSubmission);
-      };
-    }
   }, [input]);
-
+  
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      e.stopPropagation();
       handleSubmit(e);
     }
   };
 
-  // Only prevent default on click, but allow input interactions
-  const handleInputClick = (e: React.MouseEvent) => {
-    // Don't stop propagation for input field clicks
-    e.stopPropagation();
-  };
-
   return (
-    <div 
-      className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm" 
-      onClick={(e) => e.stopPropagation()}
-    >
+    <div className="chat-input-container">
       <form 
         ref={formRef}
         onSubmit={(e) => {
           e.preventDefault();
-          e.stopPropagation();
           handleSubmit(e);
           return false;
         }} 
-        className="relative"
+        className="relative max-w-2xl mx-auto w-full"
       >
         <Textarea
           ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          onClick={handleInputClick}
           placeholder="Ask SireIQ anything..."
           className="pr-14 resize-none min-h-[32px] max-h-[60px] text-xs sm:text-sm bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent py-1.5 px-2.5"
           rows={1}
@@ -94,7 +65,6 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               e.preventDefault();
               e.stopPropagation();
               handleVoiceInput();
-              return false;
             }}
           >
             <Mic className="h-2.5 w-2.5" />
@@ -103,12 +73,6 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             type="submit"
             size="icon"
             disabled={!input.trim()}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (input.trim()) handleSubmit(e);
-              return false;
-            }}
             className={`rounded-full h-5 w-5 ${
               input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'
             }`}

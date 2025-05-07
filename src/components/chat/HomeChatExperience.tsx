@@ -20,10 +20,9 @@ const HomeChatExperience: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const isMobile = useIsMobile();
   
-  // Prevent page scroll but allow input interactions
+  // Prevent page scroll and handling
   useEffect(() => {
     const preventDefaultScroll = (e: TouchEvent) => {
-      // Only prevent default on document body, not on inputs and textareas
       if (
         e.target instanceof Element && 
         !['INPUT', 'TEXTAREA'].includes(e.target.tagName) &&
@@ -34,10 +33,22 @@ const HomeChatExperience: React.FC = () => {
       }
     };
     
+    const preventDefaultClick = (e: MouseEvent) => {
+      if (e.target instanceof HTMLAnchorElement) {
+        e.preventDefault();
+      }
+    };
+    
     document.addEventListener('touchmove', preventDefaultScroll, { passive: false });
+    document.addEventListener('click', preventDefaultClick);
+    
+    // Disable pull-to-refresh and browser navigation gestures on mobile
+    document.body.style.overscrollBehavior = 'none';
     
     return () => {
       document.removeEventListener('touchmove', preventDefaultScroll);
+      document.removeEventListener('click', preventDefaultClick);
+      document.body.style.overscrollBehavior = '';
     };
   }, []);
   
@@ -107,19 +118,8 @@ const HomeChatExperience: React.FC = () => {
     ]);
   }, []);
 
-  // Allow basic event propagation but prevent page reloads
-  const preventReload = (e: React.MouseEvent) => {
-    // Don't stop propagation completely to allow internal interactions
-    if (e.target === e.currentTarget) {
-      e.preventDefault();
-    }
-  };
-
   return (
-    <div 
-      className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow chat-container" 
-      onClick={preventReload}
-    >
+    <div className="chat-container">
       {/* Header */}
       <ChatHeader clearChat={clearChat} />
       

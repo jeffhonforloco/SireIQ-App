@@ -11,18 +11,18 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user';
   
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`} onClick={(e) => e.stopPropagation()}>
-      <div className={`flex items-start gap-1 max-w-[85%]`}>
+    <div className={`${isUser ? 'user-message-container' : 'assistant-message-container'} animate-fade-in w-full`} onClick={(e) => e.stopPropagation()}>
+      <div className={`flex items-start gap-1 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
         {!isUser && (
           <div className="h-5 w-5 rounded-full bg-gradient-to-r from-sireiq-cyan to-blue-500 flex items-center justify-center mt-1 shadow-glow flex-shrink-0">
             <MessageSquare className="h-2.5 w-2.5 text-sireiq-darker" />
           </div>
         )}
         
-        <div className={`p-1.5 text-xs ${
+        <div className={`p-2 text-sm ${
           isUser 
-            ? 'chat-bubble-user ml-2' 
-            : 'chat-bubble-assistant mr-2'
+            ? 'chat-bubble-user' 
+            : 'chat-bubble-assistant'
         }`}>
           <p className="text-gray-100 whitespace-pre-wrap">{message.content}</p>
         </div>

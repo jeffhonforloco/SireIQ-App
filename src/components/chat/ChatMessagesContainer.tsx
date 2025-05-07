@@ -30,20 +30,12 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
-  // Allow interaction within the messages container but prevent page reloads
-  const handleContainerClick = (e: React.MouseEvent) => {
-    // Only prevent default if clicked directly on the container
-    if (e.target === e.currentTarget) {
-      e.preventDefault();
-    }
-  };
 
   return (
     <div 
       ref={containerRef}
-      className="flex-grow overflow-y-auto overflow-x-hidden p-2 space-y-2" 
-      onClick={handleContainerClick}
+      className="messages-container" 
+      onClick={(e) => e.stopPropagation()}
     >
       {/* Welcome section with quick suggestions */}
       {messages.length === 1 && messages[0].id.includes('welcome') && (
@@ -54,7 +46,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       )}
       
       {/* Chat messages */}
-      <div className="space-y-2">
+      <div className="space-y-4 w-full">
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
