@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, KeyboardEvent } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { Send } from 'lucide-react';
 
 interface InputFieldProps {
   input: string;
@@ -52,7 +52,7 @@ const InputField: React.FC<InputFieldProps> = ({
           input.trim() && !isTyping ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700'
         }`}
       >
-        <ArrowUp className="h-5 w-5" />
+        <Send className="h-5 w-5" />
       </button>
     </div>
   );
