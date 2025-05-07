@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, MessageSquare, Mic, MoreHorizontal } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Paperclip, Search, Lightbulb, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ButtonRowProps {
@@ -21,8 +20,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   toggleFeatures,
   isExpanded
 }) => {
-  const isMobile = useIsMobile();
-  
   return (
     <div className="input-buttons-container">
       <div className="left-buttons">
@@ -31,7 +28,8 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="input-button"
           onClick={handleAttachClick}
         >
-          <Paperclip className="h-4 w-4" />
+          <Paperclip className="h-5 w-5" />
+          <span>Attach</span>
         </button>
         
         <button
@@ -39,7 +37,8 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="input-button"
           onClick={handleSearchClick}
         >
-          <Search className="h-4 w-4" />
+          <Search className="h-5 w-5" />
+          <span>Search</span>
         </button>
         
         <button
@@ -47,15 +46,8 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="input-button"
           onClick={handleReasonClick}
         >
-          <MessageSquare className="h-4 w-4" />
-        </button>
-        
-        <button
-          type="button"
-          className="input-button"
-          onClick={() => console.log("More options clicked")}
-        >
-          <MoreHorizontal className="h-4 w-4" />
+          <Lightbulb className="h-5 w-5" />
+          <span>Reason</span>
         </button>
       </div>
       
@@ -65,17 +57,17 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="voice-button"
           onClick={handleVoiceInput}
         >
-          <Mic className="h-4 w-4" />
+          <Mic className="h-5 w-5" />
+          <span>Voice</span>
         </button>
         
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={toggleFeatures}
+        <button
+          type="button"
           className="features-button"
+          onClick={toggleFeatures}
         >
           {isExpanded ? "Hide Features" : "Show Features"}
-        </Button>
+        </button>
       </div>
     </div>
   );

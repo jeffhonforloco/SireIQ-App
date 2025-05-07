@@ -2,7 +2,7 @@
 /* Input styling */
 .input-buttons-container {
   display: flex;
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -11,53 +11,53 @@
 .input-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
   background-color: #1A1F2C;
-  border-radius: 50%;
-  color: #8E9196;
-  font-size: 0.75rem;
-  transition: all 0.2s;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+  white-space: nowrap;
   border: none;
 }
 
 .input-button:hover {
   background-color: #2A2F3C;
-  color: #FFFFFF;
 }
 
 .voice-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #9b87f5;
-  color: #FFFFFF;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  color: #000000;
   font-size: 0.875rem;
+  padding: 0.6rem 1.25rem;
   border: none;
-  transition: all 0.2s;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .voice-button:hover {
-  background-color: #8B5CF6;
+  opacity: 0.9;
 }
 
 .features-button {
-  background-color: #1A1F2C !important;
-  color: #8E9196 !important;
-  border: none !important;
+  background-color: #1A1F2C;
+  color: #ffffff;
+  border: none;
   border-radius: 0.375rem;
-  font-size: 0.75rem !important;
-  transition: all 0.2s;
-  height: 32px !important;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .features-button:hover {
-  background-color: #2A2F3C !important;
-  color: #FFFFFF !important;
+  background-color: #2A2F3C;
 }
 
 .left-buttons {
@@ -74,27 +74,26 @@
 /* Responsive adjustments for mobile */
 @media (max-width: 640px) {
   .input-buttons-container {
-    padding: 0.375rem 0;
-    flex-wrap: nowrap;
-    overflow-x: hidden;
-    justify-content: space-between;
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
   }
   
   .input-buttons-container .left-buttons {
     display: flex;
     gap: 0.5rem;
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-  }
-  
-  .input-buttons-container .left-buttons::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    order: 2;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
   }
   
   .input-buttons-container .right-buttons {
     display: flex;
     gap: 0.5rem;
-    align-items: center;
+    order: 1;
+    width: 100%;
+    justify-content: center;
   }
 }
