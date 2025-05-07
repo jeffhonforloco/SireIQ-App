@@ -1,13 +1,12 @@
 
-
 @layer components {
   /* Chat interface specific styles */
   .chat-bubble-user {
-    @apply bg-sireiq-accent/30 rounded-2xl rounded-tr-sm text-white;
+    @apply bg-gradient-to-r from-sireiq-accent/30 to-purple-500/30 rounded-2xl rounded-tr-sm text-white;
   }
   
   .chat-bubble-assistant {
-    @apply bg-gray-800 rounded-2xl rounded-tl-sm text-white;
+    @apply bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl rounded-tl-sm text-white;
   }
   
   .chat-input {
@@ -20,7 +19,7 @@
   
   /* Typing indicator animation */
   .typing-indicator div {
-    @apply w-2 h-2 rounded-full bg-gray-400;
+    @apply w-2 h-2 rounded-full bg-sireiq-cyan;
     animation: pulse 1.4s infinite;
   }
   
@@ -30,6 +29,17 @@
   
   .typing-indicator div:nth-child(2) {
     animation-delay: -0.16s;
+  }
+  
+  /* Glow effect for elements */
+  .shadow-glow {
+    box-shadow: 0 0 40px rgba(96, 165, 250, 0.1), 
+                0 0 20px rgba(96, 165, 250, 0.05), 
+                0 0 10px rgba(96, 165, 250, 0.025);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
   }
   
   @keyframes pulse {
@@ -43,4 +53,3 @@
     }
   }
 }
-

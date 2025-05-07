@@ -14,7 +14,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}>
       <div className={`flex items-start gap-3 max-w-[85%]`}>
         {!isUser && (
-          <div className="h-8 w-8 rounded-full bg-sireiq-cyan flex items-center justify-center mt-1">
+          <div className="h-8 w-8 rounded-full bg-gradient-to-r from-sireiq-cyan to-blue-500 flex items-center justify-center mt-1 shadow-glow">
             <MessageSquare className="h-4 w-4 text-sireiq-darker" />
           </div>
         )}

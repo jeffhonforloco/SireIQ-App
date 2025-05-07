@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, Mic, X } from 'lucide-react';
+import { MessageSquare, Send, Mic, X, Sparkles, Zap, BrainCircuit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/sonner';
@@ -13,7 +13,7 @@ const HomeChatExperience: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
-      content: "Hi there! I'm SireIQ, your ecommerce insights assistant. How can I help you today?",
+      content: "Hi there! I'm SireIQ, your intelligent AI assistant. I can help with content creation, data analysis, workflow optimization, and much more. How can I assist you today?",
       role: 'assistant',
       timestamp: new Date(),
     },
@@ -24,10 +24,10 @@ const HomeChatExperience: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   
   const quickSuggestions = [
-    "What can you help me with?",
-    "Analyze my store metrics",
-    "Generate product descriptions",
-    "Optimize my pricing strategy"
+    "How can you enhance my workflow?",
+    "Analyze my content strategy",
+    "Generate creative ideas",
+    "Optimize my decision-making process"
   ];
 
   useEffect(() => {
@@ -76,10 +76,10 @@ const HomeChatExperience: React.FC = () => {
   const generateResponse = (userInput: string) => {
     // Add AI assistant message
     const responses = [
-      `Based on your ecommerce data, I can provide insights about ${userInput.toLowerCase()}. Would you like me to analyze specific metrics?`,
-      `I've analyzed similar questions for other ecommerce businesses. For ${userInput.toLowerCase()}, I'd recommend looking at your customer acquisition costs and conversion rates first.`,
-      `That's a great question about ${userInput.toLowerCase()}. From my analysis, this is an area where data-driven decisions can significantly improve your results.`,
-      `I can help you understand ${userInput.toLowerCase()} better through our advanced analytics. Would you like me to show you some visualizations related to this?`
+      `I've analyzed your question about ${userInput.toLowerCase()}. Based on our advanced AI models, here are some insights that might help you enhance your strategy or workflow.`,
+      `That's an interesting point about ${userInput.toLowerCase()}. Our data analysis tools can help you develop a more comprehensive understanding of this topic.`,
+      `When it comes to ${userInput.toLowerCase()}, our AI systems detect several optimization opportunities worth exploring. Would you like me to elaborate on specific areas?`,
+      `I can provide detailed assistance with ${userInput.toLowerCase()}. SireIQ's advanced neural networks are specifically designed to transform complex questions into actionable intelligence.`
     ];
     
     const assistantMessage: Message = {
@@ -124,16 +124,16 @@ const HomeChatExperience: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-7rem)] max-w-4xl mx-auto w-full relative bg-black/20 rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm">
+    <div className="flex flex-col h-[calc(100vh-7rem)] max-w-4xl w-full relative bg-gradient-to-br from-gray-900 via-black to-sireiq-darker rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm shadow-glow">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800">
+      <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-black/50">
         <div className="flex items-center">
-          <div className="bg-sireiq-cyan rounded-full p-2 mr-3">
-            <MessageSquare className="h-5 w-5 text-sireiq-darker" />
+          <div className="bg-gradient-to-r from-sireiq-cyan to-blue-500 rounded-full p-2 mr-3 shadow-lg">
+            <BrainCircuit className="h-5 w-5 text-sireiq-darker" />
           </div>
           <div>
             <h2 className="text-lg font-medium text-white">Chat with SireIQ</h2>
-            <p className="text-xs text-gray-400">Your ecommerce insights assistant</p>
+            <p className="text-xs text-gray-400">Your intelligent AI assistant</p>
           </div>
         </div>
         <Button 
@@ -151,8 +151,8 @@ const HomeChatExperience: React.FC = () => {
         {/* Welcome section with quick suggestions */}
         {messages.length === 1 && messages[0].id.includes('welcome') && (
           <div className="mb-8 animate-fade-in">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gradient glow">
-              How can I help your ecommerce business today?
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
+              Unleash your potential with intelligent AI
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {quickSuggestions.map((suggestion, index) => (
@@ -177,15 +177,15 @@ const HomeChatExperience: React.FC = () => {
       </div>
       
       {/* Input area */}
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-gray-800 bg-black/30">
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask SireIQ something..."
-            className="pr-24 resize-none min-h-[50px] max-h-[200px] bg-gray-800 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent"
+            placeholder="Ask SireIQ anything..."
+            className="pr-24 resize-none min-h-[50px] max-h-[200px] bg-gray-800/80 border-gray-700 rounded-xl placeholder:text-gray-400 focus-visible:ring-sireiq-accent"
             rows={1}
           />
           <div className="absolute bottom-2 right-2 flex items-center space-x-2">
@@ -203,7 +203,7 @@ const HomeChatExperience: React.FC = () => {
               size="icon"
               disabled={!input.trim()}
               className={`rounded-full h-8 w-8 ${
-                input.trim() ? 'bg-sireiq-cyan text-sireiq-darker hover:bg-sireiq-cyan/90' : 'bg-gray-700 text-gray-400'
+                input.trim() ? 'bg-gradient-to-r from-sireiq-cyan to-blue-500 text-sireiq-darker hover:opacity-90' : 'bg-gray-700 text-gray-400'
               }`}
             >
               <Send className="h-4 w-4" />
@@ -211,7 +211,7 @@ const HomeChatExperience: React.FC = () => {
           </div>
         </form>
         <p className="text-xs text-gray-500 mt-2 text-center">
-          SireIQ helps with ecommerce insights. Your conversations may be reviewed to improve our services.
+          SireIQ helps with AI-powered insights, content creation, and workflow optimization. Your conversations may be reviewed to improve our services.
         </p>
       </div>
     </div>
