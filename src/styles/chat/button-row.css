@@ -31,9 +31,9 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
-  padding: 0.65rem;
-  height: 40px;
   width: 40px;
+  height: 40px;
+  padding: 0;
 }
 
 .circle-button:hover {
@@ -53,7 +53,7 @@
   background-color: #ffffff;
   color: #000000;
   font-size: 0.875rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0 1.25rem;
   border: none;
   font-weight: 500;
   transition: background-color 0.2s;
@@ -66,17 +66,18 @@
 }
 
 .features-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #22252F;
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   font-size: 0.875rem;
   transition: background-color 0.2s;
   cursor: pointer;
   height: 40px;
-  display: flex;
-  align-items: center;
 }
 
 .features-button:hover {

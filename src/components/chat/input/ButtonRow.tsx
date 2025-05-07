@@ -29,7 +29,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           aria-label="Attach file"
         >
           <Paperclip className="h-5 w-5" />
-          <span>Attach</span>
         </button>
         
         <button
@@ -39,7 +38,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           aria-label="Search"
         >
           <Search className="h-5 w-5" />
-          <span>Search</span>
         </button>
         
         <button
@@ -49,7 +47,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           aria-label="Reason"
         >
           <Lightbulb className="h-5 w-5" />
-          <span>Reason</span>
         </button>
       </div>
       
