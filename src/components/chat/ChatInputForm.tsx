@@ -36,7 +36,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="px-4 pt-2 pb-4 sticky bottom-0 bg-black">
+    <div className="px-4 pt-2 pb-4 sticky bottom-0 bg-[#0f1117]">
       <form 
         ref={formRef}
         onSubmit={(e) => {
@@ -52,7 +52,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Message SireIQ..."
+            placeholder="Ask SireIQ anything..."
             disabled={isTyping}
             className="chat-input-textarea"
             rows={1}
@@ -104,7 +104,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
       </form>
       
       <div className="disclaimer-text">
-        SireIQ may display inaccurate info, including about people, places, or facts. By messaging SireIQ, you agree to our <a href="#" className="underline hover:text-gray-400">Terms</a> and <a href="#" className="underline hover:text-gray-400">Privacy Policy</a>.
+        SireIQ helps with AI-powered insights, content creation, and workflow optimization. Your conversations may be reviewed to improve our services.
       </div>
     </div>
   );

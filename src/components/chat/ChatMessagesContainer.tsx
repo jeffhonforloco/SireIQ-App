@@ -4,6 +4,7 @@ import { Message } from '@/components/ai-chat/types';
 import ChatMessage from './ChatMessage';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatWelcomeSection from './ChatWelcomeSection';
+import { MessageSquare } from 'lucide-react';
 
 interface ChatMessagesContainerProps {
   messages: Message[];
@@ -31,7 +32,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
     }
   };
 
-  // Show welcome screen if no messages or only welcome message
+  // Show welcome screen if no messages
   const showWelcome = messages.length === 0;
 
   return (

@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -15,22 +15,21 @@ const HomeChatExperience: React.FC = () => {
   
   // SireIQ specific responses
   const sireIQResponses = {
-    features: [
-      "SireIQ offers advanced data analytics, helping you transform raw data into actionable insights with sophisticated visualization tools and AI-driven pattern recognition.",
-      "Our natural language processing capabilities allow SireIQ to understand and generate human-like text, perfect for content creation, summarization, and translation tasks.",
-      "SireIQ's voice assistant feature provides hands-free interaction, allowing you to multitask while getting information or completing tasks through simple voice commands.",
-      "Our enterprise security features include end-to-end encryption, role-based access controls, and compliance with major security standards like GDPR, HIPAA, and SOC 2."
+    workflow: [
+      "I can enhance your workflow by analyzing your current processes and identifying bottlenecks. SireIQ's AI can streamline repetitive tasks, automate document processing, and provide intelligent suggestions for task prioritization.",
+      "Let me optimize your workflow with SireIQ's smart scheduling tools, automated follow-ups, and intelligent task delegation. Our platform reduces manual effort by up to 40% through AI-driven automation."
     ],
-    comparisons: [
-      "Unlike basic chatbots, SireIQ combines multiple AI technologies including NLP, machine learning, and computer vision to provide more comprehensive solutions to complex problems.",
-      "While many AI platforms require technical expertise, SireIQ features an intuitive interface accessible to team members of all technical backgrounds.",
-      "SireIQ differentiates itself with domain-specific knowledge across industries, allowing for more relevant and accurate responses compared to general-purpose AI systems."
+    content: [
+      "Looking at your content strategy, I'd recommend focusing on more interactive elements and data visualization. SireIQ's analysis shows that your audience engages 37% more with visual content compared to text-only posts.",
+      "Based on SireIQ's trend analysis, your content would benefit from more industry-specific case studies. Our AI detects increasing search volume for practical applications rather than theoretical discussions in your field."
     ],
-    industries: [
-      "In healthcare, SireIQ helps analyze patient data, predict outcomes, and streamline administrative tasks while maintaining strict HIPAA compliance.",
-      "Financial institutions use SireIQ for fraud detection, market trend analysis, and personalized customer service, all with enterprise-grade security.",
-      "Marketing teams leverage SireIQ for content creation, audience analysis, and campaign optimization, increasing engagement while reducing production time.",
-      "SireIQ assists software development teams with code generation, bug detection, and documentation, accelerating development cycles."
+    ideas: [
+      "Here are some creative ideas SireIQ generated: 1) Interactive webinar series that transforms into modular content, 2) AI-powered customer journey visualization tool, 3) Collaborative industry benchmark report with complementary businesses.",
+      "SireIQ suggests these creative concepts: 1) Develop a predictive market analysis dashboard, 2) Create an AI-assisted decision tree for customer support, 3) Launch a personal productivity score tool that integrates with existing workflows."
+    ],
+    decisions: [
+      "To optimize your decision-making process, SireIQ recommends implementing a structured framework that quantifies both objective metrics and subjective factors. Our AI can help weight these elements based on your organizational priorities.",
+      "SireIQ's decision optimization tool can integrate data from multiple sources to provide comprehensive scenario analysis. This reduces decision fatigue and ensures consistent quality across your organization."
     ]
   };
   
@@ -66,21 +65,24 @@ const HomeChatExperience: React.FC = () => {
     // Generate appropriate response based on input content
     const lowerInput = userInput.toLowerCase();
     
-    if (lowerInput.includes("feature") || lowerInput.includes("what can") || lowerInput.includes("capabilities")) {
-      responseContent = sireIQResponses.features[Math.floor(Math.random() * sireIQResponses.features.length)];
+    if (lowerInput.includes("workflow") || lowerInput.includes("enhance") || lowerInput.includes("process")) {
+      responseContent = sireIQResponses.workflow[Math.floor(Math.random() * sireIQResponses.workflow.length)];
     } 
-    else if (lowerInput.includes("compare") || lowerInput.includes("difference") || lowerInput.includes("better than")) {
-      responseContent = sireIQResponses.comparisons[Math.floor(Math.random() * sireIQResponses.comparisons.length)];
+    else if (lowerInput.includes("content") || lowerInput.includes("strategy") || lowerInput.includes("analyze")) {
+      responseContent = sireIQResponses.content[Math.floor(Math.random() * sireIQResponses.content.length)];
     }
-    else if (lowerInput.includes("industry") || lowerInput.includes("sector") || lowerInput.includes("business")) {
-      responseContent = sireIQResponses.industries[Math.floor(Math.random() * sireIQResponses.industries.length)];
+    else if (lowerInput.includes("idea") || lowerInput.includes("creative") || lowerInput.includes("generate")) {
+      responseContent = sireIQResponses.ideas[Math.floor(Math.random() * sireIQResponses.ideas.length)];
+    }
+    else if (lowerInput.includes("decision") || lowerInput.includes("optimize") || lowerInput.includes("process")) {
+      responseContent = sireIQResponses.decisions[Math.floor(Math.random() * sireIQResponses.decisions.length)];
     }
     else {
       const generalResponses = [
-        `I've analyzed your question about ${userInput.toLowerCase()}. Based on SireIQ's advanced AI models, here are some insights that might help enhance your understanding.`,
-        `That's an interesting point about ${userInput.toLowerCase()}. SireIQ's data analysis tools can help you develop a more comprehensive understanding of this topic.`,
-        `When it comes to ${userInput.toLowerCase()}, SireIQ's AI systems detect several optimization opportunities worth exploring. Would you like me to elaborate on specific areas?`,
-        `I can provide detailed assistance with ${userInput.toLowerCase()}. SireIQ's neural networks are specifically designed to transform complex questions into actionable intelligence.`
+        `I'm SireIQ, your intelligent AI assistant. Looking at your question about ${userInput.toLowerCase()}, I can provide advanced analytics and insights to help you make better decisions.`,
+        `As SireIQ, I can analyze your needs around ${userInput.toLowerCase()} and provide AI-powered recommendations that integrate with your existing workflow.`,
+        `SireIQ's neural networks are designed to help with challenges like ${userInput.toLowerCase()}. Our platform combines machine learning with industry-specific knowledge to deliver personalized solutions.`,
+        `I've analyzed your question about ${userInput.toLowerCase()} using SireIQ's advanced language processing. Would you like me to generate a comprehensive report, provide quick insights, or suggest optimization strategies?`
       ];
       responseContent = generalResponses[Math.floor(Math.random() * generalResponses.length)];
     }
@@ -117,10 +119,8 @@ const HomeChatExperience: React.FC = () => {
 
   return (
     <div className="chat-container">
-      {/* Header */}
       <ChatHeader clearChat={clearChat} />
       
-      {/* Messages container */}
       <ChatMessagesContainer 
         messages={messages} 
         isTyping={isTyping} 
@@ -128,7 +128,6 @@ const HomeChatExperience: React.FC = () => {
         isMobile={isMobile} 
       />
       
-      {/* Input area */}
       <ChatInputForm
         input={input}
         setInput={setInput}

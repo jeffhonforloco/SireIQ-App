@@ -2,7 +2,7 @@
 @layer components {
   /* Chat container - fixed position with rounded corners */
   .chat-container {
-    @apply flex flex-col h-full max-w-3xl mx-auto bg-gray-900 overflow-hidden rounded-2xl border border-gray-800 shadow-lg;
+    @apply flex flex-col h-full max-w-3xl mx-auto bg-[#0f1117] overflow-hidden rounded-xl border border-gray-700/50 shadow-lg;
     max-height: calc(100vh - 32px);
   }
   
@@ -20,7 +20,7 @@
   
   /* Message styles */
   .message-container {
-    @apply py-6 px-1 border-b border-gray-800 last:border-none;
+    @apply py-6 px-1 border-b border-gray-700/30 last:border-none;
   }
   
   .user-message-container {
@@ -39,9 +39,9 @@
   
   /* Chat input container */
   .chat-input-container {
-    @apply relative flex items-center w-full bg-gray-900 rounded-xl border border-gray-700;
+    @apply relative flex items-center w-full rounded-xl border border-gray-700/50;
     border-radius: 24px;
-    background-color: #2a2a2a;
+    background-color: #1a1d29;
   }
   
   /* Input buttons container */
@@ -60,7 +60,7 @@
   }
   
   .submit-button.active {
-    @apply bg-gray-600 text-white hover:bg-gray-700;
+    @apply bg-blue-600 text-white hover:bg-blue-700;
   }
   
   .submit-button.inactive {
@@ -92,8 +92,8 @@
   
   /* Suggestion buttons */
   .suggestion-button {
-    @apply flex items-center justify-between gap-2 rounded-lg border border-gray-700 bg-gray-800 
-           hover:bg-gray-700 transition-colors text-sm text-gray-300 
+    @apply flex items-center justify-between gap-2 rounded-lg border border-gray-700/50 bg-gray-800/50 
+           hover:bg-gray-700/50 transition-colors text-sm text-gray-300 
            px-4 py-3 w-full cursor-pointer;
   }
   
@@ -130,15 +130,5 @@
       transform: scale(1);
       opacity: 1;
     }
-  }
-  
-  /* Quick suggestion grid */
-  .quick-suggestion-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-2xl mx-auto;
-  }
-  
-  /* Logo in chat header and welcome screen */
-  .chat-logo-container {
-    @apply flex items-center justify-center;
   }
 }
