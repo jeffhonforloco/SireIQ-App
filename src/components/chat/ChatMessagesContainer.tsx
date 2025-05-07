@@ -4,6 +4,7 @@ import { Message } from '@/components/ai-chat/types';
 import ChatMessage from './ChatMessage';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatWelcomeSection from './ChatWelcomeSection';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ChatMessagesContainerProps {
   messages: Message[];
@@ -35,26 +36,28 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   const showWelcome = messages.length === 0;
 
   return (
-    <div 
-      ref={containerRef}
-      className="messages-container"
-    >
-      {showWelcome ? (
-        <ChatWelcomeSection 
-          handleQuickSuggestion={handleQuickSuggestion} 
-          isMobile={isMobile} 
-        />
-      ) : (
-        <div className="space-y-0 w-full py-4">
-          {messages.map((message) => (
-            <ChatMessage key={message.id} message={message} />
-          ))}
-        </div>
-      )}
-      
-      {isTyping && <ChatTypingIndicator />}
-      <div ref={messagesEndRef} />
-    </div>
+    <ScrollArea className="h-full w-full">
+      <div 
+        ref={containerRef}
+        className="p-4"
+      >
+        {showWelcome ? (
+          <ChatWelcomeSection 
+            handleQuickSuggestion={handleQuickSuggestion} 
+            isMobile={isMobile} 
+          />
+        ) : (
+          <div className="space-y-0 w-full">
+            {messages.map((message) => (
+              <ChatMessage key={message.id} message={message} />
+            ))}
+          </div>
+        )}
+        
+        {isTyping && <ChatTypingIndicator />}
+        <div ref={messagesEndRef} />
+      </div>
+    </ScrollArea>
   );
 };
 

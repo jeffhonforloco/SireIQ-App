@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 
 const Index = () => {
   return (
-    <div className="min-h-screen h-full w-full bg-black flex flex-col">
+    <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
       <Helmet>
         <title>SireIQ | Your Intelligent AI Assistant</title>
         <meta name="description" content="An advanced AI platform that helps businesses leverage data for better insights, content creation, and decision-making." />
@@ -15,8 +15,8 @@ const Index = () => {
       
       <Navbar />
       
-      <div className="flex-1 flex justify-center items-center p-4">
-        <div className="w-full max-w-3xl h-[calc(100vh-100px)]">
+      <div className="flex-1 flex justify-center items-center p-0 overflow-hidden">
+        <div className="w-full max-w-3xl h-full">
           <HomeChatExperience />
         </div>
       </div>

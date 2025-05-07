@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
@@ -132,15 +131,17 @@ const HomeChatExperience: React.FC = () => {
   }, []);
 
   return (
-    <div className="chat-container">
+    <div className="flex flex-col h-full">
       <ChatHeader clearChat={clearChat} />
       
-      <ChatMessagesContainer 
-        messages={messages} 
-        isTyping={isTyping} 
-        handleQuickSuggestion={handleQuickSuggestion} 
-        isMobile={isMobile} 
-      />
+      <div className="flex-1 overflow-hidden">
+        <ChatMessagesContainer 
+          messages={messages} 
+          isTyping={isTyping} 
+          handleQuickSuggestion={handleQuickSuggestion} 
+          isMobile={isMobile} 
+        />
+      </div>
       
       <ChatInputForm
         input={input}
