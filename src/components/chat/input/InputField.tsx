@@ -39,7 +39,7 @@ const InputField: React.FC<InputFieldProps> = ({
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type your message here..."
+        placeholder="Ask anything..."
         disabled={isTyping}
         className="chat-input"
       />

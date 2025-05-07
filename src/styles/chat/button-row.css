@@ -26,7 +26,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-  background-color: #1A1F2C;
+  background-color: #1A1F2C; /* Match input field color */
   border-radius: 9999px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
@@ -37,7 +37,7 @@
 }
 
 .input-button:hover {
-  background-color: #2A2F3C;
+  background-color: #252D3C;
 }
 
 .voice-button {
@@ -74,7 +74,7 @@
 }
 
 .features-button:hover {
-  background-color: #2A2F3C;
+  background-color: #252D3C;
 }
 
 /* Responsive adjustments for mobile */
