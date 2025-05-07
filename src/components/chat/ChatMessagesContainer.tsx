@@ -29,7 +29,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   };
 
   return (
-    <div className="flex-grow overflow-hidden p-2 space-y-2">
+    <div className="flex-grow overflow-hidden p-2 space-y-2" onClick={(e) => e.stopPropagation()}>
       {/* Welcome section with quick suggestions */}
       {messages.length === 1 && messages[0].id.includes('welcome') && (
         <ChatWelcomeSection 

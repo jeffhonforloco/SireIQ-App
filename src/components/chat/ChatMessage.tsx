@@ -11,7 +11,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user';
   
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`} onClick={(e) => e.stopPropagation()}>
       <div className={`flex items-start gap-1 max-w-[85%]`}>
         {!isUser && (
           <div className="h-5 w-5 rounded-full bg-gradient-to-r from-sireiq-cyan to-blue-500 flex items-center justify-center mt-1 shadow-glow flex-shrink-0">

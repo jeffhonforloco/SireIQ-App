@@ -83,7 +83,7 @@ const HomeChatExperience: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow">
+    <div className="flex flex-col w-full h-full max-h-full fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-sireiq-darker border border-gray-800 overflow-hidden shadow-glow" onClick={(e) => e.preventDefault()}>
       {/* Header */}
       <ChatHeader clearChat={clearChat} />
       

@@ -51,6 +51,16 @@
     }
   }
   
+  /* Prevent default link behavior */
+  a {
+    pointer-events: none;
+  }
+  
+  /* Remove hover effects */
+  button:hover {
+    transform: none !important;
+  }
+  
   @keyframes pulse {
     0%, 80%, 100% { 
       transform: scale(0.6);

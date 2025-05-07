@@ -35,7 +35,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm">
+    <div className="p-1.5 border-t border-gray-800 bg-black/30 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
       <form onSubmit={handleSubmit} className="relative">
         <Textarea
           ref={textareaRef}

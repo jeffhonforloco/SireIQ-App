@@ -18,11 +18,11 @@ const Index = () => {
       <ParticleBackground />
       
       {/* Main content with Chat Experience - fixed size to prevent scrolling */}
-      <main className="fixed inset-0 flex items-center justify-center">
+      <div className="fixed inset-0 flex items-center justify-center">
         <div className="h-full w-full max-w-full flex items-center justify-center">
           <HomeChatExperience />
         </div>
-      </main>
+      </div>
     </div>
   );
 };
