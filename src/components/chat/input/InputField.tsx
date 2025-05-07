@@ -43,12 +43,13 @@ const InputField: React.FC<InputFieldProps> = ({
         disabled={isTyping}
         className="chat-input"
       />
-      <button
-        className="chat-input-button"
+      <button 
+        className="up-arrow-button"
         onClick={handleSubmit}
         disabled={isTyping}
+        aria-label="Send message"
       >
-        <ArrowUp className="h-5 w-5 text-white" />
+        <ArrowUp className="h-5 w-5" />
       </button>
     </div>
   );
