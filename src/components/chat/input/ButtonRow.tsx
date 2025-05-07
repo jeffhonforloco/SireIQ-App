@@ -56,7 +56,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
       <div className="right-buttons">
         <button
           type="button"
-          className="voice-button rounded-full bg-white text-black py-2 px-4 flex items-center gap-2"
+          className="voice-button"
           onClick={handleVoiceInput}
         >
           <Mic className="h-4 w-4" />
@@ -65,7 +65,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
         
         <button
           type="button"
-          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors text-sm whitespace-nowrap"
+          className="features-button"
           onClick={toggleFeatures}
         >
           {isExpanded ? "Hide Features" : "Show Features"}
