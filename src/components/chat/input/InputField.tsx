@@ -1,5 +1,6 @@
 
 import React, { useRef, useEffect, KeyboardEvent } from 'react';
+import { ArrowUp } from 'lucide-react';
 
 interface InputFieldProps {
   input: string;
@@ -38,10 +39,13 @@ const InputField: React.FC<InputFieldProps> = ({
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Ask anything..."
+        placeholder="Ask anything"
         disabled={isTyping}
         className="chat-input"
       />
+      <div className="send-button-container">
+        <ArrowUp className="h-5 w-5 text-white" />
+      </div>
     </div>
   );
 };

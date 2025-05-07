@@ -2,6 +2,7 @@
 /* Feature buttons styling */
 .feature-buttons-container {
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .feature-buttons-container .grid {
