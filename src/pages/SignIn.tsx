@@ -91,7 +91,9 @@ const SignIn = () => {
             </div>
             
             <div className="flex justify-end">
-              <a href="#" className="text-sm text-sireiq-cyan hover:underline">Forgot password?</a>
+              <Link to="/forgot-password" className="text-sm text-sireiq-cyan hover:underline">
+                Forgot password?
+              </Link>
             </div>
             
             <Button type="submit" className="w-full bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0]">

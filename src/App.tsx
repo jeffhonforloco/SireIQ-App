@@ -17,6 +17,7 @@ import Dashboard from '@/pages/Dashboard';
 import Features from '@/pages/Features';
 import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
+import ForgotPassword from '@/pages/ForgotPassword';
 
 // Import feature pages
 import IdeaGeneration from '@/pages/features/IdeaGeneration';
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/features/decision-support" element={<DecisionSupport />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/signin" element={<SignIn />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <MobileBottomNav />
