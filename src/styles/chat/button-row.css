@@ -3,29 +3,17 @@
 .input-buttons-container {
   display: flex;
   width: 100%;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
-}
-
-.left-buttons {
-  display: flex;
   gap: 0.5rem;
-  align-items: center;
-}
-
-.right-buttons {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
 }
 
 .input-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
   background-color: #1A1F2C;
   border-radius: 9999px;
   color: rgba(255, 255, 255, 0.8);
@@ -34,6 +22,7 @@
   white-space: nowrap;
   border: none;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .input-button:hover {
@@ -44,17 +33,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   border-radius: 9999px;
   background-color: #ffffff;
   color: #000000;
   font-size: 0.875rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   border: none;
   font-weight: 500;
   transition: background-color 0.2s;
   white-space: nowrap;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .voice-button:hover {
@@ -66,11 +56,13 @@
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
   transition: background-color 0.2s;
   white-space: nowrap;
   cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .features-button:hover {
@@ -79,12 +71,23 @@
 
 /* Responsive adjustments for mobile */
 @media (max-width: 640px) {
-  .input-button, .voice-button, .features-button {
+  .input-buttons-container {
+    flex-wrap: wrap;
+  }
+  
+  .input-button, .voice-button {
     padding: 0.5rem;
     font-size: 0.75rem;
   }
   
   .input-button span, .voice-button span {
     display: none;
+  }
+  
+  .features-button {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0.5rem;
+    justify-content: center;
   }
 }

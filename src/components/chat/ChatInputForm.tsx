@@ -81,6 +81,9 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             handleVoiceInput={handleVoiceInput}
             toggleFeatures={toggleFeatures}
             isExpanded={isExpanded}
+            input={input}
+            handleSubmit={handleSubmit}
+            isTyping={isTyping}
           />
         </form>
         
