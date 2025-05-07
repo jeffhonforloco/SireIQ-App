@@ -139,6 +139,25 @@
   transform: translateY(-2px);
 }
 
+/* Mobile features styling */
+.mobile-features {
+  animation: slideUp 0.3s ease;
+  backdrop-filter: blur(8px);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .feature-title {
   font-weight: 600;
   font-size: 0.875rem;

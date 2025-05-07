@@ -10,6 +10,7 @@ import {
   Image, 
   Sparkles 
 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FeatureButtonsProps {
   isExpanded: boolean;
@@ -20,6 +21,8 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
   isExpanded,
   handleFeatureClick
 }) => {
+  const isMobile = useIsMobile();
+  
   if (!isExpanded) return null;
   
   const features = [
@@ -66,16 +69,19 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
   ];
 
   return (
-    <div className="feature-buttons-container mt-3 mb-2">
-      <div className="grid">
+    <div className={`feature-buttons-container ${isMobile ? 'mobile-features fixed bottom-16 left-0 right-0 bg-gray-900/95 border-t border-gray-800 p-4 z-30' : 'mt-3 mb-2'}`}>
+      <div className={`${isMobile ? 'grid grid-cols-4 gap-3' : 'grid'}`}>
         {features.map((feature) => (
           <button 
             key={feature.name}
-            className="feature-button flex items-center space-x-2 bg-gray-800/70 hover:bg-gray-700/70 text-gray-200 rounded-lg px-3 py-2 text-sm transition-colors"
+            className={`feature-button flex ${isMobile ? 'flex-col justify-center items-center h-20 space-y-2' : 'items-center space-x-2'} 
+              bg-gray-800/70 hover:bg-gray-700/70 text-gray-200 rounded-lg px-3 py-2 text-sm transition-colors`}
             onClick={() => handleFeatureClick(feature.prompt)}
           >
             <span className="text-blue-400">{feature.icon}</span>
-            <span className="whitespace-nowrap">{feature.name}</span>
+            <span className={`${isMobile ? 'text-xs text-center' : 'whitespace-nowrap'}`}>
+              {isMobile ? feature.name.split(' ')[0] : feature.name}
+            </span>
           </button>
         ))}
       </div>

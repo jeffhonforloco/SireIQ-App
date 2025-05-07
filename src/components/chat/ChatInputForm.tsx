@@ -1,9 +1,10 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputField from './input/InputField';
 import ButtonRow from './input/ButtonRow';
 import FeatureButtons from './input/FeatureButtons';
 import DisclaimerText from './input/DisclaimerText';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatInputFormProps {
   input: string;
@@ -24,6 +25,21 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useIsMobile();
+  
+  // Close features panel when user scrolls on mobile
+  useEffect(() => {
+    if (isMobile) {
+      const handleScroll = () => {
+        if (isExpanded) {
+          setIsExpanded(false);
+        }
+      };
+      
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [isMobile, isExpanded]);
   
   const handleAttachClick = () => {
     // Open file picker dialog
@@ -58,7 +74,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="px-4 pt-2 pb-4 bg-[#0f1117] border-t border-gray-800">
+    <div className={`px-4 pt-2 pb-4 bg-[#0f1117] border-t border-gray-800 ${isExpanded && isMobile ? 'pb-[330px]' : ''}`}>
       <div className="max-w-3xl mx-auto">
         <form 
           ref={formRef}
@@ -92,7 +108,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           handleFeatureClick={handleFeatureClick}
         />
         
-        <DisclaimerText />
+        {!isExpanded && <DisclaimerText />}
       </div>
     </div>
   );
