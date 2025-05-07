@@ -99,18 +99,7 @@ const SignIn = () => {
             </Button>
           </form>
           
-          <div className="mt-6 pt-4 border-t border-sireiq-accent/20">
-            <p className="text-sm text-center mb-4">Demo accounts for testing:</p>
-            <div className="space-y-1 text-sm">
-              <p><span className="text-sireiq-cyan">User:</span> user@example.com / password</p>
-              <p><span className="text-sireiq-cyan">Developer:</span> dev@example.com / password</p>
-            </div>
-            <p className="text-xs text-center mt-3 text-sireiq-light/70">
-              After signing in, you can upgrade to Developer or Enterprise accounts from your dashboard.
-            </p>
-          </div>
-          
-          <p className="mt-4 text-center text-sm">
+          <p className="mt-6 text-center text-sm">
             Don't have an account?{' '}
             <Link to="/get-started" className="text-sireiq-cyan hover:underline">Get Started</Link>
           </p>
