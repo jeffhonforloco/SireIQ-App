@@ -34,6 +34,7 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
+    // First, remove all theme classes to avoid conflicts
     root.classList.remove("light", "dark");
     
     if (theme === "system") {
@@ -41,12 +42,19 @@ export function ThemeProvider({
         ? "dark"
         : "light";
       root.classList.add(systemTheme);
+      // Store the actual applied theme for consistency
+      document.body.dataset.theme = systemTheme;
     } else {
       root.classList.add(theme);
+      // Store the theme in a data attribute for easier CSS targeting
+      document.body.dataset.theme = theme;
     }
     
     // Store preference in localStorage
     localStorage.setItem(storageKey, theme);
+    
+    // Dispatch a custom event that components can listen to
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
   }, [theme, storageKey]);
 
   const value = {
