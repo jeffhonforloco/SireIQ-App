@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Paperclip, Search, Lightbulb, Mic } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface ButtonRowProps {
   handleAttachClick: () => void;

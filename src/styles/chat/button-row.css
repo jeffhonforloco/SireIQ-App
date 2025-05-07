@@ -8,6 +8,17 @@
   align-items: center;
 }
 
+.left-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.right-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .input-button {
   display: flex;
   align-items: center;
@@ -20,6 +31,10 @@
   transition: background-color 0.2s;
   white-space: nowrap;
   border: none;
+}
+
+.input-button span {
+  margin-left: 0.375rem;
 }
 
 .input-button:hover {
@@ -49,7 +64,7 @@
   background-color: #1A1F2C;
   color: #ffffff;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
   padding: 0.6rem 1.25rem;
   font-size: 0.875rem;
   transition: background-color 0.2s;
@@ -58,17 +73,6 @@
 
 .features-button:hover {
   background-color: #2A2F3C;
-}
-
-.left-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.right-buttons {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
 }
 
 /* Responsive adjustments for mobile */
