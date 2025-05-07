@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Settings, Bell, Zap, Code, Users } from 'lucide-react';
-import { useRole, AIModel } from '@/contexts/RoleContext';
+import { useRole } from '@/contexts/RoleContext';
 
 const QuickPreferences = () => {
   const { role, preferences, setPreferences, setOnboardingStep } = useRole();
@@ -60,7 +60,7 @@ const QuickPreferences = () => {
           
           <RadioGroup 
             value={preferences.aiModel}
-            onValueChange={(value) => setPreferences({ aiModel: value as AIModel })}
+            onValueChange={(value) => setPreferences({ aiModel: value })}
             className="flex flex-col space-y-2 ml-8"
           >
             <div className="flex items-center space-x-2">

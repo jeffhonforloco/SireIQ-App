@@ -1,77 +1,69 @@
 
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@/components/ui/theme-provider';
-import { HelmetProvider } from 'react-helmet-async';
-import { Toaster } from '@/components/ui/sonner';
-import { VoiceAssistantProvider } from '@/hooks/useVoiceAssistant';
-import { RoleProvider } from '@/contexts/RoleContext';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { RoleProvider } from "./contexts/RoleContext";
+import MobileBottomNav from "./components/MobileBottomNav";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import AIWorkflows from "./pages/AIWorkflows";
+import Features from "./pages/Features";
+import HowItWorks from "./pages/HowItWorks";
+import Enterprise from "./pages/Enterprise";
+import TryAdvancedAI from "./pages/TryAdvancedAI";
+import TrustAndCompliance from "./pages/TrustAndCompliance";
+import SignIn from "./pages/SignIn";
+import GetStarted from "./pages/GetStarted";
+import Dashboard from "./pages/Dashboard";
+import AIPoweredCreation from "./pages/features/AIPoweredCreation";
+import PersonalityEngine from "./pages/features/PersonalityEngine";
+import RealTimeCollaboration from "./pages/features/RealTimeCollaboration";
+import IdeaGeneration from "./pages/features/IdeaGeneration";
+import PerformanceAnalytics from "./pages/features/PerformanceAnalytics";
+import EnterpriseSecurity from "./pages/features/EnterpriseSecurity";
+import Integrations from "./pages/Integrations";
 
-// Import pages
-import Index from '@/pages/Index';
-import LandingPage from '@/pages/LandingPage';
-import NotFound from '@/pages/NotFound';
-import GetStarted from '@/pages/GetStarted';
-import Pricing from '@/pages/Pricing';
-import Dashboard from '@/pages/Dashboard';
-import Features from '@/pages/Features';
-import Enterprise from '@/pages/Enterprise';
-import SignIn from '@/pages/SignIn';
+const queryClient = new QueryClient();
 
-// Import feature pages
-import IdeaGeneration from '@/pages/features/IdeaGeneration';
-import PersonalityEngine from '@/pages/features/PersonalityEngine';
-import VoiceAssistant from '@/pages/features/VoiceAssistant';
-import SimpleVoiceAssistantDemo from '@/pages/features/SimpleVoiceAssistantDemo';
-import PerformanceAnalytics from '@/pages/features/PerformanceAnalytics';
-import AIPoweredCreation from '@/pages/features/AIPoweredCreation';
-import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
-import DataAnalysis from '@/pages/features/DataAnalysis';
-import ContentCreation from '@/pages/features/ContentCreation';
-import CodeAssistance from '@/pages/features/CodeAssistance';
-import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
-import DecisionSupport from '@/pages/features/DecisionSupport';
-
-import MobileBottomNav from '@/components/MobileBottomNav';
-
-function App() {
-  return (
-    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
       <HelmetProvider>
         <RoleProvider>
-          <VoiceAssistantProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/landing" element={<LandingPage />} />
-                <Route path="/get-started" element={<GetStarted />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/features/idea-generation" element={<IdeaGeneration />} />
-                <Route path="/features/personality-engine" element={<PersonalityEngine />} />
-                <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
-                <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
-                <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
-                <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
-                <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
-                <Route path="/features/data-analysis" element={<DataAnalysis />} />
-                <Route path="/features/content-creation" element={<ContentCreation />} />
-                <Route path="/features/code-assistance" element={<CodeAssistance />} />
-                <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
-                <Route path="/features/decision-support" element={<DecisionSupport />} />
-                <Route path="/enterprise" element={<Enterprise />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <MobileBottomNav />
-              <Toaster position="bottom-right" />
-            </Router>
-          </VoiceAssistantProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/ai-workflows" element={<AIWorkflows />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/enterprise" element={<Enterprise />} />
+              <Route path="/try-advanced-ai" element={<TryAdvancedAI />} />
+              <Route path="/trust-and-compliance" element={<TrustAndCompliance />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/get-started" element={<GetStarted />} />
+              <Route path="/integrations" element={<Integrations />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              {/* Feature detail pages */}
+              <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
+              <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+              <Route path="/features/real-time-collaboration" element={<RealTimeCollaboration />} />
+              <Route path="/features/idea-generation" element={<IdeaGeneration />} />
+              <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
+              <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <MobileBottomNav />
+          </BrowserRouter>
         </RoleProvider>
       </HelmetProvider>
-    </ThemeProvider>
-  );
-}
+    </TooltipProvider>
+  </QueryClientProvider>
+);
 
 export default App;

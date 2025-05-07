@@ -1,79 +1,26 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Share2, Webhook, Code, Database, Puzzle } from 'lucide-react';
+import { Slack, ExternalLink, Layers, Share2, Webhook } from 'lucide-react';
 import { AdobeIcon, TeamsIcon } from './CustomIcons';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import DisclosureAccordion from '@/components/DisclosureAccordion';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const IntegrationsSection: React.FC = () => {
   const { toast } = useToast();
-  const [selectedIntegration, setSelectedIntegration] = useState<string | null>(null);
-  const [webhookUrl, setWebhookUrl] = useState<string>('');
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   
   const handleIntegrationClick = (integrationName: string) => {
-    setSelectedIntegration(integrationName);
-  };
-
-  const handleWebhookSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!webhookUrl.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a valid webhook URL",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      toast({
-        title: "Integration Successful",
-        description: `Successfully connected to ${webhookUrl}`,
-        duration: 3000,
-      });
-      setIsSubmitting(false);
-    }, 1500);
-  };
-  
-  const handleThirdPartyAuth = (integrationName: string) => {
     toast({
-      title: "Authorization Started",
-      description: `Connecting to ${integrationName}...`,
+      title: "Coming Soon",
+      description: `Integration with ${integrationName} will be available soon.`,
       duration: 3000,
     });
-    
-    // Simulate API call
-    setTimeout(() => {
-      toast({
-        title: "Connection Successful",
-        description: `Successfully connected to ${integrationName}`,
-        duration: 3000,
-      });
-    }, 2000);
   };
   
   const integrations = [
     {
       name: 'Slack',
-      icon: Share2,
+      icon: Slack,
       description: 'Send AI-generated content directly to your Slack channels and collaborate with your team.',
       comingSoon: false,
       primaryColor: 'bg-[#4A154B]'
@@ -96,19 +43,19 @@ const IntegrationsSection: React.FC = () => {
       name: 'Zapier',
       icon: Webhook,
       description: 'Connect SireIQ to 3000+ apps with custom workflow automation.',
-      comingSoon: false,
+      comingSoon: true,
       primaryColor: 'bg-[#FF4A00]'
     },
     {
       name: 'Content Platforms',
-      icon: Puzzle,
+      icon: Share2,
       description: 'Publish directly to WordPress, Medium, or other content platforms.',
       comingSoon: true,
       primaryColor: 'bg-[#21759B]'
     },
     {
-      name: 'API',
-      icon: Code,
+      name: 'Data Sources',
+      icon: Layers,
       description: 'Import data from various sources to inform your AI-powered content creation.',
       comingSoon: true,
       primaryColor: 'bg-[#0078D4]'
@@ -139,115 +86,13 @@ const IntegrationsSection: React.FC = () => {
                 <CardDescription className="text-sireiq-light/70 mb-6">
                   {integration.description}
                 </CardDescription>
-                
-                {!integration.comingSoon ? (
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button 
-                        variant="outline" 
-                        className="text-sireiq-cyan border-sireiq-cyan/50 hover:bg-sireiq-cyan/10 w-full group-hover:border-sireiq-cyan transition-all"
-                        onClick={() => handleIntegrationClick(integration.name)}
-                      >
-                        Connect <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md bg-sireiq-darker border-sireiq-accent/30 text-sireiq-light">
-                      <DialogHeader>
-                        <DialogTitle className="text-sireiq-light">Connect to {selectedIntegration}</DialogTitle>
-                        <DialogDescription className="text-sireiq-light/70">
-                          Set up your integration with {selectedIntegration}.
-                        </DialogDescription>
-                      </DialogHeader>
-                      
-                      <Tabs defaultValue="quickConnect" className="w-full mt-4">
-                        <TabsList className="grid w-full grid-cols-2 bg-sireiq-accent/10">
-                          <TabsTrigger value="quickConnect">Quick Connect</TabsTrigger>
-                          <TabsTrigger value="advanced">Advanced</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="quickConnect" className="mt-4">
-                          <div className="space-y-4">
-                            <Button 
-                              className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
-                              onClick={() => handleThirdPartyAuth(selectedIntegration || '')}
-                            >
-                              Connect with {selectedIntegration}
-                            </Button>
-                            <p className="text-sm text-sireiq-light/70 text-center">
-                              You'll be redirected to authorize this connection.
-                            </p>
-                          </div>
-                        </TabsContent>
-                        
-                        <TabsContent value="advanced" className="mt-4">
-                          <form onSubmit={handleWebhookSubmit} className="space-y-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="webhook" className="text-sireiq-light">Webhook URL</Label>
-                              <Input 
-                                id="webhook" 
-                                value={webhookUrl} 
-                                onChange={(e) => setWebhookUrl(e.target.value)}
-                                placeholder="https://hooks.yourservice.com/trigger/..." 
-                                className="bg-sireiq-darker border-sireiq-accent/50 text-sireiq-light"
-                              />
-                            </div>
-                            
-                            <Button 
-                              type="submit" 
-                              className="w-full bg-sireiq-cyan text-sireiq-darker"
-                              disabled={isSubmitting}
-                            >
-                              {isSubmitting ? "Connecting..." : "Connect Webhook"}
-                            </Button>
-                          </form>
-                          
-                          <div className="mt-6 space-y-4">
-                            <h4 className="text-sm font-semibold text-sireiq-light">Documentation</h4>
-                            <DisclosureAccordion title="How to use webhooks">
-                              <div className="text-sm text-sireiq-light/80 space-y-2">
-                                <p>
-                                  Webhooks allow SireIQ to send real-time updates to your other applications when certain events occur.
-                                </p>
-                                <ol className="list-decimal pl-5 space-y-1">
-                                  <li>Set up a webhook endpoint in your application</li>
-                                  <li>Enter the webhook URL above</li>
-                                  <li>Configure the events you want to receive</li>
-                                  <li>Test the connection</li>
-                                </ol>
-                              </div>
-                            </DisclosureAccordion>
-                            
-                            <DisclosureAccordion title="API Reference">
-                              <div className="text-sm text-sireiq-light/80 space-y-2">
-                                <p>
-                                  Our API allows for programmatic access to SireIQ features. View our full API documentation for details.
-                                </p>
-                                <Button 
-                                  variant="outline" 
-                                  className="text-sireiq-cyan border-sireiq-cyan/50 hover:bg-sireiq-cyan/10 mt-2"
-                                  onClick={() => toast({
-                                    title: "API Documentation",
-                                    description: "Documentation will open in a new tab.",
-                                  })}
-                                >
-                                  View API Docs <ExternalLink className="ml-2 h-4 w-4" />
-                                </Button>
-                              </div>
-                            </DisclosureAccordion>
-                          </div>
-                        </TabsContent>
-                      </Tabs>
-                    </DialogContent>
-                  </Dialog>
-                ) : (
-                  <Button 
-                    variant="outline" 
-                    className="text-sireiq-cyan border-sireiq-cyan/50 hover:bg-sireiq-cyan/10 w-full group-hover:border-sireiq-cyan transition-all"
-                    onClick={() => handleIntegrationClick(integration.name)}
-                    disabled
-                  >
-                    Coming Soon <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
+                <Button 
+                  variant="outline" 
+                  className="text-sireiq-cyan border-sireiq-cyan/50 hover:bg-sireiq-cyan/10 w-full group-hover:border-sireiq-cyan transition-all"
+                  onClick={() => handleIntegrationClick(integration.name)}
+                >
+                  Learn More <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
               </CardContent>
             </Card>
           ))}

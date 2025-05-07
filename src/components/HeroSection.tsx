@@ -14,6 +14,18 @@ const HeroSection: React.FC = () => {
   const handleGetStarted = () => {
     navigate('/get-started');
   };
+  
+  const handleBookDemo = () => {
+    toast.success("Demo request submitted! Our team will contact you soon.");
+    
+    // If the user is authenticated, don't change the route
+    if (!role) {
+      // After 2 seconds, redirect to the get started page for non-authenticated users
+      setTimeout(() => {
+        navigate('/get-started');
+      }, 2000);
+    }
+  };
 
   return (
     <section className="pt-40 pb-20 relative">
@@ -29,13 +41,21 @@ const HeroSection: React.FC = () => {
               SireIQ combines AI-powered tools, real-time collaboration, and enterprise-grade features to revolutionize content creation.
             </p>
             
-            {/* CTA button */}
+            {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Button 
                 className="bg-[#3CDFFF] text-sireiq-darker hover:bg-[#33c3e0] px-6 py-3 h-auto"
                 onClick={handleGetStarted}
               >
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-3 h-auto"
+                onClick={handleBookDemo}
+              >
+                Book a Demo
               </Button>
             </div>
             

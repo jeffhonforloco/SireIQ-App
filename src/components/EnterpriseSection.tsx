@@ -1,15 +1,12 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Server, Database, Slack } from 'lucide-react';
 import { AdobeIcon, TeamsIcon } from './CustomIcons';
 import { Link } from 'react-router-dom';
-import DemoRequestModal from './enterprise/DemoRequestModal';
 
 const EnterpriseSection: React.FC = () => {
-  const [demoModalOpen, setDemoModalOpen] = useState(false);
-  
   const enterpriseFeatures = [
     {
       title: "Team Dashboards",
@@ -103,15 +100,11 @@ const EnterpriseSection: React.FC = () => {
         <div className="text-center mt-12">
           <Button 
             className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-8 py-6 h-auto text-lg font-medium hover:opacity-90 transition-opacity"
-            onClick={() => setDemoModalOpen(true)}
           >
             Request Enterprise Demo
           </Button>
         </div>
       </div>
-      
-      {/* Demo Request Modal */}
-      <DemoRequestModal open={demoModalOpen} onOpenChange={setDemoModalOpen} />
     </section>
   );
 };
