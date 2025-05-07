@@ -5,6 +5,7 @@
   padding: 0.5rem 0;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .input-button {
@@ -44,14 +45,19 @@
   .input-buttons-container {
     padding: 0.375rem 0;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    overflow-x: hidden;
+    justify-content: space-between;
   }
   
-  .input-buttons-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+  .input-buttons-container .left-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .input-buttons-container .right-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
   
   .input-button {

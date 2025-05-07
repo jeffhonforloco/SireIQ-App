@@ -24,7 +24,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   
   return (
     <div className="input-buttons-container">
-      <div className="flex gap-2">
+      <div className="left-buttons">
         <button
           type="button"
           className="input-button"
@@ -53,9 +53,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
         </button>
       </div>
       
-      <div className="flex-grow"></div>
-      
-      <div className="flex gap-2 items-center">
+      <div className="right-buttons">
         <button
           type="button"
           className="voice-button rounded-full bg-white text-black py-2 px-4 flex items-center gap-2"
