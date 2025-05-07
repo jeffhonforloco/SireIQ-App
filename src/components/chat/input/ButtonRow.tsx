@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, Lightbulb, Mic } from 'lucide-react';
+import { Paperclip, Search, MessageSquare, Mic, MoreHorizontal } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 
@@ -32,7 +32,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           onClick={handleAttachClick}
         >
           <Paperclip className="h-4 w-4" />
-          <span>Attach</span>
         </button>
         
         <button
@@ -41,7 +40,6 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           onClick={handleSearchClick}
         >
           <Search className="h-4 w-4" />
-          <span>Search</span>
         </button>
         
         <button
@@ -49,8 +47,15 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           className="input-button"
           onClick={handleReasonClick}
         >
-          <Lightbulb className="h-4 w-4" />
-          <span>Reason</span>
+          <MessageSquare className="h-4 w-4" />
+        </button>
+        
+        <button
+          type="button"
+          className="input-button"
+          onClick={() => console.log("More options clicked")}
+        >
+          <MoreHorizontal className="h-4 w-4" />
         </button>
       </div>
       
@@ -61,16 +66,16 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
           onClick={handleVoiceInput}
         >
           <Mic className="h-4 w-4" />
-          <span>Voice</span>
         </button>
         
-        <button
-          type="button"
-          className="features-button"
+        <Button
+          variant="secondary"
+          size="sm"
           onClick={toggleFeatures}
+          className="features-button"
         >
           {isExpanded ? "Hide Features" : "Show Features"}
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -11,53 +11,53 @@
 .input-button {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.625rem;
-  background-color: rgba(31, 35, 40, 0.8);
-  border-radius: 9999px;
-  color: rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: #1A1F2C;
+  border-radius: 50%;
+  color: #8E9196;
   font-size: 0.75rem;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+  transition: all 0.2s;
   border: none;
 }
 
 .input-button:hover {
-  background-color: rgba(48, 54, 61, 0.8);
+  background-color: #2A2F3C;
+  color: #FFFFFF;
 }
 
 .voice-button {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  border-radius: 9999px;
-  background-color: #ffffff;
-  color: #000000;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #9b87f5;
+  color: #FFFFFF;
   font-size: 0.875rem;
-  padding: 0.5rem 1.25rem;
   border: none;
-  font-weight: 500;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+  transition: all 0.2s;
 }
 
 .voice-button:hover {
-  opacity: 0.9;
+  background-color: #8B5CF6;
 }
 
 .features-button {
-  background-color: rgba(31, 41, 55, 0.7);
-  color: #ffffff;
-  border: none;
+  background-color: #1A1F2C !important;
+  color: #8E9196 !important;
+  border: none !important;
   border-radius: 0.375rem;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+  font-size: 0.75rem !important;
+  transition: all 0.2s;
+  height: 32px !important;
 }
 
 .features-button:hover {
-  background-color: rgba(55, 65, 81, 0.8);
+  background-color: #2A2F3C !important;
+  color: #FFFFFF !important;
 }
 
 .left-buttons {
@@ -96,19 +96,5 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
-  }
-  
-  .input-button {
-    flex-shrink: 0;
-  }
-  
-  .voice-button, .features-button {
-    flex-shrink: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .input-buttons-container .flex-grow {
-    display: none; /* Remove spacer on very small screens */
   }
 }
