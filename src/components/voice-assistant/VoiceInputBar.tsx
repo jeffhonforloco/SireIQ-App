@@ -45,16 +45,16 @@ const VoiceInputBar: React.FC = () => {
         <Button
           className={`rounded-full p-3 mr-3 ${
             isListening 
-              ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-              : 'bg-blue-600 hover:bg-blue-700'
+              ? 'bg-white hover:bg-gray-100 text-red-500 border border-gray-200 animate-pulse' 
+              : 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-200'
           }`}
           size="icon"
           onClick={handleToggleMic}
         >
           {isListening ? (
-            <MicOff className="h-6 w-6 text-white" />
+            <MicOff className="h-6 w-6" />
           ) : (
-            <Mic className="h-6 w-6 text-white" />
+            <Mic className="h-6 w-6" />
           )}
         </Button>
         
