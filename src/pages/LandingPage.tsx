@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
-        <title>SireIQ | Next Generation AI Platform</title>
+        <title>SireIQ | Think it. Build it. With SireIQ</title>
         <meta name="description" content="SireIQ is an advanced AI platform that helps businesses and creative professionals enhance their workflows and productivity." />
       </Helmet>
       

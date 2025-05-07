@@ -24,7 +24,7 @@ const Index = () => {
   return (
     <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
       <Helmet>
-        <title>SireIQ | Your Intelligent AI Assistant</title>
+        <title>SireIQ | Think it. Build it. With SireIQ</title>
         <meta name="description" content="An advanced AI platform that helps businesses leverage data for better insights, content creation, and decision-making." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </Helmet>
