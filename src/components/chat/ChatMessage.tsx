@@ -11,7 +11,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   const isUser = message.role === 'user';
   
   return (
-    <div className={`message-container ${isUser ? 'user-message-container' : 'assistant-message-container'}`}>
+    <div className="message-container">
       <div className="flex items-start gap-3 max-w-full">
         {!isUser && (
           <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">

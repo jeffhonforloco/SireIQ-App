@@ -32,7 +32,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   };
 
   // Show welcome screen if no messages or only welcome message
-  const showWelcome = messages.length === 0 || (messages.length === 1 && messages[0].id.includes('welcome'));
+  const showWelcome = messages.length === 0;
 
   return (
     <div 
@@ -45,7 +45,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
           isMobile={isMobile} 
         />
       ) : (
-        <div className="space-y-0 w-full">
+        <div className="space-y-0 w-full py-4">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} />
           ))}

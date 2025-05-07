@@ -52,7 +52,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask anything"
+            placeholder="Message SireIQ..."
             disabled={isTyping}
             className="chat-input-textarea"
             rows={1}
@@ -63,6 +63,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               type="button"
               className="input-icon-button"
               onClick={() => console.log("Paperclip clicked")}
+              aria-label="Attach file"
+              title="Attach file"
             >
               <Paperclip className="h-5 w-5 text-gray-400" />
             </button>
@@ -71,6 +73,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               type="button"
               className="input-icon-button"
               onClick={() => console.log("Globe clicked")}
+              aria-label="Language settings"
+              title="Language settings"
             >
               <Globe className="h-5 w-5 text-gray-400" />
             </button>
@@ -79,6 +83,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               type="button"
               className="input-icon-button"
               onClick={() => console.log("Lightbulb clicked")}
+              aria-label="Get suggestions"
+              title="Get suggestions"
             >
               <Lightbulb className="h-5 w-5 text-gray-400" />
             </button>
@@ -87,6 +93,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
+            aria-label="Send message"
             className={`submit-button ${
               input.trim() && !isTyping ? 'active' : 'inactive'
             }`}
@@ -97,7 +104,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
       </form>
       
       <div className="disclaimer-text">
-        By messaging SireIQ, you agree to our <a href="#" className="underline hover:text-gray-400">Terms</a> and have read our <a href="#" className="underline hover:text-gray-400">Privacy Policy</a>.
+        SireIQ may display inaccurate info, including about people, places, or facts. By messaging SireIQ, you agree to our <a href="#" className="underline hover:text-gray-400">Terms</a> and <a href="#" className="underline hover:text-gray-400">Privacy Policy</a>.
       </div>
     </div>
   );

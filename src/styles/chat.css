@@ -2,7 +2,7 @@
 @layer components {
   /* Chat container - fixed position with rounded corners */
   .chat-container {
-    @apply flex flex-col h-full max-w-3xl mx-auto bg-gray-900 overflow-hidden rounded-2xl border border-gray-800;
+    @apply flex flex-col h-full max-w-3xl mx-auto bg-gray-900 overflow-hidden rounded-2xl border border-gray-800 shadow-lg;
     max-height: calc(100vh - 32px);
   }
   
@@ -15,12 +15,12 @@
   
   /* Welcome screen styles */
   .welcome-container {
-    @apply flex flex-col items-center justify-center mt-8 px-4;
+    @apply flex flex-col items-center justify-center py-8 px-4 max-w-2xl mx-auto;
   }
   
   /* Message styles */
   .message-container {
-    @apply py-4 border-b border-gray-800 last:border-none;
+    @apply py-6 px-1 border-b border-gray-800 last:border-none;
   }
   
   .user-message-container {
@@ -33,7 +33,7 @@
   
   /* Message content */
   .message-content {
-    @apply text-gray-200 whitespace-pre-wrap text-sm sm:text-base;
+    @apply text-gray-200 whitespace-pre-wrap text-sm sm:text-base leading-relaxed;
     max-width: 100%;
   }
   
@@ -68,6 +68,10 @@
   }
   
   /* Typing indicator */
+  .typing-indicator {
+    @apply flex items-center gap-1 p-2 my-2;
+  }
+  
   .typing-indicator div {
     @apply w-2 h-2 rounded-full bg-blue-500;
     animation: pulse 1.4s infinite;
@@ -88,9 +92,9 @@
   
   /* Suggestion buttons */
   .suggestion-button {
-    @apply flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800 
+    @apply flex items-center justify-between gap-2 rounded-lg border border-gray-700 bg-gray-800 
            hover:bg-gray-700 transition-colors text-sm text-gray-300 
-           px-4 py-2 cursor-pointer;
+           px-4 py-3 w-full cursor-pointer;
   }
   
   /* Input textarea */
@@ -130,6 +134,11 @@
   
   /* Quick suggestion grid */
   .quick-suggestion-grid {
-    @apply grid grid-cols-2 gap-2 mt-5 w-full max-w-lg mx-auto;
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-2xl mx-auto;
+  }
+  
+  /* Logo in chat header and welcome screen */
+  .chat-logo-container {
+    @apply flex items-center justify-center;
   }
 }
