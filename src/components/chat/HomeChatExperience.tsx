@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -83,7 +83,7 @@ const HomeChatExperience: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[500px] sm:h-[600px] md:h-[calc(100vh-7rem)] relative bg-gradient-to-br from-gray-900 via-black to-sireiq-darker rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm shadow-glow">
+    <div className="flex flex-col w-full h-[450px] sm:h-[500px] md:h-[600px] lg:h-[calc(100vh-7rem)] relative bg-gradient-to-br from-gray-900 via-black to-sireiq-darker rounded-xl border border-gray-800 overflow-hidden backdrop-blur-sm shadow-glow">
       {/* Header */}
       <ChatHeader clearChat={clearChat} />
       
