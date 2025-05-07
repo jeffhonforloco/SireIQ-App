@@ -14,26 +14,26 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({
   const quickSuggestions = [
     {
       icon: <Lightbulb className="w-4 h-4 text-yellow-400" />,
-      text: "Make a plan for content optimization"
+      text: "What can SireIQ help with?"
     },
     {
       icon: <Gift className="w-4 h-4 text-blue-400" />,
-      text: "Surprise me with creative ideas"
+      text: "How does SireIQ compare to other AI assistants?"
     },
     {
       icon: <BarChart2 className="w-4 h-4 text-green-400" />,
-      text: "Analyze data from my latest campaign"
+      text: "What are SireIQ's main features?"
     },
     {
       icon: <Feather className="w-4 h-4 text-purple-400" />,
-      text: "Help me write compelling copy"
+      text: "Tell me about SireIQ's Enterprise plan"
     }
   ];
 
   return (
     <div className="welcome-container">
-      <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-white text-center">
-        What can I help with?
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-white text-center">
+        How can I help you today?
       </h1>
       
       <div className="quick-suggestion-grid">

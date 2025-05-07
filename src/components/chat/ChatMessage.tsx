@@ -12,14 +12,14 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   
   return (
     <div className={`message-container ${isUser ? 'user-message-container' : 'assistant-message-container'}`}>
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3 max-w-full">
         {!isUser && (
           <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
             <MessageSquare className="h-4 w-4 text-white" />
           </div>
         )}
         
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <div className="font-medium text-sm mb-1 text-gray-400">
             {isUser ? 'You' : 'SireIQ'}
           </div>

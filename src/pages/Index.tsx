@@ -2,11 +2,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
-  const isMobile = useIsMobile();
-  
   return (
     <div className="min-h-screen h-full w-full bg-black text-white flex flex-col items-center justify-center p-4">
       <Helmet>

@@ -39,8 +39,32 @@
   
   /* Chat input container */
   .chat-input-container {
-    @apply p-3 border-t border-gray-800 bg-gray-900 w-full;
-    position: relative;
+    @apply relative flex items-center w-full bg-gray-900 rounded-xl border border-gray-700;
+    border-radius: 24px;
+    background-color: #2a2a2a;
+  }
+  
+  /* Input buttons container */
+  .input-buttons-container {
+    @apply absolute left-2 bottom-2 flex items-center space-x-1;
+  }
+  
+  /* Input icon button */
+  .input-icon-button {
+    @apply p-2 rounded-full hover:bg-gray-800 transition-colors flex items-center justify-center;
+  }
+  
+  /* Submit button */
+  .submit-button {
+    @apply absolute right-2 bottom-2 p-2 rounded-full transition-colors flex items-center justify-center;
+  }
+  
+  .submit-button.active {
+    @apply bg-gray-600 text-white hover:bg-gray-700;
+  }
+  
+  .submit-button.inactive {
+    @apply bg-gray-700 text-gray-500 cursor-not-allowed;
   }
   
   /* Typing indicator */
@@ -59,7 +83,7 @@
   
   /* Bottom disclaimer text */
   .disclaimer-text {
-    @apply text-center text-xs text-gray-500 mt-2 px-4;
+    @apply text-center text-xs text-gray-500 mt-3;
   }
   
   /* Suggestion buttons */
@@ -71,10 +95,9 @@
   
   /* Input textarea */
   .chat-input-textarea {
-    @apply w-full px-3 py-2.5 bg-gray-800 rounded-2xl 
+    @apply w-full px-12 py-3 bg-transparent rounded-2xl 
            text-gray-200 placeholder-gray-400 text-sm sm:text-base
-           border border-gray-700 pr-10
-           focus:outline-none focus:border-gray-600 focus:ring-0 resize-none;
+           focus:outline-none focus:ring-0 resize-none;
     min-height: 24px;
     max-height: 200px;
   }
@@ -105,7 +128,7 @@
     }
   }
   
-  /* Quick suggestion buttons */
+  /* Quick suggestion grid */
   .quick-suggestion-grid {
     @apply grid grid-cols-2 gap-2 mt-5 w-full max-w-lg mx-auto;
   }

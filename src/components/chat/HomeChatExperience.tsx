@@ -40,7 +40,6 @@ const HomeChatExperience: React.FC = () => {
   }, [input, isTyping]);
 
   const generateResponse = useCallback((userInput: string) => {
-    // Add AI assistant message
     const responses = [
       `I've analyzed your question about ${userInput.toLowerCase()}. Based on our advanced AI models, here are some insights that might help you enhance your strategy or workflow.`,
       `That's an interesting point about ${userInput.toLowerCase()}. Our data analysis tools can help you develop a more comprehensive understanding of this topic.`,
@@ -61,7 +60,13 @@ const HomeChatExperience: React.FC = () => {
 
   const handleQuickSuggestion = useCallback((suggestion: string) => {
     setInput(suggestion);
-  }, []);
+    
+    // Auto-submit after a brief delay to simulate user typing
+    setTimeout(() => {
+      const syntheticEvent = { preventDefault: () => {}, stopPropagation: () => {} } as React.FormEvent;
+      handleSubmit(syntheticEvent);
+    }, 300);
+  }, [handleSubmit]);
 
   const handleVoiceInput = useCallback(() => {
     toast.info("Voice recognition activated. Please speak clearly.");

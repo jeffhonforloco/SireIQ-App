@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Send, Paperclip, CornerUpRight } from 'lucide-react';
+import { ArrowUp, Paperclip, Globe, Lightbulb } from 'lucide-react';
 
 interface ChatInputFormProps {
   input: string;
@@ -36,7 +36,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="px-3 pt-2 pb-4">
+    <div className="px-4 pt-2 pb-4 sticky bottom-0 bg-black">
       <form 
         ref={formRef}
         onSubmit={(e) => {
@@ -46,28 +46,52 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
         }} 
         className="relative max-w-3xl mx-auto w-full"
       >
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask anything"
-          disabled={isTyping}
-          className="chat-input-textarea"
-          rows={1}
-        />
-        
-        <div className="absolute right-2.5 bottom-1.5 flex items-center">
+        <div className="chat-input-container">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask anything"
+            disabled={isTyping}
+            className="chat-input-textarea"
+            rows={1}
+          />
+          
+          <div className="input-buttons-container">
+            <button
+              type="button"
+              className="input-icon-button"
+              onClick={() => console.log("Paperclip clicked")}
+            >
+              <Paperclip className="h-5 w-5 text-gray-400" />
+            </button>
+            
+            <button
+              type="button"
+              className="input-icon-button"
+              onClick={() => console.log("Globe clicked")}
+            >
+              <Globe className="h-5 w-5 text-gray-400" />
+            </button>
+            
+            <button
+              type="button"
+              className="input-icon-button"
+              onClick={() => console.log("Lightbulb clicked")}
+            >
+              <Lightbulb className="h-5 w-5 text-gray-400" />
+            </button>
+          </div>
+          
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className={`p-1 rounded-md ${
-              input.trim() && !isTyping 
-                ? 'text-gray-300 hover:text-white' 
-                : 'text-gray-500'
+            className={`submit-button ${
+              input.trim() && !isTyping ? 'active' : 'inactive'
             }`}
           >
-            <CornerUpRight className="h-4 w-4" />
+            <ArrowUp className="h-5 w-5" />
           </button>
         </div>
       </form>
