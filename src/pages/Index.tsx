@@ -5,6 +5,7 @@ import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
+import { Sparkles, Zap, BrainCircuit } from 'lucide-react';
 
 const Index = () => {
   return (
