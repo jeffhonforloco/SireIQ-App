@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
 import GetStarted from '@/pages/GetStarted';
-import { vi } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 
 // Mock the components since we've tested them individually
 vi.mock('@/components/get-started/GetStartedCard', () => ({

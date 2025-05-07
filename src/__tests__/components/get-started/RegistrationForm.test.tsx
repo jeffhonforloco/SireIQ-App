@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
-import { vi } from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
 
 describe('RegistrationForm', () => {
   const mockOnSuccess = vi.fn();

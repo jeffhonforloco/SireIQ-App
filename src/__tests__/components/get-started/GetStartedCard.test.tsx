@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { render, screen } from '../../test-utils';
+import { render, screen } from '@testing-library/react';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
-import { vi } from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
 
 describe('GetStartedCard', () => {
   const mockSetVerificationCode = vi.fn();
