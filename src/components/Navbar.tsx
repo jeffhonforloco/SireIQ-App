@@ -7,11 +7,19 @@ import NavLinks from './navbar/NavLinks';
 import AuthButtons from './navbar/AuthButtons';
 import MobileMenu from './navbar/MobileMenu';
 import { ThemeToggle } from './ui/theme-toggle';
+import BuildInfoSection from './navbar/BuildInfoSection';
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+} from "@/components/ui/menubar";
 
 const Navbar: React.FC = () => {
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [showBuildInfo, setShowBuildInfo] = useState(false);
   
   // Add scroll detection for glass effect
   useEffect(() => {
@@ -32,13 +40,26 @@ const Navbar: React.FC = () => {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex flex-1 justify-center space-x-8 items-center">
+        <nav className="hidden md:flex flex-1 justify-center items-center">
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons */}
+        {/* Auth Buttons and Build Info Toggle */}
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
+          
+          {/* "Build it" menu item */}
+          <Menubar className="bg-transparent border-0">
+            <MenubarMenu>
+              <MenubarTrigger className="cursor-pointer px-4 py-2 text-sireiq-light hover:text-sireiq-cyan focus:text-sireiq-cyan data-[state=open]:text-sireiq-cyan">
+                Build it
+              </MenubarTrigger>
+              <MenubarContent className="bg-black border-gray-800 w-[400px] p-0">
+                <BuildInfoSection />
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+          
           <AuthButtons />
         </div>
         

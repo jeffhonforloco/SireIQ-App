@@ -9,18 +9,31 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const NavLinks: React.FC = () => {
+interface NavLinksProps {
+  orientation?: 'horizontal' | 'vertical';
+}
+
+const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
   const location = useLocation();
+  const isVertical = orientation === 'vertical';
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
+  const containerClass = isVertical 
+    ? "flex flex-col gap-4" 
+    : "flex space-x-8 items-center";
+
+  const linkClass = isVertical
+    ? "text-sireiq-light hover:text-sireiq-cyan transition-colors py-2"
+    : "text-sireiq-light hover:text-sireiq-cyan transition-colors";
+
   return (
-    <>
+    <div className={containerClass}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center text-sireiq-light hover:text-sireiq-cyan transition-colors">
+          <button className={`flex items-center ${linkClass}`}>
             Features <ChevronDown className="ml-1 h-4 w-4" />
           </button>
         </DropdownMenuTrigger>
@@ -51,7 +64,7 @@ const NavLinks: React.FC = () => {
       
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center text-sireiq-light hover:text-sireiq-cyan transition-colors">
+          <button className={`flex items-center ${linkClass}`}>
             Solutions <ChevronDown className="ml-1 h-4 w-4" />
           </button>
         </DropdownMenuTrigger>
@@ -70,18 +83,18 @@ const NavLinks: React.FC = () => {
       
       <Link 
         to="/pricing" 
-        className={`text-sireiq-light hover:text-sireiq-cyan transition-colors ${isActive('/pricing') ? 'text-sireiq-cyan' : ''}`}
+        className={`${linkClass} ${isActive('/pricing') ? 'text-sireiq-cyan' : ''}`}
       >
         Pricing
       </Link>
       
       <Link 
         to="/enterprise" 
-        className={`text-sireiq-light hover:text-sireiq-cyan transition-colors ${isActive('/enterprise') ? 'text-sireiq-cyan' : ''}`}
+        className={`${linkClass} ${isActive('/enterprise') ? 'text-sireiq-cyan' : ''}`}
       >
         Enterprise
       </Link>
-    </>
+    </div>
   );
 };
 
