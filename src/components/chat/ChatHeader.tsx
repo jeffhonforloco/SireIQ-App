@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu, X, Plus, MessageSquare, Trash2, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { Menu, Plus, MessageSquare, Trash2, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/Logo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -37,14 +37,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
             <div className="flex flex-col h-full">
               <div className="p-4 border-b border-gray-800 flex justify-between items-center">
                 <Logo size="md" />
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="h-7 w-7 text-gray-400 hover:text-white hover:bg-gray-800"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                {/* The SheetContent component already includes a close button, so we don't need to add another one */}
               </div>
               
               <nav className="flex-1 overflow-y-auto py-2">

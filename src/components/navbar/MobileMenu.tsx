@@ -2,7 +2,7 @@
 import React from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Logo from '@/components/Logo';
 import MobileAuthButtons from './MobileAuthButtons';
 import NavLinks from './NavLinks';
@@ -26,9 +26,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
         <SheetContent side="left" className="bg-black border-gray-800 flex flex-col">
           <div className="flex items-center justify-between">
             <Logo size="md" />
-            <Button variant="ghost" size="icon" onClick={() => setIsSheetOpen(false)}>
-              <X className="h-5 w-5" />
-            </Button>
+            {/* Removed the duplicate X button here since SheetContent already has a built-in close button */}
           </div>
           
           <div className="mt-8 flex flex-col gap-6">
