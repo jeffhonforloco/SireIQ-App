@@ -41,13 +41,16 @@ const InputField: React.FC<InputFieldProps> = ({
         onKeyDown={handleKeyDown}
         placeholder="Ask anything"
         disabled={isTyping}
-        className="chat-input"
+        className="chat-input-field"
       />
-      <button 
-        className="send-button"
-        onClick={handleSubmit}
-        disabled={isTyping}
+      
+      <button
+        type="submit"
+        disabled={!input.trim() || isTyping}
         aria-label="Send message"
+        className={`submit-button ${
+          input.trim() && !isTyping ? 'active' : 'inactive'
+        }`}
       >
         <ArrowUp className="h-5 w-5" />
       </button>

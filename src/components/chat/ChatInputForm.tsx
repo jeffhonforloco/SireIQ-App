@@ -4,6 +4,7 @@ import InputField from './input/InputField';
 import ButtonRow from './input/ButtonRow';
 import FeatureButtons from './input/FeatureButtons';
 import DisclaimerText from './input/DisclaimerText';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatInputFormProps {
   input: string;
@@ -22,6 +23,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useIsMobile();
   
   const handleAttachClick = () => {
     // Open file picker dialog
@@ -56,7 +58,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   return (
-    <div className="px-4 py-4 bg-[#121317] border-t border-gray-800">
+    <div className="px-4 pt-2 pb-4 bg-[#0f1117] border-t border-gray-800">
       <div className="max-w-3xl mx-auto">
         <form 
           ref={formRef}
@@ -84,12 +86,10 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
           />
         </form>
         
-        {isExpanded && (
-          <FeatureButtons 
-            isExpanded={isExpanded}
-            handleFeatureClick={handleFeatureClick}
-          />
-        )}
+        <FeatureButtons 
+          isExpanded={isExpanded}
+          handleFeatureClick={handleFeatureClick}
+        />
         
         <DisclaimerText />
       </div>

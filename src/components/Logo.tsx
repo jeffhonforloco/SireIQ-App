@@ -9,15 +9,15 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ className = '', size = 'md', showText = true }) => {
   const sizeClasses = {
-    sm: 'h-9 w-9',  // Increased from h-7 w-7
-    md: 'h-12 w-12', // Increased from h-10 w-10
-    lg: 'h-24 w-24'  // Increased from h-20 w-20
+    sm: 'h-7 w-7',
+    md: 'h-10 w-10',
+    lg: 'h-20 w-20'
   };
 
   const textSizeClasses = {
-    sm: 'text-xl',   // Increased from text-lg
-    md: 'text-2xl',  // Increased from text-xl
-    lg: 'text-4xl'   // Increased from text-3xl
+    sm: 'text-lg',
+    md: 'text-xl',
+    lg: 'text-3xl'
   };
 
   return (
