@@ -1,13 +1,11 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
-import { Shield, ShieldCheck, ShieldX } from 'lucide-react';
-
-type AccountType = 'personal' | 'developer' | 'enterprise';
+import AccountTypeSelector, { AccountType } from './AccountTypeSelector';
+import PasswordStrengthIndicator from './PasswordStrengthIndicator';
+import { usePasswordStrength } from '@/hooks/usePasswordStrength';
 
 interface RegistrationFormProps {
   onSuccess: (email: string) => void;
@@ -19,35 +17,9 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [accountType, setAccountType] = useState<AccountType>('personal');
-  const [passwordStrength, setPasswordStrength] = useState<'weak' | 'medium' | 'strong' | null>(null);
-
-  // Calculate password strength whenever password changes
-  useEffect(() => {
-    if (!password) {
-      setPasswordStrength(null);
-      return;
-    }
-
-    // Simple password strength calculation
-    let strength: 'weak' | 'medium' | 'strong' = 'weak';
-    
-    // Check for minimum length
-    if (password.length >= 8) {
-      strength = 'medium';
-      
-      // Check for complexity (has uppercase, lowercase, number, and special character)
-      const hasUppercase = /[A-Z]/.test(password);
-      const hasLowercase = /[a-z]/.test(password);
-      const hasNumber = /[0-9]/.test(password);
-      const hasSpecial = /[^A-Za-z0-9]/.test(password);
-      
-      if (hasUppercase && hasLowercase && (hasNumber || hasSpecial)) {
-        strength = 'strong';
-      }
-    }
-    
-    setPasswordStrength(strength);
-  }, [password]);
+  
+  // Use custom hook for password strength
+  const passwordStrength = usePasswordStrength(password);
 
   const handleCreateAccount = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,24 +56,6 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
     console.log(`Verification code for demo: 123456`);
   };
 
-  const getPasswordStrengthColor = () => {
-    switch (passwordStrength) {
-      case 'weak': return 'text-red-500 border-red-500';
-      case 'medium': return 'text-yellow-500 border-yellow-500';
-      case 'strong': return 'text-green-500 border-green-500';
-      default: return 'text-sireiq-light/50 border-sireiq-accent/20';
-    }
-  };
-
-  const getPasswordStrengthIcon = () => {
-    switch (passwordStrength) {
-      case 'weak': return <ShieldX className="h-5 w-5 text-red-500" />;
-      case 'medium': return <Shield className="h-5 w-5 text-yellow-500" />;
-      case 'strong': return <ShieldCheck className="h-5 w-5 text-green-500" />;
-      default: return null;
-    }
-  };
-
   return (
     <form className="space-y-4" onSubmit={handleCreateAccount}>
       <div>
@@ -115,6 +69,7 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
           placeholder="Enter your full name"
         />
       </div>
+      
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address</label>
         <Input
@@ -127,27 +82,10 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
         />
       </div>
       
-      <div>
-        <label htmlFor="accountType" className="block text-sm font-medium mb-2">Account Type</label>
-        <RadioGroup
-          value={accountType}
-          onValueChange={(value) => setAccountType(value as AccountType)}
-          className="flex flex-wrap gap-3"
-        >
-          <div className="flex items-center space-x-2 bg-sireiq-dark/50 border border-sireiq-accent/20 px-3 py-2 rounded-md">
-            <RadioGroupItem value="personal" id="personal" />
-            <Label htmlFor="personal" className="cursor-pointer">Personal</Label>
-          </div>
-          <div className="flex items-center space-x-2 bg-sireiq-dark/50 border border-sireiq-accent/20 px-3 py-2 rounded-md">
-            <RadioGroupItem value="developer" id="developer" />
-            <Label htmlFor="developer" className="cursor-pointer">Developer</Label>
-          </div>
-          <div className="flex items-center space-x-2 bg-sireiq-dark/50 border border-sireiq-accent/20 px-3 py-2 rounded-md">
-            <RadioGroupItem value="enterprise" id="enterprise" />
-            <Label htmlFor="enterprise" className="cursor-pointer">Enterprise</Label>
-          </div>
-        </RadioGroup>
-      </div>
+      <AccountTypeSelector 
+        accountType={accountType}
+        onChange={setAccountType}
+      />
       
       <div>
         <label htmlFor="password" className="block text-sm font-medium mb-1">Create Password</label>
@@ -157,25 +95,20 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={`bg-sireiq-dark text-sireiq-light border-sireiq-accent/20 pr-10 ${password ? getPasswordStrengthColor() : ''}`}
+            className={`bg-sireiq-dark text-sireiq-light border-sireiq-accent/20 pr-10 ${
+              password && passwordStrength ? 
+                passwordStrength === 'weak' ? 'text-red-500 border-red-500' :
+                passwordStrength === 'medium' ? 'text-yellow-500 border-yellow-500' :
+                'text-green-500 border-green-500' 
+              : ''
+            }`}
             placeholder="Min 6 characters"
           />
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            {getPasswordStrengthIcon()}
-          </div>
+          <PasswordStrengthIndicator 
+            password={password}
+            passwordStrength={passwordStrength}
+          />
         </div>
-        {passwordStrength && (
-          <div className="mt-1 text-xs flex items-center gap-1">
-            <span className={`font-medium capitalize ${getPasswordStrengthColor()}`}>
-              {passwordStrength}
-            </span>
-            <span className="text-sireiq-light/50">
-              {passwordStrength === 'weak' && "- Consider a stronger password"}
-              {passwordStrength === 'medium' && "- Good, but could be stronger"}
-              {passwordStrength === 'strong' && "- Excellent password strength"}
-            </span>
-          </div>
-        )}
       </div>
       
       <div>

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen } from '../../test-utils';
 import userEvent from '@testing-library/user-event';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
@@ -29,8 +29,8 @@ describe('RegistrationForm', () => {
     expect(screen.getByLabelText(/create password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/personal/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/business/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/education/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/developer/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/enterprise/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /create free account/i })).toBeInTheDocument();
   });
   
@@ -71,19 +71,19 @@ describe('RegistrationForm', () => {
     
     // Check default is personal
     const personalRadio = screen.getByLabelText(/personal/i) as HTMLInputElement;
-    const businessRadio = screen.getByLabelText(/business/i) as HTMLInputElement;
-    const educationRadio = screen.getByLabelText(/education/i) as HTMLInputElement;
+    const developerRadio = screen.getByLabelText(/developer/i) as HTMLInputElement;
+    const enterpriseRadio = screen.getByLabelText(/enterprise/i) as HTMLInputElement;
     
     expect(personalRadio.checked).toBe(true);
     
-    // Change to business
-    await user.click(businessRadio);
+    // Change to developer
+    await user.click(developerRadio);
     expect(personalRadio.checked).toBe(false);
-    expect(businessRadio.checked).toBe(true);
+    expect(developerRadio.checked).toBe(true);
     
-    // Change to education
-    await user.click(educationRadio);
-    expect(educationRadio.checked).toBe(true);
-    expect(businessRadio.checked).toBe(false);
+    // Change to enterprise
+    await user.click(enterpriseRadio);
+    expect(enterpriseRadio.checked).toBe(true);
+    expect(developerRadio.checked).toBe(false);
   });
 });
