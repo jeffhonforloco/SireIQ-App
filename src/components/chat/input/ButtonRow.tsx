@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Paperclip, Search, Lightbulb, Mic } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ButtonRowProps {
   handleAttachClick: () => void;
@@ -19,8 +20,10 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   toggleFeatures,
   isExpanded
 }) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="input-buttons-container flex items-center gap-2">
+    <div className="input-buttons-container">
       <div className="flex gap-2">
         <button
           type="button"
@@ -64,7 +67,7 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
         
         <button
           type="button"
-          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors text-sm"
+          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors text-sm whitespace-nowrap"
           onClick={toggleFeatures}
         >
           {isExpanded ? "Hide Features" : "Show Features"}

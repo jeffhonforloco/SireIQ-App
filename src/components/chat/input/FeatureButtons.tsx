@@ -67,7 +67,7 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
 
   return (
     <div className="feature-buttons-container mt-3 mb-2">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <div className="grid">
         {features.map((feature) => (
           <button 
             key={feature.name}
