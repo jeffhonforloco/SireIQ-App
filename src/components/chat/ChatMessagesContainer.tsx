@@ -29,7 +29,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   };
 
   return (
-    <div className="flex-grow overflow-y-auto p-3 md:p-6 space-y-3 md:space-y-6">
+    <div className="flex-grow overflow-y-auto p-2 sm:p-3 md:p-4 space-y-2 sm:space-y-3 md:space-y-4">
       {/* Welcome section with quick suggestions */}
       {messages.length === 1 && messages[0].id.includes('welcome') && (
         <ChatWelcomeSection 
@@ -39,7 +39,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       )}
       
       {/* Chat messages */}
-      <div className="space-y-3 md:space-y-6">
+      <div className="space-y-2 sm:space-y-3 md:space-y-4">
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}

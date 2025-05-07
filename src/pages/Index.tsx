@@ -24,7 +24,7 @@ const Index = () => {
       <Navbar />
       
       {/* Main content with Chat Experience - positioned responsively */}
-      <main className="container mx-auto px-4 py-8 md:py-16">
+      <main className="container mx-auto px-4 pt-16 sm:pt-20 md:pt-24 pb-8 md:pb-16">
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between">
           {/* Left side content - stacks on mobile */}
           <div className={`${isMobile ? 'w-full mb-6' : 'md:w-1/3 mb-10 md:mb-0 md:pr-8'}`}>

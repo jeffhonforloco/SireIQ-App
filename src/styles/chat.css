@@ -14,7 +14,7 @@
   }
   
   .action-button {
-    @apply flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-xs sm:text-sm text-gray-200;
+    @apply flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-800 hover:bg-gray-700 transition-colors rounded-full text-xs sm:text-sm text-gray-200;
   }
   
   /* Typing indicator animation - smaller on mobile */
@@ -33,13 +33,13 @@
   
   /* Glow effect for elements */
   .shadow-glow {
-    box-shadow: 0 0 40px rgba(96, 165, 250, 0.1), 
-                0 0 20px rgba(96, 165, 250, 0.05), 
-                0 0 10px rgba(96, 165, 250, 0.025);
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.1), 
+                0 0 10px rgba(96, 165, 250, 0.05), 
+                0 0 5px rgba(96, 165, 250, 0.025);
   }
   
   .glow-text {
-    text-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+    text-shadow: 0 0 4px rgba(96, 165, 250, 0.3);
   }
   
   @keyframes pulse {
