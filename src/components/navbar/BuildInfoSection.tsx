@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BuildInfoSection = () => {
   return (
@@ -14,26 +15,26 @@ const BuildInfoSection = () => {
       </p>
       
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
+        <Link to="/features/ai-powered-creation" className="flex items-center gap-4 hover:bg-blue-500/10 rounded-lg p-2 transition-colors">
           <div className="h-10 w-10 rounded-full bg-cyan-500/20 flex items-center justify-center">
             <span className="text-cyan-400">✦</span>
           </div>
           <div className="text-white">Advanced neural networks</div>
-        </div>
+        </Link>
         
-        <div className="flex items-center gap-4">
+        <Link to="/features/performance-analytics" className="flex items-center gap-4 hover:bg-purple-500/10 rounded-lg p-2 transition-colors">
           <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
             <span className="text-purple-400">✦</span>
           </div>
           <div className="text-white">Real-time insights</div>
-        </div>
+        </Link>
         
-        <div className="flex items-center gap-4">
+        <Link to="/features/idea-generation" className="flex items-center gap-4 hover:bg-blue-500/10 rounded-lg p-2 transition-colors">
           <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
             <span className="text-blue-400">✦</span>
           </div>
           <div className="text-white">Workflow optimization</div>
-        </div>
+        </Link>
       </div>
     </div>
   );
