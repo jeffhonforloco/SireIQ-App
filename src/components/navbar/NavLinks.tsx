@@ -62,25 +62,6 @@ const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
         </DropdownMenuContent>
       </DropdownMenu>
       
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className={`flex items-center ${linkClass}`}>
-            Solutions <ChevronDown className="ml-1 h-4 w-4" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-sireiq-darker border-sireiq-accent/30 w-48">
-          <DropdownMenuItem asChild>
-            <Link to="/features/idea-generation" className="cursor-pointer">Idea Generation</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/features/personality-engine" className="cursor-pointer">Personality Engine</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/features/voice-assistant" className="cursor-pointer">Voice Assistant</Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      
       <Link 
         to="/pricing" 
         className={`${linkClass} ${isActive('/pricing') ? 'text-sireiq-cyan' : ''}`}
