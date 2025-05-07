@@ -143,8 +143,10 @@
 .mobile-features {
   animation: slideUp 0.3s ease;
   backdrop-filter: blur(8px);
-  max-height: 300px;
+  max-height: 350px;
   overflow-y: auto;
+  z-index: 50 !important;
+  display: block !important;
 }
 
 @keyframes slideUp {

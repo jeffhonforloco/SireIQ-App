@@ -41,6 +41,12 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
     }
   }, [isMobile, isExpanded]);
   
+  // Debug mobile detection
+  useEffect(() => {
+    console.log("Is mobile device:", isMobile);
+    console.log("Features expanded:", isExpanded);
+  }, [isMobile, isExpanded]);
+  
   const handleAttachClick = () => {
     // Open file picker dialog
     const input = document.createElement('input');
@@ -70,6 +76,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
 
   const toggleFeatures = () => {
+    console.log("Toggling features, current state:", isExpanded);
     setIsExpanded(!isExpanded);
   };
 

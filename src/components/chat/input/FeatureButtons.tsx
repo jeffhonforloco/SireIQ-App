@@ -23,7 +23,11 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
 }) => {
   const isMobile = useIsMobile();
   
-  if (!isExpanded) return null;
+  // On mobile, we still want to render the component structure even if not expanded,
+  // but with a visibility class to control its display
+  if (!isExpanded) {
+    return null;
+  }
   
   const features = [
     {

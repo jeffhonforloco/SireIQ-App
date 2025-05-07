@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, Lightbulb, Mic, MicOff } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Paperclip, Search, BrainCircuit, Mic, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface ButtonRowProps {
   handleAttachClick: () => void;
@@ -22,66 +21,61 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
   isExpanded,
   isListening
 }) => {
-  const isMobile = useIsMobile();
-  
   return (
-    <div className="input-buttons-container">
-      <div className="flex gap-2">
+    <div className="flex items-center justify-between mt-2">
+      <div className="flex space-x-2">
         <button
           type="button"
-          className="input-button"
           onClick={handleAttachClick}
+          className="flex items-center text-gray-400 hover:text-gray-300 text-xs"
         >
-          <Paperclip className="h-4 w-4" />
-          <span>Attach</span>
+          <Paperclip className="h-4 w-4 mr-1" />
+          <span className="hidden sm:inline">Attach</span>
         </button>
         
         <button
           type="button"
-          className="input-button"
           onClick={handleSearchClick}
+          className="flex items-center text-gray-400 hover:text-gray-300 text-xs"
         >
-          <Search className="h-4 w-4" />
-          <span>Search</span>
+          <Search className="h-4 w-4 mr-1" />
+          <span className="hidden sm:inline">Search</span>
         </button>
         
         <button
           type="button"
-          className="input-button"
           onClick={handleReasonClick}
+          className="flex items-center text-gray-400 hover:text-gray-300 text-xs"
         >
-          <Lightbulb className="h-4 w-4" />
-          <span>Reason</span>
+          <BrainCircuit className="h-4 w-4 mr-1" />
+          <span className="hidden sm:inline">Reason</span>
         </button>
       </div>
       
-      <div className="flex-grow"></div>
-      
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center space-x-2">
         <button
           type="button"
-          className={`voice-button rounded-full ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-white text-black'} py-2 px-4 flex items-center gap-2 transition-colors`}
           onClick={handleVoiceInput}
+          className={`voice-button rounded-full p-1.5 ${
+            isListening
+              ? 'bg-red-500 animate-pulse'
+              : 'bg-gray-700 hover:bg-gray-600'
+          }`}
         >
-          {isListening ? (
-            <>
-              <MicOff className="h-4 w-4" />
-              <span>Stop</span>
-            </>
-          ) : (
-            <>
-              <Mic className="h-4 w-4" />
-              <span>Voice</span>
-            </>
-          )}
+          <Mic className="h-4 w-4" />
         </button>
         
         <button
           type="button"
-          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition-colors text-sm whitespace-nowrap"
           onClick={toggleFeatures}
+          className="rounded-full p-1.5 bg-blue-600 hover:bg-blue-500"
+          aria-label={isExpanded ? "Close features" : "Show features"}
         >
-          {isExpanded ? "Hide Features" : "Show Features"}
+          {isExpanded ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronUp className="h-4 w-4" />
+          )}
         </button>
       </div>
     </div>
