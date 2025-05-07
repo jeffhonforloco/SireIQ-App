@@ -58,6 +58,7 @@
   font-weight: 500;
   transition: background-color 0.2s;
   cursor: pointer;
+  height: 40px;
 }
 
 .voice-button:hover {
@@ -73,6 +74,9 @@
   font-size: 0.875rem;
   transition: background-color 0.2s;
   cursor: pointer;
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .features-button:hover {
