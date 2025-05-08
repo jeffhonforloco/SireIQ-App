@@ -25,6 +25,13 @@ import Press from '@/pages/Press';
 import Contact from '@/pages/Contact';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 
+// New resource pages
+import Documentation from '@/pages/Documentation';
+import APIReference from '@/pages/APIReference';
+import Blog from '@/pages/Blog';
+import Tutorials from '@/pages/Tutorials';
+import Community from '@/pages/Community';
+
 // Import admin pages
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import UserManagement from '@/pages/admin/UserManagement';
@@ -61,7 +68,6 @@ import DedicatedInfrastructure from '@/pages/enterprise/DedicatedInfrastructure'
 import GlobalDeployment from '@/pages/enterprise/GlobalDeployment';
 import ComplianceControls from '@/pages/enterprise/ComplianceControls';
 import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
-import Integrations from '@/pages/Integrations';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -109,12 +115,19 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                {/* New pages */}
+                {/* Company pages */}
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/press" element={<Press />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+                {/* New resource pages */}
+                <Route path="/documentation" element={<Documentation />} />
+                <Route path="/api-reference" element={<APIReference />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/tutorials" element={<Tutorials />} />
+                <Route path="/community" element={<Community />} />
 
                 {/* Admin Routes */}
                 <Route path="/admin" element={<AdminDashboard />} />
