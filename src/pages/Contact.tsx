@@ -94,7 +94,7 @@ const Contact = () => {
                 <p className="text-sireiq-light/70 mb-4">
                   For general inquiries and information
                 </p>
-                <p className="text-sireiq-cyan">info@sireiq.com</p>
+                <p className="text-sireiq-cyan">hello@sireiq.com</p>
               </CardContent>
             </Card>
             
@@ -140,15 +140,15 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div>
                     <p className="font-medium">Sales Inquiries</p>
-                    <p className="text-sireiq-cyan">info@sireiq.com</p>
+                    <p className="text-sireiq-cyan">sales@sireiq.com</p>
                   </div>
                   <div>
                     <p className="font-medium">Technical Support</p>
-                    <p className="text-sireiq-cyan">info@sireiq.com</p>
+                    <p className="text-sireiq-cyan">support@sireiq.com</p>
                   </div>
                   <div>
                     <p className="font-medium">Media Relations</p>
-                    <p className="text-sireiq-cyan">info@sireiq.com</p>
+                    <p className="text-sireiq-cyan">press@sireiq.com</p>
                   </div>
                 </div>
               </div>
@@ -287,7 +287,7 @@ const Contact = () => {
                 <h3 className="text-lg font-bold mb-2">Do you offer demos for enterprise clients?</h3>
                 <p className="text-sireiq-light/70">
                   Yes, we offer personalized demos for enterprise clients. Please contact our 
-                  sales team at info@sireiq.com or fill out the contact form to schedule a demo.
+                  sales team at sales@sireiq.com or fill out the contact form to schedule a demo.
                 </p>
               </div>
               
