@@ -43,18 +43,20 @@ const Navbar: React.FC = () => {
       }}
     >
       <div className="w-full px-2 md:px-3 lg:px-4 mx-auto flex items-center justify-between border-0 border-none">
-        {/* Logo - Pushed all the way to the left edge */}
-        <Link to="/" className="flex items-center pl-0 border-0 border-none">
-          <Logo size="md" />
-        </Link>
+        {/* Logo - Left side */}
+        <div className="flex-none">
+          <Link to="/" className="flex items-center pl-0 border-0 border-none">
+            <Logo size="md" />
+          </Link>
+        </div>
         
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Centered */}
         <nav className="hidden md:flex flex-1 justify-center items-center border-0 border-none">
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons and Build Info Toggle - Pushed all the way to the right edge */}
-        <div className="hidden md:flex items-center space-x-4 pr-0 border-0 border-none">
+        {/* Auth Buttons and Build Info Toggle - Right side */}
+        <div className="hidden md:flex items-center space-x-4 pr-0 border-0 border-none flex-none">
           <ThemeToggle />
           
           {/* "Build it" menu item */}
