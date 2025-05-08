@@ -31,8 +31,8 @@ const Index = () => {
       
       <Navbar />
       
-      {/* Add a small spacer div with no borders */}
-      <div className="w-full h-[1px] bg-transparent border-0 border-none"></div>
+      {/* Replace spacer div with a solid black one */}
+      <div className="w-full h-[1px] bg-black border-0 border-none"></div>
       
       <div className="flex-1 flex justify-center items-center p-0 overflow-hidden border-0 border-t-0 border-none">
         <div className="w-full max-w-3xl h-full">

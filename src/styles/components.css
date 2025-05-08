@@ -98,6 +98,14 @@
     header .separator {
       @apply hidden !important;
     }
+    
+    /* Remove dividing line between header and page content */
+    header + * {
+      @apply border-t-0 border-0 border-none !important;
+      margin-top: 0 !important;
+      border-top: none !important;
+      border-bottom: none !important;
+    }
   }
 
   /* Force remove all borders from specific UI elements that may be in the navbar */
@@ -132,5 +140,27 @@
   .NavigationMenuLink {
     @apply border-0 border-none !important;
     border-bottom: none !important;
+  }
+  
+  /* Add specific styles for index page to remove border line */
+  body > div > header + div {
+    @apply border-0 border-none border-t-0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+    position: relative;
+  }
+  
+  /* Target pseudo-elements that might be creating the line */
+  header:after,
+  header:before {
+    display: none !important;
+    content: none !important;
+  }
+  
+  /* Remove all possible box shadows */
+  header, 
+  header + div,
+  header + * {
+    box-shadow: none !important;
   }
 }
