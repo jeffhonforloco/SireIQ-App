@@ -16,7 +16,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
   // Adjust classes based on orientation
   const containerClass = orientation === 'vertical' 
     ? "navbar-links flex flex-col space-y-2 border-0 border-none" 
-    : "navbar-links flex space-x-1 md:space-x-2 lg:space-x-6 border-0 border-none";
+    : "navbar-links flex justify-center space-x-4 md:space-x-6 lg:space-x-8 border-0 border-none";
   
   return (
     <div className={containerClass}>
