@@ -65,4 +65,11 @@
   .card-glass {
     @apply glass-effect rounded-xl p-6;
   }
+  
+  /* Remove border from nav links on desktop */
+  @media (min-width: 768px) {
+    .navbar-links {
+      @apply border-b-0 border-transparent;
+    }
+  }
 }
