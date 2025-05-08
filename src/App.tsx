@@ -18,17 +18,15 @@ import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
 
-// New pages
+// Company pages
 import AboutUs from '@/pages/AboutUs';
 import Careers from '@/pages/Careers';
 import Press from '@/pages/Press';
 import Contact from '@/pages/Contact';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 
-// New resource pages (removed Documentation)
+// New resource pages (removed Blog and Tutorials)
 import APIReference from '@/pages/APIReference';
-import Blog from '@/pages/Blog';
-import Tutorials from '@/pages/Tutorials';
 import Community from '@/pages/Community';
 
 // Enterprise pages including Integrations
@@ -124,10 +122,8 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-                {/* New resource pages - Documentation route removed */}
+                {/* Resource pages - Blog and Tutorials removed */}
                 <Route path="/api-reference" element={<APIReference />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/tutorials" element={<Tutorials />} />
                 <Route path="/community" element={<Community />} />
 
                 {/* Admin Routes */}

@@ -49,13 +49,11 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Resources links - Updated with links to new pages, removed Documentation */}
+          {/* Resources links - Removed Blog and Tutorials */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li><Link to="/api-reference" className="text-sireiq-light/70 hover:text-sireiq-cyan">API Reference</Link></li>
-              <li><Link to="/blog" className="text-sireiq-light/70 hover:text-sireiq-cyan">Blog</Link></li>
-              <li><Link to="/tutorials" className="text-sireiq-light/70 hover:text-sireiq-cyan">Tutorials</Link></li>
               <li><Link to="/community" className="text-sireiq-light/70 hover:text-sireiq-cyan">Community</Link></li>
             </ul>
           </div>
