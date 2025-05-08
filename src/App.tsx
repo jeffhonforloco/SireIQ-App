@@ -46,6 +46,8 @@ import CustomTraining from '@/pages/enterprise/CustomTraining';
 import CustomWorkflows from '@/pages/enterprise/CustomWorkflows';
 import DedicatedInfrastructure from '@/pages/enterprise/DedicatedInfrastructure';
 import GlobalDeployment from '@/pages/enterprise/GlobalDeployment';
+import ComplianceControls from '@/pages/enterprise/ComplianceControls';
+import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -88,6 +90,8 @@ function App() {
                 <Route path="/enterprise/custom-workflows" element={<CustomWorkflows />} />
                 <Route path="/enterprise/dedicated-infrastructure" element={<DedicatedInfrastructure />} />
                 <Route path="/enterprise/global-deployment" element={<GlobalDeployment />} />
+                <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
+                <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="*" element={<NotFound />} />
