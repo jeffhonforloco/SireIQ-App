@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
@@ -84,7 +83,7 @@ const Contact = () => {
           </div>
           
           {/* Contact Options */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="mb-4 p-3 rounded-full bg-sireiq-accent/20">
@@ -101,26 +100,13 @@ const Contact = () => {
             <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="mb-4 p-3 rounded-full bg-sireiq-accent/20">
-                  <Phone className="h-6 w-6 text-sireiq-cyan" />
+                  <Info className="h-6 w-6 text-sireiq-cyan" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Call Us</h3>
+                <h3 className="text-xl font-bold mb-2">Online Support</h3>
                 <p className="text-sireiq-light/70 mb-4">
-                  Available Monday-Friday, 9am-5pm PT
+                  Get help from our support team
                 </p>
-                <p className="text-sireiq-cyan">+1 (555) 123-4567</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
-              <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="mb-4 p-3 rounded-full bg-sireiq-accent/20">
-                  <MapPin className="h-6 w-6 text-sireiq-cyan" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Visit Us</h3>
-                <p className="text-sireiq-light/70 mb-4">
-                  Our headquarters location
-                </p>
-                <p className="text-sireiq-cyan">123 AI Avenue, San Francisco, CA 94105</p>
+                <p className="text-sireiq-cyan">support.sireiq.com</p>
               </CardContent>
             </Card>
           </div>
@@ -294,8 +280,8 @@ const Contact = () => {
               <div>
                 <h3 className="text-lg font-bold mb-2">Where is SireIQ based?</h3>
                 <p className="text-sireiq-light/70">
-                  Our headquarters is in San Francisco, California, but we have team members 
-                  around the world. We operate fully remotely and serve clients globally.
+                  Our team members work remotely from around the world. We operate globally and 
+                  serve clients in all regions.
                 </p>
               </div>
               
@@ -309,17 +295,15 @@ const Contact = () => {
             </div>
           </div>
           
-          {/* Global Offices */}
+          {/* Global Presence */}
           <div>
-            <h2 className="text-3xl font-bold mb-10 text-center">Our Global Offices</h2>
+            <h2 className="text-3xl font-bold mb-10 text-center">Our Global Presence</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-2">San Francisco</h3>
+                  <h3 className="text-lg font-bold mb-2">North America</h3>
                   <p className="text-sireiq-light/70 mb-2">Headquarters</p>
                   <p className="text-sm text-sireiq-light/70">
-                    123 AI Avenue<br />
-                    San Francisco, CA 94105<br />
                     United States
                   </p>
                 </CardContent>
@@ -327,23 +311,9 @@ const Contact = () => {
               
               <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-2">New York</h3>
-                  <p className="text-sireiq-light/70 mb-2">Sales & Marketing</p>
+                  <h3 className="text-lg font-bold mb-2">Europe</h3>
+                  <p className="text-sireiq-light/70 mb-2">Regional Office</p>
                   <p className="text-sm text-sireiq-light/70">
-                    456 Tech Plaza<br />
-                    New York, NY 10001<br />
-                    United States
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-2">London</h3>
-                  <p className="text-sireiq-light/70 mb-2">European Operations</p>
-                  <p className="text-sm text-sireiq-light/70">
-                    78 Innovation Street<br />
-                    London, EC2A 4NE<br />
                     United Kingdom
                   </p>
                 </CardContent>
@@ -351,12 +321,20 @@ const Contact = () => {
               
               <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-2">Singapore</h3>
-                  <p className="text-sireiq-light/70 mb-2">APAC Headquarters</p>
+                  <h3 className="text-lg font-bold mb-2">Asia Pacific</h3>
+                  <p className="text-sireiq-light/70 mb-2">APAC Operations</p>
                   <p className="text-sm text-sireiq-light/70">
-                    90 Digital Tower<br />
-                    Singapore, 018956<br />
                     Singapore
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-sireiq-accent/10 border-sireiq-accent/30">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-bold mb-2">Global Support</h3>
+                  <p className="text-sireiq-light/70 mb-2">24/7 Coverage</p>
+                  <p className="text-sm text-sireiq-light/70">
+                    International
                   </p>
                 </CardContent>
               </Card>
