@@ -52,7 +52,7 @@ const CodeGenerator = () => {
                       <div className="text-sireiq-light/70">  user: User;</div>
                       <div className="text-sireiq-light/70">&#125;</div>
                       <div className="text-sireiq-light/70"></div>
-                      <div className="text-sireiq-light/70">const Profile = (&#123; user &#125;: ProfileProps) => &#123;</div>
+                      <div className="text-sireiq-light/70">const Profile = (&#123; user &#125;: ProfileProps) =&gt; &#123;</div>
                       <div className="text-sireiq-light/70">  return (</div>
                       <div className="text-sireiq-cyan">    &lt;div className="profile-container"&gt;</div>
                       <div className="text-sireiq-cyan">      &lt;img src=&#123;user.avatar&#125; alt="Profile" /&gt;</div>
