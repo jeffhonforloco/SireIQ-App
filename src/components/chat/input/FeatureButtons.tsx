@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { 
   Clock, 
@@ -81,18 +82,18 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
     }
   ];
 
-  // Handle both adding prompt to chat and navigating to feature page
+  // Handle feature button click - now navigate by default
   const handleFeatureAction = (feature: typeof features[0], e: React.MouseEvent) => {
-    // If user is holding Ctrl/Cmd key, navigate to feature page
-    if (e.ctrlKey || e.metaKey) {
-      navigate(feature.path);
-    } else {
-      // Otherwise insert the prompt into the chat
+    // If user is holding Shift key, insert prompt into chat instead of navigating
+    if (e.shiftKey) {
       handleFeatureClick(feature.prompt);
+    } else {
+      // By default, navigate to feature page
+      navigate(feature.path);
     }
   };
   
-  // Long press for mobile devices
+  // Long press for mobile devices remains same - navigates to feature page
   const handleLongPress = (feature: typeof features[0]) => {
     navigate(feature.path);
   };
@@ -108,7 +109,7 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
             onClick={(e) => handleFeatureAction(feature, e)}
             onContextMenu={(e) => {
               e.preventDefault();
-              navigate(feature.path);
+              handleFeatureClick(feature.prompt);
             }}
             onTouchStart={() => {
               let timer = setTimeout(() => {
@@ -123,7 +124,7 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
             </span>
             {!isMobile && (
               <span className="text-xs text-gray-400 ml-1">
-                (Ctrl+click for page)
+                (Shift+click for prompt)
               </span>
             )}
           </button>
