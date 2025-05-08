@@ -42,8 +42,8 @@ const Navbar: React.FC = () => {
           />
         )}
 
-        {/* Logo centered on desktop, on left side for mobile */}
-        <div className={`flex items-center ${!isMobile ? 'mx-auto' : ''}`}>
+        {/* Logo - centered on desktop */}
+        <div className={`${isMobile ? '' : 'absolute left-1/2 transform -translate-x-1/2'}`}>
           <Link to="/" className="flex items-center">
             <Logo size="md" />
           </Link>
