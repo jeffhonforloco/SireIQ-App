@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -265,10 +264,7 @@ const PrivacyPolicy = () => {
                 If you have any questions about this Privacy Policy, please contact us at:
               </p>
               <div className="bg-sireiq-accent/10 border border-sireiq-accent/30 rounded-lg p-4">
-                <p className="font-bold">SireIQ, Inc.</p>
-                <p>Attention: Privacy Team</p>
-                <p>123 AI Avenue</p>
-                <p>San Francisco, CA 94105</p>
+                <p className="font-bold">SireIQ</p>
                 <p className="mt-2">Email: <span className="text-sireiq-cyan">privacy@sireiq.com</span></p>
               </div>
             </section>
