@@ -33,6 +33,9 @@ import CodeAssistance from '@/pages/features/CodeAssistance';
 import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
 import DecisionSupport from '@/pages/features/DecisionSupport';
 import ContentSummarizer from '@/pages/features/ContentSummarizer';
+import CodeGenerator from '@/pages/features/CodeGenerator';
+import ImageEnhancer from '@/pages/features/ImageEnhancer';
+import AIAssistant from '@/pages/features/AIAssistant';
 
 // Import enterprise pages
 import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
@@ -70,6 +73,9 @@ function App() {
                 <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
                 <Route path="/features/decision-support" element={<DecisionSupport />} />
                 <Route path="/features/content-summarizer" element={<ContentSummarizer />} />
+                <Route path="/features/code-generator" element={<CodeGenerator />} />
+                <Route path="/features/image-enhancer" element={<ImageEnhancer />} />
+                <Route path="/features/ai-assistant" element={<AIAssistant />} />
                 <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/enterprise/team-management" element={<TeamManagement />} />
