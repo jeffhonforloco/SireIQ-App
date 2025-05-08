@@ -9,6 +9,13 @@ import { Search, UserPlus, Edit, Trash2, Shield } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { toast } from '@/components/ui/sonner';
+import { useForm } from 'react-hook-form';
+
+interface UserFormValues {
+  name: string;
+  email: string;
+  role: string;
+}
 
 const mockUsers = [
   { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
@@ -21,13 +28,25 @@ const mockUsers = [
 const UserManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+  
+  const form = useForm<UserFormValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+      role: 'user'
+    }
+  });
 
   const handleAddUser = () => {
+    const values = form.getValues();
+    console.log('Adding user:', values);
     toast.success('User added successfully');
     setIsAddUserOpen(false);
+    form.reset();
   };
 
   const handleDeleteUser = (id: number) => {
+    console.log('Deleting user with ID:', id);
     toast.success('User deleted successfully');
   };
 
@@ -59,44 +78,62 @@ const UserManagementPage = () => {
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <Form>
-                  <FormField name="name">
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                  <FormField name="email">
-                    <FormItem className="mt-4">
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="john@example.com" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                  <FormField name="role">
-                    <FormItem className="mt-4">
-                      <FormLabel>Role</FormLabel>
-                      <FormControl>
-                        <select className="flex h-10 w-full rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30">
-                          <option value="user">User</option>
-                          <option value="developer">Developer</option>
-                          <option value="enterprise">Enterprise</option>
-                          <option value="admin">Admin</option>
-                        </select>
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(handleAddUser)}>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="John Doe" className="bg-sireiq-dark border-sireiq-accent/30" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem className="mt-4">
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="john@example.com" className="bg-sireiq-dark border-sireiq-accent/30" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="role"
+                      render={({ field }) => (
+                        <FormItem className="mt-4">
+                          <FormLabel>Role</FormLabel>
+                          <FormControl>
+                            <select 
+                              className="flex h-10 w-full rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30"
+                              {...field}
+                            >
+                              <option value="user">User</option>
+                              <option value="developer">Developer</option>
+                              <option value="enterprise">Enterprise</option>
+                              <option value="admin">Admin</option>
+                            </select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <DialogFooter className="mt-6">
+                      <Button variant="outline" type="button" onClick={() => setIsAddUserOpen(false)}>Cancel</Button>
+                      <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker" type="submit">
+                        Add User
+                      </Button>
+                    </DialogFooter>
+                  </form>
                 </Form>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsAddUserOpen(false)}>Cancel</Button>
-                <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker" onClick={handleAddUser}>
-                  Add User
-                </Button>
-              </DialogFooter>
             </DialogContent>
           </Dialog>
         </CardHeader>
