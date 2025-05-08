@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Github, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -40,10 +41,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Product</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Features</a></li>
+              <li><Link to="/features" className="text-sireiq-light/70 hover:text-sireiq-cyan">Features</Link></li>
               <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Pricing</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Integrations</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Enterprise</a></li>
+              <li><Link to="/enterprise/integrations" className="text-sireiq-light/70 hover:text-sireiq-cyan">Integrations</Link></li>
+              <li><Link to="/enterprise" className="text-sireiq-light/70 hover:text-sireiq-cyan">Enterprise</Link></li>
               <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Case Studies</a></li>
             </ul>
           </div>
@@ -60,15 +61,15 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Company links */}
+          {/* Company links - Updated with links to new pages */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Company</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">About Us</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Careers</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Press</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Contact</a></li>
-              <li><a href="#" className="text-sireiq-light/70 hover:text-sireiq-cyan">Privacy Policy</a></li>
+              <li><Link to="/about" className="text-sireiq-light/70 hover:text-sireiq-cyan">About Us</Link></li>
+              <li><Link to="/careers" className="text-sireiq-light/70 hover:text-sireiq-cyan">Careers</Link></li>
+              <li><Link to="/press" className="text-sireiq-light/70 hover:text-sireiq-cyan">Press</Link></li>
+              <li><Link to="/contact" className="text-sireiq-light/70 hover:text-sireiq-cyan">Contact</Link></li>
+              <li><Link to="/privacy-policy" className="text-sireiq-light/70 hover:text-sireiq-cyan">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
@@ -78,7 +79,7 @@ const Footer: React.FC = () => {
           <p>© {new Date().getFullYear()} SireIQ. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-sireiq-cyan">Terms</a>
-            <a href="#" className="hover:text-sireiq-cyan">Privacy</a>
+            <Link to="/privacy-policy" className="hover:text-sireiq-cyan">Privacy</Link>
             <a href="#" className="hover:text-sireiq-cyan">Cookies</a>
           </div>
         </div>
