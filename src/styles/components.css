@@ -115,4 +115,22 @@
   header + * {
     @apply border-t-0 !important;
   }
+  
+  /* Additional explicit rule to hide the border between header and content */
+  header::after {
+    content: none !important;
+    display: none !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+  }
+  
+  /* Target the navigation menu directly */
+  .NavigationMenu,
+  .NavigationMenuList,
+  .NavigationMenuItem,
+  .NavigationMenuLink {
+    @apply border-0 border-none !important;
+    border-bottom: none !important;
+  }
 }

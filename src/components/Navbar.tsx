@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-black'} border-0 border-none`}>
+    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-black'} border-0 border-none border-b-0 shadow-none`} style={{borderBottom: "none", boxShadow: "none"}}>
       <div className="w-full px-4 md:px-10 lg:px-16 mx-auto flex items-center justify-between border-0 border-none">
         {/* Logo - Pushed all the way to the left edge */}
         <Link to="/" className="flex items-center pl-0 border-0 border-none">
