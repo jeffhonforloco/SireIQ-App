@@ -12,12 +12,18 @@ import Index from '@/pages/Index';
 import LandingPage from '@/pages/LandingPage';
 import NotFound from '@/pages/NotFound';
 import GetStarted from '@/pages/GetStarted';
-import Pricing from '@/pages/Pricing';
 import Dashboard from '@/pages/Dashboard';
 import Features from '@/pages/Features';
 import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
+
+// Import admin pages
+import AdminDashboard from '@/pages/admin/AdminDashboard';
+import UserManagement from '@/pages/admin/UserManagement';
+import AnalyticsDashboard from '@/pages/admin/AnalyticsDashboard';
+import SystemSettings from '@/pages/admin/SystemSettings';
+import SecurityOverview from '@/pages/admin/SecurityOverview';
 
 // Import feature pages
 import IdeaGeneration from '@/pages/features/IdeaGeneration';
@@ -63,7 +69,6 @@ function App() {
                 <Route path="/" element={<Index />} />
                 <Route path="/landing" element={<LandingPage />} />
                 <Route path="/get-started" element={<GetStarted />} />
-                <Route path="/pricing" element={<Pricing />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/features" element={<Features />} />
                 <Route path="/features/idea-generation" element={<IdeaGeneration />} />
@@ -96,6 +101,14 @@ function App() {
                 <Route path="/enterprise/integrations" element={<Integrations />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/users" element={<UserManagement />} />
+                <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
+                <Route path="/admin/settings" element={<SystemSettings />} />
+                <Route path="/admin/security" element={<SecurityOverview />} />
+
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <MobileBottomNav />
