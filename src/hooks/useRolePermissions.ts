@@ -1,6 +1,6 @@
 
 import { useRole } from '@/contexts/RoleContext';
-import { hasAccess, getAvailableFeatures, getUpgradeFeatures } from '@/utils/rolePermissions';
+import { hasAccess, getAvailableFeatures, getUpgradeFeatures, getFeatureDisplayName, getChatMessageLimit } from '@/utils/rolePermissions';
 
 export function useRolePermissions() {
   const { role } = useRole();
@@ -10,6 +10,8 @@ export function useRolePermissions() {
     hasAccess: (feature: string) => hasAccess(role, feature),
     availableFeatures: getAvailableFeatures(role),
     upgradeOptions: getUpgradeFeatures(role),
+    getFeatureDisplayName,
+    chatMessageLimit: getChatMessageLimit(role),
     isPersonal: role === 'user',
     isDeveloper: role === 'developer',
     isEnterprise: role === 'enterprise',

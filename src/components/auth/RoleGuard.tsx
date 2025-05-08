@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useRole } from '@/contexts/RoleContext';
-import { hasAccess } from '@/utils/rolePermissions';
+import { hasAccess, getFeatureDisplayName } from '@/utils/rolePermissions';
 import { toast } from '@/components/ui/sonner';
 import { Navigate } from 'react-router-dom';
 import { Lock, Shield } from 'lucide-react';
@@ -41,16 +41,23 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
     return <>{fallback}</>;
   }
 
+  // Get the appropriate plan name based on the required feature
+  const requiredPlan = requiredFeature.includes('coding') || requiredFeature.includes('api') 
+    ? 'Developer' 
+    : requiredFeature.includes('team') || requiredFeature.includes('security') || requiredFeature.includes('unlimited')
+      ? 'Enterprise'
+      : 'Premium';
+
   // Default fallback
   return (
     <div className="flex flex-col items-center justify-center p-8 rounded-lg border border-sireiq-accent/20 bg-sireiq-darker">
       <Lock className="w-12 h-12 text-sireiq-accent mb-4" />
       <h3 className="text-xl font-bold mb-2">Feature Restricted</h3>
       <p className="text-sireiq-light/70 text-center mb-4">
-        This feature requires a {requiredFeature.includes('api') ? 'Developer' : 'Enterprise'} account.
+        {getFeatureDisplayName(requiredFeature)} requires a {requiredPlan} account.
       </p>
       <Button 
-        onClick={() => toast.info("Upgrade your account to access this feature.")}
+        onClick={() => toast.info(`Upgrade to ${requiredPlan} to access the ${getFeatureDisplayName(requiredFeature)} feature.`)}
         className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
       >
         Upgrade Your Account

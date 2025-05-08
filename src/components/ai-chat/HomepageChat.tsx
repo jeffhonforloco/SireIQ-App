@@ -8,8 +8,8 @@ import SignupPrompt from './SignupPrompt';
 import ChatInput from './ChatInput';
 import { MessageSquare } from 'lucide-react';
 import { Message } from './types';
-
-const MAX_FREE_MESSAGES = 3;
+import { useRolePermissions } from '@/hooks/useRolePermissions';
+import { useRole } from '@/contexts/RoleContext';
 
 const HomepageChat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -27,6 +27,9 @@ const HomepageChat: React.FC = () => {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  
+  const { role } = useRole();
+  const { chatMessageLimit } = useRolePermissions();
   
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -57,8 +60,11 @@ const HomepageChat: React.FC = () => {
     const newCount = messageCount + 1;
     setMessageCount(newCount);
     
-    // Check if we should show signup prompt
-    if (newCount >= MAX_FREE_MESSAGES) {
+    // Check if we should show signup prompt based on user role and message count
+    // Non-authenticated users get 3 messages
+    const messageLimit = role ? chatMessageLimit : 3;
+    
+    if (newCount >= messageLimit) {
       setTimeout(() => {
         setShowSignupPrompt(true);
         setIsTyping(false);
@@ -101,6 +107,14 @@ const HomepageChat: React.FC = () => {
     navigate('/signin');
   };
   
+  // Determine the prompt message based on user role
+  const getPromptMessage = () => {
+    if (!role) return "You've reached the limit of free messages. Sign up to continue chatting with SireIQ and unlock all features.";
+    if (role === 'user') return "You've reached the limit for your Personal account. Upgrade to Developer for more messages and features.";
+    if (role === 'developer') return "You've reached the limit for your Developer account. Upgrade to Enterprise for unlimited chat.";
+    return "You've reached your session limit. Start a new conversation to continue.";
+  };
+  
   return (
     <Card className="w-full max-w-3xl border-0 bg-gray-900 shadow-lg overflow-hidden">
       <CardHeader className="bg-gray-800 border-b border-gray-700">
@@ -126,7 +140,9 @@ const HomepageChat: React.FC = () => {
           {showSignupPrompt && (
             <SignupPrompt 
               onSignUp={handleSignUp} 
-              onSignIn={handleSignIn} 
+              onSignIn={handleSignIn}
+              message={getPromptMessage()}
+              isAuthenticated={!!role}
             />
           )}
           
