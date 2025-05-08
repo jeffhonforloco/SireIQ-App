@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -106,8 +107,8 @@ const Community: React.FC = () => {
             </div>
           </div>
           
-          {/* Community CTA */}
-          <div className="bg-gradient-to-r from-sireiq-accent/20 to-sireiq-cyan/10 rounded-xl p-8 mb-16">
+          {/* Community CTA - Removed case studies reference */}
+          <div className="bg-gradient-to-r from-sireiq-accent/20 to-sireiq-cyan/10 rounded-xl p-8">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl font-bold mb-4">Join Our Global Community Today</h2>
               <p className="text-sireiq-light/70 mb-6">
