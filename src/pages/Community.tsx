@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -18,7 +17,7 @@ const Community: React.FC = () => {
     {
       id: 'disc-1',
       title: 'Best practices for fine-tuning the personality engine',
-      preview: 'I've been experimenting with different parameter settings for personality generation and wanted to share some insights...',
+      preview: "I've been experimenting with different parameter settings for personality generation and wanted to share some insights...",
       author: 'Michelle K.',
       replies: 28,
       views: 342,
@@ -28,7 +27,7 @@ const Community: React.FC = () => {
     {
       id: 'disc-2',
       title: 'Show & Tell: Voice Assistant for Healthcare',
-      preview: 'I've built a specialized voice assistant for patient intake using SireIQ's platform. Here's how it works...',
+      preview: "I've built a specialized voice assistant for patient intake using SireIQ's platform. Here's how it works...",
       author: 'Dr. James Wilson',
       replies: 45,
       views: 512,
@@ -38,7 +37,7 @@ const Community: React.FC = () => {
     {
       id: 'disc-3',
       title: 'Upcoming developer meetups in Europe?',
-      preview: 'I'll be traveling through Europe next month and would love to connect with other SireIQ developers...',
+      preview: "I'll be traveling through Europe next month and would love to connect with other SireIQ developers...",
       author: 'Thomas G.',
       replies: 17,
       views: 203,

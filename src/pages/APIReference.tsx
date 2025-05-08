@@ -72,10 +72,10 @@ const APIReference: React.FC = () => {
                   
                   <h4 className="font-medium mb-2">API Key Authentication</h4>
                   <div className="bg-gray-900 rounded-md p-4 mb-4 overflow-x-auto">
-                    <pre><code>curl -X POST https://api.sireiq.com/v1/content/generate \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"prompt": "Generate a creative story about AI"}'</code></pre>
+                    <pre><code>{`curl -X POST https://api.sireiq.com/v1/content/generate \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{"prompt": "Generate a creative story about AI"}'`}</code></pre>
                   </div>
                   
                   <div className="flex items-center bg-blue-900/20 border border-blue-500/30 rounded-md p-4">
