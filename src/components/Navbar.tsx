@@ -34,23 +34,13 @@ const Navbar: React.FC = () => {
   return (
     <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md shadow-md' : 'bg-black'}`}>
       <div className="container mx-auto flex items-center justify-between px-4">
-        {/* Mobile Menu (Left) */}
-        {isMobile && (
-          <MobileMenu 
-            isSheetOpen={isSheetOpen}
-            setIsSheetOpen={setIsSheetOpen}
-          />
-        )}
-
-        {/* Logo centered on desktop, on left side for mobile */}
-        <div className={`flex items-center ${!isMobile ? 'mx-auto' : ''}`}>
-          <Link to="/" className="flex items-center">
-            <Logo size="md" />
-          </Link>
-        </div>
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <Logo size="md" />
+        </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center ml-auto">
+        <nav className="hidden md:flex flex-1 justify-center items-center">
           <NavLinks />
         </nav>
         
@@ -72,6 +62,14 @@ const Navbar: React.FC = () => {
           
           <AuthButtons />
         </div>
+        
+        {/* Mobile Navigation */}
+        {isMobile && (
+          <MobileMenu 
+            isSheetOpen={isSheetOpen}
+            setIsSheetOpen={setIsSheetOpen}
+          />
+        )}
       </div>
     </header>
   );
