@@ -100,11 +100,11 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
 
   return (
     <div className={`feature-buttons-container ${isMobile ? 'mobile-features fixed bottom-16 left-0 right-0 bg-gray-900/95 border-t border-gray-800 p-4 z-30' : 'mt-3 mb-2'}`}>
-      <div className={`${isMobile ? 'grid grid-cols-4 gap-3' : 'grid'}`}>
+      <div className={`grid ${isMobile ? 'grid-cols-4 gap-3' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2'}`}>
         {features.map((feature) => (
           <button 
             key={feature.name}
-            className={`feature-button flex ${isMobile ? 'flex-col justify-center items-center h-20 space-y-2' : 'items-center space-x-2'} 
+            className={`feature-button flex ${isMobile ? 'flex-col justify-center items-center h-20 space-y-2' : 'flex-col items-center justify-center p-3 h-[80px]'} 
               bg-gray-800/70 hover:bg-gray-700/70 text-gray-200 rounded-lg px-3 py-2 text-sm transition-colors`}
             onClick={(e) => handleFeatureAction(feature, e)}
             onContextMenu={(e) => {
@@ -119,11 +119,11 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
             }}
           >
             <span className="text-blue-400">{feature.icon}</span>
-            <span className={`${isMobile ? 'text-xs text-center' : 'whitespace-nowrap'}`}>
+            <span className={`${isMobile ? 'text-xs text-center' : 'text-xs sm:text-sm text-center mt-1'}`}>
               {isMobile ? feature.name.split(' ')[0] : feature.name}
             </span>
             {!isMobile && (
-              <span className="text-xs text-gray-400 ml-1">
+              <span className="text-xs text-gray-400 mt-1 text-center">
                 (Shift+click for prompt)
               </span>
             )}
