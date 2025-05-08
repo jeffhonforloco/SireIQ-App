@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Github, Twitter, Instagram, Linkedin } from 'lucide-react';
 
@@ -79,6 +80,19 @@ const Footer: React.FC = () => {
             <a href="#" className="hover:text-sireiq-cyan">Terms</a>
             <a href="#" className="hover:text-sireiq-cyan">Privacy</a>
             <a href="#" className="hover:text-sireiq-cyan">Cookies</a>
+          </div>
+        </div>
+
+        {/* Powered by Vytreon */}
+        <div className="mt-8 flex flex-col items-center justify-center">
+          <p className="text-sm text-sireiq-light/50 mb-2">Powered by</p>
+          <div className="flex items-center space-x-2">
+            <img 
+              src="/lovable-uploads/cede0156-a68f-404d-91b9-3e895f531627.png" 
+              alt="Vytreon Logo" 
+              className="h-8" 
+            />
+            <span className="text-white font-medium">Vytreon</span>
           </div>
         </div>
       </div>
