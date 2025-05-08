@@ -25,7 +25,7 @@ const Enterprise = () => {
       icon: Lock,
       title: "Enterprise Security",
       description: "Bank-level encryption, SSO integration, and compliance with industry standards to protect your data.",
-      path: "/enterprise/enterprise-security"
+      path: "/features/enterprise-security"
     },
     {
       icon: Workflow,
@@ -77,7 +77,7 @@ const Enterprise = () => {
       icon: Lock,
       title: "Enterprise Security",
       description: "Advanced security features including SSO, audit logs, and role-based access.",
-      path: "/enterprise/enterprise-security"
+      path: "/features/enterprise-security"
     },
     {
       icon: Database,

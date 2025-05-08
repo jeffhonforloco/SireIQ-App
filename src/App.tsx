@@ -33,6 +33,13 @@ import CodeAssistance from '@/pages/features/CodeAssistance';
 import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
 import DecisionSupport from '@/pages/features/DecisionSupport';
 
+// Import enterprise pages
+import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
+import TeamManagement from '@/pages/enterprise/TeamManagement';
+import TeamCollaboration from '@/pages/enterprise/TeamCollaboration';
+import PrivateKnowledgeBase from '@/pages/enterprise/PrivateKnowledgeBase';
+import CustomTraining from '@/pages/enterprise/CustomTraining';
+
 import MobileBottomNav from '@/components/MobileBottomNav';
 
 function App() {
@@ -61,7 +68,12 @@ function App() {
                 <Route path="/features/code-assistance" element={<CodeAssistance />} />
                 <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
                 <Route path="/features/decision-support" element={<DecisionSupport />} />
+                <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                 <Route path="/enterprise" element={<Enterprise />} />
+                <Route path="/enterprise/team-management" element={<TeamManagement />} />
+                <Route path="/enterprise/team-collaboration" element={<TeamCollaboration />} />
+                <Route path="/enterprise/private-knowledge-base" element={<PrivateKnowledgeBase />} />
+                <Route path="/enterprise/custom-training" element={<CustomTraining />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="*" element={<NotFound />} />

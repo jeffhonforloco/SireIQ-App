@@ -71,7 +71,7 @@ const EnterpriseSection: React.FC = () => {
               </ul>
             </div>
             <div>
-              <Link to="/ai-workflows">
+              <Link to="/enterprise/custom-workflows">
                 <Button className="bg-sireiq-cyan hover:bg-sireiq-cyan/90">
                   Try AI Studio
                 </Button>
