@@ -13,20 +13,20 @@ const Separator = React.forwardRef<
     ref
   ) => {
     // Create a more reliable way to check for header context
-    const separatorRef = React.useRef<HTMLDivElement>(null);
+    const separatorRef = React.useRef<HTMLDivElement | null>(null);
     const [isInHeader, setIsInHeader] = React.useState(false);
     
     // Check on mount and when the ref is attached if this is in a header
     React.useEffect(() => {
       if (separatorRef.current) {
         // Check if this element or any parent is a header
-        let element = separatorRef.current;
+        let element: HTMLElement | null = separatorRef.current;
         while (element) {
           if (element.tagName && element.tagName.toLowerCase() === 'header') {
             setIsInHeader(true);
             break;
           }
-          element = element.parentElement as HTMLElement;
+          element = element.parentElement;
         }
       }
     }, []);
@@ -45,7 +45,7 @@ const Separator = React.forwardRef<
           } else if (ref) {
             ref.current = node;
           }
-          if (separatorRef && node) {
+          if (node) {
             separatorRef.current = node as unknown as HTMLDivElement;
           }
         }}
