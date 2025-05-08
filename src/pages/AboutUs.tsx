@@ -100,37 +100,37 @@ const AboutUs = () => {
           <div className="mb-24">
             <h2 className="text-3xl font-bold mb-10 text-center">Our Leadership Team</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Team Member 1 */}
+              {/* Leadership Role 1 */}
               <div className="text-center">
                 <div className="w-48 h-48 mx-auto mb-4 rounded-full bg-gradient-to-br from-sireiq-accent to-sireiq-cyan/30 flex items-center justify-center overflow-hidden">
                   <Users className="h-24 w-24 text-sireiq-light/40" />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Alexandra Chen</h3>
-                <p className="text-sireiq-cyan mb-3">Chief Executive Officer</p>
+                <h3 className="text-xl font-bold mb-1">Chief Executive Officer</h3>
+                <p className="text-sireiq-cyan mb-3">Leadership</p>
                 <p className="text-sm text-sireiq-light/70">
-                  Former AI Research Lead at Google with over 15 years of experience in machine learning and artificial intelligence.
+                  Former AI Research Lead with over 15 years of experience in machine learning and artificial intelligence.
                 </p>
               </div>
               
-              {/* Team Member 2 */}
+              {/* Leadership Role 2 */}
               <div className="text-center">
                 <div className="w-48 h-48 mx-auto mb-4 rounded-full bg-gradient-to-br from-sireiq-accent to-sireiq-cyan/30 flex items-center justify-center overflow-hidden">
                   <Users className="h-24 w-24 text-sireiq-light/40" />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Michael Roberts</h3>
-                <p className="text-sireiq-cyan mb-3">Chief Technology Officer</p>
+                <h3 className="text-xl font-bold mb-1">Chief Technology Officer</h3>
+                <p className="text-sireiq-cyan mb-3">Leadership</p>
                 <p className="text-sm text-sireiq-light/70">
                   Serial entrepreneur with multiple successful tech startups. Expert in scalable systems and enterprise AI integration.
                 </p>
               </div>
               
-              {/* Team Member 3 */}
+              {/* Leadership Role 3 */}
               <div className="text-center">
                 <div className="w-48 h-48 mx-auto mb-4 rounded-full bg-gradient-to-br from-sireiq-accent to-sireiq-cyan/30 flex items-center justify-center overflow-hidden">
                   <Users className="h-24 w-24 text-sireiq-light/40" />
                 </div>
-                <h3 className="text-xl font-bold mb-1">Sarah Johnson</h3>
-                <p className="text-sireiq-cyan mb-3">Chief Product Officer</p>
+                <h3 className="text-xl font-bold mb-1">Chief Product Officer</h3>
+                <p className="text-sireiq-cyan mb-3">Leadership</p>
                 <p className="text-sm text-sireiq-light/70">
                   Product visionary with background in UX research and cognitive science. Passionate about creating intuitive AI experiences.
                 </p>
