@@ -33,9 +33,9 @@ const Navbar: React.FC = () => {
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md shadow-md' : 'bg-black'}`}>
-      <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
-        {/* Logo - Pushed much further to left edge on desktop */}
-        <Link to="/" className="flex items-center pl-0 md:pl-0">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Logo - Pushed completely to left edge on desktop */}
+        <Link to="/" className="flex items-center pl-0 md:pl-2 lg:pl-0">
           <Logo size="md" />
         </Link>
         
@@ -44,8 +44,8 @@ const Navbar: React.FC = () => {
           <NavLinks />
         </nav>
         
-        {/* Auth Buttons and Build Info Toggle - Pushed much further to right edge on desktop */}
-        <div className="hidden md:flex items-center space-x-4 pr-0 md:pr-0">
+        {/* Auth Buttons and Build Info Toggle - Pushed completely to right edge on desktop */}
+        <div className="hidden md:flex items-center space-x-4 pr-0 md:pr-2 lg:pr-0">
           <ThemeToggle />
           
           {/* "Build it" menu item */}
