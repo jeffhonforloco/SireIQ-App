@@ -25,8 +25,7 @@ import Press from '@/pages/Press';
 import Contact from '@/pages/Contact';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 
-// New resource pages
-import Documentation from '@/pages/Documentation';
+// New resource pages (removed Documentation)
 import APIReference from '@/pages/APIReference';
 import Blog from '@/pages/Blog';
 import Tutorials from '@/pages/Tutorials';
@@ -125,8 +124,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-                {/* New resource pages */}
-                <Route path="/documentation" element={<Documentation />} />
+                {/* New resource pages - Documentation route removed */}
                 <Route path="/api-reference" element={<APIReference />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/tutorials" element={<Tutorials />} />
