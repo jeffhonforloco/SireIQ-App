@@ -13,6 +13,76 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for proper versioning
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Set version
+        id: set-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Build
+        run: npm run build
+        env:
+          VITE_APP_ENV: production
+          VITE_APP_VERSION: ${{ steps.set-version.outputs.version }}
+        
+      - name: Run tests
+        run: npm test
+      
+      - name: Deploy to Production
+        id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}'
+          channelId: live
+          projectId: your-firebase-project-id-prod
+      
+      - name: Create deployment tag
+        run: |
+          git tag -a deploy-${{ steps.set-version.outputs.version }}-$(date +'%Y%m%d%H%M%S') -m "Production deployment ${{ steps.set-version.outputs.version }}"
+          git push --tags
+      
+      - name: Notify on success
+        if: success()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              "attachments": [
+                {
+                  "color": "good",
+                  "text": "🚀 Production deployment succeeded!\nVersion: ${{ steps.set-version.outputs.version }}\nURL: https://your-production-url.com"
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  rollback:
+    name: Rollback (Manual)
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event_name == 'workflow_dispatch' && failure()
+    steps:
+      - name: Checkout previous deployment
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.before }}
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -23,13 +93,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build
+      - name: Build previous version
         run: npm run build
         
-      - name: Deploy to Production
+      - name: Deploy rollback
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}'
           channelId: live
           projectId: your-firebase-project-id-prod
+      
+      - name: Notify rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              "attachments": [
+                {
+                  "color": "danger",
+                  "text": "⚠️ Production deployment failed! Rollback initiated.\nDetails: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

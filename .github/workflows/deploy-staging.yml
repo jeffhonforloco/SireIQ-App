@@ -21,8 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: Run linting
+        run: npm run lint || echo "No linting configuration found"
+      
       - name: Build
         run: npm run build
+        env:
+          VITE_APP_ENV: staging
+          VITE_APP_VERSION: ${{ github.sha }}
         
       - name: Deploy to Staging
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -31,3 +37,17 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}'
           channelId: staging
           projectId: your-firebase-project-id-staging
+          
+      - name: Create PR preview comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo } } = context;
+            github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: `✅ Staging deployment complete! Preview: https://staging.your-app-url.com`
+            });

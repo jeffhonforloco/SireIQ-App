@@ -28,6 +28,33 @@ jobs:
       - name: Build
         run: npm run build
         
+      - name: Create dist zip
+        run: zip -r dist.zip dist
+        
+      - name: Generate changelog
+        id: changelog
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            
+            // Get the current tag
+            const currentTag = context.ref.replace('refs/tags/', '');
+            
+            // Find the previous tag
+            let previousTag;
+            try {
+              previousTag = execSync('git describe --tags --abbrev=0 HEAD^').toString().trim();
+            } catch (error) {
+              console.log('No previous tag found, using first commit');
+              previousTag = execSync('git rev-list --max-parents=0 HEAD').toString().trim();
+            }
+            
+            // Generate changelog
+            const changelog = execSync(`git log ${previousTag}..${currentTag} --pretty=format:"* %s (%an)" --reverse`).toString().trim();
+            
+            return changelog || 'Initial release';
+            
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -35,10 +62,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
           body: |
-            Changes in this Release:
-            ${{ github.event.head_commit.message }}
+            ## Changes in this Release
+            
+            ${{ steps.changelog.outputs.result }}
+            
+            ## Installation
+            
+            You can download the latest build below or use our Docker image:
+            ```
+            docker pull your-dockerhub-username/sireiq:${{ github.ref_name }}
+            ```
           draft: false
           prerelease: false
           
@@ -51,3 +86,20 @@ jobs:
           asset_path: ./dist.zip
           asset_name: build.zip
           asset_content_type: application/zip
+
+      - name: Notify release
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              "attachments": [
+                {
+                  "color": "good",
+                  "text": "🎉 New release published: ${{ github.ref_name }}\nCheck it out: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

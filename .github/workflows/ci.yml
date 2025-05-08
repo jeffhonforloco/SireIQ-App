@@ -28,6 +28,12 @@ jobs:
         
       - name: Run tests
         run: npm test
+        
+      - name: Run type check
+        run: npx tsc --noEmit
+        
+      - name: Check for security vulnerabilities
+        run: npx audit-ci --moderate
 
   build:
     name: Build
@@ -53,3 +59,6 @@ jobs:
         with:
           name: build
           path: dist/
+          
+      - name: Check bundle size
+        run: npx bundlesize

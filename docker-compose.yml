@@ -13,5 +13,18 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-
-  # Add more services as needed (e.g., mock API)
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+      
+  # Mock API service for development
+  mock-api:
+    image: stoplight/prism:4
+    command: mock -h 0.0.0.0 /app/api-spec.yaml
+    ports:
+      - "4010:4010"
+    volumes:
+      - ./api:/app
