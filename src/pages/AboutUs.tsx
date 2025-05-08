@@ -107,9 +107,6 @@ const AboutUs = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-1">Chief Executive Officer</h3>
                 <p className="text-sireiq-cyan mb-3">Leadership</p>
-                <p className="text-sm text-sireiq-light/70">
-                  Former AI Research Lead with over 15 years of experience in machine learning and artificial intelligence.
-                </p>
               </div>
               
               {/* Leadership Role 2 */}
@@ -119,9 +116,6 @@ const AboutUs = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-1">Chief Technology Officer</h3>
                 <p className="text-sireiq-cyan mb-3">Leadership</p>
-                <p className="text-sm text-sireiq-light/70">
-                  Serial entrepreneur with multiple successful tech startups. Expert in scalable systems and enterprise AI integration.
-                </p>
               </div>
               
               {/* Leadership Role 3 */}
@@ -131,9 +125,6 @@ const AboutUs = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-1">Chief Product Officer</h3>
                 <p className="text-sireiq-cyan mb-3">Leadership</p>
-                <p className="text-sm text-sireiq-light/70">
-                  Product visionary with background in UX research and cognitive science. Passionate about creating intuitive AI experiences.
-                </p>
               </div>
             </div>
           </div>
