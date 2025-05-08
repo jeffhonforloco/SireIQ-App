@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
@@ -106,7 +107,7 @@ const Contact = () => {
                 <p className="text-sireiq-light/70 mb-4">
                   Get help from our support team
                 </p>
-                <p className="text-sireiq-cyan">support.sireiq.com</p>
+                <p className="text-sireiq-cyan">support@sireiq.com</p>
               </CardContent>
             </Card>
           </div>
