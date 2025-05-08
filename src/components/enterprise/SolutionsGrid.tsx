@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { ShieldCheck, Users, Lock, Workflow, Server, Database, Globe, BarChart } from 'lucide-react';
+import { ShieldCheck, Users, Lock, Workflow, Server, Database, Globe, BarChart, Webhook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const SolutionsGrid: React.FC = () => {
@@ -53,6 +53,12 @@ const SolutionsGrid: React.FC = () => {
       title: "Advanced Analytics",
       description: "Comprehensive reporting on usage, performance, and ROI across your organization.",
       path: "/enterprise/advanced-analytics"
+    },
+    {
+      icon: Webhook,
+      title: "Integrations",
+      description: "Connect SireIQ with your favorite tools and platforms for a seamless workflow experience.",
+      path: "/enterprise/integrations"
     }
   ];
 

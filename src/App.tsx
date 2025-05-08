@@ -48,6 +48,7 @@ import DedicatedInfrastructure from '@/pages/enterprise/DedicatedInfrastructure'
 import GlobalDeployment from '@/pages/enterprise/GlobalDeployment';
 import ComplianceControls from '@/pages/enterprise/ComplianceControls';
 import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
+import Integrations from '@/pages/Integrations';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
@@ -92,6 +93,7 @@ function App() {
                 <Route path="/enterprise/global-deployment" element={<GlobalDeployment />} />
                 <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
                 <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
+                <Route path="/enterprise/integrations" element={<Integrations />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="*" element={<NotFound />} />

@@ -38,6 +38,12 @@ const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
       >
         Enterprise
       </Link>
+      <Link 
+        to="/enterprise/integrations" 
+        className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/enterprise/integrations') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
+      >
+        Integrations
+      </Link>
     </div>
   );
 };
