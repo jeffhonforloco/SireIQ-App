@@ -9,9 +9,63 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/components/ui/sonner';
 import { Settings, Save, RefreshCw, Database } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+
+interface FormValues {
+  siteName: string;
+  maintenanceMode: boolean;
+  debugMode: boolean;
+  cache: string;
+  twoFactorAuth: boolean;
+  passwordPolicy: string;
+  sessionTimeout: string;
+  ipRestriction: boolean;
+  apiEnabled: boolean;
+  apiKey: string;
+  rateLimiting: string;
+  webhookUrl: string;
+  databaseBackup: boolean;
+  backupFrequency: string;
+  maxConnections: string;
+}
 
 const SystemSettingsPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  
+  const generalForm = useForm<FormValues>({
+    defaultValues: {
+      siteName: 'SireIQ',
+      maintenanceMode: false,
+      debugMode: false,
+      cache: '60',
+    }
+  });
+  
+  const securityForm = useForm<FormValues>({
+    defaultValues: {
+      twoFactorAuth: true,
+      passwordPolicy: 'strict',
+      sessionTimeout: '30',
+      ipRestriction: false,
+    }
+  });
+  
+  const apiForm = useForm<FormValues>({
+    defaultValues: {
+      apiEnabled: true,
+      apiKey: 'sk_live_7f4c38a9d2e96c31a4f219f73a',
+      rateLimiting: '100',
+      webhookUrl: '',
+    }
+  });
+  
+  const databaseForm = useForm<FormValues>({
+    defaultValues: {
+      databaseBackup: true,
+      backupFrequency: 'weekly',
+      maxConnections: '100',
+    }
+  });
   
   const handleSaveSettings = () => {
     setIsLoading(true);
@@ -48,62 +102,89 @@ const SystemSettingsPage = () => {
               <CardDescription>Configure application-wide settings</CardDescription>
             </CardHeader>
             <CardContent>
-              <Form>
-                <div className="grid gap-6">
-                  <FormField name="siteName">
-                    <FormItem>
-                      <FormLabel>Site Name</FormLabel>
-                      <FormControl>
-                        <Input defaultValue="SireIQ" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        The name displayed in the browser title bar and throughout the application
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="maintenanceMode">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Maintenance Mode</FormLabel>
+              <Form {...generalForm}>
+                <form onSubmit={generalForm.handleSubmit(handleSaveSettings)} className="grid gap-6">
+                  <FormField
+                    control={generalForm.control}
+                    name="siteName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Site Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="bg-sireiq-dark border-sireiq-accent/30" />
+                        </FormControl>
                         <FormDescription className="text-sireiq-light/50">
-                          When enabled, users will see a maintenance page
+                          The name displayed in the browser title bar and throughout the application
                         </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
                   
-                  <FormField name="debugMode">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Debug Mode</FormLabel>
+                  <FormField
+                    control={generalForm.control}
+                    name="maintenanceMode"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">Maintenance Mode</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            When enabled, users will see a maintenance page
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={generalForm.control}
+                    name="debugMode"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">Debug Mode</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            Show detailed error messages and logs for debugging
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={generalForm.control}
+                    name="cache"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Cache Timeout (minutes)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            {...field}
+                            className="bg-sireiq-dark border-sireiq-accent/30" 
+                          />
+                        </FormControl>
                         <FormDescription className="text-sireiq-light/50">
-                          Show detailed error messages and logs for debugging
+                          How long items should remain in cache before expiring
                         </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="cache">
-                    <FormItem>
-                      <FormLabel>Cache Timeout (minutes)</FormLabel>
-                      <FormControl>
-                        <Input type="number" defaultValue="60" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        How long items should remain in cache before expiring
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
                   
                   <div className="flex justify-between">
                     <Button 
+                      type="button"
                       variant="outline"
                       onClick={handleClearCache}
                       disabled={isLoading}
@@ -113,7 +194,7 @@ const SystemSettingsPage = () => {
                       Clear Cache
                     </Button>
                     <Button
-                      onClick={handleSaveSettings}
+                      type="submit"
                       disabled={isLoading}
                       className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
                     >
@@ -121,7 +202,7 @@ const SystemSettingsPage = () => {
                       Save Settings
                     </Button>
                   </div>
-                </div>
+                </form>
               </Form>
             </CardContent>
           </Card>
@@ -134,67 +215,97 @@ const SystemSettingsPage = () => {
               <CardDescription>Configure security policies and features</CardDescription>
             </CardHeader>
             <CardContent>
-              <Form>
-                <div className="grid gap-6">
-                  <FormField name="twoFactorAuth">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Require Two-Factor Authentication</FormLabel>
+              <Form {...securityForm}>
+                <form onSubmit={securityForm.handleSubmit(handleSaveSettings)} className="grid gap-6">
+                  <FormField
+                    control={securityForm.control}
+                    name="twoFactorAuth"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">Require Two-Factor Authentication</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            Force users to set up 2FA for their accounts
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={securityForm.control}
+                    name="passwordPolicy"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password Policy</FormLabel>
+                        <FormControl>
+                          <select 
+                            className="w-full h-10 rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30"
+                            value={field.value}
+                            onChange={field.onChange}
+                          >
+                            <option value="standard">Standard</option>
+                            <option value="strict">Strict</option>
+                            <option value="enterprise">Enterprise</option>
+                          </select>
+                        </FormControl>
                         <FormDescription className="text-sireiq-light/50">
-                          Force users to set up 2FA for their accounts
+                          Password complexity requirements for users
                         </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch defaultChecked />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
                   
-                  <FormField name="passwordPolicy">
-                    <FormItem>
-                      <FormLabel>Password Policy</FormLabel>
-                      <FormControl>
-                        <select className="w-full h-10 rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30">
-                          <option value="standard">Standard</option>
-                          <option value="strict" selected>Strict</option>
-                          <option value="enterprise">Enterprise</option>
-                        </select>
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        Password complexity requirements for users
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="sessionTimeout">
-                    <FormItem>
-                      <FormLabel>Session Timeout (minutes)</FormLabel>
-                      <FormControl>
-                        <Input type="number" defaultValue="30" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        How long before inactive users are automatically logged out
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="ipRestriction">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">IP Address Restriction</FormLabel>
+                  <FormField
+                    control={securityForm.control}
+                    name="sessionTimeout"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Session Timeout (minutes)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            {...field}
+                            className="bg-sireiq-dark border-sireiq-accent/30" 
+                          />
+                        </FormControl>
                         <FormDescription className="text-sireiq-light/50">
-                          Limit login access to specific IP addresses
+                          How long before inactive users are automatically logged out
                         </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={securityForm.control}
+                    name="ipRestriction"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">IP Address Restriction</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            Limit login access to specific IP addresses
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                   
                   <div className="flex justify-end">
                     <Button
-                      onClick={handleSaveSettings}
+                      type="submit"
                       disabled={isLoading}
                       className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
                     >
@@ -202,7 +313,7 @@ const SystemSettingsPage = () => {
                       Save Settings
                     </Button>
                   </div>
-                </div>
+                </form>
               </Form>
             </CardContent>
           </Card>
@@ -215,71 +326,102 @@ const SystemSettingsPage = () => {
               <CardDescription>Manage API keys and access</CardDescription>
             </CardHeader>
             <CardContent>
-              <Form>
-                <div className="grid gap-6">
-                  <FormField name="apiEnabled">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Enable Public API</FormLabel>
-                        <FormDescription className="text-sireiq-light/50">
-                          Allow external applications to access the API
-                        </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch defaultChecked />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="apiKey">
-                    <FormItem>
-                      <FormLabel>API Key</FormLabel>
-                      <div className="flex gap-2">
+              <Form {...apiForm}>
+                <form onSubmit={apiForm.handleSubmit(handleSaveSettings)} className="grid gap-6">
+                  <FormField
+                    control={apiForm.control}
+                    name="apiEnabled"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">Enable Public API</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            Allow external applications to access the API
+                          </FormDescription>
+                        </div>
                         <FormControl>
-                          <Input
-                            type="password"
-                            value="sk_live_7f4c38a9d2e96c31a4f219f73a"
-                            readOnly
-                            className="bg-sireiq-dark border-sireiq-accent/30 flex-1"
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
                           />
                         </FormControl>
-                        <Button variant="outline" className="border-sireiq-accent/30">
-                          Regenerate
-                        </Button>
-                      </div>
-                      <FormDescription className="text-sireiq-light/50">
-                        Your API key for authentication (keep this secure)
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
                   
-                  <FormField name="rateLimiting">
-                    <FormItem>
-                      <FormLabel>Rate Limiting (requests per minute)</FormLabel>
-                      <FormControl>
-                        <Input type="number" defaultValue="100" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        Maximum number of API requests allowed per minute
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
+                  <FormField
+                    control={apiForm.control}
+                    name="apiKey"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>API Key</FormLabel>
+                        <div className="flex gap-2">
+                          <FormControl>
+                            <Input
+                              type="password"
+                              {...field}
+                              readOnly
+                              className="bg-sireiq-dark border-sireiq-accent/30 flex-1"
+                            />
+                          </FormControl>
+                          <Button 
+                            type="button"
+                            variant="outline" 
+                            className="border-sireiq-accent/30"
+                          >
+                            Regenerate
+                          </Button>
+                        </div>
+                        <FormDescription className="text-sireiq-light/50">
+                          Your API key for authentication (keep this secure)
+                        </FormDescription>
+                      </FormItem>
+                    )}
+                  />
                   
-                  <FormField name="webhookUrl">
-                    <FormItem>
-                      <FormLabel>Webhook URL</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://your-app.com/webhook" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        URL to receive event notifications
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
+                  <FormField
+                    control={apiForm.control}
+                    name="rateLimiting"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Rate Limiting (requests per minute)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            {...field}
+                            className="bg-sireiq-dark border-sireiq-accent/30" 
+                          />
+                        </FormControl>
+                        <FormDescription className="text-sireiq-light/50">
+                          Maximum number of API requests allowed per minute
+                        </FormDescription>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={apiForm.control}
+                    name="webhookUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Webhook URL</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="https://your-app.com/webhook"
+                            {...field}
+                            className="bg-sireiq-dark border-sireiq-accent/30" 
+                          />
+                        </FormControl>
+                        <FormDescription className="text-sireiq-light/50">
+                          URL to receive event notifications
+                        </FormDescription>
+                      </FormItem>
+                    )}
+                  />
                   
                   <div className="flex justify-end">
                     <Button
-                      onClick={handleSaveSettings}
+                      type="submit"
                       disabled={isLoading}
                       className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
                     >
@@ -287,7 +429,7 @@ const SystemSettingsPage = () => {
                       Save API Settings
                     </Button>
                   </div>
-                </div>
+                </form>
               </Form>
             </CardContent>
           </Card>
@@ -300,52 +442,76 @@ const SystemSettingsPage = () => {
               <CardDescription>Configure database connections and backups</CardDescription>
             </CardHeader>
             <CardContent>
-              <Form>
-                <div className="grid gap-6">
-                  <FormField name="databaseBackup">
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Automated Backups</FormLabel>
+              <Form {...databaseForm}>
+                <form onSubmit={databaseForm.handleSubmit(handleSaveSettings)} className="grid gap-6">
+                  <FormField
+                    control={databaseForm.control}
+                    name="databaseBackup"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-sireiq-accent/30 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-base">Automated Backups</FormLabel>
+                          <FormDescription className="text-sireiq-light/50">
+                            Automatically backup the database on schedule
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch 
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={databaseForm.control}
+                    name="backupFrequency"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Backup Frequency</FormLabel>
+                        <FormControl>
+                          <select 
+                            className="w-full h-10 rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30"
+                            value={field.value}
+                            onChange={field.onChange}
+                          >
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                          </select>
+                        </FormControl>
                         <FormDescription className="text-sireiq-light/50">
-                          Automatically backup the database on schedule
+                          How often database backups should run
                         </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch defaultChecked />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
+                      </FormItem>
+                    )}
+                  />
                   
-                  <FormField name="backupFrequency">
-                    <FormItem>
-                      <FormLabel>Backup Frequency</FormLabel>
-                      <FormControl>
-                        <select className="w-full h-10 rounded-md border border-input bg-sireiq-dark px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm border-sireiq-accent/30">
-                          <option value="daily">Daily</option>
-                          <option value="weekly" selected>Weekly</option>
-                          <option value="monthly">Monthly</option>
-                        </select>
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        How often database backups should run
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
-                  
-                  <FormField name="maxConnections">
-                    <FormItem>
-                      <FormLabel>Maximum Connections</FormLabel>
-                      <FormControl>
-                        <Input type="number" defaultValue="100" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </FormControl>
-                      <FormDescription className="text-sireiq-light/50">
-                        Maximum number of simultaneous database connections
-                      </FormDescription>
-                    </FormItem>
-                  </FormField>
+                  <FormField
+                    control={databaseForm.control}
+                    name="maxConnections"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Maximum Connections</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            {...field}
+                            className="bg-sireiq-dark border-sireiq-accent/30" 
+                          />
+                        </FormControl>
+                        <FormDescription className="text-sireiq-light/50">
+                          Maximum number of simultaneous database connections
+                        </FormDescription>
+                      </FormItem>
+                    )}
+                  />
                   
                   <div className="flex justify-between">
                     <Button 
+                      type="button"
                       variant="outline"
                       className="border-sireiq-accent/30"
                     >
@@ -353,7 +519,7 @@ const SystemSettingsPage = () => {
                       Run Backup Now
                     </Button>
                     <Button
-                      onClick={handleSaveSettings}
+                      type="submit"
                       disabled={isLoading}
                       className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
                     >
@@ -361,7 +527,7 @@ const SystemSettingsPage = () => {
                       Save Database Settings
                     </Button>
                   </div>
-                </div>
+                </form>
               </Form>
             </CardContent>
           </Card>
