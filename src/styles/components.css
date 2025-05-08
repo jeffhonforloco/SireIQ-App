@@ -70,17 +70,49 @@
   @media (min-width: 768px) {
     .navbar-links, 
     .navbar-links * {
-      @apply border-0 !important;
+      @apply border-0 border-none !important;
     }
     
     nav, 
     nav * {
-      @apply border-0 !important;
+      @apply border-0 border-none !important;
     }
     
+    header,
+    header *,
     header nav,
     header nav * {
-      @apply border-0 !important;
+      @apply border-0 border-none !important;
     }
+
+    /* Extremely specific selector to override the menubar bottom border */
+    header .menubar-root,
+    header [data-radix-menubar-root],
+    header div[role="menubar"] {
+      @apply border-0 border-none border-b-0 border-bottom-0 !important;
+    }
+
+    /* Target any horizontal separators that might be causing the line */
+    .separator[data-orientation="horizontal"],
+    header hr,
+    header .separator {
+      @apply hidden !important;
+    }
+  }
+
+  /* Force remove all borders from specific UI elements that may be in the navbar */
+  header .menubar-root,
+  [data-radix-menubar-root],
+  [role="menubar"],
+  [data-orientation="horizontal"] {
+    @apply border-0 border-b-0 border-bottom-0 border-none !important;
+    border-bottom: none !important;
+    border: none !important;
+  }
+
+  /* Override any separator that might be causing the line */
+  header + *:before,
+  header + * {
+    @apply border-t-0 border-top-0 !important;
   }
 }

@@ -32,26 +32,26 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-black'}`}>
-      <div className="w-full px-4 md:px-10 lg:px-16 mx-auto flex items-center justify-between">
+    <header className={`fixed top-0 left-0 w-full z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-black'} border-0 border-none`}>
+      <div className="w-full px-4 md:px-10 lg:px-16 mx-auto flex items-center justify-between border-0 border-none">
         {/* Logo - Pushed all the way to the left edge */}
-        <Link to="/" className="flex items-center pl-0">
+        <Link to="/" className="flex items-center pl-0 border-0 border-none">
           <Logo size="md" />
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex flex-1 justify-center items-center border-0">
+        <nav className="hidden md:flex flex-1 justify-center items-center border-0 border-none">
           <NavLinks />
         </nav>
         
         {/* Auth Buttons and Build Info Toggle - Pushed all the way to the right edge */}
-        <div className="hidden md:flex items-center space-x-4 pr-0">
+        <div className="hidden md:flex items-center space-x-4 pr-0 border-0 border-none">
           <ThemeToggle />
           
           {/* "Build it" menu item */}
-          <Menubar className="bg-transparent border-0">
+          <Menubar className="bg-transparent border-0 border-none">
             <MenubarMenu>
-              <MenubarTrigger className="cursor-pointer px-4 py-2 text-sireiq-light hover:text-sireiq-cyan focus:text-sireiq-cyan data-[state=open]:text-sireiq-cyan">
+              <MenubarTrigger className="cursor-pointer px-4 py-2 text-sireiq-light hover:text-sireiq-cyan focus:text-sireiq-cyan data-[state=open]:text-sireiq-cyan border-0 border-none">
                 Build it
               </MenubarTrigger>
               <MenubarContent className="bg-black border-gray-800 w-[400px] p-0">

@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
@@ -18,6 +19,8 @@ const Separator = React.forwardRef<
       className={cn(
         "shrink-0 bg-border",
         orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+        // Add a check for header context to prevent borders in navbar
+        document?.querySelector('header') ? 'border-0 border-none opacity-0' : '',
         className
       )}
       {...props}
