@@ -27,12 +27,6 @@ const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
         Features
       </Link>
       <Link 
-        to="/pricing" 
-        className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/pricing') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
-      >
-        Pricing
-      </Link>
-      <Link 
         to="/enterprise" 
         className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/enterprise') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
       >
