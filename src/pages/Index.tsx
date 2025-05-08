@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import SignInModal from '@/components/auth/SignInModal';
 import { useRole } from '@/contexts/RoleContext';
 
@@ -23,7 +22,7 @@ const Index = () => {
   }, [role]);
 
   return (
-    <div className="min-h-screen w-full bg-black flex flex-col overflow-hidden">
+    <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
       <Helmet>
         <title>SireIQ | Think it. Build it. With SireIQ</title>
         <meta name="description" content="An advanced AI platform that helps businesses leverage data for better insights, content creation, and decision-making." />
@@ -37,8 +36,6 @@ const Index = () => {
           <HomeChatExperience />
         </div>
       </div>
-
-      <Footer />
       
       <SignInModal isOpen={showSignInModal} onOpenChange={setShowSignInModal} />
     </div>
