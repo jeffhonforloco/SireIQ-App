@@ -93,7 +93,7 @@ const Contact = () => {
                 <p className="text-sireiq-light/70 mb-4">
                   For general inquiries and information
                 </p>
-                <p className="text-sireiq-cyan">hello@sireiq.com</p>
+                <p className="text-sireiq-cyan">info@sireiq.com</p>
               </CardContent>
             </Card>
             
