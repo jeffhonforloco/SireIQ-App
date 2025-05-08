@@ -21,7 +21,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   ];
 
   return (
-    <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-700/50 bg-[#0f1117] sticky top-0 z-10">
+    <div className="flex items-center justify-between p-2 sm:p-3 border-b border-gray-700/50 bg-[#0f1117] sticky top-0 z-10">
       <div className="flex items-center">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
@@ -67,7 +67,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
             </div>
           </SheetContent>
         </Sheet>
-        <div className="flex items-center">
+        <div className="flex items-center pl-0">
           <Logo size="md" />
         </div>
       </div>
@@ -76,7 +76,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         variant="outline" 
         size="sm"
         onClick={clearChat}
-        className="flex items-center gap-1 h-8 text-xs border-gray-700 hover:bg-gray-800 text-gray-300"
+        className="flex items-center gap-1 h-8 text-xs border-gray-700 hover:bg-gray-800 text-gray-300 mr-0"
       >
         <Plus className="h-3.5 w-3.5" />
         <span>New chat</span>

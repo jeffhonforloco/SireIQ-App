@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
         borderRight: "none"
       }}
     >
-      <div className="w-full px-4 md:px-10 lg:px-16 mx-auto flex items-center justify-between border-0 border-none">
+      <div className="w-full px-2 md:px-3 lg:px-4 mx-auto flex items-center justify-between border-0 border-none">
         {/* Logo - Pushed all the way to the left edge */}
         <Link to="/" className="flex items-center pl-0 border-0 border-none">
           <Logo size="md" />

@@ -35,7 +35,7 @@ const Index = () => {
       <div className="w-full h-[1px] bg-black border-0 border-none"></div>
       
       <div className="flex-1 flex justify-center items-center p-0 overflow-hidden border-0 border-t-0 border-none">
-        <div className="w-full max-w-3xl h-full">
+        <div className="w-full h-full">
           <HomeChatExperience />
         </div>
       </div>
