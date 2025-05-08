@@ -32,6 +32,7 @@ import ContentCreation from '@/pages/features/ContentCreation';
 import CodeAssistance from '@/pages/features/CodeAssistance';
 import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
 import DecisionSupport from '@/pages/features/DecisionSupport';
+import ContentSummarizer from '@/pages/features/ContentSummarizer';
 
 // Import enterprise pages
 import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
@@ -68,6 +69,7 @@ function App() {
                 <Route path="/features/code-assistance" element={<CodeAssistance />} />
                 <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
                 <Route path="/features/decision-support" element={<DecisionSupport />} />
+                <Route path="/features/content-summarizer" element={<ContentSummarizer />} />
                 <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/enterprise/team-management" element={<TeamManagement />} />
