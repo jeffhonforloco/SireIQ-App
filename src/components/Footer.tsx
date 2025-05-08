@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
           <p className="text-sm text-sireiq-light/50 mb-2">Powered by</p>
           <div className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/cede0156-a68f-404d-91b9-3e895f531627.png" 
+              src="/lovable-uploads/f0852717-50fb-42f3-ab9d-a49b2f26ec6a.png" 
               alt="Vytreon Logo" 
               className="h-8" 
             />
