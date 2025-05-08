@@ -32,6 +32,9 @@ import Blog from '@/pages/Blog';
 import Tutorials from '@/pages/Tutorials';
 import Community from '@/pages/Community';
 
+// Enterprise pages including Integrations
+import Integrations from '@/pages/enterprise/Integrations';
+
 // Import admin pages
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import UserManagement from '@/pages/admin/UserManagement';
