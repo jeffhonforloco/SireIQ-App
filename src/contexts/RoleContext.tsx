@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
 export type OnboardingStep = 1 | 2 | 3 | 'completed';
@@ -35,13 +35,53 @@ const initialPreferences: Preferences = {
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
 
 export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [role, setRole] = useState<Role>(null); // Initialize role to null to indicate not logged in
-  const [isFirstTimeUser, setIsFirstTimeUser] = useState<boolean>(false);
-  const [onboardingStep, setOnboardingStep] = useState<OnboardingStep>(1);
-  const [preferences, setPreferencesState] = useState<Preferences>(initialPreferences);
+  // Load role from localStorage or default to null
+  const savedRole = localStorage.getItem('userRole');
+  const [role, setRoleState] = useState<Role>(savedRole ? (savedRole as Role) : null);
   
+  const [isFirstTimeUser, setIsFirstTimeUserState] = useState<boolean>(
+    localStorage.getItem('isFirstTimeUser') === 'true'
+  );
+  
+  const [onboardingStep, setOnboardingStepState] = useState<OnboardingStep>(
+    localStorage.getItem('onboardingStep') ? 
+      (localStorage.getItem('onboardingStep') as OnboardingStep) : 
+      1
+  );
+  
+  // Load preferences from localStorage or use defaults
+  const savedPreferences = localStorage.getItem('userPreferences');
+  const [preferences, setPreferencesState] = useState<Preferences>(
+    savedPreferences ? JSON.parse(savedPreferences) : initialPreferences
+  );
+  
+  // Persist role to localStorage whenever it changes
+  const setRole = (newRole: Role) => {
+    setRoleState(newRole);
+    if (newRole) {
+      localStorage.setItem('userRole', newRole);
+    } else {
+      localStorage.removeItem('userRole');
+    }
+  };
+  
+  // Persist isFirstTimeUser to localStorage
+  const setIsFirstTimeUser = (isFirstTime: boolean) => {
+    setIsFirstTimeUserState(isFirstTime);
+    localStorage.setItem('isFirstTimeUser', String(isFirstTime));
+  };
+  
+  // Persist onboardingStep to localStorage
+  const setOnboardingStep = (step: OnboardingStep) => {
+    setOnboardingStepState(step);
+    localStorage.setItem('onboardingStep', String(step));
+  };
+  
+  // Update and persist preferences
   const setPreferences = (prefs: Partial<Preferences>) => {
-    setPreferencesState(prev => ({ ...prev, ...prefs }));
+    const updatedPreferences = { ...preferences, ...prefs };
+    setPreferencesState(updatedPreferences);
+    localStorage.setItem('userPreferences', JSON.stringify(updatedPreferences));
   };
   
   return (

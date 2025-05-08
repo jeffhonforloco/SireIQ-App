@@ -6,7 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/sonner';
-import { Check, ChevronRight, Users, Code, Building } from 'lucide-react';
+import { Check, ChevronRight, Users, Code, Building, Lock } from 'lucide-react';
+import { getUpgradeFeatures } from '@/utils/rolePermissions';
 
 const pricingOptions = {
   user: {
@@ -53,6 +54,9 @@ export const AccountTypeSwitcher = () => {
   const [selectedPlan, setSelectedPlan] = useState<AccountType>(role as AccountType || 'user');
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   
+  const upgradeOptions = getUpgradeFeatures(role);
+  const hasUpgradeOptions = upgradeOptions.length > 0;
+  
   const handleSwitchRole = () => {
     if (selectedPlan === 'enterprise') {
       // For enterprise, we'll show a demo request dialog instead of immediate switch
@@ -69,9 +73,13 @@ export const AccountTypeSwitcher = () => {
   return (
     <Dialog open={upgradeDialogOpen} onOpenChange={setUpgradeDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 flex items-center gap-2">
-          <span>Switch Role</span>
-          <ChevronRight className="h-4 w-4" />
+        <Button 
+          variant="outline" 
+          className="border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 flex items-center gap-2"
+          disabled={!hasUpgradeOptions && role === 'enterprise'}
+        >
+          {role === 'enterprise' ? 'Enterprise Plan' : 'Switch Role'}
+          {hasUpgradeOptions && <ChevronRight className="h-4 w-4" />}
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-sireiq-darker border-sireiq-accent/30 text-sireiq-light sm:max-w-[550px]">
@@ -92,6 +100,9 @@ export const AccountTypeSwitcher = () => {
             {Object.entries(pricingOptions).map(([key, option]) => {
               const Icon = option.icon;
               const isSelected = selectedPlan === key;
+              const isCurrentPlan = role === key;
+              const accountKey = key as AccountType;
+              
               return (
                 <div 
                   key={key}
@@ -106,7 +117,10 @@ export const AccountTypeSwitcher = () => {
                         <div className={`p-2 rounded-md ${isSelected ? 'bg-sireiq-cyan/20' : 'bg-sireiq-accent/10'}`}>
                           <Icon size={16} className={isSelected ? 'text-sireiq-cyan' : 'text-sireiq-light/70'} />
                         </div>
-                        <Label htmlFor={`${key}-plan`} className="text-lg font-medium">{option.title}</Label>
+                        <Label htmlFor={`${key}-plan`} className="text-lg font-medium">
+                          {option.title}
+                          {isCurrentPlan && <span className="ml-2 text-xs bg-sireiq-cyan/20 text-sireiq-cyan px-2 py-0.5 rounded">Current</span>}
+                        </Label>
                       </div>
                       <span className="font-medium">{option.price}</span>
                     </div>
@@ -140,8 +154,10 @@ export const AccountTypeSwitcher = () => {
           <Button 
             onClick={handleSwitchRole}
             className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
+            disabled={role === selectedPlan}
           >
-            {selectedPlan === 'enterprise' ? 'Request Demo' : 'Confirm Change'}
+            {selectedPlan === role ? 'Current Plan' : 
+             selectedPlan === 'enterprise' ? 'Request Demo' : 'Confirm Change'}
           </Button>
         </DialogFooter>
       </DialogContent>

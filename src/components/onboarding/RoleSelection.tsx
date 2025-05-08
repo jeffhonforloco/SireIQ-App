@@ -4,7 +4,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useRole } from '@/contexts/RoleContext';
-import { User } from 'lucide-react';
+import { User, Users, Code, Building } from 'lucide-react';
+import RoleFeatureGuide from './RoleFeatureGuide';
 
 const RoleSelection = () => {
   const { setRole, setOnboardingStep } = useRole();
@@ -33,13 +34,18 @@ const RoleSelection = () => {
       >
         <div className="relative flex flex-col items-center border rounded-lg p-6 cursor-pointer transition-all bg-sireiq-accent/20 border-sireiq-cyan">
           <RadioGroupItem value="user" id="user" className="sr-only" />
-          <User className="h-10 w-10 mb-4 text-sireiq-cyan" />
+          <Users className="h-10 w-10 mb-4 text-sireiq-cyan" />
           <Label htmlFor="user" className="text-lg font-semibold mb-2">User</Label>
           <p className="text-sm text-center text-sireiq-light/70">
             Personal assistant for daily tasks, content creation, and conversations
           </p>
         </div>
       </RadioGroup>
+      
+      {/* Feature guide */}
+      <div className="w-full mt-8 border-t border-sireiq-accent/20 pt-8">
+        <RoleFeatureGuide />
+      </div>
       
       <Button 
         onClick={handleContinue} 
