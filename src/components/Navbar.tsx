@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex flex-1 justify-center items-center border-b-0">
+        <nav className="hidden md:flex flex-1 justify-center items-center border-0">
           <NavLinks />
         </nav>
         

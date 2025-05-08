@@ -66,10 +66,21 @@
     @apply glass-effect rounded-xl p-6;
   }
   
-  /* Remove border from nav links on desktop */
+  /* Remove ALL borders from nav elements on desktop */
   @media (min-width: 768px) {
-    .navbar-links {
-      @apply border-b-0 border-transparent;
+    .navbar-links, 
+    .navbar-links * {
+      @apply border-0 !important;
+    }
+    
+    nav, 
+    nav * {
+      @apply border-0 !important;
+    }
+    
+    header nav,
+    header nav * {
+      @apply border-0 !important;
     }
   }
 }
