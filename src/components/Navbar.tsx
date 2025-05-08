@@ -14,16 +14,6 @@ import {
   MenubarTrigger,
   MenubarContent,
 } from "@/components/ui/menubar";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import { Book, Code, FileText, MessageSquare, Video } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const isMobile = useIsMobile();
@@ -63,76 +53,6 @@ const Navbar: React.FC = () => {
         {/* Desktop Navigation - Centered */}
         <nav className="hidden md:flex flex-1 justify-center items-center border-0 border-none">
           <NavLinks />
-          
-          {/* Resources Menu - New */}
-          <NavigationMenu className="ml-6">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent text-sireiq-light hover:text-sireiq-cyan">
-                  Resources
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-black border border-sireiq-accent/30">
-                  <ul className="grid gap-3 p-4 w-[400px] md:w-[500px] lg:w-[600px] grid-cols-2">
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link to="/documentation" className="flex items-start p-3 hover:bg-sireiq-accent/10 rounded-md">
-                          <Book className="h-6 w-6 text-sireiq-cyan mr-3" />
-                          <div>
-                            <div className="text-sm font-medium mb-1">Documentation</div>
-                            <p className="text-xs text-sireiq-light/70">Comprehensive guides for using the SireIQ platform</p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link to="/api-reference" className="flex items-start p-3 hover:bg-sireiq-accent/10 rounded-md">
-                          <Code className="h-6 w-6 text-sireiq-cyan mr-3" />
-                          <div>
-                            <div className="text-sm font-medium mb-1">API Reference</div>
-                            <p className="text-xs text-sireiq-light/70">Technical documentation for API integration</p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link to="/blog" className="flex items-start p-3 hover:bg-sireiq-accent/10 rounded-md">
-                          <FileText className="h-6 w-6 text-sireiq-cyan mr-3" />
-                          <div>
-                            <div className="text-sm font-medium mb-1">Blog</div>
-                            <p className="text-xs text-sireiq-light/70">Insights, updates, and AI industry perspectives</p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link to="/tutorials" className="flex items-start p-3 hover:bg-sireiq-accent/10 rounded-md">
-                          <Video className="h-6 w-6 text-sireiq-cyan mr-3" />
-                          <div>
-                            <div className="text-sm font-medium mb-1">Tutorials</div>
-                            <p className="text-xs text-sireiq-light/70">Step-by-step guides and educational videos</p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li className="col-span-2">
-                      <NavigationMenuLink asChild>
-                        <Link to="/community" className="flex items-start p-3 hover:bg-sireiq-accent/10 rounded-md">
-                          <MessageSquare className="h-6 w-6 text-sireiq-cyan mr-3" />
-                          <div>
-                            <div className="text-sm font-medium mb-1">Community</div>
-                            <p className="text-xs text-sireiq-light/70">Connect with other developers and share knowledge</p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
         </nav>
         
         {/* Auth Buttons and Build Info Toggle - Right side */}
