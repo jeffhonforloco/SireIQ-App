@@ -1,119 +1,94 @@
 
-import { useState, useCallback, useEffect } from 'react';
-import { toast } from '@/components/ui/sonner';
-import { Message } from '@/components/ai-chat/types';
-import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
+import React, { useState, useCallback } from 'react';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { useRole } from '@/contexts/RoleContext';
+import { useRolePermissions } from '@/hooks/useRolePermissions';
 
-export interface ChatState {
-  messages: Message[];
-  input: string;
-  isTyping: boolean;
+export interface ChatMessage {
+  id: string;
+  content: string;
+  role: 'user' | 'assistant';
+  timestamp: Date;
 }
 
-interface UseChatStateReturn extends ChatState {
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  setInput: (value: string) => void;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleQuickSuggestion: (suggestion: string) => void;
-  handleVoiceInput: () => void;
-  clearChat: () => void;
-  generateResponse: (userInput: string) => void;
-}
-
-// SireIQ specific responses database
-const sireIQResponses = {
-  workflow: [
-    "I can enhance your workflow by analyzing your current processes and identifying bottlenecks. SireIQ's AI can streamline repetitive tasks, automate document processing, and provide intelligent suggestions for task prioritization.",
-    "Let me optimize your workflow with SireIQ's smart scheduling tools, automated follow-ups, and intelligent task delegation. Our platform reduces manual effort by up to 40% through AI-driven automation."
-  ],
-  content: [
-    "Looking at your content strategy, I'd recommend focusing on more interactive elements and data visualization. SireIQ's analysis shows that your audience engages 37% more with visual content compared to text-only posts.",
-    "Based on SireIQ's trend analysis, your content would benefit from more industry-specific case studies. Our AI detects increasing search volume for practical applications rather than theoretical discussions in your field."
-  ],
-  ideas: [
-    "Here are some creative ideas SireIQ generated: 1) Interactive webinar series that transforms into modular content, 2) AI-powered customer journey visualization tool, 3) Collaborative industry benchmark report with complementary businesses.",
-    "SireIQ suggests these creative concepts: 1) Develop a predictive market analysis dashboard, 2) Create an AI-assisted decision tree for customer support, 3) Launch a personal productivity score tool that integrates with existing workflows."
-  ],
-  decisions: [
-    "To optimize your decision-making process, SireIQ recommends implementing a structured framework that quantifies both objective metrics and subjective factors. Our AI can help weight these elements based on your organizational priorities.",
-    "SireIQ's decision optimization tool can integrate data from multiple sources to provide comprehensive scenario analysis. This reduces decision fatigue and ensures consistent quality across your organization."
-  ],
-  code: [
-    "Here's a code snippet based on your requirements:\n```javascript\nfunction optimizeWorkflow(tasks) {\n  return tasks.sort((a, b) => {\n    return (b.priority * b.impact) - (a.priority * a.impact);\n  });\n}\n```\nThis function prioritizes tasks with the highest combined priority and impact score.",
-    "I've analyzed your code structure. Consider this refactored approach:\n```javascript\nconst processData = async (input) => {\n  const results = await Promise.all(input.map(async item => {\n    const enriched = await enrichItem(item);\n    return transformItem(enriched);\n  }));\n  return aggregateResults(results);\n};\n```\nThis approach improves performance with parallel processing."
-  ],
-  brainstorm: [
-    "Let's brainstorm on this topic. SireIQ suggests considering these angles:\n1. Customer perspective: What unmet needs exist?\n2. Competitive landscape: Where are the gaps?\n3. Technology trends: What emerging tools can be leveraged?\n4. Resource optimization: How can existing assets be repurposed?\n5. Cross-industry inspiration: What successful models can be adapted?",
-    "For an effective brainstorming session, SireIQ recommends this structured approach:\n1. Define the challenge with specific parameters\n2. Generate quantity first (aim for 30+ ideas)\n3. Build on existing concepts with \"yes, and...\" thinking\n4. Categorize ideas into immediate, near-term, and moonshot groups\n5. Prioritize based on impact vs. effort analysis"
-  ]
-};
-
-export const useChatState = (): UseChatStateReturn => {
-  const [messages, setMessages] = useState<Message[]>([]);
+export const useChatState = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const { speakText, isSpeaking } = useVoiceAssistant();
+  const navigate = useNavigate();
+  const { role } = useRole();
+  const { chatMessageLimit } = useRolePermissions();
+  const [messageCount, setMessageCount] = useState(0);
   
-  const generateResponse = useCallback((userInput: string) => {
-    let responseContent = "";
+  // Clear chat functionality
+  const clearChat = useCallback(() => {
+    setMessages([]);
+    setMessageCount(0);
+    setInput('');
+  }, []);
+  
+  // Generate a response based on user input
+  const generateResponse = useCallback((userMessage: string) => {
+    setIsTyping(true);
     
-    // Generate appropriate response based on input content
-    const lowerInput = userInput.toLowerCase();
-    
-    if (lowerInput.includes("workflow") || lowerInput.includes("enhance") || lowerInput.includes("process")) {
-      responseContent = sireIQResponses.workflow[Math.floor(Math.random() * sireIQResponses.workflow.length)];
-    } 
-    else if (lowerInput.includes("content") || lowerInput.includes("strategy") || lowerInput.includes("analyze")) {
-      responseContent = sireIQResponses.content[Math.floor(Math.random() * sireIQResponses.content.length)];
-    }
-    else if (lowerInput.includes("idea") || lowerInput.includes("creative") || lowerInput.includes("generate")) {
-      responseContent = sireIQResponses.ideas[Math.floor(Math.random() * sireIQResponses.ideas.length)];
-    }
-    else if (lowerInput.includes("decision") || lowerInput.includes("optimize") || lowerInput.includes("process")) {
-      responseContent = sireIQResponses.decisions[Math.floor(Math.random() * sireIQResponses.decisions.length)];
-    }
-    else if (lowerInput.includes("code") || lowerInput.includes("programming") || lowerInput.includes("function")) {
-      responseContent = sireIQResponses.code[Math.floor(Math.random() * sireIQResponses.code.length)];
-    }
-    else if (lowerInput.includes("brainstorm") || lowerInput.includes("ideas") || lowerInput.includes("think")) {
-      responseContent = sireIQResponses.brainstorm[Math.floor(Math.random() * sireIQResponses.brainstorm.length)];
-    }
-    else {
-      const generalResponses = [
-        `I'm SireIQ, your intelligent AI assistant. Looking at your question about ${userInput.toLowerCase()}, I can provide advanced analytics and insights to help you make better decisions.`,
-        `As SireIQ, I can analyze your needs around ${userInput.toLowerCase()} and provide AI-powered recommendations that integrate with your existing workflow.`,
-        `SireIQ's neural networks are designed to help with challenges like ${userInput.toLowerCase()}. Our platform combines machine learning with industry-specific knowledge to deliver personalized solutions.`,
-        `I've analyzed your question about ${userInput.toLowerCase()} using SireIQ's advanced language processing. Would you like me to generate a comprehensive report, provide quick insights, or suggest optimization strategies?`
+    setTimeout(() => {
+      const responses = [
+        "I understand your question about " + userMessage.substring(0, 20) + "..., let me help with that.",
+        "Thanks for asking. Based on what you're looking for regarding " + userMessage.substring(0, 15) + "..., I can provide some insights.",
+        "That's an interesting question about " + userMessage.substring(0, 20) + "..., here's what I think.",
+        "I've processed your query about " + userMessage.substring(0, 15) + "... and have some information for you."
       ];
-      responseContent = generalResponses[Math.floor(Math.random() * generalResponses.length)];
-    }
-    
-    const assistantMessage: Message = {
-      id: Date.now().toString(),
-      content: responseContent,
-      role: 'assistant',
-      timestamp: new Date(),
-    };
-    
-    setMessages(prev => [...prev, assistantMessage]);
-    setIsTyping(false);
-    
-    // Speak the response if voice is enabled
-    if (isSpeaking) {
-      speakText(responseContent);
-    }
-  }, [speakText, isSpeaking]);
+      
+      const randomIndex = Math.floor(Math.random() * responses.length);
+      const botMessage: ChatMessage = {
+        id: Date.now().toString(),
+        content: responses[randomIndex],
+        role: 'assistant',
+        timestamp: new Date(),
+      };
+      
+      setMessages(prev => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1500);
+  }, []);
   
+  // Handle form submission
   const handleSubmit = useCallback((e: React.FormEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!input.trim()) return;
+    
+    // Check if user has reached their message limit
+    const newCount = messageCount + 1;
+    
+    // Get message limit based on user role
+    const messageLimit = role ? chatMessageLimit : 3; // Default 3 for non-authenticated users
+    
+    if (newCount > messageLimit) {
+      toast.error(`You've reached your message limit (${messageLimit}). ${!role ? 'Please sign up' : 'Please upgrade your plan'} to continue.`);
+      
+      if (!role) {
+        // Prompt non-authenticated users to sign up
+        setTimeout(() => {
+          if (confirm('Would you like to sign up to continue chatting?')) {
+            navigate('/get-started');
+          }
+        }, 500);
+      } else if (role === 'user') {
+        // Prompt free users to upgrade
+        setTimeout(() => {
+          if (confirm('Would you like to upgrade your plan to continue chatting?')) {
+            navigate('/pricing');
+          }
+        }, 500);
+      }
+      return;
     }
     
-    if (!input.trim() || isTyping) return;
-    
-    // Add user message
-    const userMessage: Message = {
+    // Add user message to chat
+    const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: input,
       role: 'user',
@@ -122,42 +97,45 @@ export const useChatState = (): UseChatStateReturn => {
     
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-    setIsTyping(true);
+    setMessageCount(newCount);
     
-    // Simulate AI response
-    setTimeout(() => {
-      generateResponse(input);
-    }, 1000);
-  }, [input, isTyping, generateResponse]);
-
+    // Generate assistant response
+    generateResponse(input);
+  }, [input, messageCount, role, chatMessageLimit, generateResponse, navigate]);
+  
+  // Handle quick suggestions
   const handleQuickSuggestion = useCallback((suggestion: string) => {
     setInput(suggestion);
     
-    // Auto-submit after a brief delay to simulate user typing
+    // Automatically submit after a brief delay
     setTimeout(() => {
-      const syntheticEvent = { preventDefault: () => {}, stopPropagation: () => {} } as React.FormEvent;
-      handleSubmit(syntheticEvent);
+      const formEvent = {
+        preventDefault: () => {},
+        stopPropagation: () => {}
+      } as React.FormEvent;
+      
+      handleSubmit(formEvent);
     }, 300);
   }, [handleSubmit]);
-
-  const handleVoiceInput = useCallback(() => {
-    toast.info("Use the voice button to start speaking");
+  
+  // Handle voice input
+  const handleVoiceInput = useCallback((transcription: string) => {
+    if (transcription) {
+      setInput(transcription);
+    }
   }, []);
-
-  const clearChat = useCallback(() => {
-    setMessages([]);
-  }, []);
-
+  
   return {
     messages,
     input,
     isTyping,
-    setMessages,
     setInput,
     handleSubmit,
     handleQuickSuggestion,
     handleVoiceInput,
     clearChat,
-    generateResponse
+    generateResponse,
+    messageCount,
+    chatMessageLimit: role ? chatMessageLimit : 3
   };
 };
