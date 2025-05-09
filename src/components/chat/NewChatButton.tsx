@@ -17,8 +17,13 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   const navigate = useNavigate();
 
   const handleNewChat = () => {
-    // Create a new chat session
-    navigate('/');
+    // Force a reload to the home page to ensure a completely fresh chat session
+    navigate('/', { replace: true });
+    
+    // Clear any local storage related to the current chat if needed
+    // This ensures a completely fresh start
+    localStorage.removeItem('current-chat');
+    
     toast.success('New chat session created');
   };
 
