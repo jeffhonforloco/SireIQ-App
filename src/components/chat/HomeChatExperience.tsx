@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -12,7 +13,6 @@ import { getShortcutCategories } from '../keyboard/AppKeyboardShortcuts';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
 import { Progress } from '@/components/ui/progress';
-import ChatWelcomeSection from './ChatWelcomeSection';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -151,12 +151,6 @@ const HomeChatExperience: React.FC = () => {
       )}
       
       <div className="flex-1 overflow-hidden">
-        {messages.length === 0 && (
-          <ChatWelcomeSection 
-            messageCount={messageCount}
-            chatMessageLimit={chatMessageLimit}
-          />
-        )}
         <ChatMessagesContainer 
           messages={messages} 
           isTyping={isTyping} 
