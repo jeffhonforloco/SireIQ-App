@@ -2,6 +2,7 @@
 import React from 'react';
 import { Paperclip, Search, BrainCircuit, Mic, MicOff, ChevronUp, ChevronDown } from 'lucide-react';
 
+// This component is no longer being used, maintaining it for reference
 interface ButtonRowProps {
   handleAttachClick: () => void;
   handleSearchClick: () => void;
