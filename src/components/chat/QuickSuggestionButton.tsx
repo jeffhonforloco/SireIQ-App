@@ -3,11 +3,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 interface QuickSuggestionButtonProps {
-  text: string;
+  suggestion: string;  // Changed from 'text' to 'suggestion'
   onClick: () => void;
 }
 
-const QuickSuggestionButton: React.FC<QuickSuggestionButtonProps> = ({ text, onClick }) => {
+const QuickSuggestionButton: React.FC<QuickSuggestionButtonProps> = ({ suggestion, onClick }) => {  // Changed from 'text' to 'suggestion'
   return (
     <Button
       variant="outline"
@@ -18,7 +18,7 @@ const QuickSuggestionButton: React.FC<QuickSuggestionButtonProps> = ({ text, onC
         onClick();
       }}
     >
-      <span className="text-gray-300 group-hover:text-white transition-colors line-clamp-1">{text}</span>
+      <span className="text-gray-300 group-hover:text-white transition-colors line-clamp-1">{suggestion}</span>  {/* Changed from 'text' to 'suggestion' */}
       <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
         <div className="h-3 w-3 bg-sireiq-cyan/20 rounded-full flex items-center justify-center">
           <span className="text-[8px] text-sireiq-cyan">→</span>
