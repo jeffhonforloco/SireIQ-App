@@ -28,19 +28,16 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleClearChat = () => {
-    // Show success toast to confirm action to user
-    toast.success('New chat session created');
-    
-    // Clear all chat-related storage
+    // Clear all chat-related storage immediately
     localStorage.removeItem('current-chat');
     sessionStorage.removeItem('chat-messages');
     sessionStorage.removeItem('chat-context');
     
-    // Small timeout to allow the toast to be visible before reload
-    setTimeout(() => {
-      // Force a full page reload to reset all React states
-      window.location.href = '/';
-    }, 300);
+    // Show success toast to confirm action to user
+    toast.success('New chat session created');
+    
+    // Force immediate page reload without delay
+    window.location.href = '/';
   };
 
   return (
