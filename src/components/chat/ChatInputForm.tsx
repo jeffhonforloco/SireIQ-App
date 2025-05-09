@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Send, Mic, MicOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Send, Mic } from 'lucide-react';
 import FeatureButtons from './input/FeatureButtons';
 
 interface ChatInputFormProps {
@@ -37,17 +36,26 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   };
   
   return (
-    <div className="border-t border-sireiq-accent/20 bg-sireiq-darker px-4 py-2">
-      <form onSubmit={handleSubmit} className="space-y-2">
+    <div className="border-t border-sireiq-accent/20 bg-[#0f1216] px-4 py-2">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={isTyping ? "Please wait..." : "Ask SireIQ..."}
-            className="w-full bg-sireiq-accent/10 rounded-lg py-3 px-4 text-sireiq-light focus:outline-none focus:ring-1 focus:ring-sireiq-cyan/50"
+            placeholder={isTyping ? "Please wait..." : "Ask anything"}
+            className="w-full bg-[#171c26] rounded-full py-4 px-6 text-gray-200 focus:outline-none"
             disabled={isTyping || disabled}
           />
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+            <button
+              type="submit"
+              disabled={!input.trim() || isTyping || disabled}
+              className="h-10 w-10 flex items-center justify-center rounded-full bg-[#3b82f6] disabled:bg-gray-700 disabled:text-gray-500"
+            >
+              <Send className="h-5 w-5 text-white" />
+            </button>
+          </div>
         </div>
         
         <div className="flex items-center justify-between">
@@ -57,38 +65,21 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             handleReasonClick={handleReasonClick}
           />
           
-          <div className="flex items-center gap-2">
-            <Button
+          <div>
+            <button
               type="button"
               onClick={handleVoiceInput}
               disabled={isTyping || disabled}
-              className="rounded-full bg-white text-black hover:bg-gray-100 px-3 py-1.5 flex items-center gap-1"
+              className="bg-white text-black hover:bg-gray-100 py-2 px-6 rounded-full flex items-center gap-2"
               title={isListening ? "Stop listening" : "Start voice input"}
             >
-              {isListening ? (
-                <>
-                  <MicOff className="h-4 w-4 mr-1" />
-                  <span className="text-xs font-medium">Stop</span>
-                </>
-              ) : (
-                <>
-                  <Mic className="h-4 w-4 mr-1" />
-                  <span className="text-xs font-medium">Voice</span>
-                </>
-              )}
-            </Button>
-            
-            <Button 
-              type="submit"
-              disabled={!input.trim() || isTyping || disabled}
-              className="rounded-full bg-blue-600 hover:bg-blue-500 p-1.5"
-            >
-              <Send className="h-4 w-4 text-white" />
-            </Button>
+              <Mic className="h-5 w-5" />
+              <span className="font-medium">Voice</span>
+            </button>
           </div>
         </div>
         
-        <div className="text-center text-xs text-sireiq-light/60">
+        <div className="text-center text-xs text-gray-500">
           SireIQ helps with AI-powered insights, content creation, and workflow optimization.
         </div>
       </form>
