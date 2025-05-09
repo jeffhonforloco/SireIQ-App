@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { PersonalityEngineProvider, usePersonalityEngine } from '@/contexts/PersonalityEngineContext';
@@ -9,6 +9,7 @@ import ParameterSlider from '@/components/personality/ParameterSlider';
 import StyleCard from '@/components/personality/StyleCard';
 import TextPreview from '@/components/personality/TextPreview';
 import CustomizeButton from '@/components/personality/CustomizeButton';
+import AdvancedSettingsDialog from '@/components/personality/AdvancedSettingsDialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { 
@@ -30,6 +31,8 @@ const PersonalityEngineContent = () => {
     updateParameter,
     selectedStyle 
   } = usePersonalityEngine();
+  
+  const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-sireiq-darker text-sireiq-light">
@@ -37,6 +40,12 @@ const PersonalityEngineContent = () => {
         <title>Personality Engine | SireIQ</title>
         <meta name="description" content="Customize SireIQ's personality and communication style to match your preferences" />
       </Helmet>
+
+      {/* Advanced Settings Dialog */}
+      <AdvancedSettingsDialog 
+        open={advancedSettingsOpen} 
+        onOpenChange={setAdvancedSettingsOpen} 
+      />
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
@@ -139,7 +148,10 @@ const PersonalityEngineContent = () => {
               </div>
 
               <div className="flex justify-end">
-                <Button className="bg-sireiq-cyan text-sireiq-darker hover:bg-sireiq-cyan/90">
+                <Button 
+                  className="bg-sireiq-cyan text-sireiq-darker hover:bg-sireiq-cyan/90"
+                  onClick={() => setAdvancedSettingsOpen(true)}
+                >
                   <Settings className="mr-2 h-4 w-4" />
                   Advanced Settings
                 </Button>
