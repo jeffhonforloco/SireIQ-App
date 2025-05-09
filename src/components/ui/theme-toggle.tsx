@@ -8,14 +8,23 @@ import { toast } from "@/components/ui/sonner";
 export function ThemeToggle() {
   const { isSpeaking, stopSpeaking, speakText, updateVoiceSettings } = useVoiceAssistant();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [localSpeakingState, setLocalSpeakingState] = useState(isSpeaking);
 
-  // Handle toggle animation
+  // Sync local state with context state
+  useEffect(() => {
+    setLocalSpeakingState(isSpeaking);
+  }, [isSpeaking]);
+
+  // Handle toggle animation and state change
   const handleToggleVoice = () => {
     if (isAnimating) return; // Prevent multiple clicks during animation
     
     setIsAnimating(true);
     
-    if (isSpeaking) {
+    // Toggle the state immediately for UI feedback
+    setLocalSpeakingState(!localSpeakingState);
+    
+    if (localSpeakingState) {
       stopSpeaking();
       toast.info("Voice output disabled");
     } else {
@@ -43,7 +52,7 @@ export function ThemeToggle() {
       disabled={isAnimating}
     >
       <div className={`transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-        {isSpeaking ? (
+        {localSpeakingState ? (
           <Volume className="h-5 w-5" />
         ) : (
           <VolumeX className="h-5 w-5" />

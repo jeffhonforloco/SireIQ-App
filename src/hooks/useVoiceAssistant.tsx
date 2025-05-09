@@ -101,10 +101,19 @@ export const VoiceAssistantProvider: React.FC<VoiceAssistantProviderProps> = ({ 
   }, [synth, isSpeaking]);
 
   const updateVoiceSettings = useCallback((settings: Partial<VoiceSettings>) => {
-    setVoiceSettings(prev => ({
-      ...prev,
-      ...settings
-    }));
+    setVoiceSettings(prev => {
+      const newSettings = {
+        ...prev,
+        ...settings
+      };
+      
+      // If we're toggling autoResponse, also update isSpeaking state
+      if (settings.autoResponse !== undefined) {
+        setIsSpeaking(settings.autoResponse);
+      }
+      
+      return newSettings;
+    });
   }, []);
 
   const value = {
