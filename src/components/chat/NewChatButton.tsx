@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageSquarePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
+import { toast } from '@/components/ui/sonner';
 
 interface NewChatButtonProps {
   position?: 'fixed' | 'relative';
