@@ -53,6 +53,18 @@ const HomeChatExperience: React.FC = () => {
     }
   }, [transcript, isListening, setInput, resetTranscript, handleSubmit]);
 
+  // Add event listener for new chat created event
+  useEffect(() => {
+    const handleNewChat = () => {
+      clearChat();
+    };
+
+    window.addEventListener('new-chat-created', handleNewChat);
+    return () => {
+      window.removeEventListener('new-chat-created', handleNewChat);
+    };
+  }, [clearChat]);
+
   // Enhanced voice input handler
   const handleVoiceInputToggle = () => {
     if (!supportsSpeechRecognition) {

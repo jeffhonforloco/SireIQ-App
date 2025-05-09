@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useNavigate } from 'react-router-dom';
 
 interface NewChatButtonProps {
   position?: 'fixed' | 'relative';
@@ -26,6 +27,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const navigate = useNavigate();
 
   const handleClearChat = () => {
     // Clear all chat-related storage immediately
@@ -36,8 +38,12 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
     // Show success toast to confirm action to user
     toast.success('New chat session created');
     
-    // Force immediate page reload without delay
-    window.location.href = '/';
+    // Use React Router to navigate instead of full page reload
+    // This provides a smoother transition without white flashing
+    navigate('/', { replace: true });
+    
+    // Dispatch a custom event that HomeChatExperience can listen for
+    window.dispatchEvent(new CustomEvent('new-chat-created'));
   };
 
   return (
