@@ -33,7 +33,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
     <Button 
       onClick={handleNewChat}
       className={`
-        ${position === 'fixed' ? 'fixed top-16 right-4 md:top-20 md:right-8 z-30' : ''}
+        ${position === 'fixed' ? 'fixed bottom-20 right-4 md:top-20 md:right-8 z-40' : ''}
         rounded-full ${isMobile ? 'p-2' : 'p-3'} shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
         transition-all duration-200 hover:scale-105 hover:shadow-xl
         ${className}

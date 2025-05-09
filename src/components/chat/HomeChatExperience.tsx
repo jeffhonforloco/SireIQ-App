@@ -68,11 +68,7 @@ const HomeChatExperience: React.FC = () => {
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
       
-      {/* Position the button at the top right corner for better visibility */}
-      <NewChatButton 
-        position="relative" 
-        className="absolute top-2 right-2 md:top-2 md:right-2 z-10" 
-      />
+      {/* We'll remove this NewChatButton as it's already handled by the App.tsx */}
       
       <div className="flex-1 overflow-hidden">
         <ChatMessagesContainer 
