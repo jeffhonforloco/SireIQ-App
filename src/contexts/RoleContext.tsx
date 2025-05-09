@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export type Role = 'user' | 'developer' | 'admin' | 'enterprise' | null;
@@ -11,6 +10,11 @@ interface Preferences {
   aiModel: AIModel;
   codeAutoComplete?: boolean;
   teamUpdates?: boolean;
+  showCode?: boolean;
+  showSuggestions?: boolean;
+  voiceEnabled?: boolean;
+  voiceFeedback?: boolean;
+  dataSharing?: boolean;
 }
 
 interface RoleContextType {
@@ -29,7 +33,12 @@ const initialPreferences: Preferences = {
   notifications: true,
   aiModel: 'balanced',
   codeAutoComplete: true,
-  teamUpdates: true
+  teamUpdates: true,
+  showCode: false,
+  showSuggestions: true,
+  voiceEnabled: false,
+  voiceFeedback: false,
+  dataSharing: true
 };
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
