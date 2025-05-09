@@ -19,15 +19,13 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   const isMobile = useIsMobile();
 
   const handleNewChat = () => {
-    // Navigate to home page to create a new chat
-    navigate('/', { replace: true });
-    
-    // Clear any local storage related to the current chat
+    // Clear all chat-related storage
     localStorage.removeItem('current-chat');
-    
-    // Clear any chat-related session storage if applicable
     sessionStorage.removeItem('chat-messages');
     sessionStorage.removeItem('chat-context');
+    
+    // Force a full page reload to reset all React states
+    window.location.href = '/';
     
     // Show success toast to confirm action to user
     toast.success('New chat session created');
