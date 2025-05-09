@@ -44,6 +44,7 @@ import SecurityOverview from '@/pages/admin/SecurityOverview';
 // Import feature pages
 import IdeaGeneration from '@/pages/features/IdeaGeneration';
 import PersonalityEngine from '@/pages/features/PersonalityEngine';
+import CustomizePersonality from '@/pages/features/CustomizePersonality';
 import VoiceAssistant from '@/pages/features/VoiceAssistant';
 import SimpleVoiceAssistantDemo from '@/pages/features/SimpleVoiceAssistantDemo';
 import PerformanceAnalytics from '@/pages/features/PerformanceAnalytics';
@@ -109,6 +110,7 @@ function App() {
                 <Route path="/features" element={<Features />} />
                 <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                 <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+                <Route path="/features/customize-personality" element={<CustomizePersonality />} />
                 <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
                 <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
                 <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />

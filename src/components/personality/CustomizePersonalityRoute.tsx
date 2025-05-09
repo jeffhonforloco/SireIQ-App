@@ -5,8 +5,7 @@ import CustomizePersonality from '@/pages/features/CustomizePersonality';
 
 /**
  * This component provides the route for the CustomizePersonality page.
- * To use it, add the following to your App.tsx Routes component:
- * 
+ * The route has been added to App.tsx:
  * <Route path="/features/customize-personality" element={<CustomizePersonality />} />
  */
 const CustomizePersonalityRoute = () => {
