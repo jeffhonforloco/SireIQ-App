@@ -1,13 +1,20 @@
 
-import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import ParticleBackground from '@/components/ParticleBackground';
+import PricingComparisonTable from '@/components/pricing/PricingComparisonTable';
+import PricingTabs from '@/components/pricing/PricingTabs';
+import PricingCards from '@/components/pricing/PricingCards';
+import EnterpriseCallout from '@/components/pricing/EnterpriseCallout';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import FAQSection from '@/components/pricing/FAQSection';
 
 const Pricing: React.FC = () => {
+  const [view, setView] = useState<'cards' | 'table'>('cards');
+
   return (
-    <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+    <div className="min-h-screen bg-sireiq-darker text-sireiq-light">
       <Helmet>
         <title>Pricing | SireIQ</title>
         <meta name="description" content="View SireIQ's pricing tiers and choose the best plan for your needs." />
@@ -27,6 +34,14 @@ const Pricing: React.FC = () => {
               Choose the plan that works best for you or your organization.
             </p>
           </div>
+          
+          <PricingTabs activeView={view} setActiveView={setView} />
+          
+          {view === 'cards' ? <PricingCards /> : <PricingComparisonTable />}
+          
+          <EnterpriseCallout />
+          
+          <FAQSection />
         </section>
       </main>
       
