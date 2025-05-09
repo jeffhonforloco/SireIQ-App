@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SendHorizontalIcon } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
@@ -50,7 +50,7 @@ const InputField: React.FC<InputFieldProps> = ({
           !input.trim() || isTyping ? 'bg-gray-700 text-gray-500' : 'bg-blue-600 hover:bg-blue-500 text-white'
         }`}
       >
-        <SendHorizontalIcon className="h-4 w-4" />
+        <ArrowUp className="h-4 w-4" />
       </Button>
     </div>
   );
