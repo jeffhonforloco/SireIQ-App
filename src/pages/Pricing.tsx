@@ -8,25 +8,15 @@ import { Check } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
 import { toast } from 'sonner';
 import FAQSection from '@/components/pricing/FAQSection';
+import PricingTabs from '@/components/pricing/PricingTabs';
+import PricingCards from '@/components/pricing/PricingCards';
+import EnterpriseCallout from '@/components/pricing/EnterpriseCallout';
 
 const Pricing: React.FC = () => {
-  const { role, setRole } = useRole();
+  const { role } = useRole();
   const [planType, setPlanType] = useState<'personal' | 'business'>('personal');
+  const [activeView, setActiveView] = useState<'cards' | 'table'>('cards');
   
-  const handlePlanChange = (newRole: 'user' | 'developer' | 'enterprise') => {
-    if (role === newRole) {
-      toast.info(`You're already on the ${newRole} plan.`);
-      return;
-    }
-
-    setRole(newRole);
-    toast.success(`Successfully switched to ${newRole} plan!`);
-  };
-
-  const handleEnterpriseRequest = () => {
-    toast.info("Request sent! Our team will contact you shortly to discuss enterprise options.");
-  };
-
   return (
     <div className="min-h-screen bg-sireiq-darker">
       <Helmet>
@@ -42,7 +32,11 @@ const Pricing: React.FC = () => {
             Upgrade your plan
           </h1>
           
-          <div className="bg-sireiq-accent/10 rounded-full p-1 inline-flex mt-6 mb-10">
+          <p className="text-center text-sireiq-light/70 mb-12 max-w-2xl mx-auto">
+            Choose the plan that's right for you and unlock SireIQ's advanced AI capabilities
+          </p>
+          
+          <div className="bg-sireiq-accent/10 rounded-full p-1 inline-flex mb-10">
             <Button 
               variant="ghost"
               className={`rounded-full px-6 ${
@@ -66,168 +60,101 @@ const Pricing: React.FC = () => {
               Business
             </Button>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-            {/* Free / Personal Plan */}
-            <div className="border border-sireiq-accent/30 rounded-xl overflow-hidden bg-sireiq-darker">
-              <div className="p-8">
-                <h2 className="text-xl font-bold mb-1">Free</h2>
-                <div className="flex items-baseline mb-4">
-                  <span className="text-4xl font-bold">$0</span>
-                  <span className="text-sireiq-light/70 ml-1">/month</span>
-                </div>
-                <p className="text-sm text-sireiq-light/70 mb-6">
-                  Explore how AI can help you with everyday tasks
-                </p>
-                
-                <Button 
-                  className="w-full mb-6 bg-sireiq-accent/20 hover:bg-sireiq-accent/30 text-white"
-                  variant="outline"
-                  disabled={role === 'user'}
-                  onClick={() => handlePlanChange('user')}
-                >
-                  {role === 'user' ? 'Current Plan' : 'Your current plan'}
-                </Button>
-                
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Basic AI assistant access</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>10 messages per day</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Standard voice mode</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Real-time data from the web</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Limited access to coding tools</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            {/* Developer / Plus Plan */}
-            <div className="border-2 border-sireiq-cyan rounded-xl overflow-hidden bg-sireiq-darker relative">
-              <div className="absolute top-0 left-0 w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-center py-1.5 text-xs font-medium text-sireiq-darker">
-                POPULAR
-              </div>
-              <div className="p-8 pt-10">
-                <h2 className="text-xl font-bold mb-1">Developer</h2>
-                <div className="flex items-baseline mb-4">
-                  <span className="text-4xl font-bold">$19</span>
-                  <span className="text-sireiq-light/70 ml-1">/month</span>
-                </div>
-                <p className="text-sm text-sireiq-light/70 mb-6">
-                  Level up productivity and creativity with expanded access
-                </p>
-                
-                <Button 
-                  className="w-full mb-6 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90"
-                  variant="default"
-                  disabled={role === 'developer'}
-                  onClick={() => handlePlanChange('developer')}
-                >
-                  {role === 'developer' ? 'Current Plan' : 'Get Developer'}
-                </Button>
-                
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Everything in Free</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span><strong>50 messages per day</strong> (5x more)</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Extended limits on messaging, file uploads, and advanced data analysis</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Standard and advanced voice mode</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Access to deep research, multiple reasoning models</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Create and use tasks, projects, and custom workflows</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Limited access to image generation</span>
-                  </li>
-                </ul>
-                <div className="text-xs text-sireiq-light/50 mt-4 text-center">
-                  Usage limits apply
-                </div>
-              </div>
-            </div>
-            
-            {/* Enterprise / Pro Plan */}
-            <div className="border border-sireiq-accent/30 rounded-xl overflow-hidden bg-sireiq-darker">
-              <div className="p-8">
-                <h2 className="text-xl font-bold mb-1">Enterprise</h2>
-                <div className="flex items-baseline mb-4">
-                  <span className="text-4xl font-bold">Custom</span>
-                </div>
-                <p className="text-sm text-sireiq-light/70 mb-6">
-                  Get the best of SireIQ with the highest level of access
-                </p>
-                
-                <Button 
-                  className="w-full mb-6 bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90"
-                  variant="default"
-                  disabled={role === 'enterprise'}
-                  onClick={handleEnterpriseRequest}
-                >
-                  {role === 'enterprise' ? 'Current Plan' : 'Contact Sales'}
-                </Button>
-                
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Everything in Developer</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span><strong>Unlimited messages</strong> for all team members</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Unlimited access to all reasoning models</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Extended access to deep research with multi-step online capabilities</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Access to advanced analytics and reporting</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Dedicated support team & SLA</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <Check className="h-5 w-5 text-sireiq-cyan shrink-0 mt-0.5" />
-                    <span>Advanced security & compliance controls</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
           
+          <PricingTabs activeView={activeView} setActiveView={setActiveView} />
+          
+          {activeView === 'cards' ? (
+            <PricingCards />
+          ) : (
+            <div className="w-full overflow-x-auto mb-10">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <th className="p-4 text-left"></th>
+                    <th className="p-4 text-center">Free</th>
+                    <th className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">
+                      <span className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker text-xs py-1 px-2 rounded-full">POPULAR</span>
+                      <div className="mt-2 font-bold">Developer</div>
+                    </th>
+                    <th className="p-4 text-center">Enterprise</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Price</td>
+                    <td className="p-4 text-center">$0</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">$19/month</td>
+                    <td className="p-4 text-center">Custom</td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Messages per day</td>
+                    <td className="p-4 text-center">10</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">50</td>
+                    <td className="p-4 text-center">Unlimited</td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Voice mode</td>
+                    <td className="p-4 text-center">Standard</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">Advanced</td>
+                    <td className="p-4 text-center">All modes</td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Web access</td>
+                    <td className="p-4 text-center"><Check className="mx-auto h-5 w-5 text-sireiq-cyan" /></td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30"><Check className="mx-auto h-5 w-5 text-sireiq-cyan" /></td>
+                    <td className="p-4 text-center"><Check className="mx-auto h-5 w-5 text-sireiq-cyan" /></td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Coding tools</td>
+                    <td className="p-4 text-center">Limited</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">Full access</td>
+                    <td className="p-4 text-center">Full access</td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Image generation</td>
+                    <td className="p-4 text-center">—</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">Limited</td>
+                    <td className="p-4 text-center">Unlimited</td>
+                  </tr>
+                  <tr className="border-b border-sireiq-accent/30">
+                    <td className="p-4">Custom training</td>
+                    <td className="p-4 text-center">—</td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">—</td>
+                    <td className="p-4 text-center"><Check className="mx-auto h-5 w-5 text-sireiq-cyan" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-4"></td>
+                    <td className="p-4 text-center">
+                      <Button 
+                        className="bg-sireiq-accent/20 hover:bg-sireiq-accent/30 text-white"
+                        variant="outline"
+                        disabled={role === 'user'}
+                      >
+                        {role === 'user' ? 'Current Plan' : 'Free Plan'}
+                      </Button>
+                    </td>
+                    <td className="p-4 text-center bg-sireiq-accent/10 border-x border-sireiq-accent/30">
+                      <Button 
+                        className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90"
+                        disabled={role === 'developer'}
+                      >
+                        {role === 'developer' ? 'Current Plan' : 'Upgrade Now'}
+                      </Button>
+                    </td>
+                    <td className="p-4 text-center">
+                      <Button 
+                        className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90"
+                        disabled={role === 'enterprise'}
+                      >
+                        Contact Sales
+                      </Button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {/* Team Plan Section - Only shown for Business tab */}
           {planType === 'business' && (
             <div className="mt-10 w-full max-w-6xl">
@@ -291,21 +218,12 @@ const Pricing: React.FC = () => {
             </div>
           )}
           
-          {/* Enterprise section at bottom */}
-          <div className="w-full max-w-4xl mx-auto mt-12 text-center">
-            <p className="text-sireiq-light/70 mb-2">Need more capabilities for your business?</p>
-            <Button 
-              variant="ghost" 
-              className="text-sireiq-cyan hover:bg-sireiq-accent/10"
-              onClick={() => window.location.href = '/enterprise'}
-            >
-              See SireIQ Enterprise
-            </Button>
-          </div>
+          {/* Enterprise callout section */}
+          <EnterpriseCallout />
+          
+          {/* FAQ Section */}
+          <FAQSection />
         </div>
-        
-        {/* FAQ Section */}
-        <FAQSection />
       </main>
       
       <Footer />
