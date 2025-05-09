@@ -3,18 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useRole } from '@/contexts/RoleContext';
+import UserMenu from './UserMenu';
 
 const AuthButtons = () => {
   const { role } = useRole();
   
   if (role) {
-    return (
-      <Link to="/dashboard">
-        <Button className="rounded-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6">
-          My Dashboard
-        </Button>
-      </Link>
-    );
+    return <UserMenu />;
   }
 
   return (
