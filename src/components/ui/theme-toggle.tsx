@@ -6,13 +6,15 @@ import { useVoiceAssistant } from "@/hooks/useVoiceAssistant";
 import { toast } from "@/components/ui/sonner";
 
 export function ThemeToggle() {
-  const { isSpeaking, stopSpeaking, speakText } = useVoiceAssistant();
+  const { isSpeaking, stopSpeaking, speakText, updateVoiceSettings } = useVoiceAssistant();
 
   const handleToggleVoice = () => {
     if (isSpeaking) {
       stopSpeaking();
       toast.info("Voice output disabled");
     } else {
+      // Enable voice output
+      updateVoiceSettings({ autoResponse: true });
       speakText("Voice output enabled");
       toast.success("Voice output enabled");
     }
