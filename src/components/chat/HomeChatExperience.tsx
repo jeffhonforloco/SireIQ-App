@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -13,6 +12,7 @@ import { getShortcutCategories } from '../keyboard/AppKeyboardShortcuts';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
 import { Progress } from '@/components/ui/progress';
+import ChatWelcomeSection from './ChatWelcomeSection';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -131,34 +131,32 @@ const HomeChatExperience: React.FC = () => {
       <ChatHeader clearChat={clearChat} />
       <AppKeyboardShortcuts />
       
-      {/* Usage limit indicator - Enhanced for mobile display */}
-      {!isEnterprise && (
-        <div className="px-4 py-2 bg-sireiq-darker/50 border-b border-sireiq-accent/20">
-          <div className="flex justify-between items-center text-xs text-sireiq-light/70 mb-1 flex-wrap gap-1">
-            <span className="whitespace-nowrap">Message usage</span>
-            <span className="font-medium whitespace-nowrap">{messageCount} / {chatMessageLimit}</span>
+      {/* Usage limit indicator for mobile - moved from ChatHeader component */}
+      {!isEnterprise && isMobile && (
+        <div className="px-4 py-3 bg-sireiq-darker/80 border-b border-sireiq-accent/20">
+          <div className="flex justify-between items-center text-sm text-sireiq-light mb-1.5">
+            <span>Message usage</span>
+            <span className="font-medium">{messageCount} / {chatMessageLimit}</span>
           </div>
           <Progress 
             value={usagePercentage} 
-            className="h-1.5" 
+            className="h-2" 
             indicatorClassName={
               usagePercentage > 95 ? "bg-red-500" : 
               usagePercentage > 80 ? "bg-amber-500" : 
               "bg-sireiq-cyan"
             }
           />
-          {usagePercentage > 80 && !isEnterprise && (
-            <div className="mt-1 text-xs text-amber-400">
-              {isDeveloper ? 
-                "You're nearing your daily message limit. Consider upgrading to Enterprise for unlimited messages." :
-                "You're nearing your daily message limit. Consider upgrading to the Developer plan for more messages."
-              }
-            </div>
-          )}
         </div>
       )}
       
       <div className="flex-1 overflow-hidden">
+        {messages.length === 0 && (
+          <ChatWelcomeSection 
+            messageCount={messageCount}
+            chatMessageLimit={chatMessageLimit}
+          />
+        )}
         <ChatMessagesContainer 
           messages={messages} 
           isTyping={isTyping} 

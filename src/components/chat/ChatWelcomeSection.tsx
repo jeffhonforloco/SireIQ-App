@@ -18,9 +18,6 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
     navigate('/pricing');
   };
 
-  // Show welcome message only if there are no messages yet
-  if (messageCount > 0) return null;
-
   return (
     <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
       <div className="rounded-full bg-sireiq-accent/20 p-3 mb-4">

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useChatState } from './hooks/useChatState';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatHeaderProps {
   clearChat: () => void;
@@ -18,6 +19,7 @@ interface ChatHeaderProps {
 const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   const { messageCount, chatMessageLimit } = useChatState();
   const { isEnterprise } = useRolePermissions();
+  const isMobile = useIsMobile();
 
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
@@ -27,14 +29,14 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         </div>
         <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
         
-        {/* Message counter badge - Improved for better display across all devices */}
-        {!isEnterprise && (
+        {/* Message counter badge - Only show on desktop */}
+        {!isEnterprise && !isMobile && (
           <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap min-w-[50px] text-center shrink-0">
             {messageCount}/{chatMessageLimit}
           </div>
         )}
         
-        {isEnterprise && (
+        {isEnterprise && !isMobile && (
           <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
             Unlimited
           </div>
