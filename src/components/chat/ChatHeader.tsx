@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
-import { Menu, Plus, MessageSquare, Trash2, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { Menu, Plus, MessageSquare, Trash2, Settings, HelpCircle, LogOut, Volume, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/Logo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
+import { toast } from '@/components/ui/sonner';
 
 interface ChatHeaderProps {
   clearChat: () => void;
@@ -11,6 +13,17 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSpeaking, stopSpeaking, speakText } = useVoiceAssistant();
+  
+  const handleToggleSound = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+      toast.info("Voice output muted");
+    } else {
+      speakText("Voice output enabled");
+      toast.info("Voice output enabled");
+    }
+  };
   
   const menuItems = [
     { icon: <MessageSquare size={16} />, label: "New chat", onClick: clearChat },
@@ -72,15 +85,27 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         </div>
       </div>
       
-      <Button 
-        variant="outline" 
-        size="sm"
-        onClick={clearChat}
-        className="flex items-center gap-1 h-8 text-xs border-gray-700 hover:bg-gray-800 text-gray-300 mr-0"
-      >
-        <Plus className="h-3.5 w-3.5" />
-        <span>New chat</span>
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleToggleSound}
+          className="h-8 w-8 text-gray-400 hover:text-white hover:bg-gray-800"
+          title={isSpeaking ? "Mute voice" : "Enable voice"}
+        >
+          {isSpeaking ? <Volume className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+        </Button>
+        
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={clearChat}
+          className="flex items-center gap-1 h-8 text-xs border-gray-700 hover:bg-gray-800 text-gray-300 mr-0"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          <span>New chat</span>
+        </Button>
+      </div>
     </div>
   );
 };
