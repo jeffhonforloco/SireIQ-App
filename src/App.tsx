@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -17,6 +18,7 @@ import Features from '@/pages/Features';
 import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
+import AccountSettings from '@/pages/AccountSettings';
 
 // Company pages
 import AboutUs from '@/pages/AboutUs';
@@ -135,6 +137,7 @@ function App() {
                 <Route path="/enterprise/integrations" element={<Integrations />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/account/settings" element={<AccountSettings />} />
 
                 {/* Company pages */}
                 <Route path="/about" element={<AboutUs />} />
