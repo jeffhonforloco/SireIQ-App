@@ -53,8 +53,8 @@ export function ThemeToggle() {
           <Button
             variant="outline"
             size="icon"
-            className={`h-9 w-9 rounded-full bg-transparent border-sireiq-accent/30 text-sireiq-light 
-              hover:bg-sireiq-accent/10 hover:text-sireiq-cyan transition-all duration-300 ease-in-out
+            className={`h-9 w-9 rounded-full bg-transparent border-gray-600 text-gray-200 
+              hover:bg-gray-700/50 hover:text-gray-100 transition-all duration-300 ease-in-out
               ${isAnimating ? 'scale-90' : 'scale-100'}
             `}
             onClick={handleToggleVoice}
@@ -70,7 +70,7 @@ export function ThemeToggle() {
             <span className="sr-only">Toggle voice output</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="bg-sireiq-accent text-sireiq-light border border-sireiq-cyan/20">
+        <TooltipContent className="bg-gray-800 text-gray-100 border border-gray-600 shadow-lg">
           <p>{localSpeakingState ? "Disable voice output" : "Enable voice output"}</p>
         </TooltipContent>
       </Tooltip>

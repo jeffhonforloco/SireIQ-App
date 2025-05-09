@@ -61,7 +61,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
               onClick={() => setShowConfirmDialog(true)}
               className={`
                 ${position === 'fixed' ? 'fixed top-20 right-4 md:top-20 md:right-8 z-50' : ''}
-                rounded-full ${isMobile ? 'p-3' : 'p-3'} shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
+                rounded-full ${isMobile ? 'p-3' : 'p-3'} shadow-lg bg-sky-500 hover:bg-sky-600 text-white
                 transition-all duration-200 hover:scale-105 hover:shadow-xl
                 ${className}
               `}
@@ -71,17 +71,17 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
               <MessageSquarePlus className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'}`} />
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="bg-sireiq-accent text-sireiq-light border border-sireiq-cyan/20">
+          <TooltipContent className="bg-gray-800 text-gray-100 border border-gray-600 shadow-lg">
             <p>Start a new chat</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <AlertDialogContent className="bg-gradient-to-b from-gray-900 to-gray-800 border-0 rounded-xl shadow-xl max-w-xs sm:max-w-sm mx-auto">
+        <AlertDialogContent className="bg-gray-800 border border-gray-700 rounded-xl shadow-xl max-w-xs sm:max-w-sm mx-auto">
           <div className="absolute -top-12 left-0 right-0 flex justify-center">
-            <div className="bg-sireiq-cyan p-3 rounded-full shadow-lg">
-              <MessageSquarePlus className="h-6 w-6 text-gray-900" />
+            <div className="bg-sky-500 p-3 rounded-full shadow-lg">
+              <MessageSquarePlus className="h-6 w-6 text-white" />
             </div>
           </div>
           <AlertDialogHeader className="mt-4">
@@ -95,7 +95,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
           <AlertDialogFooter className="flex flex-col gap-2 sm:flex-col mt-4">
             <AlertDialogAction
               onClick={handleClearChat}
-              className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 hover:opacity-90 text-gray-900 font-medium py-2 rounded-lg border-0"
+              className="w-full bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 rounded-lg border-0"
             >
               New Chat
             </AlertDialogAction>

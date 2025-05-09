@@ -10,17 +10,17 @@
 
   /* Text gradient effect */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500;
   }
 
   /* Glow effect */
   .glow {
-    text-shadow: 0 0 15px rgba(60, 223, 255, 0.5);
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
   }
 
   /* Glow effect for images */
   .glow-image {
-    filter: drop-shadow(0 0 8px rgba(60, 223, 255, 0.5));
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
   }
 
   /* Gradient border */
@@ -34,7 +34,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(90deg, #3CDFFF, #00A3C4);
+    background: linear-gradient(90deg, #38bdf8, #0284c7);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
@@ -42,11 +42,11 @@
 
   /* Button variants */
   .btn-primary {
-    @apply bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 px-6 py-2 rounded-md transition-colors;
+    @apply bg-gradient-to-r from-sky-400 to-blue-500 text-white hover:opacity-90 px-6 py-2 rounded-md transition-colors;
   }
   
   .btn-secondary {
-    @apply border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors;
+    @apply border border-sky-400 text-sky-400 bg-transparent hover:bg-sky-400/10 px-6 py-2 rounded-md transition-colors;
   }
   
   .btn-danger {
@@ -55,11 +55,11 @@
 
   /* Card variants */
   .card-base {
-    @apply bg-card border border-sireiq-accent/30 rounded-xl p-6;
+    @apply bg-card border border-gray-700 rounded-xl p-6;
   }
   
   .card-interactive {
-    @apply card-base hover:border-sireiq-cyan/50 transition-all hover:shadow-[0_0_15px_rgba(60,223,255,0.15)];
+    @apply card-base hover:border-sky-400/50 transition-all hover:shadow-[0_0_15px_rgba(56,189,248,0.15)];
   }
   
   .card-glass {
