@@ -10,23 +10,38 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useChatState } from './hooks/useChatState';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatHeaderProps {
   clearChat: () => void;
 }
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
+  const { messageCount, chatMessageLimit } = useChatState();
+  const { isEnterprise } = useRolePermissions();
+
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
       <div className="flex items-center gap-2">
-        <div className="bg-sireiq-accent/20 p-1.5 rounded-lg shrink-0">
+        <div className="bg-sireiq-accent/20 p-1.5 rounded-lg">
           <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
         </div>
-        <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
+        <span className="font-medium text-sm">SireIQ Chat</span>
+        
+        {/* Message counter badge - Fixed to ensure proper display */}
+        {!isEnterprise && (
+          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap min-w-[40px] text-center">
+            {messageCount}/{chatMessageLimit}
+          </div>
+        )}
+        
+        {isEnterprise && (
+          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap">
+            Unlimited
+          </div>
+        )}
       </div>
       
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-2">
         <Button
           variant="ghost"
           size="icon"

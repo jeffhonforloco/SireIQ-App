@@ -1,16 +1,19 @@
 
-import React from 'react';
-import { ArrowUp, Paperclip, Search, Zap, Mic } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import InputField from './input/InputField';
+import ButtonRow from './input/ButtonRow';
 import FeatureButtons from './input/FeatureButtons';
+import DisclaimerText from './input/DisclaimerText';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
 interface ChatInputFormProps {
   input: string;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
+  setInput: (value: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
   handleVoiceInput: () => void;
   isTyping: boolean;
   isListening: boolean;
-  disabled?: boolean;
 }
 
 const ChatInputForm: React.FC<ChatInputFormProps> = ({
@@ -19,82 +22,109 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   handleSubmit,
   handleVoiceInput,
   isTyping,
-  isListening,
-  disabled = false
+  isListening
 }) => {
-  return (
-    <div className="border-t border-gray-800 bg-[#121620] px-4 py-4">
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="relative">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={isTyping ? "Please wait..." : "Ask anything"}
-            className="w-full bg-[#1A202C] rounded-full py-3 px-4 text-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
-            disabled={isTyping || disabled}
-          />
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-            <button
-              type="button"
-              disabled={isTyping || disabled}
-              className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-700 text-white"
-            >
-              <ArrowUp className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <button
-              type="button"
-              className="flex items-center justify-center text-gray-400"
-            >
-              <Paperclip className="h-6 w-6" />
-            </button>
-            
-            <button
-              type="button"
-              className="flex items-center justify-center text-gray-400"
-            >
-              <Search className="h-6 w-6" />
-            </button>
-            
-            <button
-              type="button"
-              className="flex items-center justify-center text-gray-400"
-            >
-              <Zap className="h-6 w-6" />
-            </button>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={handleVoiceInput}
-              disabled={isTyping || disabled}
-              className="bg-white text-black hover:bg-gray-100 py-2 px-6 rounded-full flex items-center gap-1.5"
-            >
-              <Mic className="h-5 w-5" />
-              <span className="font-medium">Voice</span>
-            </button>
-            
-            <button
-              type="submit"
-              disabled={!input.trim() || isTyping || disabled}
-              className="h-10 w-10 flex items-center justify-center rounded-full bg-blue-600 disabled:bg-gray-700 disabled:text-gray-500"
-            >
-              <ArrowUp className="h-5 w-5 text-white" />
-            </button>
-          </div>
-        </div>
-      </form>
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useIsMobile();
+  const { transcript } = useVoiceAssistant();
+  
+  // Close features panel when user scrolls on mobile
+  useEffect(() => {
+    if (isMobile) {
+      const handleScroll = () => {
+        if (isExpanded) {
+          setIsExpanded(false);
+        }
+      };
+      
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [isMobile, isExpanded]);
+  
+  // Debug mobile detection
+  useEffect(() => {
+    console.log("Is mobile device:", isMobile);
+    console.log("Features expanded:", isExpanded);
+  }, [isMobile, isExpanded]);
+  
+  // Set input to transcript while listening
+  useEffect(() => {
+    if (isListening && transcript) {
+      setInput(transcript);
+    }
+  }, [isListening, transcript, setInput]);
+  
+  const handleAttachClick = () => {
+    // Open file picker dialog
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        console.log("File selected:", file.name);
+        // You could add actual file handling logic here
+        setInput(`I'm attaching ${file.name}`);
+      }
+    };
+    input.click();
+  };
 
-      <div className="text-center mt-5">
-        <p className="text-sm text-gray-500">
-          SireIQ helps with AI-powered insights, content creation, and workflow optimization.
-        </p>
+  const handleSearchClick = () => {
+    setInput("Search for: ");
+  };
+
+  const handleReasonClick = () => {
+    setInput("Provide reasoning about ");
+  };
+
+  const handleFeatureClick = (featurePrompt: string) => {
+    setInput(featurePrompt);
+    setIsExpanded(false);
+  };
+
+  const toggleFeatures = () => {
+    console.log("Toggling features, current state:", isExpanded);
+    setIsExpanded(!isExpanded);
+  };
+
+  return (
+    <div className={`px-4 pt-2 pb-4 bg-[#0f1117] border-t border-gray-800 ${isExpanded && isMobile ? 'pb-[330px]' : ''}`}>
+      <div className="max-w-3xl mx-auto">
+        <form 
+          ref={formRef}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(e);
+            return false;
+          }} 
+          className="relative w-full"
+        >
+          <InputField 
+            input={input}
+            setInput={setInput}
+            handleSubmit={handleSubmit}
+            isTyping={isTyping}
+          />
+          
+          <ButtonRow 
+            handleAttachClick={handleAttachClick}
+            handleSearchClick={handleSearchClick}
+            handleReasonClick={handleReasonClick}
+            handleVoiceInput={handleVoiceInput}
+            toggleFeatures={toggleFeatures}
+            isExpanded={isExpanded}
+            isListening={isListening}
+          />
+        </form>
+        
+        <FeatureButtons 
+          isExpanded={isExpanded}
+          handleFeatureClick={handleFeatureClick}
+        />
+        
+        {!isExpanded && <DisclaimerText />}
       </div>
     </div>
   );

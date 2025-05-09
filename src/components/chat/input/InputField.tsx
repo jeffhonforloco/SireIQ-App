@@ -4,7 +4,6 @@ import { ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
-// This component is no longer being used, maintaining it for reference
 interface InputFieldProps {
   input: string;
   setInput: (value: string) => void;
