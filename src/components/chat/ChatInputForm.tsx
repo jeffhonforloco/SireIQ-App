@@ -12,7 +12,6 @@ interface ChatInputFormProps {
   handleVoiceInput: () => void;
   isTyping: boolean;
   isListening: boolean;
-  voiceResponseButton?: React.ReactNode;
 }
 
 const ChatInputForm: React.FC<ChatInputFormProps> = ({
@@ -21,8 +20,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   handleSubmit,
   handleVoiceInput,
   isTyping,
-  isListening,
-  voiceResponseButton
+  isListening
 }) => {
   return (
     <div className="p-4 border-t border-gray-700 bg-gray-800">
@@ -57,8 +55,6 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-
-          {voiceResponseButton}
           
           <Button
             type="submit"
