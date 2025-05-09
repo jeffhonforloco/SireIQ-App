@@ -15,6 +15,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from 'react-router-dom';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface NewChatButtonProps {
   position?: 'fixed' | 'relative';
@@ -48,19 +54,28 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
 
   return (
     <>
-      <Button 
-        onClick={() => setShowConfirmDialog(true)}
-        className={`
-          ${position === 'fixed' ? 'fixed top-20 right-4 md:top-20 md:right-8 z-50' : ''}
-          rounded-full ${isMobile ? 'p-3' : 'p-3'} shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
-          transition-all duration-200 hover:scale-105 hover:shadow-xl
-          ${className}
-        `}
-        aria-label="New chat"
-        type="button"
-      >
-        <MessageSquarePlus className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'}`} />
-      </Button>
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger asChild>
+            <Button 
+              onClick={() => setShowConfirmDialog(true)}
+              className={`
+                ${position === 'fixed' ? 'fixed top-20 right-4 md:top-20 md:right-8 z-50' : ''}
+                rounded-full ${isMobile ? 'p-3' : 'p-3'} shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
+                transition-all duration-200 hover:scale-105 hover:shadow-xl
+                ${className}
+              `}
+              aria-label="New chat"
+              type="button"
+            >
+              <MessageSquarePlus className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'}`} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-sireiq-accent text-sireiq-light border border-sireiq-cyan/20">
+            <p>Start a new chat</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent className="bg-gradient-to-b from-gray-900 to-gray-800 border-0 rounded-xl shadow-xl max-w-xs sm:max-w-sm mx-auto">

@@ -4,6 +4,12 @@ import { Volume, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useVoiceAssistant } from "@/hooks/useVoiceAssistant";
 import { toast } from "@/components/ui/sonner";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function ThemeToggle() {
   const { isSpeaking, stopSpeaking, speakText, updateVoiceSettings } = useVoiceAssistant();
@@ -41,24 +47,33 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className={`h-9 w-9 rounded-full bg-transparent border-sireiq-accent/30 text-sireiq-light 
-        hover:bg-sireiq-accent/10 hover:text-sireiq-cyan transition-all duration-300 ease-in-out
-        ${isAnimating ? 'scale-90' : 'scale-100'}
-      `}
-      onClick={handleToggleVoice}
-      disabled={isAnimating}
-    >
-      <div className={`transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-        {localSpeakingState ? (
-          <Volume className="h-5 w-5" />
-        ) : (
-          <VolumeX className="h-5 w-5" />
-        )}
-      </div>
-      <span className="sr-only">Toggle voice output</span>
-    </Button>
+    <TooltipProvider>
+      <Tooltip delayDuration={300}>
+        <TooltipTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className={`h-9 w-9 rounded-full bg-transparent border-sireiq-accent/30 text-sireiq-light 
+              hover:bg-sireiq-accent/10 hover:text-sireiq-cyan transition-all duration-300 ease-in-out
+              ${isAnimating ? 'scale-90' : 'scale-100'}
+            `}
+            onClick={handleToggleVoice}
+            disabled={isAnimating}
+          >
+            <div className={`transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+              {localSpeakingState ? (
+                <Volume className="h-5 w-5" />
+              ) : (
+                <VolumeX className="h-5 w-5" />
+              )}
+            </div>
+            <span className="sr-only">Toggle voice output</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-sireiq-accent text-sireiq-light border border-sireiq-cyan/20">
+          <p>{localSpeakingState ? "Disable voice output" : "Enable voice output"}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
