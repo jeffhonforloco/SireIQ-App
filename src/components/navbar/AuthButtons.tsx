@@ -22,7 +22,7 @@ const AuthButtons = () => {
       <Link to="/signin">
         <Button 
           variant="ghost" 
-          className="text-neutral-300 hover:text-neutral-100 hover:bg-neutral-800/50 transition-colors"
+          className="text-gray-300 hover:text-gray-100 hover:bg-gray-800/50 transition-colors"
         >
           Sign In
         </Button>
