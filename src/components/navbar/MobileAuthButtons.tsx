@@ -20,7 +20,10 @@ const MobileAuthButtons = () => {
   return (
     <div className="flex flex-col space-y-2 w-full">
       <Link to="/signin" className="w-full">
-        <Button variant="outline" className="w-full">
+        <Button 
+          variant="ghost" 
+          className="w-full text-neutral-300 hover:text-neutral-100 hover:bg-neutral-800/50 transition-colors"
+        >
           Sign In
         </Button>
       </Link>
