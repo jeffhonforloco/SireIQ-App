@@ -7,7 +7,6 @@ import ChatInputForm from './ChatInputForm';
 import { useChatState } from './hooks/useChatState';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 import { toast } from '@/components/ui/sonner';
-import NewChatButton from './NewChatButton';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -67,8 +66,6 @@ const HomeChatExperience: React.FC = () => {
   return (
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
-      
-      {/* We'll remove this NewChatButton as it's already handled by the App.tsx */}
       
       <div className="flex-1 overflow-hidden">
         <ChatMessagesContainer 

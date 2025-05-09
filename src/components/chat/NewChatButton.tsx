@@ -19,13 +19,17 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   const isMobile = useIsMobile();
 
   const handleNewChat = () => {
-    // Force a reload to the home page to ensure a completely fresh chat session
+    // Navigate to home page to create a new chat
     navigate('/', { replace: true });
     
-    // Clear any local storage related to the current chat if needed
-    // This ensures a completely fresh start
+    // Clear any local storage related to the current chat
     localStorage.removeItem('current-chat');
     
+    // Clear any chat-related session storage if applicable
+    sessionStorage.removeItem('chat-messages');
+    sessionStorage.removeItem('chat-context');
+    
+    // Show success toast to confirm action to user
     toast.success('New chat session created');
   };
 
@@ -39,6 +43,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
         ${className}
       `}
       aria-label="New chat"
+      type="button"
     >
       <MessageSquarePlus className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'}`} />
     </Button>
