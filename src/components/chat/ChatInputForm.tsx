@@ -43,7 +43,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={isTyping ? "Please wait..." : "Ask anything"}
+            placeholder={isTyping ? "Please wait..." : "Ask SireIQ..."}
             className="w-full bg-[#171c26] rounded-full py-4 px-6 text-gray-200 focus:outline-none"
             disabled={isTyping || disabled}
           />
