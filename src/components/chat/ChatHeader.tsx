@@ -23,7 +23,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
 
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
-      <div className="flex items-center gap-2 overflow-hidden">
+      <div className="flex items-center gap-2">
         <div className="bg-sireiq-accent/20 p-1.5 rounded-lg shrink-0">
           <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
         </div>
@@ -31,7 +31,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         
         {/* Message counter badge - Only show on desktop */}
         {!isEnterprise && !isMobile && (
-          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap min-w-[50px] text-center shrink-0">
+          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
             {messageCount}/{chatMessageLimit}
           </div>
         )}

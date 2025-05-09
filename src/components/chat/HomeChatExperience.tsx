@@ -131,12 +131,12 @@ const HomeChatExperience: React.FC = () => {
       <ChatHeader clearChat={clearChat} />
       <AppKeyboardShortcuts />
       
-      {/* Usage limit indicator for mobile - moved from ChatHeader component */}
+      {/* Usage limit indicator for mobile - only show if not enterprise plan */}
       {!isEnterprise && isMobile && (
         <div className="px-4 py-3 bg-sireiq-darker/80 border-b border-sireiq-accent/20">
           <div className="flex justify-between items-center text-sm text-sireiq-light mb-1.5">
-            <span>Message usage</span>
-            <span className="font-medium">{messageCount} / {chatMessageLimit}</span>
+            <span className="truncate">Message usage</span>
+            <span className="font-medium ml-1 whitespace-nowrap">{messageCount} / {chatMessageLimit}</span>
           </div>
           <Progress 
             value={usagePercentage} 
