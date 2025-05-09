@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MessageSquarePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface NewChatButtonProps {
   position?: 'fixed' | 'relative';
@@ -15,6 +16,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   className = ''
 }) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleNewChat = () => {
     // Force a reload to the home page to ensure a completely fresh chat session
@@ -32,13 +34,13 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
       onClick={handleNewChat}
       className={`
         ${position === 'fixed' ? 'fixed top-16 right-4 md:top-20 md:right-8 z-30' : ''}
-        rounded-full p-3 shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
+        rounded-full ${isMobile ? 'p-2' : 'p-3'} shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
         transition-all duration-200 hover:scale-105 hover:shadow-xl
         ${className}
       `}
       aria-label="New chat"
     >
-      <MessageSquarePlus className="h-6 w-6" />
+      <MessageSquarePlus className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'}`} />
     </Button>
   );
 };
