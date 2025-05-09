@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -75,8 +76,9 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 const NewChatButtonWrapper = () => {
   const location = useLocation();
   
-  // Define paths where the button should be shown
+  // Define paths where the button should be shown, including the home page
   const showOnPaths = [
+    '/',
     '/dashboard',
     '/features/ai-assistant',
     '/features/code-assistance',
