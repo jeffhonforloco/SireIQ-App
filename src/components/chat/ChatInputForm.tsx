@@ -57,6 +57,8 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
+          {voiceResponseButton}
           
           <Button
             type="submit"
