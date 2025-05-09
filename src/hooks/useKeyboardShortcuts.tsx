@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
-type ShortcutAction = {
+export type ShortcutAction = {
   key: string;
   ctrlKey?: boolean;
   altKey?: boolean;
@@ -10,6 +10,11 @@ type ShortcutAction = {
   description: string;
   action: () => void;
   disabled?: boolean;
+};
+
+// We'll create a separate type for display purposes that doesn't require the action
+export type ShortcutDisplay = Omit<ShortcutAction, 'action'> & {
+  action?: () => void;
 };
 
 export const useKeyboardShortcuts = (shortcuts: ShortcutAction[]) => {
@@ -49,7 +54,7 @@ export const useKeyboardShortcuts = (shortcuts: ShortcutAction[]) => {
 };
 
 // Helper function to format keyboard shortcut for display
-export const formatShortcut = (shortcut: ShortcutAction): string => {
+export const formatShortcut = (shortcut: ShortcutDisplay): string => {
   const parts = [];
   if (shortcut.ctrlKey) parts.push('Ctrl');
   if (shortcut.altKey) parts.push('Alt');

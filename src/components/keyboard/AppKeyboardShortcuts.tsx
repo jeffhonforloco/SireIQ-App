@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
-import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useKeyboardShortcuts, ShortcutDisplay } from '@/hooks/useKeyboardShortcuts';
 import { toast } from 'sonner';
 import { useRole } from '@/contexts/RoleContext';
 

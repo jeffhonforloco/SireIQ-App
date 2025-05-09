@@ -10,17 +10,11 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Keyboard } from 'lucide-react';
-import { formatShortcut } from '@/hooks/useKeyboardShortcuts';
+import { formatShortcut, ShortcutDisplay } from '@/hooks/useKeyboardShortcuts';
 
 export type ShortcutCategory = {
   name: string;
-  shortcuts: {
-    key: string;
-    ctrlKey?: boolean;
-    altKey?: boolean;
-    shiftKey?: boolean;
-    description: string;
-  }[];
+  shortcuts: ShortcutDisplay[];
 };
 
 interface KeyboardShortcutsDialogProps {

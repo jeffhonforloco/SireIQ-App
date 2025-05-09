@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -33,6 +34,22 @@ const HomeChatExperience: React.FC = () => {
     transcript,
     resetTranscript
   } = useVoiceAssistant();
+
+  // Define the handleVoiceInputToggle function before using it in the shortcuts array
+  const handleVoiceInputToggle = () => {
+    if (isListening) {
+      stopListening();
+      toast.info("Voice input disabled");
+    } else {
+      if (!supportsSpeechRecognition) {
+        toast.error("Your browser doesn't support speech recognition");
+        return;
+      }
+      
+      startListening();
+      toast.success("Listening...");
+    }
+  };
 
   // Add chat-specific keyboard shortcuts
   const chatShortcuts = [
@@ -100,22 +117,6 @@ const HomeChatExperience: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [transcript, isListening, setInput, handleSubmit, resetTranscript]);
-
-  // Enhanced voice input handler
-  const handleVoiceInputToggle = () => {
-    if (isListening) {
-      stopListening();
-      toast.info("Voice input disabled");
-    } else {
-      if (!supportsSpeechRecognition) {
-        toast.error("Your browser doesn't support speech recognition");
-        return;
-      }
-      
-      startListening();
-      toast.success("Listening...");
-    }
-  };
 
   return (
     <div className="flex flex-col h-full relative">
