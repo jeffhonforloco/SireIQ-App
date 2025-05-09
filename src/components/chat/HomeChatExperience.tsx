@@ -6,6 +6,7 @@ import ChatMessagesContainer from './ChatMessagesContainer';
 import ChatInputForm from './ChatInputForm';
 import { useChatState } from './hooks/useChatState';
 import { toast } from '@/components/ui/sonner';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -21,6 +22,7 @@ const HomeChatExperience: React.FC = () => {
   } = useChatState();
   
   const isMobile = useIsMobile();
+  const { isListening, startListening, stopListening, supportsSpeechRecognition } = useVoiceAssistant();
 
   // Check if we need to clear the chat based on URL params
   useEffect(() => {
@@ -42,7 +44,18 @@ const HomeChatExperience: React.FC = () => {
 
   // Enhanced voice input handler
   const handleVoiceInputToggle = () => {
-    toast.info("Voice input is currently disabled");
+    if (isListening) {
+      stopListening();
+      toast.info("Voice input disabled");
+    } else {
+      if (!supportsSpeechRecognition) {
+        toast.error("Your browser doesn't support speech recognition");
+        return;
+      }
+      
+      startListening();
+      toast.success("Listening...");
+    }
   };
 
   return (
@@ -64,7 +77,7 @@ const HomeChatExperience: React.FC = () => {
         handleSubmit={handleSubmit}
         handleVoiceInput={handleVoiceInputToggle}
         isTyping={isTyping}
-        isListening={false}
+        isListening={isListening}
       />
     </div>
   );

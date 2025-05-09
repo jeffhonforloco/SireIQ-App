@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Paperclip, Search, BrainCircuit, Mic, ChevronUp, ChevronDown } from 'lucide-react';
+import { Paperclip, Search, BrainCircuit, Mic, MicOff, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface ButtonRowProps {
   handleAttachClick: () => void;
@@ -62,8 +62,17 @@ const ButtonRow: React.FC<ButtonRowProps> = ({
               : 'bg-white text-black hover:bg-gray-100 border border-gray-200'
           }`}
         >
-          <Mic className="h-4 w-4 mr-1" />
-          <span className="text-xs font-medium">Voice</span>
+          {isListening ? (
+            <>
+              <MicOff className="h-4 w-4 mr-1" />
+              <span className="text-xs font-medium">Stop</span>
+            </>
+          ) : (
+            <>
+              <Mic className="h-4 w-4 mr-1" />
+              <span className="text-xs font-medium">Voice</span>
+            </>
+          )}
         </button>
         
         <button
