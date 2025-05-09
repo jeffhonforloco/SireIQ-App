@@ -68,6 +68,12 @@ const HomeChatExperience: React.FC = () => {
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
       
+      {/* Position the button at the top right corner for better visibility */}
+      <NewChatButton 
+        position="relative" 
+        className="absolute top-2 right-2 md:top-2 md:right-2 z-10" 
+      />
+      
       <div className="flex-1 overflow-hidden">
         <ChatMessagesContainer 
           messages={messages} 
@@ -84,12 +90,6 @@ const HomeChatExperience: React.FC = () => {
         handleVoiceInput={handleVoiceInputToggle}
         isTyping={isTyping}
         isListening={isListening}
-      />
-      
-      {/* Position the button in a better location for both mobile and desktop */}
-      <NewChatButton 
-        position="relative" 
-        className="absolute bottom-24 right-4 md:bottom-16 md:right-6" 
       />
     </div>
   );

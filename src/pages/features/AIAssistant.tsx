@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -20,6 +21,9 @@ const AIAssistant = () => {
       <ParticleBackground />
       
       <Navbar />
+      
+      {/* Position the new chat button at the top right for better visibility */}
+      <NewChatButton position="fixed" className="top-20 right-4 md:top-20 md:right-8" />
       
       <main className="pt-32 pb-20 relative">
         {/* Hero section */}
@@ -124,9 +128,6 @@ const AIAssistant = () => {
           </div>
         </section>
       </main>
-      
-      {/* Position the new chat button in a non-intrusive location */}
-      <NewChatButton position="fixed" />
       
       <CTASection />
       
