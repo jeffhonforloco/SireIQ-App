@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
@@ -52,7 +51,7 @@ export const useChatState = (): UseChatStateReturn => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const { isSpeaking, speakText } = useVoiceAssistant();
+  const { isSpeaking, speakText, voiceSettings } = useVoiceAssistant();
   
   const generateResponse = useCallback((userInput: string) => {
     let responseContent = "";
@@ -99,10 +98,10 @@ export const useChatState = (): UseChatStateReturn => {
     setIsTyping(false);
     
     // Speak the response if voice is enabled
-    if (isSpeaking) {
+    if (isSpeaking && voiceSettings.autoResponse) {
       speakText(responseContent);
     }
-  }, [isSpeaking, speakText]);
+  }, [isSpeaking, speakText, voiceSettings]);
   
   const handleSubmit = useCallback((e: React.FormEvent) => {
     if (e) {

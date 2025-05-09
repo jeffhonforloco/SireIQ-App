@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
 import ChatMessagesContainer from './ChatMessagesContainer';
@@ -7,6 +7,8 @@ import ChatInputForm from './ChatInputForm';
 import { useChatState } from './hooks/useChatState';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 import { toast } from '@/components/ui/sonner';
+import { Volume2, VolumeX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -28,7 +30,10 @@ const HomeChatExperience: React.FC = () => {
     startListening, 
     stopListening, 
     resetTranscript, 
-    supportsSpeechRecognition 
+    supportsSpeechRecognition,
+    isSpeaking,
+    stopSpeaking,
+    updateVoiceSettings
   } = useVoiceAssistant();
 
   // Check if we need to clear the chat based on URL params
@@ -81,6 +86,13 @@ const HomeChatExperience: React.FC = () => {
     }
   };
 
+  // Toggle voice response
+  const toggleVoiceResponse = () => {
+    updateVoiceSettings({ autoResponse: !isSpeaking });
+    toast.info(isSpeaking ? "Voice responses disabled" : "Voice responses enabled");
+    stopSpeaking();
+  };
+
   return (
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
@@ -92,6 +104,18 @@ const HomeChatExperience: React.FC = () => {
           handleQuickSuggestion={handleQuickSuggestion} 
           isMobile={isMobile} 
         />
+      </div>
+      
+      <div className="absolute top-16 right-4 z-10">
+        <Button 
+          variant="outline"
+          size="icon"
+          className="bg-gray-800 border-gray-700 hover:bg-gray-700 rounded-full"
+          onClick={toggleVoiceResponse}
+          title={isSpeaking ? "Disable voice responses" : "Enable voice responses"}
+        >
+          {isSpeaking ? <Volume2 className="h-5 w-5 text-sireiq-cyan" /> : <VolumeX className="h-5 w-5 text-gray-400" />}
+        </Button>
       </div>
       
       <ChatInputForm

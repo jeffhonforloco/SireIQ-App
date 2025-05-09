@@ -13,7 +13,11 @@ export const loadSavedSettings = (): VoiceSettings => {
   const savedSettings = localStorage.getItem('voiceAssistantSettings');
   if (savedSettings) {
     try {
-      return JSON.parse(savedSettings);
+      const parsed = JSON.parse(savedSettings);
+      return {
+        ...defaultVoiceSettings,
+        ...parsed
+      };
     } catch (e) {
       console.error('Failed to parse saved voice settings');
       return defaultVoiceSettings;
