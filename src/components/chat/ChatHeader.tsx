@@ -21,27 +21,27 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
 
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
-      <div className="flex items-center gap-2">
-        <div className="bg-sireiq-accent/20 p-1.5 rounded-lg">
+      <div className="flex items-center gap-2 overflow-hidden">
+        <div className="bg-sireiq-accent/20 p-1.5 rounded-lg shrink-0">
           <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
         </div>
-        <span className="font-medium text-sm">SireIQ Chat</span>
+        <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
         
-        {/* Message counter badge - Fixed to ensure proper display */}
+        {/* Message counter badge - Improved for better display across all devices */}
         {!isEnterprise && (
-          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap min-w-[40px] text-center">
+          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap min-w-[50px] text-center shrink-0">
             {messageCount}/{chatMessageLimit}
           </div>
         )}
         
         {isEnterprise && (
-          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap">
+          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
             Unlimited
           </div>
         )}
       </div>
       
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 shrink-0">
         <Button
           variant="ghost"
           size="icon"
