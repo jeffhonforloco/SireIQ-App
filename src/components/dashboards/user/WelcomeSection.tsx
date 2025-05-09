@@ -18,6 +18,7 @@ const WelcomeSection = ({ username = "Alex", suggestions }: WelcomeSectionProps)
             <span className="text-gradient glow">Welcome back, {username}</span>
           </h1>
           <p className="text-sireiq-light/70">Continue where you left off or start something new</p>
+          <p className="text-xs text-sireiq-light/50 mt-1">Dashboard v1.0.1</p>
         </div>
         <Avatar className="h-16 w-16 border-2 border-sireiq-accent/30">
           <AvatarImage src="/lovable-uploads/8e6b4446-3486-45e0-b6f6-b46acd418ac4.png" />
