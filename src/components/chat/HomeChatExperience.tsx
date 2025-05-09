@@ -22,7 +22,14 @@ const HomeChatExperience: React.FC = () => {
   } = useChatState();
   
   const isMobile = useIsMobile();
-  const { isListening, startListening, stopListening, supportsSpeechRecognition } = useVoiceAssistant();
+  const { 
+    isListening, 
+    startListening, 
+    stopListening, 
+    supportsSpeechRecognition,
+    transcript,
+    resetTranscript
+  } = useVoiceAssistant();
 
   // Check if we need to clear the chat based on URL params
   useEffect(() => {
@@ -41,6 +48,25 @@ const HomeChatExperience: React.FC = () => {
       window.removeEventListener('new-chat-created', handleNewChat);
     };
   }, [clearChat]);
+
+  // Process transcript when it changes
+  useEffect(() => {
+    if (transcript && !isListening) {
+      // When speech recognition stops and we have a transcript
+      setInput(transcript);
+      
+      // Auto submit after brief delay
+      const timer = setTimeout(() => {
+        handleSubmit({
+          preventDefault: () => {},
+          stopPropagation: () => {}
+        } as React.FormEvent);
+        resetTranscript();
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [transcript, isListening, setInput, handleSubmit, resetTranscript]);
 
   // Enhanced voice input handler
   const handleVoiceInputToggle = () => {

@@ -2,6 +2,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from '@/components/ui/sonner';
 import { Message } from '@/components/ai-chat/types';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
 export interface ChatState {
   messages: Message[];
@@ -51,6 +52,7 @@ export const useChatState = (): UseChatStateReturn => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const { speakText, isSpeaking } = useVoiceAssistant();
   
   const generateResponse = useCallback((userInput: string) => {
     let responseContent = "";
@@ -95,7 +97,12 @@ export const useChatState = (): UseChatStateReturn => {
     
     setMessages(prev => [...prev, assistantMessage]);
     setIsTyping(false);
-  }, []);
+    
+    // Speak the response if voice is enabled
+    if (isSpeaking) {
+      speakText(responseContent);
+    }
+  }, [speakText, isSpeaking]);
   
   const handleSubmit = useCallback((e: React.FormEvent) => {
     if (e) {
@@ -134,7 +141,7 @@ export const useChatState = (): UseChatStateReturn => {
   }, [handleSubmit]);
 
   const handleVoiceInput = useCallback(() => {
-    toast.info("Voice input is currently disabled");
+    toast.info("Use the voice button to start speaking");
   }, []);
 
   const clearChat = useCallback(() => {

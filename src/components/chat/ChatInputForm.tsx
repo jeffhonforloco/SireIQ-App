@@ -5,6 +5,7 @@ import ButtonRow from './input/ButtonRow';
 import FeatureButtons from './input/FeatureButtons';
 import DisclaimerText from './input/DisclaimerText';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
 interface ChatInputFormProps {
   input: string;
@@ -26,6 +27,7 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
   const formRef = useRef<HTMLFormElement>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const isMobile = useIsMobile();
+  const { transcript } = useVoiceAssistant();
   
   // Close features panel when user scrolls on mobile
   useEffect(() => {
@@ -46,6 +48,13 @@ const ChatInputForm: React.FC<ChatInputFormProps> = ({
     console.log("Is mobile device:", isMobile);
     console.log("Features expanded:", isExpanded);
   }, [isMobile, isExpanded]);
+  
+  // Set input to transcript while listening
+  useEffect(() => {
+    if (isListening && transcript) {
+      setInput(transcript);
+    }
+  }, [isListening, transcript, setInput]);
   
   const handleAttachClick = () => {
     // Open file picker dialog

@@ -1,6 +1,8 @@
 
-import React, { useRef, useEffect, KeyboardEvent } from 'react';
-import { ArrowUp } from 'lucide-react';
+import React from 'react';
+import { SendHorizontalIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 
 interface InputFieldProps {
   input: string;
@@ -9,51 +11,47 @@ interface InputFieldProps {
   isTyping: boolean;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  input,
-  setInput,
+const InputField: React.FC<InputFieldProps> = ({ 
+  input, 
+  setInput, 
   handleSubmit,
   isTyping
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  
-  useEffect(() => {
-    // Focus input on component mount
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
-  
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSubmit(e);
-    }
-  };
+  const { isListening } = useVoiceAssistant();
   
   return (
-    <div className="chat-input-container mb-2">
-      <input
-        ref={inputRef}
-        type="text"
+    <div className="flex items-center relative">
+      <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ask anything"
-        disabled={isTyping}
-        className="chat-input w-full rounded-full bg-gray-900 border border-gray-700 py-3 px-4"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+          }
+        }}
+        placeholder={isListening ? "Listening..." : "Ask SireIQ..."}
+        className={`w-full p-3 pr-12 bg-gray-800 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none resize-none text-gray-200 placeholder:text-gray-400 transition-all ${
+          isListening ? "border-red-400 animate-pulse" : ""
+        }`}
+        rows={1}
+        style={{
+          minHeight: '60px',
+          maxHeight: '180px',
+          overflowY: 'auto'
+        }}
       />
       
-      <button
-        type="submit"
+      <Button 
         disabled={!input.trim() || isTyping}
-        aria-label="Send message"
-        className={`chat-input-button absolute right-4 top-4 transform rounded-full p-1.5 ${
-          input.trim() && !isTyping ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700'
+        type="submit" 
+        onClick={(e) => handleSubmit(e as unknown as React.FormEvent)}
+        className={`absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full p-1.5 ${
+          !input.trim() || isTyping ? 'bg-gray-700 text-gray-500' : 'bg-blue-600 hover:bg-blue-500 text-white'
         }`}
       >
-        <ArrowUp className="h-4 w-4" />
-      </button>
+        <SendHorizontalIcon className="h-4 w-4" />
+      </Button>
     </div>
   );
 };
