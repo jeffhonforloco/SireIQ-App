@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -89,7 +88,7 @@ const NewChatButtonWrapper = () => {
     location.pathname === path || location.pathname.startsWith(`${path}/`)
   );
   
-  return shouldShowButton ? <NewChatButton position="fixed" className="left-4 bottom-24 md:left-6 md:bottom-6" /> : null;
+  return shouldShowButton ? <NewChatButton position="fixed" /> : null;
 };
 
 function App() {

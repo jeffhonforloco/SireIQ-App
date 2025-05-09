@@ -85,10 +85,10 @@ const HomeChatExperience: React.FC = () => {
         isListening={isListening}
       />
       
-      {/* Add new chat button in top-right corner with relative positioning */}
+      {/* Position the button in the bottom-right corner within the chat container */}
       <NewChatButton 
         position="relative" 
-        className="absolute top-16 right-4 md:top-20 md:right-6" 
+        className="absolute bottom-20 right-4 md:bottom-4 md:right-4" 
       />
     </div>
   );
