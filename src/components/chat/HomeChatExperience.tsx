@@ -106,18 +106,6 @@ const HomeChatExperience: React.FC = () => {
         />
       </div>
       
-      <div className="absolute top-16 right-4 z-10">
-        <Button 
-          variant="outline"
-          size="icon"
-          className="bg-gray-800 border-gray-700 hover:bg-gray-700 rounded-full"
-          onClick={toggleVoiceResponse}
-          title={isSpeaking ? "Disable voice responses" : "Enable voice responses"}
-        >
-          {isSpeaking ? <Volume2 className="h-5 w-5 text-sireiq-cyan" /> : <VolumeX className="h-5 w-5 text-gray-400" />}
-        </Button>
-      </div>
-      
       <ChatInputForm
         input={input}
         setInput={setInput}
@@ -125,6 +113,17 @@ const HomeChatExperience: React.FC = () => {
         handleVoiceInput={handleVoiceInputToggle}
         isTyping={isTyping}
         isListening={isListening}
+        voiceResponseButton={
+          <Button 
+            variant="outline"
+            size="icon"
+            className="bg-gray-800 border-gray-700 hover:bg-gray-700 rounded-full"
+            onClick={toggleVoiceResponse}
+            title={isSpeaking ? "Disable voice responses" : "Enable voice responses"}
+          >
+            {isSpeaking ? <Volume2 className="h-5 w-5 text-sireiq-cyan" /> : <VolumeX className="h-5 w-5 text-gray-400" />}
+          </Button>
+        }
       />
     </div>
   );
