@@ -10,8 +10,8 @@ const AuthButtons = () => {
   if (role) {
     return (
       <Link to="/dashboard">
-        <Button className="rounded-full px-6">
-          Dashboard
+        <Button className="rounded-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker px-6">
+          My Dashboard
         </Button>
       </Link>
     );
@@ -22,13 +22,13 @@ const AuthButtons = () => {
       <Link to="/signin">
         <Button 
           variant="ghost" 
-          className="text-gray-300 hover:text-gray-100 hover:bg-gray-800/50 transition-colors"
+          className="text-gray-300 hover:text-white hover:bg-sireiq-accent/10 transition-colors"
         >
           Sign In
         </Button>
       </Link>
       <Link to="/get-started">
-        <Button className="bg-white text-black hover:bg-gray-100 rounded-full px-6">
+        <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker rounded-full px-6">
           Get Started
         </Button>
       </Link>

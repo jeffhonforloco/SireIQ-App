@@ -1,26 +1,10 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
-import SignInModal from '@/components/auth/SignInModal';
-import { useRole } from '@/contexts/RoleContext';
 
 const Index = () => {
-  const [showSignInModal, setShowSignInModal] = useState(false);
-  const { role } = useRole();
-
-  useEffect(() => {
-    // Only show the sign-in modal after a delay if the user is not logged in
-    if (!role) {
-      const timer = setTimeout(() => {
-        setShowSignInModal(true);
-      }, 3000); // Show after 3 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [role]);
-
   return (
     <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
       <Helmet>
@@ -39,8 +23,6 @@ const Index = () => {
           <HomeChatExperience />
         </div>
       </div>
-      
-      <SignInModal isOpen={showSignInModal} onOpenChange={setShowSignInModal} />
     </div>
   );
 };

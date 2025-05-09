@@ -10,7 +10,6 @@ import EnterpriseDashboard from '@/components/dashboards/EnterpriseDashboard';
 import RoleSelection from '@/components/onboarding/RoleSelection';
 import QuickPreferences from '@/components/onboarding/QuickPreferences';
 import StartPlatform from '@/components/onboarding/StartPlatform';
-import AccountTypeSwitcher from '@/components/AccountTypeSwitcher';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,19 +25,8 @@ const Dashboard = () => {
   }, [role, isFirstTimeUser, navigate]);
 
   // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const fadeIn = {
+    hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0 }
   };
 
@@ -57,7 +45,7 @@ const Dashboard = () => {
           className="container mx-auto pt-32 pb-20 px-4"
           initial="hidden"
           animate="visible"
-          variants={containerVariants}
+          variants={fadeIn}
         >
           {onboardingStep === 1 && <RoleSelection />}
           {onboardingStep === 2 && <QuickPreferences />}
@@ -77,7 +65,7 @@ const Dashboard = () => {
       case 'enterprise':
         return 'Enterprise Dashboard';
       default:
-        return 'User Dashboard';
+        return 'My Dashboard';
     }
   };
 
@@ -85,7 +73,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
       <Helmet>
-        <title>SireIQ Dashboard | {role.charAt(0).toUpperCase() + role.slice(1)}</title>
+        <title>SireIQ | {getDashboardTitle()}</title>
         <meta name="description" content={`Your personalized SireIQ ${role} dashboard.`} />
       </Helmet>
       
@@ -95,24 +83,16 @@ const Dashboard = () => {
         className="container mx-auto pt-28 pb-20 px-4 md:px-6"
         initial="hidden"
         animate="visible"
-        variants={containerVariants}
+        variants={fadeIn}
+        transition={{ duration: 0.4 }}
       >
-        <motion.div 
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-sireiq-accent/20"
-          variants={itemVariants}
-        >
-          <div>
-            <h1 className="text-2xl font-bold text-gradient">{getDashboardTitle()}</h1>
-            <p className="text-sireiq-light/70">Welcome back! Manage your projects and settings here.</p>
-          </div>
-          <AccountTypeSwitcher />
-        </motion.div>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-sireiq-accent/20">
+          <h1 className="text-2xl font-bold text-gradient">{getDashboardTitle()}</h1>
+        </div>
         
-        <motion.div variants={itemVariants}>
-          {role === 'user' && <UserDashboard />}
-          {role === 'developer' && <DeveloperDashboard />}
-          {role === 'enterprise' && <EnterpriseDashboard />}
-        </motion.div>
+        {role === 'user' && <UserDashboard />}
+        {role === 'developer' && <DeveloperDashboard />}
+        {role === 'enterprise' && <EnterpriseDashboard />}
       </motion.main>
       
       <Footer />
