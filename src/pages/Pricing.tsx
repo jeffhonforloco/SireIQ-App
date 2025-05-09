@@ -31,13 +31,21 @@ const Pricing: React.FC = () => {
               Simple, <span className="text-gradient glow">Transparent</span> Pricing
             </h1>
             <p className="text-xl md:text-2xl text-sireiq-light/70 max-w-3xl mx-auto">
-              Choose the plan that works best for you or your organization.
+              Choose the plan that best fits your needs, from personal use to enterprise solutions.
             </p>
           </div>
           
           <PricingTabs activeView={view} setActiveView={setView} />
           
-          {view === 'cards' ? <PricingCards /> : <PricingComparisonTable />}
+          {view === 'cards' ? (
+            <div className="animate-fade-in">
+              <PricingCards />
+            </div>
+          ) : (
+            <div className="animate-fade-in">
+              <PricingComparisonTable />
+            </div>
+          )}
           
           <EnterpriseCallout />
           

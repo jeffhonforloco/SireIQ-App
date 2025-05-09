@@ -37,29 +37,42 @@ const FAQSection: React.FC = () => {
 
   return (
     <div className="mt-20">
-      <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <h2 className="text-3xl font-bold text-center mb-4">Frequently Asked Questions</h2>
+      <p className="text-center text-sireiq-light/70 mb-12 max-w-2xl mx-auto">
+        Have questions about SireIQ's pricing or features? Find answers to common questions below.
+      </p>
       
-      <Accordion type="single" collapsible className="max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {faqs.map((faq, index) => (
-          <AccordionItem key={index} value={`item-${index}`} className="border-b border-sireiq-accent/20">
-            <AccordionTrigger className="text-left py-4 hover:text-sireiq-cyan transition-colors">
-              {faq.question}
-            </AccordionTrigger>
-            <AccordionContent className="text-sireiq-light/70 pb-4">
-              {faq.answer}
-            </AccordionContent>
-          </AccordionItem>
+          <Accordion key={index} type="single" collapsible className="bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/30">
+            <AccordionItem value={`item-${index}`} className="border-0">
+              <AccordionTrigger className="px-6 py-4 hover:text-sireiq-cyan transition-colors">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-4 pt-0 text-sireiq-light/70">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         ))}
-      </Accordion>
+      </div>
       
       <div className="text-center mt-12">
-        <p className="text-sireiq-light/70 mb-4">Still have questions? Contact our support team.</p>
-        <a 
-          href="/contact" 
-          className="text-sireiq-cyan hover:text-sireiq-cyan hover:underline transition-colors"
-        >
-          Contact Support
-        </a>
+        <p className="text-sireiq-light/70 mb-4">Still have questions? We're here to help.</p>
+        <div className="flex justify-center gap-6 flex-wrap">
+          <a 
+            href="/contact" 
+            className="text-sireiq-cyan hover:text-sireiq-cyan hover:underline transition-colors"
+          >
+            Contact Support
+          </a>
+          <a 
+            href="/documentation" 
+            className="text-sireiq-cyan hover:text-sireiq-cyan hover:underline transition-colors"
+          >
+            Read Documentation
+          </a>
+        </div>
       </div>
     </div>
   );

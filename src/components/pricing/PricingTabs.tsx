@@ -26,7 +26,7 @@ const PricingTabs: React.FC<PricingTabsProps> = ({ activeView, setActiveView }) 
             }`}
           >
             <Grid2X2 className="h-4 w-4" />
-            <span>Cards</span>
+            <span>Card View</span>
           </TabsTrigger>
           <TabsTrigger 
             value="table" 
@@ -37,7 +37,7 @@ const PricingTabs: React.FC<PricingTabsProps> = ({ activeView, setActiveView }) 
             }`}
           >
             <List className="h-4 w-4" />
-            <span>Comparison</span>
+            <span>Detailed Comparison</span>
           </TabsTrigger>
         </TabsList>
       </Tabs>
