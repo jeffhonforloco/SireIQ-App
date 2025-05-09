@@ -21,6 +21,7 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [accountType, setAccountType] = useState<AccountType>('personal');
   const [registrationMethod, setRegistrationMethod] = useState<'email' | 'phone'>('email');
+  const [isProcessing, setIsProcessing] = useState(false);
   
   // Use custom hook for password strength
   const passwordStrength = usePasswordStrength(password);
@@ -83,10 +84,31 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
   };
 
   const handleGoogleSignUp = () => {
-    // In a real app, this would trigger Google OAuth authentication
-    toast.success("Account created with Google! Redirecting to dashboard...");
-    // For demo, we'll just call onSuccess with a dummy email
-    onSuccess("google-user@example.com");
+    setIsProcessing(true);
+
+    // Simulate API call delay
+    setTimeout(() => {
+      try {
+        // In a real app, this would trigger Google OAuth authentication
+        console.log("Google sign-up initiated");
+        
+        // Mock successful authentication
+        const mockGoogleUser = {
+          email: 'new-google-user@example.com',
+          name: 'New Google User'
+        };
+        
+        toast.success(`Account created with Google! Verification complete!`);
+        
+        // For demo, we'll just call onSuccess with the mock email
+        onSuccess(mockGoogleUser.email);
+      } catch (error) {
+        toast.error("Google sign-up failed. Please try again.");
+        console.error("Google sign-up error:", error);
+      } finally {
+        setIsProcessing(false);
+      }
+    }, 1500); // Simulate loading for 1.5 seconds
   };
 
   return (
@@ -273,10 +295,25 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
         type="button" 
         variant="outline"
         onClick={handleGoogleSignUp}
+        disabled={isProcessing}
         className="w-full border border-sireiq-accent/30 hover:bg-sireiq-accent/10 hover:border-sireiq-cyan"
       >
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-5 h-5 mr-2" />
-        Sign up with Google
+        {isProcessing ? (
+          <>
+            <span className="flex items-center justify-center absolute inset-0">
+              <svg className="animate-spin h-5 w-5 text-sireiq-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </span>
+            <span className="opacity-0">Sign up with Google</span>
+          </>
+        ) : (
+          <>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-5 h-5 mr-2" />
+            Sign up with Google
+          </>
+        )}
       </Button>
     </div>
   );

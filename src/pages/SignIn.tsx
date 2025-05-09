@@ -24,6 +24,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
+  const [isProcessing, setIsProcessing] = useState(false);
   const { setRole, setIsFirstTimeUser } = useRole();
   const navigate = useNavigate();
 
@@ -79,11 +80,34 @@ const SignIn = () => {
   };
 
   const handleGoogleSignIn = () => {
-    // In a real app, this would trigger Google OAuth authentication
-    toast.success("Successfully signed in with Google!");
-    setRole('user');
-    setIsFirstTimeUser(false);
-    navigate('/dashboard');
+    setIsProcessing(true);
+
+    // Simulate API call delay
+    setTimeout(() => {
+      try {
+        // In a real app, this would trigger Google OAuth authentication
+        // Here we're doing a mock implementation
+        console.log("Google sign-in initiated");
+        
+        // Mock successful authentication
+        const mockGoogleUser = {
+          email: 'google-user@example.com',
+          name: 'Google User',
+          role: 'user'
+        };
+        
+        // Set the user role and show success message
+        setRole(mockGoogleUser.role as 'user' | 'developer');
+        setIsFirstTimeUser(false);
+        toast.success(`Welcome, ${mockGoogleUser.name}!`);
+        navigate('/dashboard');
+      } catch (error) {
+        toast.error("Google sign-in failed. Please try again.");
+        console.error("Google sign-in error:", error);
+      } finally {
+        setIsProcessing(false);
+      }
+    }, 1500); // Simulate loading for 1.5 seconds
   };
 
   return (
@@ -207,10 +231,25 @@ const SignIn = () => {
             type="button" 
             variant="outline"
             onClick={handleGoogleSignIn}
-            className="w-full border border-sireiq-accent/30 hover:bg-sireiq-accent/10 hover:border-sireiq-cyan mb-4"
+            disabled={isProcessing}
+            className="w-full border border-sireiq-accent/30 hover:bg-sireiq-accent/10 hover:border-sireiq-cyan mb-4 relative"
           >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-5 h-5 mr-2" />
-            Sign in with Google
+            {isProcessing ? (
+              <>
+                <span className="flex items-center justify-center absolute inset-0">
+                  <svg className="animate-spin h-5 w-5 text-sireiq-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </span>
+                <span className="opacity-0">Sign in with Google</span>
+              </>
+            ) : (
+              <>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" className="w-5 h-5 mr-2" />
+                Sign in with Google
+              </>
+            )}
           </Button>
           
           <p className="mt-6 text-center text-sm text-sireiq-light/90">
