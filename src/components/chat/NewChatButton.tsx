@@ -60,24 +60,29 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
       </Button>
 
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <AlertDialogContent className="bg-gray-800 border-gray-700 max-w-xs sm:max-w-sm mx-auto">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl text-center text-white">
-              Clear current chat?
+        <AlertDialogContent className="bg-gradient-to-b from-gray-900 to-gray-800 border-0 rounded-xl shadow-xl max-w-xs sm:max-w-sm mx-auto">
+          <div className="absolute -top-12 left-0 right-0 flex justify-center">
+            <div className="bg-purple-500 p-3 rounded-full shadow-lg">
+              <MessageSquarePlus className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <AlertDialogHeader className="mt-4">
+            <AlertDialogTitle className="text-xl text-center font-bold text-white">
+              Start Fresh?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-center text-gray-300">
-              To start a new chat, your current conversation will be discarded. Sign up or log in to save chats.
+            <AlertDialogDescription className="text-center text-gray-300 mt-2">
+              Starting a new chat will clear your current conversation. You can sign up to save your chats.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex flex-col gap-2 sm:flex-col mt-4">
             <AlertDialogAction
               onClick={handleClearChat}
-              className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-full"
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-medium py-2 rounded-lg border-0"
             >
-              Clear chat
+              New Chat
             </AlertDialogAction>
-            <AlertDialogCancel className="w-full bg-transparent border border-gray-500 text-white hover:bg-gray-700 font-medium py-2 rounded-full mt-0">
-              Cancel
+            <AlertDialogCancel className="w-full bg-transparent border border-gray-600 text-gray-300 hover:bg-gray-700/50 font-medium py-2 rounded-lg mt-0">
+              Keep Current Chat
             </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
