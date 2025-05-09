@@ -32,28 +32,25 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
         <button
           type="button"
           onClick={() => toggleFeatures('attach')}
-          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'attach' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 ${activeButton === 'attach' ? 'text-blue-400' : ''}`}
         >
-          <Paperclip className="h-4 w-4 mr-2" />
-          <span>Attach</span>
+          <Paperclip className="h-6 w-6" />
         </button>
         
         <button
           type="button"
           onClick={() => toggleFeatures('search')}
-          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'search' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 ${activeButton === 'search' ? 'text-blue-400' : ''}`}
         >
-          <Search className="h-4 w-4 mr-2" />
-          <span>Search</span>
+          <Search className="h-6 w-6" />
         </button>
         
         <button
           type="button"
           onClick={() => toggleFeatures('reason')}
-          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'reason' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 ${activeButton === 'reason' ? 'text-blue-400' : ''}`}
         >
-          <Zap className="h-4 w-4 mr-2" />
-          <span>Reason</span>
+          <Zap className="h-6 w-6" />
         </button>
       </div>
 
