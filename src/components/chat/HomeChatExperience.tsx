@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
 import ChatMessagesContainer from './ChatMessagesContainer';
@@ -28,7 +28,7 @@ const HomeChatExperience: React.FC = () => {
     startListening, 
     stopListening, 
     resetTranscript, 
-    supportsSpeechRecognition
+    supportsSpeechRecognition 
   } = useVoiceAssistant();
 
   // Check if we need to clear the chat based on URL params
