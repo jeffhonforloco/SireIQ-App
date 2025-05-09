@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
-import { Paperclip, Search, BrainCircuit, Clock, FileText, Cpu, Lightbulb, LineChart, Code, Eye } from 'lucide-react';
+import { Paperclip, Search, Zap, Clock, FileText, Cpu, Lightbulb, LineChart, Code, Image } from 'lucide-react';
 
 interface FeatureButtonsProps {
-  handleAttachClick: () => void;
-  handleSearchClick: () => void;
-  handleReasonClick: () => void;
+  handleAttachClick?: () => void;
+  handleSearchClick?: () => void;
+  handleReasonClick?: () => void;
 }
 
 const FeatureButtons: React.FC<FeatureButtonsProps> = ({
@@ -28,74 +28,74 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
 
   return (
     <div className="relative">
-      <div className="flex space-x-4">
+      <div className="flex space-x-6">
         <button
           type="button"
           onClick={() => toggleFeatures('attach')}
-          className={`flex items-center text-gray-500 hover:text-gray-300 text-sm ${activeButton === 'attach' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'attach' ? 'text-blue-400' : ''}`}
         >
-          <Paperclip className="h-5 w-5 mr-2" />
+          <Paperclip className="h-4 w-4 mr-2" />
           <span>Attach</span>
         </button>
         
         <button
           type="button"
           onClick={() => toggleFeatures('search')}
-          className={`flex items-center text-gray-500 hover:text-gray-300 text-sm ${activeButton === 'search' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'search' ? 'text-blue-400' : ''}`}
         >
-          <Search className="h-5 w-5 mr-2" />
+          <Search className="h-4 w-4 mr-2" />
           <span>Search</span>
         </button>
         
         <button
           type="button"
           onClick={() => toggleFeatures('reason')}
-          className={`flex items-center text-gray-500 hover:text-gray-300 text-sm ${activeButton === 'reason' ? 'text-blue-400' : ''}`}
+          className={`flex items-center text-gray-400 hover:text-gray-200 text-sm ${activeButton === 'reason' ? 'text-blue-400' : ''}`}
         >
-          <BrainCircuit className="h-5 w-5 mr-2" />
+          <Zap className="h-4 w-4 mr-2" />
           <span>Reason</span>
         </button>
       </div>
 
       {showFeatures && (
-        <div className="absolute left-0 bottom-full mb-2 w-full grid grid-cols-2 md:grid-cols-4 gap-2 bg-[#0f1216] border border-sireiq-accent/30 p-2 rounded-lg z-10">
+        <div className="absolute left-0 bottom-full mb-4 grid grid-cols-4 gap-2 bg-[#121620] w-full z-10">
           <FeatureCard 
-            icon={<Clock className="h-6 w-6 text-blue-400" />}
+            icon={<Clock className="h-5 w-5 text-blue-400" />}
             title="Strategic Roadmap"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<FileText className="h-6 w-6 text-blue-400" />}
+            icon={<FileText className="h-5 w-5 text-blue-400" />}
             title="Content Distiller"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<Cpu className="h-6 w-6 text-blue-400" />}
+            icon={<Cpu className="h-5 w-5 text-blue-400" />}
             title="Neural Composer"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<Lightbulb className="h-6 w-6 text-blue-400" />}
+            icon={<Lightbulb className="h-5 w-5 text-blue-400" />}
             title="Idea Accelerator"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<LineChart className="h-6 w-6 text-blue-400" />}
+            icon={<LineChart className="h-5 w-5 text-blue-400" />}
             title="Data Architect"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<Code className="h-6 w-6 text-blue-400" />}
+            icon={<Code className="h-5 w-5 text-blue-400" />}
             title="CodeCraft Pro"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<Eye className="h-6 w-6 text-blue-400" />}
+            icon={<Image className="h-5 w-5 text-blue-400" />}
             title="Vision Insights"
             description="(Shift+click for prompt)"
           />
           <FeatureCard 
-            icon={<Cpu className="h-6 w-6 text-blue-400" />}
+            icon={<Cpu className="h-5 w-5 text-blue-400" />}
             title="Neural Spark"
             description="(Shift+click for prompt)"
           />
@@ -113,12 +113,12 @@ interface FeatureCardProps {
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => {
   return (
-    <div className="bg-[#171c26] hover:bg-[#1e2330] p-4 rounded-lg cursor-pointer flex flex-col items-center text-center transition-colors">
-      <div className="mb-2">
+    <div className="bg-[#1A202C] hover:bg-[#232A38] p-3 rounded-lg cursor-pointer flex flex-col items-center justify-center text-center transition-colors">
+      <div className="mb-1.5">
         {icon}
       </div>
-      <h4 className="text-sm font-medium text-white mb-1">{title}</h4>
-      <p className="text-xs text-gray-400">{description}</p>
+      <h4 className="text-xs font-medium text-white mb-1">{title}</h4>
+      <p className="text-[10px] text-gray-400">{description}</p>
     </div>
   );
 };
