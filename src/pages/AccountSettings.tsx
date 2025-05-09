@@ -1,271 +1,389 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { useNavigate } from 'react-router-dom';
 import { useRole } from '@/contexts/RoleContext';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
-import { User, Bell, Shield, Keyboard } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { 
+  Settings, 
+  Bell, 
+  User, 
+  Keyboard, 
+  Database, 
+  UserCircle, 
+  LogOut,
+  X,
+  ChevronRight
+} from 'lucide-react';
+
+// Import the icons from the image
+import {
+  Settings as GeneralIcon,
+  Bell as NotificationsIcon,
+  Keyboard as PersonalizationIcon,
+  Mic as SpeechIcon,
+  Database as DataControlsIcon,
+  UserCircle as BuilderProfileIcon,
+  Share2 as ConnectedAppsIcon,
+  Shield as SecurityIcon
+} from 'lucide-react';
+
+// Settings sidebar items
+const sidebarItems = [
+  { id: 'general', label: 'General', icon: GeneralIcon },
+  { id: 'notifications', label: 'Notifications', icon: NotificationsIcon },
+  { id: 'personalization', label: 'Personalization', icon: PersonalizationIcon },
+  { id: 'speech', label: 'Speech', icon: SpeechIcon },
+  { id: 'data-controls', label: 'Data controls', icon: DataControlsIcon },
+  { id: 'builder-profile', label: 'Builder profile', icon: BuilderProfileIcon },
+  { id: 'connected-apps', label: 'Connected apps', icon: ConnectedAppsIcon },
+  { id: 'security', label: 'Security', icon: SecurityIcon },
+];
 
 const AccountSettings = () => {
   const { role, preferences, setPreferences } = useRole();
+  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('general');
   
   // Handle preference changes
   const handlePreferenceChange = (key: string, value: boolean | string) => {
     setPreferences({ [key as keyof typeof preferences]: value });
     toast.success(`Preference updated successfully`);
   };
-  
-  return (
-    <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
-      <Helmet>
-        <title>SireIQ | Account Settings</title>
-        <meta name="description" content="Manage your SireIQ account settings" />
-      </Helmet>
-      
-      <Navbar />
-      
-      <main className="container mx-auto pt-28 pb-20 px-4 md:px-6">
-        <h1 className="text-2xl font-bold text-gradient mb-6">Account Settings</h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Profile Section - Left Side */}
-          <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
-            <div className="flex flex-col items-center gap-4">
-              <Avatar className="w-24 h-24 border-2 border-sireiq-accent/30">
-                <AvatarImage src="/lovable-uploads/8e6b4446-3486-45e0-b6f6-b46acd418ac4.png" />
-                <AvatarFallback className="bg-sireiq-accent/20 text-sireiq-cyan text-xl">
-                  {role?.substring(0, 2).toUpperCase() || 'U'}
-                </AvatarFallback>
-              </Avatar>
-              
-              <div className="text-center">
-                <h2 className="text-xl font-semibold mb-1">
-                  {role ? role.charAt(0).toUpperCase() + role.slice(1) : 'Guest'} Account
-                </h2>
-                <p className="text-sireiq-light/60 text-sm mb-4">
-                  {role === 'developer' ? 'Developer Access' : 
-                   role === 'enterprise' ? 'Enterprise Access' : 
-                   role === 'user' ? 'Standard Access' : 'Limited Access'}
-                </p>
-                
+
+  // Handle close settings
+  const handleCloseSettings = () => {
+    navigate('/dashboard');
+  };
+
+  // Render content based on active section
+  const renderContent = () => {
+    switch(activeSection) {
+      case 'general':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Theme</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Always show code when using data analyst</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.showCode || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('showCode', checked)}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Show follow up suggestions in chats</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.showSuggestions || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('showSuggestions', checked)}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h2 className="text-lg font-medium mb-1">Language</h2>
+              <div className="flex items-center justify-between mt-2">
+                <span>Auto-detect</span>
+                <div className="flex items-center gap-1">
+                  <span className="text-sm text-sireiq-light/60">English</span>
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h2 className="text-lg font-medium mb-1">Archived chats</h2>
+              <div className="flex items-center justify-between mt-2">
+                <span>Manage</span>
                 <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
-                  Upload Photo
+                  Manage
                 </Button>
               </div>
               
-              {role && (
-                <div className="w-full mt-4 pt-4 border-t border-sireiq-accent/20">
-                  <div className="flex justify-between items-center mb-2">
-                    <span>Account Type</span>
-                    <span className="text-sireiq-cyan">{role.charAt(0).toUpperCase() + role.slice(1)}</span>
-                  </div>
-                  
-                  {role !== 'enterprise' && (
-                    <Button className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker rounded-full mt-2">
-                      Upgrade Account
-                    </Button>
-                  )}
-                </div>
-              )}
+              <div className="mt-6 pt-2 flex items-center justify-between">
+                <span>Archive all chats</span>
+                <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                  Archive all
+                </Button>
+              </div>
+              
+              <div className="mt-6 pt-2 flex items-center justify-between">
+                <span>Delete all chats</span>
+                <Button variant="destructive" size="sm" className="bg-red-500/80 hover:bg-red-600">
+                  Delete all
+                </Button>
+              </div>
+              
+              <div className="mt-6 pt-2 flex items-center justify-between">
+                <span>Log out on this device</span>
+                <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                  Log out
+                </Button>
+              </div>
             </div>
-          </Card>
-          
-          {/* Settings Tabs - Right Side */}
-          <div className="col-span-1 lg:col-span-2">
-            <Tabs defaultValue="profile" className="w-full">
-              <TabsList className="grid grid-cols-3 mb-6 bg-sireiq-darker/70 border border-sireiq-accent/20">
-                <TabsTrigger value="profile" className="data-[state=active]:bg-sireiq-accent/10 data-[state=active]:text-sireiq-cyan">
-                  <User className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Profile</span>
-                </TabsTrigger>
-                <TabsTrigger value="preferences" className="data-[state=active]:bg-sireiq-accent/10 data-[state=active]:text-sireiq-cyan">
-                  <Keyboard className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Preferences</span>
-                </TabsTrigger>
-                <TabsTrigger value="notifications" className="data-[state=active]:bg-sireiq-accent/10 data-[state=active]:text-sireiq-cyan">
-                  <Bell className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Notifications</span>
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="profile" className="space-y-6">
-                <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
-                  <h3 className="text-lg font-medium mb-4">Personal Information</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name</Label>
-                        <Input id="name" placeholder="Your name" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="your.email@example.com" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="bio">Bio</Label>
-                      <Input id="bio" placeholder="Tell us about yourself" className="bg-sireiq-dark border-sireiq-accent/30" />
-                    </div>
-                    
-                    <Button className="bg-sireiq-accent/80 hover:bg-sireiq-accent text-white mt-2">
-                      Save Changes
-                    </Button>
+          </div>
+        );
+      case 'notifications':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Email Notifications</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Important updates</p>
+                    <p className="text-sm text-sireiq-light/60">Receive important updates via email</p>
                   </div>
-                </Card>
-                
-                <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
-                  <h3 className="text-lg font-medium mb-4">Password</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="current-password">Current Password</Label>
-                      <Input id="current-password" type="password" className="bg-sireiq-dark border-sireiq-accent/30" />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="new-password">New Password</Label>
-                        <Input id="new-password" type="password" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="confirm-password">Confirm New Password</Label>
-                        <Input id="confirm-password" type="password" className="bg-sireiq-dark border-sireiq-accent/30" />
-                      </div>
-                    </div>
-                    
-                    <Button className="bg-sireiq-accent/80 hover:bg-sireiq-accent text-white mt-2">
-                      Update Password
-                    </Button>
-                  </div>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="preferences" className="space-y-6">
-                <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
-                  <h3 className="text-lg font-medium mb-4">Display Preferences</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">Dark Mode</p>
-                        <p className="text-sm text-sireiq-light/60">Use dark theme throughout the application</p>
-                      </div>
-                      <Switch 
-                        checked={preferences.darkMode} 
-                        onCheckedChange={(checked) => handlePreferenceChange('darkMode', checked)}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between pt-2 border-t border-sireiq-accent/10">
-                      <div>
-                        <p className="font-medium">AI Model</p>
-                        <p className="text-sm text-sireiq-light/60">Select your preferred AI model</p>
-                      </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        <Button 
-                          variant={preferences.aiModel === 'fast' ? 'default' : 'outline'}
-                          onClick={() => handlePreferenceChange('aiModel', 'fast')}
-                          className="h-8 px-3"
-                        >
-                          Fast
-                        </Button>
-                        <Button 
-                          variant={preferences.aiModel === 'balanced' ? 'default' : 'outline'}
-                          onClick={() => handlePreferenceChange('aiModel', 'balanced')}
-                          className="h-8 px-3"
-                        >
-                          Balanced
-                        </Button>
-                        <Button 
-                          variant={preferences.aiModel === 'powerful' ? 'default' : 'outline'}
-                          onClick={() => handlePreferenceChange('aiModel', 'powerful')}
-                          className="h-8 px-3"
-                        >
-                          Powerful
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    {role === 'developer' && (
-                      <div className="flex items-center justify-between pt-2 border-t border-sireiq-accent/10">
-                        <div>
-                          <p className="font-medium">Code Auto-Complete</p>
-                          <p className="text-sm text-sireiq-light/60">Enable AI-powered code suggestions</p>
-                        </div>
-                        <Switch 
-                          checked={preferences.codeAutoComplete} 
-                          onCheckedChange={(checked) => handlePreferenceChange('codeAutoComplete', checked)}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="notifications" className="space-y-6">
-                <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
-                  <h3 className="text-lg font-medium mb-4">Notification Settings</h3>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">Email Notifications</p>
-                        <p className="text-sm text-sireiq-light/60">Receive important updates via email</p>
-                      </div>
-                      <Switch 
-                        checked={preferences.notifications} 
-                        onCheckedChange={(checked) => handlePreferenceChange('notifications', checked)}
-                      />
-                    </div>
-                    
-                    {(role === 'enterprise') && (
-                      <div className="flex items-center justify-between pt-2 border-t border-sireiq-accent/10">
-                        <div>
-                          <p className="font-medium">Team Updates</p>
-                          <p className="text-sm text-sireiq-light/60">Get notifications about team activity</p>
-                        </div>
-                        <Switch 
-                          checked={preferences.teamUpdates} 
-                          onCheckedChange={(checked) => handlePreferenceChange('teamUpdates', checked)}
-                        />
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center justify-between pt-2 border-t border-sireiq-accent/10">
-                      <div>
-                        <p className="font-medium">Product Updates</p>
-                        <p className="text-sm text-sireiq-light/60">Learn about new features and improvements</p>
-                      </div>
-                      <Switch defaultChecked />
-                    </div>
-                  </div>
-                </Card>
-                
-                <Card className="p-6 bg-sireiq-darker border border-sireiq-accent/20">
+                  <Switch 
+                    checked={preferences.notifications || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('notifications', checked)}
+                  />
+                </div>
+                {role === 'enterprise' && (
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-medium">Security Alerts</h3>
-                      <p className="text-sm text-sireiq-light/60">Receive alerts about security-related events</p>
+                      <p className="font-medium">Team updates</p>
+                      <p className="text-sm text-sireiq-light/60">Get notifications about team activity</p>
                     </div>
-                    <Switch defaultChecked />
+                    <Switch 
+                      checked={preferences.teamUpdates || false} 
+                      onCheckedChange={(checked) => handlePreferenceChange('teamUpdates', checked)}
+                    />
                   </div>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                )}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Product updates</p>
+                    <p className="text-sm text-sireiq-light/60">Learn about new features and improvements</p>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+              </div>
+            </div>
+            
+            <Separator className="bg-sireiq-accent/20" />
+            
+            <div>
+              <h2 className="text-lg font-medium mb-1">Security Alerts</h2>
+              <div className="flex items-center justify-between mt-4">
+                <div>
+                  <p className="font-medium">Security notifications</p>
+                  <p className="text-sm text-sireiq-light/60">Receive alerts about security-related events</p>
+                </div>
+                <Switch defaultChecked />
+              </div>
+            </div>
+          </div>
+        );
+      case 'personalization':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Display Preferences</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Dark Mode</p>
+                    <p className="text-sm text-sireiq-light/60">Use dark theme throughout the application</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.darkMode || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('darkMode', checked)}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">AI Model</p>
+                    <p className="text-sm text-sireiq-light/60">Select your preferred AI model</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant={preferences.aiModel === 'fast' ? 'default' : 'outline'} 
+                      size="sm"
+                      onClick={() => handlePreferenceChange('aiModel', 'fast')}
+                    >
+                      Fast
+                    </Button>
+                    <Button 
+                      variant={preferences.aiModel === 'balanced' ? 'default' : 'outline'} 
+                      size="sm"
+                      onClick={() => handlePreferenceChange('aiModel', 'balanced')}
+                    >
+                      Balanced
+                    </Button>
+                    <Button 
+                      variant={preferences.aiModel === 'powerful' ? 'default' : 'outline'} 
+                      size="sm"
+                      onClick={() => handlePreferenceChange('aiModel', 'powerful')}
+                    >
+                      Powerful
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'speech':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Voice Assistant Settings</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Enable Voice Input</p>
+                    <p className="text-sm text-sireiq-light/60">Use voice commands to interact with SireIQ</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.voiceEnabled || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('voiceEnabled', checked)}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Voice Feedback</p>
+                    <p className="text-sm text-sireiq-light/60">Receive audio responses from SireIQ</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.voiceFeedback || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('voiceFeedback', checked)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'data-controls':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Data Usage</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Improve SireIQ</p>
+                    <p className="text-sm text-sireiq-light/60">Allow your data to be used for AI training</p>
+                  </div>
+                  <Switch 
+                    checked={preferences.dataSharing || false} 
+                    onCheckedChange={(checked) => handlePreferenceChange('dataSharing', checked)}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Data Export</p>
+                    <p className="text-sm text-sireiq-light/60">Download a copy of your data</p>
+                  </div>
+                  <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                    Export
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'security':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Account Security</h2>
+              <div className="flex flex-col gap-5 mt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Two-Factor Authentication</p>
+                    <p className="text-sm text-sireiq-light/60">Add an extra layer of security</p>
+                  </div>
+                  <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                    Setup
+                  </Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Change Password</p>
+                    <p className="text-sm text-sireiq-light/60">Update your password</p>
+                  </div>
+                  <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                    Change
+                  </Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Session Management</p>
+                    <p className="text-sm text-sireiq-light/60">View and manage active sessions</p>
+                  </div>
+                  <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+                    Manage
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="flex items-center justify-center h-40">
+            <p>Select a setting from the sidebar</p>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-sireiq-dark/80 backdrop-blur-sm text-sireiq-light p-4">
+      <Helmet>
+        <title>SireIQ | Settings</title>
+        <meta name="description" content="Manage your SireIQ account settings" />
+      </Helmet>
+      
+      {/* Modal-like settings card */}
+      <Card className="max-w-3xl w-full bg-sireiq-darker border border-sireiq-accent/20 rounded-lg shadow-xl overflow-hidden">
+        {/* Header with title and close button */}
+        <div className="p-4 flex items-center justify-between border-b border-sireiq-accent/20">
+          <h1 className="text-xl font-medium">Settings</h1>
+          <Button variant="ghost" size="icon" onClick={handleCloseSettings} className="hover:bg-sireiq-accent/10">
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+        
+        {/* Settings content */}
+        <div className="flex h-[70vh]">
+          {/* Sidebar */}
+          <div className="w-64 border-r border-sireiq-accent/20 overflow-y-auto">
+            <nav className="py-2">
+              {sidebarItems.map((item) => (
+                <button
+                  key={item.id}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                    activeSection === item.id 
+                      ? 'bg-sireiq-accent/10 text-sireiq-cyan' 
+                      : 'hover:bg-sireiq-accent/5'
+                  }`}
+                  onClick={() => setActiveSection(item.id)}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+          
+          {/* Main content */}
+          <div className="flex-1 overflow-y-auto p-6">
+            {renderContent()}
           </div>
         </div>
-      </main>
-      
-      <Footer />
+      </Card>
     </div>
   );
 };
