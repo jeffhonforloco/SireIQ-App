@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -85,10 +86,10 @@ const HomeChatExperience: React.FC = () => {
         isListening={isListening}
       />
       
-      {/* Position the button in the bottom-right corner within the chat container */}
+      {/* Position the button in a better location for both mobile and desktop */}
       <NewChatButton 
         position="relative" 
-        className="absolute bottom-20 right-4 md:bottom-4 md:right-4" 
+        className="absolute bottom-24 right-4 md:bottom-16 md:right-6" 
       />
     </div>
   );
