@@ -126,6 +126,12 @@ const AIAssistant = () => {
         </section>
       </main>
       
+      {/* Position the new chat button in a non-intrusive location */}
+      <NewChatButton 
+        position="fixed" 
+        className="left-4 bottom-24 md:left-6 md:bottom-6" 
+      />
+      
       <CTASection />
       
       <Footer />

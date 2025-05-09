@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -86,10 +85,10 @@ const HomeChatExperience: React.FC = () => {
         isListening={isListening}
       />
       
-      {/* Add floating new chat button with relative positioning so it stays within the experience container */}
+      {/* Add new chat button in top-right corner with relative positioning */}
       <NewChatButton 
         position="relative" 
-        className="absolute right-4 bottom-20 md:right-6 md:bottom-24" 
+        className="absolute top-16 right-4 md:top-20 md:right-6" 
       />
     </div>
   );
