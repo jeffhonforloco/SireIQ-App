@@ -1,11 +1,12 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
 import { VoiceAssistantProvider } from '@/hooks/useVoiceAssistant';
 import { RoleProvider } from '@/contexts/RoleContext';
+import NewChatButton from '@/components/chat/NewChatButton';
 
 // Import pages
 import Index from '@/pages/Index';
@@ -71,6 +72,26 @@ import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
+// Component to determine if NewChatButton should be displayed
+const NewChatButtonWrapper = () => {
+  const location = useLocation();
+  
+  // Define paths where the button should be shown
+  const showOnPaths = [
+    '/dashboard',
+    '/features/ai-assistant',
+    '/features/code-assistance',
+    '/features/content-creation'
+  ];
+  
+  // Check if current path starts with any of the paths in the array
+  const shouldShowButton = showOnPaths.some(path => 
+    location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
+  
+  return shouldShowButton ? <NewChatButton /> : null;
+};
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
@@ -135,6 +156,7 @@ function App() {
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <NewChatButtonWrapper />
               <MobileBottomNav />
               <Toaster position="bottom-right" />
             </Router>

@@ -8,6 +8,7 @@ import { Rocket, ArrowRight, MessageSquare } from 'lucide-react';
 import ParticleBackground from '@/components/ParticleBackground';
 import CTASection from '@/components/CTASection';
 import PageHeader from '@/components/trust/PageHeader';
+import NewChatButton from '@/components/chat/NewChatButton';
 
 const AIAssistant = () => {
   return (
@@ -21,7 +22,7 @@ const AIAssistant = () => {
       
       <Navbar />
       
-      <main className="pt-32 pb-20">
+      <main className="pt-32 pb-20 relative">
         {/* Hero section */}
         <section className="container mx-auto px-4 mb-20">
           <PageHeader 

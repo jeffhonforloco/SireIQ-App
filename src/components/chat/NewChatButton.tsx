@@ -1,0 +1,41 @@
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MessageSquarePlus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+
+interface NewChatButtonProps {
+  position?: 'fixed' | 'relative';
+  className?: string;
+}
+
+const NewChatButton: React.FC<NewChatButtonProps> = ({ 
+  position = 'fixed',
+  className = ''
+}) => {
+  const navigate = useNavigate();
+
+  const handleNewChat = () => {
+    // Create a new chat session
+    navigate('/');
+    toast.success('New chat session created');
+  };
+
+  return (
+    <Button 
+      onClick={handleNewChat}
+      className={`
+        ${position === 'fixed' ? 'fixed bottom-24 right-6 md:bottom-6 md:right-6 z-30' : ''}
+        rounded-full p-3 shadow-lg bg-sireiq-cyan hover:bg-sireiq-cyan/90 text-gray-900
+        transition-all duration-200 hover:scale-105 hover:shadow-xl
+        ${className}
+      `}
+      aria-label="New chat"
+    >
+      <MessageSquarePlus className="h-6 w-6" />
+    </Button>
+  );
+};
+
+export default NewChatButton;

@@ -7,6 +7,7 @@ import ChatInputForm from './ChatInputForm';
 import { useChatState } from './hooks/useChatState';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
 import { toast } from '@/components/ui/sonner';
+import NewChatButton from './NewChatButton';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -64,7 +65,7 @@ const HomeChatExperience: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
       
       <div className="flex-1 overflow-hidden">
@@ -83,6 +84,12 @@ const HomeChatExperience: React.FC = () => {
         handleVoiceInput={handleVoiceInputToggle}
         isTyping={isTyping}
         isListening={isListening}
+      />
+      
+      {/* Add floating new chat button with relative positioning so it stays within the experience container */}
+      <NewChatButton 
+        position="relative" 
+        className="absolute right-4 bottom-20 md:right-6 md:bottom-24" 
       />
     </div>
   );
