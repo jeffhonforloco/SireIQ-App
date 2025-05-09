@@ -123,32 +123,10 @@ const HomeChatExperience: React.FC = () => {
     }
   }, [transcript, isListening, setInput, handleSubmit, resetTranscript]);
 
-  // Calculate progress percentage for usage meter
-  const usagePercentage = (messageCount / chatMessageLimit) * 100;
-
   return (
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
       <AppKeyboardShortcuts />
-      
-      {/* Usage limit indicator for mobile - only show if not enterprise plan */}
-      {!isEnterprise && isMobile && (
-        <div className="px-4 py-3 bg-sireiq-darker/80 border-b border-sireiq-accent/20">
-          <div className="flex justify-between items-center text-sm text-sireiq-light mb-1.5">
-            <span className="truncate">Message usage</span>
-            <span className="font-medium ml-1 whitespace-nowrap">{messageCount} / {chatMessageLimit}</span>
-          </div>
-          <Progress 
-            value={usagePercentage} 
-            className="h-2" 
-            indicatorClassName={
-              usagePercentage > 95 ? "bg-red-500" : 
-              usagePercentage > 80 ? "bg-amber-500" : 
-              "bg-sireiq-cyan"
-            }
-          />
-        </div>
-      )}
       
       <div className="flex-1 overflow-hidden">
         <ChatMessagesContainer 

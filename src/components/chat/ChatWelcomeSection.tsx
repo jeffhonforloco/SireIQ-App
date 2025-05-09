@@ -29,7 +29,6 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
       {!role ? (
         <div className="max-w-md">
           <p className="text-sireiq-light/70 mb-4">
-            You're using the guest mode with a limit of {chatMessageLimit} messages. 
             Sign up to unlock more capabilities!
           </p>
           <Button 
@@ -42,7 +41,6 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
       ) : isPersonal ? (
         <div className="max-w-md">
           <p className="text-sireiq-light/70 mb-4">
-            You're using the Personal plan with a limit of {chatMessageLimit} messages per day.
             Upgrade to Developer for 5× more messages and advanced features!
           </p>
           <Button 
@@ -55,7 +53,7 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
       ) : isDeveloper ? (
         <div className="max-w-md">
           <p className="text-sireiq-light/70 mb-2">
-            Welcome to the Developer plan! You have {chatMessageLimit} messages per day.
+            Welcome to the Developer plan!
           </p>
           <div className="p-2 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-lg mb-4">
             <div className="flex items-center gap-2">
