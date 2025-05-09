@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
 import ChatMessagesContainer from './ChatMessagesContainer';
@@ -12,7 +12,6 @@ import KeyboardShortcutsDialog from '../keyboard/KeyboardShortcutsDialog';
 import { getShortcutCategories } from '../keyboard/AppKeyboardShortcuts';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
-import { Progress } from '@/components/ui/progress';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -31,6 +30,8 @@ const HomeChatExperience: React.FC = () => {
   
   const isMobile = useIsMobile();
   const { role, isDeveloper, isEnterprise } = useRolePermissions();
+  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
+  
   const { 
     isListening, 
     startListening, 
@@ -86,6 +87,13 @@ const HomeChatExperience: React.FC = () => {
 
   useKeyboardShortcuts(chatShortcuts);
 
+  // Check if we need to show the signup prompt based on message count
+  useEffect(() => {
+    if (!role && messageCount >= 3) {
+      setShowSignupPrompt(true);
+    }
+  }, [messageCount, role]);
+
   // Check if we need to clear the chat based on URL params
   useEffect(() => {
     // Log mobile detection for debugging
@@ -96,6 +104,7 @@ const HomeChatExperience: React.FC = () => {
   useEffect(() => {
     const handleNewChat = () => {
       clearChat();
+      setShowSignupPrompt(false);
     };
 
     window.addEventListener('new-chat-created', handleNewChat);
@@ -133,7 +142,8 @@ const HomeChatExperience: React.FC = () => {
           messages={messages} 
           isTyping={isTyping} 
           handleQuickSuggestion={handleQuickSuggestion} 
-          isMobile={isMobile} 
+          isMobile={isMobile}
+          showSignupPrompt={showSignupPrompt}
         />
       </div>
       
@@ -144,6 +154,7 @@ const HomeChatExperience: React.FC = () => {
         handleVoiceInput={handleVoiceInputToggle}
         isTyping={isTyping}
         isListening={isListening}
+        disabled={showSignupPrompt}
       />
     </div>
   );
