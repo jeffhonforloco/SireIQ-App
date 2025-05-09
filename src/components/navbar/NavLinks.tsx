@@ -18,26 +18,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ orientation = 'horizontal' }) => {
     ? "navbar-links flex flex-col space-y-2 border-0 border-none" 
     : "navbar-links flex justify-center space-x-4 md:space-x-6 lg:space-x-8 border-0 border-none";
   
+  // All menu links have been removed as requested
   return (
     <div className={containerClass}>
-      <Link 
-        to="/features" 
-        className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/features') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
-      >
-        Features
-      </Link>
-      <Link 
-        to="/enterprise" 
-        className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/enterprise') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
-      >
-        Enterprise
-      </Link>
-      <Link 
-        to="/enterprise/integrations" 
-        className={`px-3 py-2 text-sm lg:text-base border-0 border-none ${isActive('/enterprise/integrations') ? 'text-sireiq-cyan' : 'text-sireiq-light hover:text-sireiq-cyan'}`}
-      >
-        Integrations
-      </Link>
+      {/* Links removed as requested by user */}
     </div>
   );
 };
