@@ -27,15 +27,15 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         </div>
         <span className="font-medium text-sm">SireIQ Chat</span>
         
-        {/* Message counter badge */}
+        {/* Message counter badge - Fixed to ensure proper display */}
         {!isEnterprise && (
-          <div className="ml-2 px-1.5 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70">
+          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap min-w-[40px] text-center">
             {messageCount}/{chatMessageLimit}
           </div>
         )}
         
         {isEnterprise && (
-          <div className="ml-2 px-1.5 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70">
+          <div className="ml-2 px-2 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded text-xs text-sireiq-light/70 whitespace-nowrap">
             Unlimited
           </div>
         )}
