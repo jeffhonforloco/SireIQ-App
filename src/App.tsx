@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -85,9 +84,9 @@ const NewChatButtonWrapper = () => {
     '/features/content-creation'
   ];
   
-  // Check if current path starts with any of the paths in the array
+  // Check if current path matches exactly any of the paths in the array
   const shouldShowButton = showOnPaths.some(path => 
-    location.pathname === path || location.pathname.startsWith(`${path}/`)
+    location.pathname === path
   );
   
   return shouldShowButton ? <NewChatButton position="fixed" /> : null;

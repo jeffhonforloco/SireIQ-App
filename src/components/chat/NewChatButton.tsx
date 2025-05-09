@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MessageSquarePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
@@ -15,20 +14,22 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
   position = 'fixed',
   className = ''
 }) => {
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   const handleNewChat = () => {
+    // Show success toast to confirm action to user
+    toast.success('New chat session created');
+    
     // Clear all chat-related storage
     localStorage.removeItem('current-chat');
     sessionStorage.removeItem('chat-messages');
     sessionStorage.removeItem('chat-context');
     
-    // Force a full page reload to reset all React states
-    window.location.href = '/';
-    
-    // Show success toast to confirm action to user
-    toast.success('New chat session created');
+    // Small timeout to allow the toast to be visible before reload
+    setTimeout(() => {
+      // Force a full page reload to reset all React states
+      window.location.href = '/';
+    }, 300);
   };
 
   return (

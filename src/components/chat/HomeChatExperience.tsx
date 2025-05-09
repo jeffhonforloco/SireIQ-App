@@ -31,6 +31,12 @@ const HomeChatExperience: React.FC = () => {
     supportsSpeechRecognition 
   } = useVoiceAssistant();
 
+  // Check if we need to clear the chat based on URL params
+  useEffect(() => {
+    // Log mobile detection for debugging
+    console.log('Is mobile device:', isMobile);
+  }, [isMobile]);
+
   // Handle voice transcript when listening stops
   useEffect(() => {
     if (transcript && !isListening && transcript.trim() !== '') {
