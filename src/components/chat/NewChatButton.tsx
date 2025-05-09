@@ -62,8 +62,8 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent className="bg-gradient-to-b from-gray-900 to-gray-800 border-0 rounded-xl shadow-xl max-w-xs sm:max-w-sm mx-auto">
           <div className="absolute -top-12 left-0 right-0 flex justify-center">
-            <div className="bg-purple-500 p-3 rounded-full shadow-lg">
-              <MessageSquarePlus className="h-6 w-6 text-white" />
+            <div className="bg-sireiq-cyan p-3 rounded-full shadow-lg">
+              <MessageSquarePlus className="h-6 w-6 text-gray-900" />
             </div>
           </div>
           <AlertDialogHeader className="mt-4">
@@ -77,7 +77,7 @@ const NewChatButton: React.FC<NewChatButtonProps> = ({
           <AlertDialogFooter className="flex flex-col gap-2 sm:flex-col mt-4">
             <AlertDialogAction
               onClick={handleClearChat}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-medium py-2 rounded-lg border-0"
+              className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 hover:opacity-90 text-gray-900 font-medium py-2 rounded-lg border-0"
             >
               New Chat
             </AlertDialogAction>
