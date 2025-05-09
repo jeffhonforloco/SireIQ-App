@@ -17,10 +17,6 @@ interface ChatHeaderProps {
 }
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
-  const { messageCount, chatMessageLimit } = useChatState();
-  const { isEnterprise } = useRolePermissions();
-  const isMobile = useIsMobile();
-
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
       <div className="flex items-center gap-2">
@@ -28,19 +24,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
           <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
         </div>
         <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
-        
-        {/* Message counter badge - Only show on desktop */}
-        {!isEnterprise && !isMobile && (
-          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
-            {messageCount}/{chatMessageLimit}
-          </div>
-        )}
-        
-        {isEnterprise && !isMobile && (
-          <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
-            Unlimited
-          </div>
-        )}
       </div>
       
       <div className="flex items-center gap-2 shrink-0">
