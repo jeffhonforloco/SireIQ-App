@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -7,6 +6,10 @@ import ChatInputForm from './ChatInputForm';
 import { useChatState } from './hooks/useChatState';
 import { toast } from '@/components/ui/sonner';
 import { useVoiceAssistant } from '@/hooks/useVoiceAssistant';
+import AppKeyboardShortcuts from '../keyboard/AppKeyboardShortcuts';
+import KeyboardShortcutsDialog from '../keyboard/KeyboardShortcutsDialog';
+import { getShortcutCategories } from '../keyboard/AppKeyboardShortcuts';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 const HomeChatExperience: React.FC = () => {
   const { 
@@ -30,6 +33,36 @@ const HomeChatExperience: React.FC = () => {
     transcript,
     resetTranscript
   } = useVoiceAssistant();
+
+  // Add chat-specific keyboard shortcuts
+  const chatShortcuts = [
+    {
+      key: 'v',
+      ctrlKey: true,
+      description: 'Toggle voice input',
+      action: handleVoiceInputToggle
+    },
+    {
+      key: 'ArrowUp',
+      altKey: true,
+      description: 'Navigate to previous message',
+      action: () => {
+        // Implementation for navigating messages would go here
+        toast.info('Previous message');
+      }
+    },
+    {
+      key: 'ArrowDown',
+      altKey: true,
+      description: 'Navigate to next message',
+      action: () => {
+        // Implementation for navigating messages would go here
+        toast.info('Next message');
+      }
+    }
+  ];
+
+  useKeyboardShortcuts(chatShortcuts);
 
   // Check if we need to clear the chat based on URL params
   useEffect(() => {
@@ -87,6 +120,7 @@ const HomeChatExperience: React.FC = () => {
   return (
     <div className="flex flex-col h-full relative">
       <ChatHeader clearChat={clearChat} />
+      <AppKeyboardShortcuts />
       
       <div className="flex-1 overflow-hidden">
         <ChatMessagesContainer 
