@@ -29,7 +29,7 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
       {!role ? (
         <div className="max-w-md">
           <p className="text-sireiq-light/70 mb-4">
-            Sign up to unlock more capabilities!
+            You have {chatMessageLimit} free messages. Sign up to unlock more capabilities and continue chatting!
           </p>
           <Button 
             onClick={() => navigate('/get-started')}
