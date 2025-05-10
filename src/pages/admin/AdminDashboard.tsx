@@ -1,15 +1,13 @@
 
 import React from 'react';
 import AdminLayout from '@/components/layouts/AdminLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AdminDashboardHeader from '@/components/dashboards/admin/AdminDashboardHeader';
-import AdminProjectDetails from '@/components/dashboards/admin/AdminProjectDetails';
+import DashboardOverview from '@/components/dashboards/admin/DashboardOverview';
 import { useRole } from '@/contexts/RoleContext';
 import { Navigate } from 'react-router-dom';
 
 const AdminDashboardPage = () => {
-  const [activeSection, setActiveSection] = React.useState('users');
-  const [activeTab, setActiveTab] = React.useState('overview');
+  const [activeSection, setActiveSection] = React.useState('dashboard');
   const { role } = useRole();
 
   if (role !== 'admin') {
@@ -19,11 +17,7 @@ const AdminDashboardPage = () => {
   return (
     <AdminLayout title="Admin Dashboard">
       <AdminDashboardHeader />
-      <AdminProjectDetails 
-        activeSection={activeSection}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      <DashboardOverview />
     </AdminLayout>
   );
 };
