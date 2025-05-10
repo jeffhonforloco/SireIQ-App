@@ -22,10 +22,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   const isMobile = useIsMobile();
 
   return (
-    <header className="border-b border-sireiq-accent/20 p-2 flex justify-between items-center bg-sireiq-darker/50">
+    <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
       <div className="flex items-center gap-2">
         <div className="bg-sireiq-accent/20 p-1.5 rounded-lg shrink-0">
-          <MessageSquare className="h-4 w-4 text-sireiq-cyan" />
+          <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
         </div>
         <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
         
@@ -47,13 +47,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7"
+          className="h-8 w-8"
           title="New chat"
           onClick={() => {
             window.dispatchEvent(new CustomEvent('new-chat-created'));
           }}
         >
-          <Plus className="h-3.5 w-3.5" />
+          <Plus className="h-4 w-4" />
         </Button>
         
         <DropdownMenu>
@@ -61,9 +61,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7"
+              className="h-8 w-8"
             >
-              <MoreVertical className="h-3.5 w-3.5" />
+              <MoreVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-sireiq-darker border-sireiq-accent/30 text-sireiq-light">
