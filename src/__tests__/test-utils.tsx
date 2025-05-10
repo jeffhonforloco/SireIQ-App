@@ -6,8 +6,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import screen and fireEvent from the correct packages
-import { screen } from '@testing-library/dom';
-import { fireEvent } from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';
@@ -29,4 +29,4 @@ const customRender = (
 ) => rtlRender(ui, { wrapper: AllTheProviders, ...options });
 
 // Export the customized render method
-export { customRender as render, screen, fireEvent };
+export { customRender as render, screen, userEvent as fireEvent };
