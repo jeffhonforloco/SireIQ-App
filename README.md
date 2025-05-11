@@ -1,21 +1,93 @@
-SireIQ Overview
+# FlashMLA
 
-SireIQ is a powerful, all-in-one creative platform designed to streamline content creation across multiple mediums, including image generation, video production, music creation, and AR/VR experiences. The platform integrates advanced AI capabilities, real-time collaboration tools, and customizable workspaces to cater to users ranging from beginners to enterprise teams.
+FlashMLA is an efficient MLA decoding kernel for Hopper GPUs, optimized for variable-length sequences serving.
 
-Core Features Content Creation Tools Image Generation: AI-assisted tools for creating and editing images, with presets, templates, and layer management for advanced control. Video Production: Drag-and-drop editing, effects integration, and real-time AI previews for seamless video creation. Music Production: Tools for composing, mixing, and enhancing music, powered by AI-generated recommendations and enhancements. AR/VR Content Creation: Dedicated features for building immersive experiences, including asset libraries and real-time simulations.
+Currently released:
+- BF16, FP16
+- Paged kvcache with block size of 64
 
-AI Assistance Built-in AI assistant offering real-time suggestions, troubleshooting, and walkthroughs. Voice command integration for hands-free operations and enhanced accessibility. Features like auto-enhance, auto-edit, and intelligent recommendations to speed up workflows.
+## Quick start
 
-Real-Time Collaboration Shared workspaces with multi-user editing, live chat, and version control. Activity tracking and comment threads for efficient team communication. Task management tools for enterprise teams to assign roles and monitor progress.
+### Install
 
-Community & Resources A social hub for sharing projects, exchanging ideas, and engaging with tutorials and case studies. Integrated filters for topics, pinned discussions, and upvoted content to foster a collaborative environment.
+```bash
+python setup.py install
+```
 
-Personalization & Customization Customizable workspaces for advanced users to tailor their tools and layouts. AI-driven personalization based on user behavior and preferences. Two operational modes: Basic Mode for simplicity and Advanced Mode for full-feature access.
+### Benchmark
 
-Cross-Platform Access Fully responsive mobile and tablet interfaces, optimized for quick edits and AI-driven workflows. Desktop-grade functionality on the go, with touch-friendly navigation and voice commands.
+```bash
+python tests/test_flash_mla.py
+```
 
-Enterprise Features Team management dashboards for overseeing projects, tracking progress, and generating reports. Integration with external tools like Adobe Creative Suite, Microsoft Teams, and cloud storage platforms. Secure environment with end-to-end encryption and mandatory two-factor authentication.
+Achieving up to 3000 GB/s in memory-bound configuration and 580 TFLOPS in computation-bound configuration on H800 SXM5, using CUDA 12.8.
 
-Technical Highlights AI Integration: Powered by robust AI models for generative content creation, auto-enhancements, and intelligent suggestions. Scalability: Designed to handle individual users and enterprise teams with seamless performance under heavy workloads. Performance Optimization: Leveraging local caching and cloud rendering for minimal latency and fast response times.
+### Usage
 
-API Support: Extensible APIs for integration with third-party tools and services. SireIQ's mission is to simplify content creation while maintaining professional-grade capabilities, making it the ideal platform for creators and collaborators to bring their ideas to life efficiently and effectively.
+```python
+from flash_mla import get_mla_metadata, flash_mla_with_kvcache
+
+tile_scheduler_metadata, num_splits = get_mla_metadata(cache_seqlens, s_q * h_q // h_kv, h_kv)
+
+for i in range(num_layers):
+    ...
+    o_i, lse_i = flash_mla_with_kvcache(
+        q_i, kvcache_i, block_table, cache_seqlens, dv,
+        tile_scheduler_metadata, num_splits, causal=True,
+    )
+    ...
+```
+
+## Requirements
+
+- Hopper GPUs
+- CUDA 12.3 and above
+    - **But we highly recommend 12.8 or above for the best performance**
+- PyTorch 2.0 and above
+
+## Acknowledgement
+
+FlashMLA is inspired by [FlashAttention 2&3](https://github.com/dao-AILab/flash-attention/) and [cutlass](https://github.com/nvidia/cutlass) projects.
+
+## Community Support
+
+### MetaX
+For MetaX GPUs, visit the official website: [MetaX](https://www.metax-tech.com).
+
+The corresponding FlashMLA version can be found at: [MetaX-MACA/FlashMLA](https://github.com/MetaX-MACA/FlashMLA)
+
+
+### Moore Threads
+For the Moore Threads GPU, visit the official website: [Moore Threads](https://www.mthreads.com/).
+
+The corresponding FlashMLA version is available on GitHub: [MooreThreads/MT-flashMLA](https://github.com/MooreThreads/MT-flashMLA).
+
+
+### Hygon DCU
+For the Hygon DCU, visit the official website: [Hygon Developer](https://developer.sourcefind.cn/).
+
+The corresponding FlashMLA version is available here: [OpenDAS/MLAttention](https://developer.sourcefind.cn/codes/OpenDAS/MLAttention).
+
+
+### Intellifusion
+For the Intellifusion NNP, visit the official website: [Intellifusion](https://www.intellif.com).
+
+The corresponding FlashMLA version is available on Gitee: [Intellifusion/tyllm](https://gitee.com/Intellifusion_2025/tyllm/blob/master/python/tylang/flash_mla.py).
+
+
+### Iluvatar Corex
+For Iluvatar Corex GPUs, visit the official website: [Iluvatar Corex](https://www.iluvatar.com).
+
+The corresponding FlashMLA version is available on GitHub: [Deep-Spark/FlashMLA](https://github.com/Deep-Spark/FlashMLA/tree/iluvatar_flashmla)
+
+## Citation
+
+```bibtex
+@misc{flashmla2025,
+      title={FlashMLA: Efficient MLA decoding kernels},
+      author={Jiashi Li},
+      year={2025},
+      publisher = {GitHub},
+      howpublished = {\url{https://github.com/deepseek-ai/FlashMLA}},
+}
+```
