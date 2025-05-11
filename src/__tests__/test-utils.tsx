@@ -6,7 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import screen and userEvent from the correct packages
-import { screen } from '@testing-library/dom';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
