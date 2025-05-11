@@ -59,6 +59,7 @@ import ContentSummarizer from '@/pages/features/ContentSummarizer';
 import CodeGenerator from '@/pages/features/CodeGenerator';
 import ImageEnhancer from '@/pages/features/ImageEnhancer';
 import AIAssistant from '@/pages/features/AIAssistant';
+import AIWorkflows from '@/pages/AIWorkflows';
 
 // Import enterprise pages
 import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
@@ -140,6 +141,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/account/settings" element={<AccountSettings />} />
+                <Route path="/ai-workflows" element={<AIWorkflows />} />
 
                 {/* Company pages */}
                 <Route path="/about" element={<AboutUs />} />
