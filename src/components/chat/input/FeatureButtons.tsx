@@ -8,7 +8,8 @@ import {
   Code, 
   BarChart2, 
   Image, 
-  Sparkles 
+  Sparkles,
+  Music3
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useNavigate } from 'react-router-dom';
@@ -39,15 +40,15 @@ const FeatureButtons: React.FC<FeatureButtonsProps> = ({
       path: "/features/workflow-optimization"
     },
     {
+      name: "Neural Composer",
+      prompt: "Compose creative content about ",
+      icon: <Music3 className="h-4 w-4" />,
+      path: "/features/neural-composer"
+    },
+    {
       name: "Content Distiller",
       prompt: "Distill this content: ",
       icon: <Copy className="h-4 w-4" />,
-      path: "/features/content-creation"
-    },
-    {
-      name: "Neural Composer",
-      prompt: "Write creative content about ",
-      icon: <Feather className="h-4 w-4" />,
       path: "/features/content-creation"
     },
     {

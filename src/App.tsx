@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -59,6 +58,7 @@ import ContentSummarizer from '@/pages/features/ContentSummarizer';
 import CodeGenerator from '@/pages/features/CodeGenerator';
 import ImageEnhancer from '@/pages/features/ImageEnhancer';
 import AIAssistant from '@/pages/features/AIAssistant';
+import NeuralComposer from '@/pages/features/NeuralComposer';
 import AIWorkflows from '@/pages/AIWorkflows';
 
 // Import enterprise pages
@@ -126,6 +126,7 @@ function App() {
                 <Route path="/features/code-generator" element={<CodeGenerator />} />
                 <Route path="/features/image-enhancer" element={<ImageEnhancer />} />
                 <Route path="/features/ai-assistant" element={<AIAssistant />} />
+                <Route path="/features/neural-composer" element={<NeuralComposer />} />
                 <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                 <Route path="/enterprise" element={<Enterprise />} />
                 <Route path="/enterprise/team-management" element={<TeamManagement />} />
