@@ -1,11 +1,12 @@
 
 import React, { ReactElement } from 'react';
-import { render as rtlRender, RenderOptions, screen } from '@testing-library/react';
+import { render as rtlRender, RenderOptions } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
-// Import userEvent from the correct package
+// Import screen from @testing-library/dom (where it's actually exported from)
+import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
