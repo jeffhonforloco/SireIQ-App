@@ -5,15 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
-// Import everything we need from testing-library
-import * as testingLibrary from '@testing-library/react';
+// Import directly from testing-library
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';
-
-// Extract screen from testing-library
-const { screen } = testingLibrary;
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
