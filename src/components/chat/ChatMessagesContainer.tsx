@@ -38,7 +38,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   }, [messages, isTyping]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-6">
+    <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-3xl mx-auto">
       {/* Welcome message when there are no messages */}
       {messages.length === 0 && (
         <ChatWelcomeSection 
@@ -48,9 +48,11 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       )}
       
       {/* Message history */}
-      {messages.map((message) => (
-        <ChatMessage key={message.id} message={message} />
-      ))}
+      <div className="space-y-6">
+        {messages.map((message) => (
+          <ChatMessage key={message.id} message={message} />
+        ))}
+      </div>
       
       {/* Typing indicator */}
       {isTyping && <ChatTypingIndicator />}
@@ -58,7 +60,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       {/* Quick suggestions */}
       {messages.length > 0 && messages.length < 3 && !isTyping && (
         <div className="pt-2 pb-4">
-          <p className="text-sm text-sireiq-light/60 mb-3">Try asking about:</p>
+          <p className="text-sm text-sireiq-light/60 mb-3 font-chat">Try asking about:</p>
           <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'flex-wrap gap-2'}`}>
             {suggestions.map((suggestion, index) => (
               <QuickSuggestionButton 

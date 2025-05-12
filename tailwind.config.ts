@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { tailwindThemeExtensions } from "./src/styles/tailwind-design-system";
 
@@ -85,6 +84,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse": "pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "fade-in": "fade-in 0.5s ease-out forwards",
+      },
+      fontFamily: {
+        chat: ['"SF Pro Display"', '"Inter"', 'sans-serif'],
       },
     },
   },

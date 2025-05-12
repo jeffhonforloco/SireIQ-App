@@ -7,11 +7,11 @@ import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import directly from testing-library
 import userEvent from '@testing-library/user-event';
-import * as testingLibrary from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';
-export const { screen } = testingLibrary;
+export { screen };
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

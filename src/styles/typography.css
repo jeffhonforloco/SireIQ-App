@@ -30,4 +30,13 @@
   small {
     @apply text-sm;
   }
+  
+  /* Chat-specific typography */
+  .chat-text {
+    @apply font-chat text-base tracking-wide leading-relaxed;
+  }
+  
+  .chat-heading {
+    @apply font-chat font-semibold text-xl;
+  }
 }
