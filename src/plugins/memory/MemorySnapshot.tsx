@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Memory, Brain, Search, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
+import { MemoryStick, Brain, Search, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 type VectorQuery = {
@@ -67,7 +67,7 @@ const MemorySnapshot: React.FC = () => {
     <Card className="border-sireiq-accent/30 bg-sireiq-darker">
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <CardTitle className="text-md font-medium flex items-center gap-2">
-          <Memory className="h-4 w-4 text-sireiq-cyan" />
+          <MemoryStick className="h-4 w-4 text-sireiq-cyan" />
           <span>Memory Snapshot</span>
         </CardTitle>
         <Button variant="ghost" size="sm" onClick={handleRefresh}>
