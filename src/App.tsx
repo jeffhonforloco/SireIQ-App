@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -18,6 +19,7 @@ import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
 import AccountSettings from '@/pages/AccountSettings';
+import Marketplace from '@/pages/Marketplace';  // Add the new Marketplace import
 
 // Company pages
 import AboutUs from '@/pages/AboutUs';
@@ -109,6 +111,7 @@ function App() {
                 <Route path="/get-started" element={<GetStarted />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/features" element={<Features />} />
+                <Route path="/marketplace" element={<Marketplace />} />  {/* Add the new Marketplace route */}
                 <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                 <Route path="/features/personality-engine" element={<PersonalityEngine />} />
                 <Route path="/features/customize-personality" element={<CustomizePersonality />} />

@@ -5,11 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
-// Import screen directly from @testing-library/react
-import * as testingLibrary from '@testing-library/react';
+// Import from @testing-library/react
 import userEvent from '@testing-library/user-event';
-
-const { screen } = testingLibrary;
+import { screen } from '@testing-library/react';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';

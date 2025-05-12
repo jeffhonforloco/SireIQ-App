@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { ArrowUpRight, Star, Download, Download as DownloadIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 type Agent = {
   id: string;
@@ -73,8 +74,13 @@ const featuredAgents: Agent[] = [
 
 const FeaturedAgents: React.FC = () => {
   const [isEnabled] = useLocalStorage('marketplace-teaser-enabled', true);
+  const navigate = useNavigate();
   
   if (!isEnabled) return null;
+
+  const handleExploreMarketplace = () => {
+    navigate('/marketplace');
+  };
 
   return (
     <div className="w-full px-4 py-8 bg-sireiq-darker">
@@ -84,7 +90,11 @@ const FeaturedAgents: React.FC = () => {
             <Star className="h-5 w-5 text-sireiq-cyan" />
             Featured Agents
           </h2>
-          <Button variant="link" className="text-sireiq-cyan">
+          <Button 
+            variant="link" 
+            className="text-sireiq-cyan"
+            onClick={handleExploreMarketplace}
+          >
             Explore Marketplace <ArrowUpRight className="ml-1 h-4 w-4" />
           </Button>
         </div>
