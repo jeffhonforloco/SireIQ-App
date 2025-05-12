@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 import { tailwindThemeExtensions } from "./src/styles/tailwind-design-system";
 
@@ -86,7 +87,9 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
       },
       fontFamily: {
+        display: ['"SF Pro Display"', '"Inter"', 'sans-serif'],
         chat: ['"SF Pro Display"', '"Inter"', 'sans-serif'],
+        sans: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
       },
     },
   },
