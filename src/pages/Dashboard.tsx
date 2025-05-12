@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -12,6 +11,11 @@ import QuickPreferences from '@/components/onboarding/QuickPreferences';
 import StartPlatform from '@/components/onboarding/StartPlatform';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import GovernancePanel from '@/plugins/governance/GovernancePanel';
+import MemorySnapshot from '@/plugins/memory/MemorySnapshot';
+import WorkflowLauncher from '@/plugins/workflows/WorkflowLauncher';
+import EdgeSyncIndicator from '@/plugins/edge/EdgeSyncIndicator';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 const Dashboard = () => {
   const { role, isFirstTimeUser, onboardingStep } = useRole();
@@ -71,32 +75,59 @@ const Dashboard = () => {
 
   // Render the appropriate dashboard based on role
   return (
-    <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
-      <Helmet>
-        <title>SireIQ | {getDashboardTitle()}</title>
-        <meta name="description" content={`Your personalized SireIQ ${role} dashboard.`} />
-      </Helmet>
-      
-      <Navbar />
-      
-      <motion.main 
-        className="container mx-auto pt-28 pb-20 px-4 md:px-6"
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        transition={{ duration: 0.4 }}
-      >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-sireiq-accent/20">
-          <h1 className="text-2xl font-bold text-gradient">{getDashboardTitle()}</h1>
+    <SidebarProvider collapsedWidth={56}>
+      <div className="min-h-screen bg-sireiq-dark text-sireiq-light">
+        <Helmet>
+          <title>SireIQ | {getDashboardTitle()}</title>
+          <meta name="description" content={`Your personalized SireIQ ${role} dashboard.`} />
+        </Helmet>
+        
+        <Navbar />
+        
+        <div className="flex w-full">
+          <motion.main 
+            className="container mx-auto pt-28 pb-20 px-4 md:px-6"
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b border-sireiq-accent/20">
+              <h1 className="text-2xl font-bold text-gradient">{getDashboardTitle()}</h1>
+              
+              <div className="flex items-center gap-3">
+                <EdgeSyncIndicator />
+                <WorkflowLauncher />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
+              {/* Main content area - 5 columns */}
+              <div className="lg:col-span-5 space-y-6">
+                {role === 'user' && <UserDashboard />}
+                {role === 'developer' && <DeveloperDashboard />}
+                {role === 'enterprise' && <EnterpriseDashboard />}
+              </div>
+              
+              {/* Sidebar - 2 columns */}
+              <div className="lg:col-span-2 space-y-6">
+                {/* Memory Snapshot is added here */}
+                <MemorySnapshot />
+                
+                {/* Keep original sidebar content */}
+                {/* User stats */}
+                {/* Premium features */}
+              </div>
+            </div>
+          </motion.main>
+          
+          {/* Governance Panel */}
+          <GovernancePanel />
         </div>
         
-        {role === 'user' && <UserDashboard />}
-        {role === 'developer' && <DeveloperDashboard />}
-        {role === 'enterprise' && <EnterpriseDashboard />}
-      </motion.main>
-      
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </SidebarProvider>
   );
 };
 

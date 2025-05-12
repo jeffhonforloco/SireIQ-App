@@ -8,6 +8,7 @@ import AuthButtons from './navbar/AuthButtons';
 import MobileMenu from './navbar/MobileMenu';
 import { ThemeToggle } from './ui/theme-toggle';
 import BuildInfoSection from './navbar/BuildInfoSection';
+import EdgeSyncIndicator from '@/plugins/edge/EdgeSyncIndicator';
 import {
   Menubar,
   MenubarMenu,
@@ -57,6 +58,7 @@ const Navbar: React.FC = () => {
         
         {/* Auth Buttons and Build Info Toggle - Right side */}
         <div className="hidden md:flex items-center space-x-4 pr-0 border-0 border-none flex-none">
+          <EdgeSyncIndicator />
           <ThemeToggle />
           
           {/* "Build it" menu item */}

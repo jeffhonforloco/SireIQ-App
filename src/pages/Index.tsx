@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
+import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
 
 const Index = () => {
   return (
@@ -23,6 +24,9 @@ const Index = () => {
           <HomeChatExperience />
         </div>
       </div>
+      
+      {/* Featured Agents Marketplace Teaser */}
+      <FeaturedAgents />
     </div>
   );
 };
