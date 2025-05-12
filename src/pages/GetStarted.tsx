@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'sonner';
@@ -6,6 +7,8 @@ import { useRole } from '@/contexts/RoleContext';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import KeyboardShortcutsDialog from '@/components/keyboard/KeyboardShortcutsDialog';
 import { getShortcutCategories } from '@/components/keyboard/AppKeyboardShortcuts';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const GetStarted = () => {
   const [step, setStep] = useState<number>(1);
@@ -29,7 +32,7 @@ const GetStarted = () => {
     if (verificationCode === demoCode || verificationCode.length === 6) {
       toast.success("Email verified successfully!");
       
-      // Set up the user role and onboarding state
+      // Set up the user role and onboarding state - always start as basic user
       setRole('user');
       setIsFirstTimeUser(true);
       setOnboardingStep(1);
@@ -57,7 +60,9 @@ const GetStarted = () => {
         <meta name="description" content="Get started with SireIQ" />
       </Helmet>
       
-      <div className="container mx-auto px-4 py-8 md:py-16">
+      <Navbar />
+      
+      <div className="container mx-auto px-4 py-8 md:py-16 pt-32">
         <div className="flex items-center justify-center mb-10">
           <h1 className="text-3xl font-bold text-gradient glow">Get Started with SireIQ</h1>
         </div>
@@ -87,6 +92,8 @@ const GetStarted = () => {
           <KeyboardShortcutsDialog categories={shortcutCategories} />
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

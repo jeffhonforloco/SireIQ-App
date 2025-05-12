@@ -28,7 +28,7 @@ export const getUpgradeFeatures = (currentRole: Role | null): {role: Role, featu
   const result: {role: Role, features: string[]}[] = [];
   const currentFeatures = new Set(getAvailableFeatures(currentRole));
   
-  // Add developer features if user is on personal plan
+  // Add developer features if user is on basic plan
   if (currentRole === 'user') {
     const developerOnlyFeatures = roleFeatures.developer.filter(f => !currentFeatures.has(f));
     result.push({
@@ -37,7 +37,7 @@ export const getUpgradeFeatures = (currentRole: Role | null): {role: Role, featu
     });
   }
   
-  // Add enterprise features if user is on personal or developer plan
+  // Add enterprise features if user is on basic or developer plan
   if (currentRole === 'user' || currentRole === 'developer') {
     const enterpriseOnlyFeatures = roleFeatures.enterprise.filter(f => !currentFeatures.has(f));
     result.push({
@@ -55,7 +55,7 @@ export const getFeatureDisplayName = (feature: string): string => {
     basic_dashboard: 'Basic Dashboard',
     content_creation: 'Content Creation',
     ai_assistant_basic: 'Basic AI Assistant',
-    chat_basic: 'Limited Chat (3 messages)',
+    chat_basic: 'Limited Chat (10 messages)',
     chat_advanced: 'Extended Chat (50 messages)',
     chat_unlimited: 'Unlimited Chat',
     coding_tools: 'Coding Tools',

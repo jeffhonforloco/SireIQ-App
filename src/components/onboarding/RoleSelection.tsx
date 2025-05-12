@@ -1,18 +1,16 @@
 
 import React from 'react';
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useRole } from '@/contexts/RoleContext';
-import { User, Users, Code, Building } from 'lucide-react';
+import { Users } from 'lucide-react';
 import RoleFeatureGuide from './RoleFeatureGuide';
 
 const RoleSelection = () => {
   const { setRole, setOnboardingStep } = useRole();
-  const [selectedRole, setSelectedRole] = React.useState<'user'>('user');
 
   const handleContinue = () => {
-    setRole(selectedRole);
+    // Always set to 'user' role by default
+    setRole('user');
     setOnboardingStep(2);
   };
 
@@ -23,24 +21,16 @@ const RoleSelection = () => {
       </h1>
       
       <p className="text-center text-sireiq-light/70">
-        You're now set up with a regular user account. You can personalize your experience in the next steps, and upgrade to Developer or Enterprise accounts from your dashboard later.
+        You're now set up with a free account. You can personalize your experience in the next steps, and upgrade to Developer or Enterprise plans from your dashboard anytime.
       </p>
       
-      <RadioGroup 
-        className="grid grid-cols-1 gap-4 w-full" 
-        defaultValue="user"
-        value="user"
-        onValueChange={(value) => setSelectedRole(value as 'user')}
-      >
-        <div className="relative flex flex-col items-center border rounded-lg p-6 cursor-pointer transition-all bg-sireiq-accent/20 border-sireiq-cyan">
-          <RadioGroupItem value="user" id="user" className="sr-only" />
-          <Users className="h-10 w-10 mb-4 text-sireiq-cyan" />
-          <Label htmlFor="user" className="text-lg font-semibold mb-2">User</Label>
-          <p className="text-sm text-center text-sireiq-light/70">
-            Personal assistant for daily tasks, content creation, and conversations
-          </p>
-        </div>
-      </RadioGroup>
+      <div className="relative flex flex-col items-center border rounded-lg p-6 cursor-pointer transition-all bg-sireiq-accent/20 border-sireiq-cyan w-full max-w-md">
+        <Users className="h-10 w-10 mb-4 text-sireiq-cyan" />
+        <h3 className="text-lg font-semibold mb-2">Free Account</h3>
+        <p className="text-sm text-center text-sireiq-light/70">
+          Personal assistant for daily tasks, content creation, and conversations with upgrade options available
+        </p>
+      </div>
       
       {/* Feature guide */}
       <div className="w-full mt-8 border-t border-sireiq-accent/20 pt-8">

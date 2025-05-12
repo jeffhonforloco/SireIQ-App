@@ -48,7 +48,7 @@ const featureInfo = {
 
 // Map roles to their user-friendly titles and icons
 const roleInfo = {
-  user: { title: 'Personal', icon: Users },
+  user: { title: 'Free', icon: Users },
   developer: { title: 'Developer', icon: Code },
   enterprise: { title: 'Enterprise', icon: Building },
 };
@@ -68,9 +68,9 @@ const RoleFeatureGuide = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Features by Account Type</h2>
+      <h2 className="text-2xl font-bold">Account Features & Upgrade Options</h2>
       <p className="text-sireiq-light/70">
-        Discover what features are available with each account level. Upgrade your account to unlock more capabilities.
+        Start with a free account and upgrade anytime to unlock premium features for your needs.
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">

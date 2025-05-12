@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
-import AccountTypeSelector, { AccountType } from './AccountTypeSelector';
 import PasswordStrengthIndicator from './PasswordStrengthIndicator';
 import { usePasswordStrength } from '@/hooks/usePasswordStrength';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -19,7 +18,6 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [accountType, setAccountType] = useState<AccountType>('personal');
   const [registrationMethod, setRegistrationMethod] = useState<'email' | 'phone'>('email');
   const [isProcessing, setIsProcessing] = useState(false);
   
@@ -151,11 +149,6 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
               />
             </div>
             
-            <AccountTypeSelector 
-              accountType={accountType}
-              onChange={setAccountType}
-            />
-            
             <div>
               <label htmlFor="password" className="block text-sm font-medium mb-1">Create Password</label>
               <div className="relative">
@@ -228,11 +221,6 @@ const RegistrationForm = ({ onSuccess }: RegistrationFormProps) => {
                 placeholder="Enter your phone number"
               />
             </div>
-            
-            <AccountTypeSelector 
-              accountType={accountType}
-              onChange={setAccountType}
-            />
             
             <div>
               <label htmlFor="phonePassword" className="block text-sm font-medium mb-1">Create Password</label>
