@@ -92,14 +92,22 @@ const FeaturedAgents: React.FC = () => {
   return (
     <div className="w-full px-4 py-6 bg-sireiq-darker">
       <div className="container mx-auto">
-        {/* Mobile Header - Always visible */}
+        {/* Header - Always visible */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <Star className="h-5 w-5 text-sireiq-cyan" />
             Featured Agents
           </h2>
           
-          {isMobile ? (
+          <div className="flex gap-2 items-center">
+            <Button 
+              variant="link" 
+              className="text-sireiq-cyan"
+              onClick={handleExploreMarketplace}
+            >
+              Explore Marketplace <ArrowUpRight className="ml-1 h-4 w-4" />
+            </Button>
+            
             <Button 
               variant="ghost" 
               size="sm"
@@ -113,32 +121,11 @@ const FeaturedAgents: React.FC = () => {
                 <ChevronDown className="h-5 w-5" />
               )}
             </Button>
-          ) : (
-            <Button 
-              variant="link" 
-              className="text-sireiq-cyan"
-              onClick={handleExploreMarketplace}
-            >
-              Explore Marketplace <ArrowUpRight className="ml-1 h-4 w-4" />
-            </Button>
-          )}
+          </div>
         </div>
 
-        {/* Mobile Explore Button - Only visible when expanded */}
-        {isMobile && isExpanded && (
-          <div className="flex justify-end mb-4">
-            <Button 
-              variant="link" 
-              className="text-sireiq-cyan"
-              onClick={handleExploreMarketplace}
-            >
-              Explore Marketplace <ArrowUpRight className="ml-1 h-4 w-4" />
-            </Button>
-          </div>
-        )}
-
-        {/* Content - Visible based on device and expanded state */}
-        {(!isMobile || isExpanded) && (
+        {/* Content - Conditionally visible based on expanded state */}
+        {isExpanded && (
           <div className="relative">
             <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
               {featuredAgents.map((agent) => (
