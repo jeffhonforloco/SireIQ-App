@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -104,10 +105,10 @@ const NewChatButtonWrapper = () => {
 };
 
 function App() {
-  // Feature flags
-  const enableGovernance = process.env.REACT_APP_ENABLE_GOVERNANCE === 'true';
-  const enableMemory = process.env.REACT_APP_ENABLE_MEMORY === 'true';
-  const enableWorkflow = process.env.REACT_APP_ENABLE_WORKFLOW === 'true';
+  // Feature flags - using import.meta.env instead of process.env
+  const enableGovernance = import.meta.env.VITE_REACT_APP_ENABLE_GOVERNANCE === 'true';
+  const enableMemory = import.meta.env.VITE_REACT_APP_ENABLE_MEMORY === 'true';
+  const enableWorkflow = import.meta.env.VITE_REACT_APP_ENABLE_WORKFLOW === 'true';
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
