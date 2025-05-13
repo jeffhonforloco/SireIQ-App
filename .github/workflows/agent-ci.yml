@@ -1,0 +1,109 @@
+
+name: Agent CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'services/agents/**'
+      - 'src/plugins/**'
+      - '.github/workflows/agent-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'services/agents/**'
+      - 'src/plugins/**'
+      - '.github/workflows/agent-ci.yml'
+
+jobs:
+  build-test:
+    name: Build & Test Agents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linter on agent code
+        run: npx eslint services/agents/**/*.js
+      
+      - name: Run Jest tests
+        run: npm test -- --testPathPattern=services/agents
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Build and start agent containers
+        run: docker-compose up -d --build governance-agent memory-agent workflow-agent
+      
+      - name: Wait for services to be ready
+        run: |
+          sleep 10
+          docker ps
+      
+      - name: Test agent health endpoints
+        run: |
+          curl --silent --fail http://localhost:3001/health || (echo "Governance agent health check failed" && exit 1)
+          curl --silent --fail http://localhost:3002/health || (echo "Memory agent health check failed" && exit 1)
+          curl --silent --fail http://localhost:3003/health || (echo "Workflow agent health check failed" && exit 1)
+      
+      - name: Run integration tests
+        run: npm run test:integration || (echo "Integration tests failed" && exit 1)
+      
+      - name: Stop containers
+        if: always()
+        run: docker-compose down
+
+  frontend-test:
+    name: Test Frontend Plugins
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linter on plugin code
+        run: npx eslint src/plugins/**/*.{tsx,ts}
+      
+      - name: Run unit tests
+        run: npm test -- --testPathPattern=src/plugins
+      
+      - name: Build frontend
+        run: npm run build
+        env:
+          REACT_APP_ENABLE_GOVERNANCE: 'true'
+          REACT_APP_ENABLE_MEMORY: 'true'
+          REACT_APP_ENABLE_WORKFLOW: 'true'
+      
+      - name: Check build output
+        run: ls -la dist
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Run security scan
+        uses: snyk/actions/node@master
+        with:
+          args: --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

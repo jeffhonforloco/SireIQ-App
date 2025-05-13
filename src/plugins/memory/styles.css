@@ -1,0 +1,46 @@
+
+.memory-browser {
+  @apply p-4 rounded-lg bg-sireiq-accent/5 border border-sireiq-accent/10 text-sireiq-light;
+}
+
+.memory-browser .panel-header {
+  @apply flex items-center gap-2 mb-4;
+}
+
+.memory-browser .panel-header h2 {
+  @apply text-xl font-semibold;
+}
+
+.memory-browser .memory-list {
+  @apply space-y-3;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.memory-browser .memory-card {
+  @apply border-sireiq-accent/20 bg-sireiq-darker transition-all duration-200;
+}
+
+.memory-browser .memory-card:hover {
+  @apply border-sireiq-accent/40;
+}
+
+.memory-browser .memory-text {
+  @apply my-2 text-sm;
+}
+
+.memory-browser .category-badge {
+  @apply px-2 py-0.5 rounded-full text-xs bg-blue-500/20 text-blue-300;
+}
+
+.memory-browser .source-badge {
+  @apply px-2 py-0.5 rounded-full text-xs bg-purple-500/20 text-purple-300;
+}
+
+.memory-browser .relevance-score {
+  @apply px-1.5 py-0.5 text-xs rounded bg-green-500/20 text-green-300;
+}
+
+.memory-browser .empty-state {
+  @apply flex flex-col items-center justify-center p-8 text-sireiq-light/60;
+}

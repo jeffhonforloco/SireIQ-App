@@ -1,0 +1,41 @@
+
+.governance-panel {
+  @apply p-4 rounded-lg bg-sireiq-accent/5 border border-sireiq-accent/10 text-sireiq-light;
+}
+
+.governance-panel .panel-header {
+  @apply flex items-center gap-2 mb-4;
+}
+
+.governance-panel .panel-header h2 {
+  @apply text-xl font-semibold;
+}
+
+.governance-panel .summary-card {
+  @apply mb-6 border-sireiq-accent/20 bg-sireiq-darker;
+}
+
+.governance-panel .policies-list {
+  @apply space-y-4;
+}
+
+.governance-panel .policies-list h3 {
+  @apply text-lg font-medium mb-2;
+}
+
+.governance-panel .policy-item {
+  @apply p-3 rounded-md bg-sireiq-accent/10 border border-sireiq-accent/20;
+}
+
+.governance-panel .policy-item h4 {
+  @apply font-medium;
+}
+
+.governance-panel .status-badge {
+  @apply px-2 py-0.5 rounded-full text-xs flex items-center gap-1;
+}
+
+.governance-panel.loading,
+.governance-panel.error {
+  @apply flex flex-col items-center justify-center gap-4 py-8 text-sireiq-light/60;
+}

@@ -1,0 +1,86 @@
+
+.workflow-launcher {
+  @apply p-4 rounded-lg bg-sireiq-accent/5 border border-sireiq-accent/10 text-sireiq-light;
+}
+
+.workflow-launcher .panel-header {
+  @apply flex items-center gap-2 mb-4;
+}
+
+.workflow-launcher .panel-header h2 {
+  @apply text-xl font-semibold;
+}
+
+.workflow-launcher h3 {
+  @apply text-lg font-medium mb-3;
+}
+
+.workflow-launcher .sections-container {
+  @apply flex flex-col gap-6;
+}
+
+.workflow-launcher .templates-list {
+  @apply grid gap-3;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.workflow-launcher .instances-list {
+  @apply space-y-3;
+}
+
+.workflow-launcher .template-card {
+  @apply border-sireiq-accent/20 bg-sireiq-darker;
+}
+
+.workflow-launcher .instance-card {
+  @apply border-sireiq-accent/20 bg-sireiq-darker;
+}
+
+.workflow-launcher .template-header {
+  @apply flex justify-between items-center mb-1;
+}
+
+.workflow-launcher .instance-header {
+  @apply flex justify-between items-center mb-2;
+}
+
+.workflow-launcher .category-badge {
+  @apply px-2 py-0.5 rounded-full text-xs bg-blue-500/20 text-blue-300;
+}
+
+.workflow-launcher .steps-indicator {
+  @apply text-xs text-sireiq-light/60;
+}
+
+.workflow-launcher .instance-id {
+  @apply text-xs text-sireiq-light/50;
+}
+
+.workflow-launcher .instance-details {
+  @apply mt-3;
+}
+
+.workflow-launcher .status-icon {
+  @apply h-4 w-4;
+}
+
+.workflow-launcher .status-icon.completed {
+  @apply text-green-500;
+}
+
+.workflow-launcher .status-icon.failed {
+  @apply text-red-500;
+}
+
+.workflow-launcher .status-icon.running {
+  @apply text-blue-500;
+}
+
+.workflow-launcher .empty-state {
+  @apply flex items-center justify-center p-6 text-sireiq-light/40 border border-dashed border-sireiq-accent/20 rounded-lg;
+}
+
+.workflow-launcher.loading,
+.workflow-launcher.error {
+  @apply flex flex-col items-center justify-center gap-4 py-8 text-sireiq-light/60;
+}

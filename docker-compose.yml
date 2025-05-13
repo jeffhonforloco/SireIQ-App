@@ -28,3 +28,58 @@ services:
       - "4010:4010"
     volumes:
       - ./api:/app
+
+  # Agent services
+  governance-agent:
+    build:
+      context: ./services/agents/governance
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./services/agents/governance:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  memory-agent:
+    build:
+      context: ./services/agents/memory
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./services/agents/memory:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  workflow-agent:
+    build:
+      context: ./services/agents/workflow
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./services/agents/workflow:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

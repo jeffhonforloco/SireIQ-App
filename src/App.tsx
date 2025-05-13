@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -77,7 +76,13 @@ import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
 
 import MobileBottomNav from '@/components/MobileBottomNav';
 
-// Component to determine if NewChatButton should be displayed
+// Import plugins
+import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
+import GovernancePanel from '@/plugins/governance';
+import MemoryBrowser from '@/plugins/memory';
+import WorkflowLauncher from '@/plugins/workflow';
+
+// Component to determine if NewChatButton should be shown
 const NewChatButtonWrapper = () => {
   const location = useLocation();
   
@@ -99,6 +104,11 @@ const NewChatButtonWrapper = () => {
 };
 
 function App() {
+  // Feature flags
+  const enableGovernance = process.env.REACT_APP_ENABLE_GOVERNANCE === 'true';
+  const enableMemory = process.env.REACT_APP_ENABLE_MEMORY === 'true';
+  const enableWorkflow = process.env.REACT_APP_ENABLE_WORKFLOW === 'true';
+  
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
       <HelmetProvider>
@@ -169,6 +179,20 @@ function App() {
               </Routes>
               <NewChatButtonWrapper />
               <MobileBottomNav />
+              
+              {/* Add feature-flagged plugins */}
+              {enableGovernance && <div className="fixed bottom-4 left-4 z-50 max-w-xs">
+                <GovernancePanel />
+              </div>}
+              
+              {enableMemory && <div className="fixed top-20 right-4 z-50 max-w-xs">
+                <MemoryBrowser />
+              </div>}
+              
+              {enableWorkflow && <div className="fixed bottom-4 right-4 z-50 max-w-xs">
+                <WorkflowLauncher />
+              </div>}
+              
               <Toaster position="bottom-right" />
             </Router>
           </VoiceAssistantProvider>

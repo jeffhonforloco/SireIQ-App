@@ -1,0 +1,90 @@
+
+version: '1.0'
+
+agents:
+  - name: Governance Panel
+    version: 1.0.0
+    description: Monitors and enforces policy compliance across your AI operations
+    tags: [governance, admin, compliance, security]
+    entrypoint: /api/agents/governance/run
+    author: SireIQ
+    icon: shield
+    capabilities:
+      - Policy enforcement
+      - Compliance monitoring
+      - Audit trail generation
+      - Risk assessment
+    requirements:
+      cpu: "0.5"
+      memory: "256Mi"
+    pricing:
+      tier: premium
+      
+  - name: Memory Browser
+    version: 1.0.0
+    description: Browse, search and manage AI's memory and context storage
+    tags: [memory, ui, context, vector]
+    entrypoint: /api/agents/memory/run
+    author: SireIQ
+    icon: database
+    capabilities:
+      - Vector search
+      - Memory management
+      - Context browsing
+      - Semantic retrieval
+    requirements:
+      cpu: "0.5"
+      memory: "512Mi"
+    pricing:
+      tier: standard
+      
+  - name: Workflow Launcher
+    version: 1.0.0
+    description: Create and manage automated workflows for common tasks
+    tags: [workflow, ui, automation]
+    entrypoint: /api/agents/workflow/run
+    author: SireIQ
+    icon: play
+    capabilities:
+      - Workflow templating
+      - Task automation
+      - Process monitoring
+      - Integration with other agents
+    requirements:
+      cpu: "0.5"
+      memory: "256Mi"
+    pricing:
+      tier: standard
+
+categories:
+  - name: productivity
+    displayName: Productivity
+    description: Agents that help you get work done faster
+    
+  - name: analytics
+    displayName: Analytics
+    description: Agents that provide insights and analysis
+    
+  - name: security
+    displayName: Security & Compliance
+    description: Agents for security monitoring and compliance
+    
+  - name: development
+    displayName: Development
+    description: Agents for software development and coding
+
+integrations:
+  - type: knowledgebase
+    name: Private Knowledge Base
+    description: Integrate with your organization's knowledge base
+    url: /api/integrations/knowledge
+    
+  - type: calendar
+    name: Calendar Integration
+    description: Connect to your calendar for scheduling and reminders
+    url: /api/integrations/calendar
+    
+  - type: messaging
+    name: Team Messaging
+    description: Integrate with Slack, Teams, or Discord
+    url: /api/integrations/messaging
