@@ -1,11 +1,10 @@
 
 import React from 'react';
-import { Routes, Route, useRoutes } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import NewChatButtonWrapper from './NewChatButtonWrapper';
 import FeatureFlaggedPlugins from './FeatureFlaggedPlugins';
-import appRoutes from '@/routes/appRoutes';
+import AppRoutes from '@/components/routing/AppRoutes';
 
 interface AppLayoutProps {
   enableGovernance: boolean;
@@ -20,15 +19,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
 }) => {
   return (
     <>
-      <Routes>
-        {appRoutes.map((route, index) => (
-          <Route 
-            key={index}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
-      </Routes>
+      <AppRoutes />
       
       <NewChatButtonWrapper />
       <MobileBottomNav />
