@@ -10,7 +10,6 @@ import { MessageSquare } from 'lucide-react';
 import { Message } from './types';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
 import { useRole } from '@/contexts/RoleContext';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 const HomepageChat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -131,26 +130,24 @@ const HomepageChat: React.FC = () => {
       </CardHeader>
       
       <CardContent className="p-0">
-        <ScrollArea className="h-[400px]">
-          <div className="space-y-4 p-4 bg-gray-900">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
-            ))}
-            
-            {isTyping && <TypingIndicator />}
-            
-            {showSignupPrompt && (
-              <SignupPrompt 
-                onSignUp={handleSignUp} 
-                onSignIn={handleSignIn}
-                message={getPromptMessage()}
-                isAuthenticated={!!role}
-              />
-            )}
-            
-            <div ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
+        <div className="space-y-4 h-[400px] overflow-y-auto p-4 bg-gray-900">
+          {messages.map((message) => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+          
+          {isTyping && <TypingIndicator />}
+          
+          {showSignupPrompt && (
+            <SignupPrompt 
+              onSignUp={handleSignUp} 
+              onSignIn={handleSignIn}
+              message={getPromptMessage()}
+              isAuthenticated={!!role}
+            />
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
       </CardContent>
       
       <CardFooter className="bg-gray-800 border-t border-gray-700 p-4">
