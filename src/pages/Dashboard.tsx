@@ -11,9 +11,7 @@ import QuickPreferences from '@/components/onboarding/QuickPreferences';
 import StartPlatform from '@/components/onboarding/StartPlatform';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import GovernancePanel from '@/plugins/governance/GovernancePanel';
 import MemorySnapshot from '@/plugins/memory/MemorySnapshot';
-import WorkflowLauncher from '@/plugins/workflows/WorkflowLauncher';
 import EdgeSyncIndicator from '@/plugins/edge/EdgeSyncIndicator';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
@@ -97,7 +95,6 @@ const Dashboard = () => {
               
               <div className="flex items-center gap-3">
                 <EdgeSyncIndicator />
-                <WorkflowLauncher />
               </div>
             </div>
             
@@ -120,9 +117,6 @@ const Dashboard = () => {
               </div>
             </div>
           </motion.main>
-          
-          {/* Governance Panel */}
-          <GovernancePanel />
         </div>
         
         <Footer />

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -79,8 +78,6 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 
 // Import plugins
 import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
-import GovernancePanel from '@/plugins/governance';
-import WorkflowLauncher from '@/plugins/workflow';
 
 // Component to determine if NewChatButton should be shown
 const NewChatButtonWrapper = () => {
@@ -104,10 +101,6 @@ const NewChatButtonWrapper = () => {
 };
 
 function App() {
-  // Feature flags - Updated to use Vite's import.meta.env instead of process.env
-  const enableGovernance = import.meta.env.VITE_REACT_APP_ENABLE_GOVERNANCE === 'true';
-  const enableWorkflow = import.meta.env.VITE_REACT_APP_ENABLE_WORKFLOW === 'true';
-  
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
       <HelmetProvider>
@@ -179,16 +172,7 @@ function App() {
               <NewChatButtonWrapper />
               <MobileBottomNav />
               
-              {/* Add feature-flagged plugins */}
-              {enableGovernance && <div className="fixed bottom-4 left-4 z-50 max-w-xs">
-                <GovernancePanel />
-              </div>}
-              
-              {/* Memory Browser removed from here as it's now in the menu */}
-              
-              {enableWorkflow && <div className="fixed bottom-4 right-4 z-50 max-w-xs">
-                <WorkflowLauncher />
-              </div>}
+              {/* Governance and Workflow plugins removed to prevent API errors */}
               
               <Toaster position="bottom-right" />
             </Router>

@@ -82,7 +82,7 @@ const MemoryBrowser: React.FC<MemoryBrowserProps> = ({ inMenu = false }) => {
       }
     } catch (error) {
       console.error('Error fetching memories:', error);
-      toast.error('Failed to retrieve memories');
+      // Silently handle error - don't show toast to avoid UI noise
     } finally {
       setLoading(false);
     }
