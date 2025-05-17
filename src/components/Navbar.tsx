@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
@@ -79,7 +78,7 @@ const Navbar: React.FC = () => {
           <AuthButtons />
         </div>
         
-        {/* Mobile Navigation - No changes for mobile */}
+        {/* Mobile Navigation */}
         {isMobile && (
           <MobileMenu 
             isSheetOpen={isSheetOpen}
