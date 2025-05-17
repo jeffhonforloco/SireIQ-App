@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -186,9 +185,7 @@ function App() {
                 <GovernancePanel />
               </div>}
               
-              {enableMemory && <div className="fixed top-20 right-4 z-50 max-w-xs">
-                <MemoryBrowser />
-              </div>}
+              {enableMemory && <MemoryBrowser />}
               
               {enableWorkflow && <div className="fixed bottom-4 right-4 z-50 max-w-xs">
                 <WorkflowLauncher />

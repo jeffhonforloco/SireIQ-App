@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Database, History, Plus, Trash } from 'lucide-react';
+import { Search, Database, History, Plus, Trash, ChevronUp, ChevronDown } from 'lucide-react';
 import { toast } from "sonner";
 import './styles.css';
 
@@ -57,6 +57,7 @@ const MemoryBrowser: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('browse');
   const [loading, setLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   
   // In a real implementation, this would fetch from the memory agent
   const fetchMemories = async (query?: string) => {
@@ -101,84 +102,96 @@ const MemoryBrowser: React.FC = () => {
     toast.info('Creating new memory - feature coming soon!');
   };
   
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="memory-browser">
-      <div className="panel-header">
-        <Database className="text-blue-500" />
-        <h2>Memory Browser</h2>
+    <div className={`memory-browser transition-all duration-300 ${isExpanded ? 'expanded' : 'collapsed'}`}>
+      <div 
+        className="panel-header cursor-pointer flex justify-between items-center"
+        onClick={toggleExpanded}
+      >
+        <div className="flex items-center">
+          <Database className="text-blue-500 mr-2" />
+          <h2>Memory Browser</h2>
+        </div>
+        {isExpanded ? 
+          <ChevronDown className="h-4 w-4" /> : 
+          <ChevronUp className="h-4 w-4" />
+        }
       </div>
       
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-2">
-          <TabsTrigger value="browse">
-            <Search className="mr-2 h-4 w-4" />
-            Browse
-          </TabsTrigger>
-          <TabsTrigger value="history">
-            <History className="mr-2 h-4 w-4" />
-            Recent
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="browse" className="mt-4">
-          <form onSubmit={handleSearch} className="mb-4 flex gap-2">
-            <Input
-              type="text"
-              placeholder="Search memories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1"
-            />
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Searching...' : 'Search'}
-            </Button>
-          </form>
-          
-          <div className="memory-list">
-            {memories.length === 0 ? (
-              <div className="empty-state">
-                <p>No memories found</p>
+      {isExpanded && (
+        <>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid grid-cols-2">
+              <TabsTrigger value="browse">
+                <Search className="mr-2 h-4 w-4" />
+                Browse
+              </TabsTrigger>
+              <TabsTrigger value="history">
+                <History className="mr-2 h-4 w-4" />
+                Recent
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="browse" className="mt-4">
+              <form onSubmit={handleSearch} className="mb-4 flex gap-2">
+                <Input
+                  type="text"
+                  placeholder="Search memories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1"
+                />
+                <Button type="submit" disabled={loading}>
+                  {loading ? 'Searching...' : 'Search'}
+                </Button>
+              </form>
+              
+              <div className="memory-list">
+                {memories.length === 0 ? (
+                  <div className="empty-state">
+                    <p>No memories found</p>
+                  </div>
+                ) : (
+                  memories.map((memory) => (
+                    <MemoryCard 
+                      key={memory.id} 
+                      memory={memory} 
+                      onDelete={() => handleDeleteMemory(memory.id)} 
+                    />
+                  ))
+                )}
               </div>
-            ) : (
-              memories.map((memory) => (
-                <MemoryCard 
-                  key={memory.id} 
-                  memory={memory} 
-                  onDelete={() => handleDeleteMemory(memory.id)} 
-                />
-              ))
-            )}
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="history" className="mt-4">
-          <div className="flex justify-between mb-4">
-            <h3 className="text-lg">Recent Memories</h3>
-            <Button variant="outline" size="sm" onClick={handleCreateMemory}>
-              <Plus className="mr-1 h-4 w-4" />
-              Create
-            </Button>
-          </div>
-          
-          <div className="memory-list">
-            {memories
-              .sort((a, b) => new Date(b.metadata.timestamp).getTime() - new Date(a.metadata.timestamp).getTime())
-              .map((memory) => (
-                <MemoryCard 
-                  key={memory.id} 
-                  memory={memory} 
-                  onDelete={() => handleDeleteMemory(memory.id)} 
-                />
-              ))
-            }
-          </div>
-        </TabsContent>
-      </Tabs>
+            </TabsContent>
+            
+            <TabsContent value="history" className="mt-4">
+              <div className="flex justify-between mb-4">
+                <h3 className="text-lg">Recent Memories</h3>
+                <Button variant="outline" size="sm" onClick={handleCreateMemory}>
+                  <Plus className="mr-1 h-4 w-4" />
+                  Create
+                </Button>
+              </div>
+              
+              <div className="memory-list">
+                {memories
+                  .sort((a, b) => new Date(b.metadata.timestamp).getTime() - new Date(a.metadata.timestamp).getTime())
+                  .map((memory) => (
+                    <MemoryCard 
+                      key={memory.id} 
+                      memory={memory} 
+                      onDelete={() => handleDeleteMemory(memory.id)} 
+                    />
+                  ))
+                }
+              </div>
+            </TabsContent>
+          </Tabs>
+        </>
+      )}
     </div>
   );
 };
