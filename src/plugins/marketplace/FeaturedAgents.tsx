@@ -73,7 +73,11 @@ const featuredAgents: Agent[] = [
   },
 ];
 
-const FeaturedAgents: React.FC = () => {
+interface FeaturedAgentsProps {
+  containerClassName?: string;
+}
+
+const FeaturedAgents: React.FC<FeaturedAgentsProps> = ({ containerClassName = "" }) => {
   const [isEnabled] = useLocalStorage('marketplace-teaser-enabled', true);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
@@ -90,7 +94,7 @@ const FeaturedAgents: React.FC = () => {
   };
 
   return (
-    <div className="w-full px-4 py-6 bg-sireiq-darker">
+    <div className={`w-full px-4 py-6 bg-sireiq-darker ${containerClassName}`}>
       <div className="container mx-auto">
         {/* Header - Always visible */}
         <div className="flex justify-between items-center mb-4">

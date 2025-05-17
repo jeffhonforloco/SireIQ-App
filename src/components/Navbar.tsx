@@ -20,7 +20,6 @@ const Navbar: React.FC = () => {
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [showBuildInfo, setShowBuildInfo] = useState(false);
   
   // Add scroll detection for glass effect
   useEffect(() => {

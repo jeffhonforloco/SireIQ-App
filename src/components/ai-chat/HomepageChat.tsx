@@ -10,6 +10,7 @@ import { MessageSquare } from 'lucide-react';
 import { Message } from './types';
 import { useRolePermissions } from '@/hooks/useRolePermissions';
 import { useRole } from '@/contexts/RoleContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const HomepageChat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -27,6 +28,7 @@ const HomepageChat: React.FC = () => {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   const { role } = useRole();
   const { chatMessageLimit } = useRolePermissions();
@@ -116,7 +118,7 @@ const HomepageChat: React.FC = () => {
   };
   
   return (
-    <Card className="w-full max-w-3xl border-0 bg-gray-900 shadow-lg overflow-hidden">
+    <Card className={`w-full ${isMobile ? 'max-w-full border-0 rounded-none' : 'max-w-3xl rounded-lg'} border-0 bg-gray-900 shadow-lg overflow-hidden`}>
       <CardHeader className="bg-gray-800 border-b border-gray-700">
         <CardTitle className="text-xl flex items-center">
           <div className="bg-blue-600 p-2 rounded-full mr-3">
