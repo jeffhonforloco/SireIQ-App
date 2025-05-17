@@ -52,7 +52,11 @@ const mockMemories: MemoryItem[] = [
   },
 ];
 
-const MemoryBrowser: React.FC = () => {
+interface MemoryBrowserProps {
+  inMenu?: boolean;
+}
+
+const MemoryBrowser: React.FC<MemoryBrowserProps> = ({ inMenu = false }) => {
   const [memories, setMemories] = useState<MemoryItem[]>(mockMemories);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('browse');
@@ -106,8 +110,13 @@ const MemoryBrowser: React.FC = () => {
     setIsExpanded(!isExpanded);
   };
 
+  // Adjust the class based on whether it's in the menu or standalone
+  const containerClass = inMenu 
+    ? 'memory-browser-in-menu' 
+    : `memory-browser transition-all duration-300 ${isExpanded ? 'expanded' : 'collapsed'}`;
+
   return (
-    <div className={`memory-browser transition-all duration-300 ${isExpanded ? 'expanded' : 'collapsed'}`}>
+    <div className={containerClass}>
       <div 
         className="panel-header cursor-pointer flex justify-between items-center"
         onClick={toggleExpanded}

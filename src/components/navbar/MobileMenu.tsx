@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
+import { Menu, Database } from 'lucide-react';
 import Logo from '@/components/Logo';
 import MobileAuthButtons from './MobileAuthButtons';
 import NavLinks from './NavLinks';
 import BuildInfoSection from './BuildInfoSection';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import MemoryBrowser from '@/plugins/memory';
 
 interface MobileMenuProps {
   isSheetOpen: boolean;
@@ -15,6 +16,8 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) => {
+  const [showMemory, setShowMemory] = useState(false);
+  
   return (
     <div className="flex md:hidden items-center">
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -32,6 +35,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
           <div className="mt-6 flex flex-col gap-6">
             <NavLinks orientation="vertical" />
           </div>
+          
+          <Button 
+            variant="outline" 
+            className="mt-6 flex items-center justify-center gap-2"
+            onClick={() => setShowMemory(!showMemory)}
+          >
+            <Database className="h-4 w-4 text-sireiq-cyan" />
+            <span>{showMemory ? "Hide Memory Browser" : "Show Memory Browser"}</span>
+          </Button>
+          
+          {showMemory && (
+            <div className="my-4 border border-gray-800 rounded-lg overflow-hidden">
+              <MemoryBrowser inMenu={true} />
+            </div>
+          )}
           
           <div className="flex items-center mt-6 mb-4">
             <ThemeToggle />

@@ -9,6 +9,7 @@ import MobileMenu from './navbar/MobileMenu';
 import { ThemeToggle } from './ui/theme-toggle';
 import BuildInfoSection from './navbar/BuildInfoSection';
 import EdgeSyncIndicator from '@/plugins/edge/EdgeSyncIndicator';
+import MemoryMenuItem from './navbar/MemoryMenuItem';
 import {
   Menubar,
   MenubarMenu,
@@ -59,6 +60,9 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-4 pr-0 border-0 border-none flex-none">
           <EdgeSyncIndicator />
           <ThemeToggle />
+          
+          {/* Memory menu item */}
+          <MemoryMenuItem />
           
           {/* "Build it" menu item */}
           <Menubar className="bg-transparent border-0 border-none">

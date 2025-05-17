@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -79,7 +80,6 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 // Import plugins
 import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
 import GovernancePanel from '@/plugins/governance';
-import MemoryBrowser from '@/plugins/memory';
 import WorkflowLauncher from '@/plugins/workflow';
 
 // Component to determine if NewChatButton should be shown
@@ -106,7 +106,6 @@ const NewChatButtonWrapper = () => {
 function App() {
   // Feature flags - Updated to use Vite's import.meta.env instead of process.env
   const enableGovernance = import.meta.env.VITE_REACT_APP_ENABLE_GOVERNANCE === 'true';
-  const enableMemory = import.meta.env.VITE_REACT_APP_ENABLE_MEMORY === 'true';
   const enableWorkflow = import.meta.env.VITE_REACT_APP_ENABLE_WORKFLOW === 'true';
   
   return (
@@ -185,7 +184,7 @@ function App() {
                 <GovernancePanel />
               </div>}
               
-              {enableMemory && <MemoryBrowser />}
+              {/* Memory Browser removed from here as it's now in the menu */}
               
               {enableWorkflow && <div className="fixed bottom-4 right-4 z-50 max-w-xs">
                 <WorkflowLauncher />
