@@ -38,23 +38,23 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   }, [messages, isTyping]);
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 h-full">
+    <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
       {/* Welcome message when there are no messages */}
       {messages.length === 0 && (
-        <ChatWelcomeSection 
-          messageCount={messageCount}
-          chatMessageLimit={chatMessageLimit}
-        />
+        <div className="flex items-center justify-center h-full">
+          <ChatWelcomeSection 
+            messageCount={messageCount}
+            chatMessageLimit={chatMessageLimit}
+          />
+        </div>
       )}
       
       {/* Message history */}
-      {messages.length > 0 && (
-        <div className="space-y-6">
-          {messages.map((message) => (
-            <ChatMessage key={message.id} message={message} />
-          ))}
-        </div>
-      )}
+      <div className="space-y-6">
+        {messages.map((message) => (
+          <ChatMessage key={message.id} message={message} />
+        ))}
+      </div>
       
       {/* Typing indicator */}
       {isTyping && <ChatTypingIndicator />}

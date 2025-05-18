@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChatHeader from './ChatHeader';
@@ -123,7 +124,7 @@ const HomeChatExperience: React.FC = () => {
   }, [transcript, isListening, setInput, handleSubmit, resetTranscript]);
 
   return (
-    <div className="flex flex-col h-full relative w-full">
+    <div className="flex flex-col h-full relative w-full max-w-3xl mx-auto">
       <ChatHeader clearChat={clearChat} />
       <AppKeyboardShortcuts />
       
