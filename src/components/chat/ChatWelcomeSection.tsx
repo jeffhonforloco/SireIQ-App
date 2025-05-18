@@ -20,12 +20,12 @@ const ChatWelcomeSection: React.FC<ChatWelcomeSectionProps> = ({ messageCount, c
 
   return (
     <div className="flex flex-col items-center justify-center py-10 px-4 text-center h-full">
-      <div className="mt-20 md:mt-32 max-w-md">
+      <div className="max-w-md">
         <div className="rounded-full bg-sireiq-accent/20 p-3 mb-4 mx-auto w-fit">
           <MessageSquare className="h-8 w-8 text-sireiq-cyan" />
         </div>
         
-        <h2 className="text-2xl font-semibold mb-2">What can I help with?</h2>
+        <h2 className="text-2xl font-semibold mb-2">Welcome to SireIQ Chat</h2>
         
         {!role ? (
           <div>
