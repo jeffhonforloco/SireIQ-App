@@ -19,8 +19,8 @@ const Index = () => {
       {/* Replace spacer div with a solid black one */}
       <div className="w-full h-[1px] bg-black border-0 border-none"></div>
       
-      <div className="flex-1 flex justify-center items-center p-0 overflow-auto border-0 border-t-0 border-none">
-        <div className="w-full max-w-3xl mx-auto px-4 flex flex-col h-full justify-center">
+      <div className="flex-1 flex items-start p-0 overflow-auto border-0 border-t-0 border-none">
+        <div className="w-full px-4 flex flex-col h-full">
           <HomeChatExperience />
         </div>
       </div>
