@@ -1,7 +1,8 @@
 
 // This is a unit test file for the research agent
-// In a real implementation, we would use Vitest or Jest to test the agent's functionality
+// Using Vitest as the test runner
 
+import { describe, test, expect } from 'vitest';
 import { researchAgent } from '../research';
 
 describe('Research Agent', () => {
