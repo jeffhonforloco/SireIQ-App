@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
@@ -21,6 +22,17 @@ const Index = () => {
       
       <div className="flex-1 flex justify-center items-center p-0 overflow-auto border-0 border-t-0 border-none">
         <div className="w-full max-w-3xl mx-auto px-4 flex flex-col h-full justify-center">
+          {/* Add Featured Agents Link */}
+          <div className="flex justify-center mb-4">
+            <Link 
+              to="/featured-agents" 
+              className="px-3 py-1.5 bg-sireiq-accent/20 hover:bg-sireiq-accent/40 text-sireiq-cyan text-sm rounded-full flex items-center gap-2 transition-all"
+            >
+              <span className="w-2 h-2 bg-sireiq-cyan rounded-full animate-pulse"></span>
+              Explore Our Featured AI Agents
+            </Link>
+          </div>
+          
           <HomeChatExperience />
         </div>
       </div>

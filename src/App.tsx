@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -18,7 +19,8 @@ import Enterprise from '@/pages/Enterprise';
 import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
 import AccountSettings from '@/pages/AccountSettings';
-import Marketplace from '@/pages/Marketplace';  // Add the new Marketplace import
+import Marketplace from '@/pages/Marketplace';
+import FeaturedAgents from '@/pages/FeaturedAgents';  // Add the new FeaturedAgents import
 
 // Company pages
 import AboutUs from '@/pages/AboutUs';
@@ -77,7 +79,7 @@ import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
 import MobileBottomNav from '@/components/MobileBottomNav';
 
 // Import plugins
-import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
+import FeaturedAgentsPlugin from '@/plugins/marketplace/FeaturedAgents';
 
 // Component to determine if NewChatButton should be shown
 const NewChatButtonWrapper = () => {
@@ -113,7 +115,8 @@ function App() {
                 <Route path="/get-started" element={<GetStarted />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/features" element={<Features />} />
-                <Route path="/marketplace" element={<Marketplace />} />  {/* Add the new Marketplace route */}
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/featured-agents" element={<FeaturedAgents />} />  {/* Add the new route */}
                 <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                 <Route path="/features/personality-engine" element={<PersonalityEngine />} />
                 <Route path="/features/customize-personality" element={<CustomizePersonality />} />
@@ -171,8 +174,6 @@ function App() {
               </Routes>
               <NewChatButtonWrapper />
               <MobileBottomNav />
-              
-              {/* Governance and Workflow plugins removed to prevent API errors */}
               
               <Toaster position="bottom-right" />
             </Router>
