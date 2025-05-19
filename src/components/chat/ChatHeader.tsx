@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, MoreVertical, Plus, Trash2 } from 'lucide-react';
+import { MoreVertical, Plus, Trash2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,11 +24,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ clearChat }) => {
   return (
     <header className="border-b border-sireiq-accent/20 p-3 flex justify-between items-center bg-sireiq-darker/50">
       <div className="flex items-center gap-2">
-        <div className="bg-sireiq-accent/20 p-1.5 rounded-lg shrink-0">
-          <MessageSquare className="h-5 w-5 text-sireiq-cyan" />
-        </div>
-        <span className="font-medium text-sm shrink-0">SireIQ Chat</span>
-        
         {/* Message counter badge - Only show on desktop */}
         {!isEnterprise && !isMobile && (
           <div className="ml-2 px-3 py-0.5 bg-sireiq-accent/10 border border-sireiq-accent/20 rounded-md text-xs text-sireiq-light/70 whitespace-nowrap shrink-0">
