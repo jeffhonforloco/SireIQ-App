@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList;
@@ -22,19 +23,49 @@ interface SpeechRecognitionAlternative {
   confidence: number;
 }
 
+interface VoiceSettings {
+  voice: string;
+  volume: number;
+  rate: number;
+  pitch: number;
+  autoResponse: boolean;
+}
+
+interface VoiceAssistantContextType {
+  isListening: boolean;
+  isSpeaking: boolean;
+  transcript: string;
+  voiceSettings: VoiceSettings;
+  startListening: () => void;
+  stopListening: () => void;
+  speakText: (text: string) => void;
+  stopSpeaking: () => void;
+  resetTranscript: () => void;
+  updateVoiceSettings: (settings: Partial<VoiceSettings>) => void;
+  supportsSpeechRecognition: boolean;
+}
+
 declare global {
   interface Window {
     SpeechRecognition: any;
     webkitSpeechRecognition: any;
-    speechSynthesis: SpeechSynthesis;
   }
 }
 
-export const useVoiceAssistant = () => {
+const VoiceAssistantContext = createContext<VoiceAssistantContextType | undefined>(undefined);
+
+export const VoiceAssistantProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+  const [voiceSettings, setVoiceSettings] = useState<VoiceSettings>({
+    voice: 'female',
+    volume: 1,
+    rate: 1,
+    pitch: 1,
+    autoResponse: true
+  });
   
   // Check if speech recognition is supported
   const supportsSpeechRecognition = useMemo(() => {
@@ -130,6 +161,11 @@ export const useVoiceAssistant = () => {
       
       const utterance = new SpeechSynthesisUtterance(text);
       
+      // Apply voice settings
+      utterance.volume = voiceSettings.volume;
+      utterance.rate = voiceSettings.rate;
+      utterance.pitch = voiceSettings.pitch;
+      
       utterance.onstart = () => {
         console.log('Speech synthesis started');
         setIsSpeaking(true);
@@ -150,7 +186,7 @@ export const useVoiceAssistant = () => {
       console.error('Failed to speak text:', error);
       setIsSpeaking(false);
     }
-  }, []);
+  }, [voiceSettings]);
 
   const stopSpeaking = useCallback(() => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -167,15 +203,35 @@ export const useVoiceAssistant = () => {
     setTranscript('');
   }, []);
 
-  return {
+  const updateVoiceSettings = useCallback((settings: Partial<VoiceSettings>) => {
+    setVoiceSettings(prev => ({ ...prev, ...settings }));
+  }, []);
+
+  const value: VoiceAssistantContextType = {
     isListening,
     isSpeaking,
     transcript,
+    voiceSettings,
     startListening,
     stopListening,
     speakText,
     stopSpeaking,
     resetTranscript,
+    updateVoiceSettings,
     supportsSpeechRecognition
   };
+
+  return (
+    <VoiceAssistantContext.Provider value={value}>
+      {children}
+    </VoiceAssistantContext.Provider>
+  );
+};
+
+export const useVoiceAssistant = () => {
+  const context = useContext(VoiceAssistantContext);
+  if (context === undefined) {
+    throw new Error('useVoiceAssistant must be used within a VoiceAssistantProvider');
+  }
+  return context;
 };

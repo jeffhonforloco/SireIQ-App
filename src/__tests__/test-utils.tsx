@@ -1,6 +1,6 @@
 
 import React, { ReactElement } from 'react';
-import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import { render as rtlRender, RenderOptions, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -10,6 +10,9 @@ import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';
+
+// Explicitly export screen and fireEvent
+export { screen, fireEvent };
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +32,3 @@ const customRender = (
 
 // Export the customized render method and userEvent
 export { customRender as render, userEvent };
-
-// For screen, we'll rely on the re-export from @testing-library/react
-// which should include screen automatically
