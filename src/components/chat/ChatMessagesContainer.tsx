@@ -22,7 +22,6 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
   isMobile
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messageCount, chatMessageLimit } = useChatState();
   
   // Quick suggestions based on common user needs
   const suggestions = [
@@ -43,8 +42,7 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = ({
       {messages.length === 0 && (
         <div className="flex items-center justify-center h-full">
           <ChatWelcomeSection 
-            messageCount={messageCount}
-            chatMessageLimit={chatMessageLimit}
+            onQuickSuggestion={handleQuickSuggestion}
           />
         </div>
       )}
