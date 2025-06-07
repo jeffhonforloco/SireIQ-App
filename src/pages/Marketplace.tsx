@@ -8,20 +8,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Download, Star, Search, Filter, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { agents } from '@/registry/agents';
 
 // Agent categories for the tabs
 const categories = [
   'All Agents',
-  'Productivity',
+  'Analysis',
+  'Creation', 
   'Research',
-  'Creative',
-  'Development',
-  'Business',
-  'Education',
+  'Summarization',
+  'Utility'
 ];
 
-// Extended agent interface with more detailed information
-interface Agent {
+// Extended agent interface with marketplace-specific properties
+interface MarketplaceAgent {
   id: string;
   name: string;
   description: string;
@@ -32,104 +32,25 @@ interface Agent {
   tags: string[];
   category: string;
   pricing?: string;
-  installedCount?: number;
+  status: string;
 }
 
-// Expanded list of agents for the marketplace
-const marketplaceAgents: Agent[] = [
-  {
-    id: 'agent1',
-    name: 'Research Assistant',
-    description: 'Helps with academic research and paper summarization',
-    author: 'SireIQ',
-    upvotes: 4289,
-    version: '2.4.0',
-    downloads: 24500,
-    tags: ['research', 'academic', 'verified'],
-    category: 'Research',
-    pricing: 'Free',
-  },
-  {
-    id: 'agent2',
-    name: 'Code Reviewer',
-    description: 'Reviews code for security and performance issues',
-    author: 'DevTeam',
-    upvotes: 3150,
-    version: '1.8.5',
-    downloads: 18200,
-    tags: ['coding', 'security', 'verified'],
-    category: 'Development',
-    pricing: 'Premium',
-  },
-  {
-    id: 'agent3',
-    name: 'Meeting Summarizer',
-    description: 'Creates concise summaries from meeting transcripts',
-    author: 'Productivity+',
-    upvotes: 2780,
-    version: '3.1.2',
-    downloads: 15600,
-    tags: ['productivity', 'business'],
-    category: 'Productivity',
-  },
-  {
-    id: 'agent4',
-    name: 'Data Visualizer',
-    description: 'Creates charts and graphs from your data',
-    author: 'DataLabs',
-    upvotes: 2105,
-    version: '2.0.1',
-    downloads: 9800,
-    tags: ['data', 'visualization'],
-    category: 'Business',
-  },
-  {
-    id: 'agent5',
-    name: 'Email Assistant',
-    description: 'Drafts and manages emails with smart suggestions',
-    author: 'CommunicateAI',
-    upvotes: 1850,
-    version: '1.5.0',
-    downloads: 12300,
-    tags: ['email', 'communication'],
-    category: 'Productivity',
-  },
-  {
-    id: 'agent6',
-    name: 'Creative Writer',
-    description: 'Generate creative content for blogs, stories, and marketing',
-    author: 'WordCraft',
-    upvotes: 2430,
-    version: '2.2.1',
-    downloads: 19500,
-    tags: ['writing', 'content', 'creative'],
-    category: 'Creative',
-  },
-  {
-    id: 'agent7',
-    name: 'Math Solver',
-    description: 'Step-by-step solutions for math problems and equations',
-    author: 'EducateMe',
-    upvotes: 1980,
-    version: '1.7.3',
-    downloads: 14200,
-    tags: ['education', 'mathematics'],
-    category: 'Education',
-  },
-  {
-    id: 'agent8',
-    name: 'Language Translator',
-    description: 'Translate text between 50+ languages with contextual accuracy',
-    author: 'LinguaTech',
-    upvotes: 3250,
-    version: '3.0.0',
-    downloads: 22800,
-    tags: ['language', 'translation', 'verified'],
-    category: 'Productivity',
-  },
-];
+// Convert real agents to marketplace format
+const marketplaceAgents: MarketplaceAgent[] = agents.map((agent, index) => ({
+  id: agent.id,
+  name: agent.name,
+  description: agent.description,
+  author: 'SireIQ',
+  upvotes: Math.floor(Math.random() * 3000) + 1500, // Generate realistic upvote counts
+  version: '2.1.0',
+  downloads: Math.floor(Math.random() * 20000) + 5000, // Generate realistic download counts
+  tags: [...agent.capabilities.slice(0, 2).map(cap => cap.toLowerCase().replace(/\s+/g, '-')), agent.status === 'available' ? 'verified' : agent.status],
+  category: agent.category.charAt(0).toUpperCase() + agent.category.slice(1),
+  pricing: agent.status === 'beta' ? 'Beta' : 'Free',
+  status: agent.status
+}));
 
-const AgentCard: React.FC<{ agent: Agent }> = ({ agent }) => {
+const AgentCard: React.FC<{ agent: MarketplaceAgent }> = ({ agent }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -180,7 +101,7 @@ const AgentCard: React.FC<{ agent: Agent }> = ({ agent }) => {
             </div>
             {agent.pricing && (
               <div className={`text-xs px-2 py-1 rounded ${
-                agent.pricing === 'Premium' ? 'bg-sireiq-cyan/20 text-sireiq-cyan' : ''
+                agent.pricing === 'Beta' ? 'bg-amber-500/20 text-amber-400' : 'bg-green-500/20 text-green-400'
               }`}>
                 {agent.pricing}
               </div>
