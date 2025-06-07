@@ -1,7 +1,6 @@
 
 import React, { ReactElement } from 'react';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
-import { screen } from '@testing-library/dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -11,7 +10,6 @@ import userEvent from '@testing-library/user-event';
 
 // Re-export everything from testing-library
 export * from '@testing-library/react';
-export { screen };
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -29,5 +27,5 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>
 ) => rtlRender(ui, { wrapper: AllTheProviders, ...options });
 
-// Export the customized render method, screen, and userEvent
+// Export the customized render method and userEvent
 export { customRender as render, userEvent as fireEvent };
