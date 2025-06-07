@@ -1,6 +1,7 @@
 
+
 import React, { ReactElement } from 'react';
-import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import { render as rtlRender, RenderOptions, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -27,5 +28,6 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>
 ) => rtlRender(ui, { wrapper: AllTheProviders, ...options });
 
-// Export the customized render method and userEvent
-export { customRender as render, userEvent as fireEvent };
+// Export the customized render method, screen, and userEvent
+export { customRender as render, screen, userEvent as fireEvent };
+
