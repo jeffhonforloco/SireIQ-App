@@ -1,190 +1,118 @@
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { ThemeProvider } from '@/components/ui/theme-provider';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
-import { VoiceAssistantProvider } from '@/hooks/useVoiceAssistant';
 import { RoleProvider } from '@/contexts/RoleContext';
-import NewChatButton from '@/components/chat/NewChatButton';
+import { ThemeProvider } from '@/components/ui/theme-provider';
 
-// Import pages
+// Pages
 import Index from '@/pages/Index';
 import LandingPage from '@/pages/LandingPage';
-import NotFound from '@/pages/NotFound';
 import GetStarted from '@/pages/GetStarted';
+import SignIn from '@/pages/SignIn';
 import Dashboard from '@/pages/Dashboard';
 import Features from '@/pages/Features';
-import Enterprise from '@/pages/Enterprise';
-import SignIn from '@/pages/SignIn';
-import ForgotPassword from '@/pages/ForgotPassword';
-import AccountSettings from '@/pages/AccountSettings';
-import Marketplace from '@/pages/Marketplace';
-import FeaturedAgents from '@/pages/FeaturedAgents';
-
-// Company pages
+import Pricing from '@/pages/Pricing';
+import Contact from '@/pages/Contact';
+import HowItWorks from '@/pages/HowItWorks';
 import AboutUs from '@/pages/AboutUs';
+import Blog from '@/pages/Blog';
 import Careers from '@/pages/Careers';
 import Press from '@/pages/Press';
-import Contact from '@/pages/Contact';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
-
-// New resource pages (removed Blog and Tutorials)
-import APIReference from '@/pages/APIReference';
+import Documentation from '@/pages/Documentation';
 import Community from '@/pages/Community';
+import AccountSettings from '@/pages/AccountSettings';
+import NotFound from '@/pages/NotFound';
+import ForgotPassword from '@/pages/ForgotPassword';
+import TrustAndCompliance from '@/pages/TrustAndCompliance';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import Integrations from '@/pages/Integrations';
+import Tutorials from '@/pages/Tutorials';
+import TryAdvancedAI from '@/pages/TryAdvancedAI';
+import Marketplace from '@/pages/Marketplace';
+import FeaturedAgents from '@/pages/FeaturedAgents';
+import AIWorkflows from '@/pages/AIWorkflows';
+import APIReference from '@/pages/APIReference';
+import DesignSystemPage from '@/pages/DesignSystemPage';
+import Enterprise from '@/pages/Enterprise';
 
-// Enterprise pages including Integrations
-import Integrations from '@/pages/enterprise/Integrations';
-
-// Import admin pages
+// Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import UserManagement from '@/pages/admin/UserManagement';
-import AnalyticsDashboard from '@/pages/admin/AnalyticsDashboard';
-import SystemSettings from '@/pages/admin/SystemSettings';
 import SecurityOverview from '@/pages/admin/SecurityOverview';
+import SystemSettings from '@/pages/admin/SystemSettings';
+import AnalyticsDashboard from '@/pages/admin/AnalyticsDashboard';
+import EnhancedSecurityFramework from '@/pages/admin/EnhancedSecurityFramework';
 
-// Import feature pages
-import IdeaGeneration from '@/pages/features/IdeaGeneration';
-import PersonalityEngine from '@/pages/features/PersonalityEngine';
-import CustomizePersonality from '@/pages/features/CustomizePersonality';
-import VoiceAssistant from '@/pages/features/VoiceAssistant';
-import SimpleVoiceAssistantDemo from '@/pages/features/SimpleVoiceAssistantDemo';
-import PerformanceAnalytics from '@/pages/features/PerformanceAnalytics';
-import AIPoweredCreation from '@/pages/features/AIPoweredCreation';
-import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
-import DataAnalysis from '@/pages/features/DataAnalysis';
-import ContentCreation from '@/pages/features/ContentCreation';
-import CodeAssistance from '@/pages/features/CodeAssistance';
-import WorkflowOptimization from '@/pages/features/WorkflowOptimization';
-import DecisionSupport from '@/pages/features/DecisionSupport';
-import ContentSummarizer from '@/pages/features/ContentSummarizer';
-import CodeGenerator from '@/pages/features/CodeGenerator';
-import ImageEnhancer from '@/pages/features/ImageEnhancer';
-import AIAssistant from '@/pages/features/AIAssistant';
-import NeuralComposer from '@/pages/features/NeuralComposer';
-import AIWorkflows from '@/pages/AIWorkflows';
-
-// Import enterprise pages
-import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
-import TeamManagement from '@/pages/enterprise/TeamManagement';
-import TeamCollaboration from '@/pages/enterprise/TeamCollaboration';
-import PrivateKnowledgeBase from '@/pages/enterprise/PrivateKnowledgeBase';
-import CustomTraining from '@/pages/enterprise/CustomTraining';
-import CustomWorkflows from '@/pages/enterprise/CustomWorkflows';
-import DedicatedInfrastructure from '@/pages/enterprise/DedicatedInfrastructure';
-import GlobalDeployment from '@/pages/enterprise/GlobalDeployment';
-import ComplianceControls from '@/pages/enterprise/ComplianceControls';
+// Enterprise Pages
 import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
+import ComplianceControl from '@/pages/enterprise/ComplianceControl';
 
-import MobileBottomNav from '@/components/MobileBottomNav';
-
-// Import plugins
-import FeaturedAgentsPlugin from '@/plugins/marketplace/FeaturedAgents';
-
-// Component to determine if NewChatButton should be shown
-const NewChatButtonWrapper = () => {
-  const location = useLocation();
-  
-  // Define paths where the button should be shown, including the home page
-  const showOnPaths = [
-    '/',
-    '/dashboard',
-    '/features/ai-assistant',
-    '/features/code-assistance',
-    '/features/content-creation'
-  ];
-  
-  // Check if current path matches exactly any of the paths in the array
-  const shouldShowButton = showOnPaths.some(path => 
-    location.pathname === path
-  );
-  
-  return shouldShowButton ? <NewChatButton position="fixed" /> : null;
-};
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
-      <HelmetProvider>
-        <RoleProvider>
-          <VoiceAssistantProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <RoleProvider>
             <Router>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/landing" element={<LandingPage />} />
-                <Route path="/get-started" element={<GetStarted />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/featured-agents" element={<FeaturedAgents />} />
-                
-                <Route path="/features/idea-generation" element={<IdeaGeneration />} />
-                <Route path="/features/personality-engine" element={<PersonalityEngine />} />
-                <Route path="/features/customize-personality" element={<CustomizePersonality />} />
-                <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
-                <Route path="/features/simple-voice" element={<SimpleVoiceAssistantDemo />} />
-                <Route path="/features/performance-analytics" element={<PerformanceAnalytics />} />
-                <Route path="/features/ai-powered-creation" element={<AIPoweredCreation />} />
-                <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
-                <Route path="/features/data-analysis" element={<DataAnalysis />} />
-                <Route path="/features/content-creation" element={<ContentCreation />} />
-                <Route path="/features/code-assistance" element={<CodeAssistance />} />
-                <Route path="/features/workflow-optimization" element={<WorkflowOptimization />} />
-                <Route path="/features/decision-support" element={<DecisionSupport />} />
-                <Route path="/features/content-summarizer" element={<ContentSummarizer />} />
-                <Route path="/features/code-generator" element={<CodeGenerator />} />
-                <Route path="/features/image-enhancer" element={<ImageEnhancer />} />
-                <Route path="/features/ai-assistant" element={<AIAssistant />} />
-                <Route path="/features/neural-composer" element={<NeuralComposer />} />
-                <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
-                <Route path="/enterprise" element={<Enterprise />} />
-                
-                <Route path="/enterprise/team-management" element={<TeamManagement />} />
-                <Route path="/enterprise/team-collaboration" element={<TeamCollaboration />} />
-                <Route path="/enterprise/private-knowledge-base" element={<PrivateKnowledgeBase />} />
-                <Route path="/enterprise/custom-training" element={<CustomTraining />} />
-                <Route path="/enterprise/custom-workflows" element={<CustomWorkflows />} />
-                <Route path="/enterprise/dedicated-infrastructure" element={<DedicatedInfrastructure />} />
-                <Route path="/enterprise/global-deployment" element={<GlobalDeployment />} />
-                <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
-                <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
-                <Route path="/enterprise/integrations" element={<Integrations />} />
-                
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/account/settings" element={<AccountSettings />} />
-                <Route path="/ai-workflows" element={<AIWorkflows />} />
-
-                {/* Company pages */}
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/press" element={<Press />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
-                {/* Resource pages - Blog and Tutorials removed */}
-                <Route path="/api-reference" element={<APIReference />} />
-                <Route path="/community" element={<Community />} />
-
-                {/* Enhanced Admin Routes */}
-                <Route path="/admin" element={<AdminPanel />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/users" element={<UserManagement />} />
-                <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
-                <Route path="/admin/settings" element={<SystemSettings />} />
-                <Route path="/admin/security" element={<SecurityOverview />} />
-
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <NewChatButtonWrapper />
-              <MobileBottomNav />
-              
-              <Toaster position="bottom-right" />
+              <div className="App">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/landing" element={<LandingPage />} />
+                  <Route path="/get-started" element={<GetStarted />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/features" element={<Features />} />
+                  <Route path="/features/*" element={<Features />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
+                  <Route path="/about" element={<AboutUs />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/careers" element={<Careers />} />
+                  <Route path="/press" element={<Press />} />
+                  <Route path="/docs" element={<Documentation />} />
+                  <Route path="/community" element={<Community />} />
+                  <Route path="/settings" element={<AccountSettings />} />
+                  <Route path="/settings/*" element={<AccountSettings />} />
+                  <Route path="/trust-compliance" element={<TrustAndCompliance />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/integrations" element={<Integrations />} />
+                  <Route path="/tutorials" element={<Tutorials />} />
+                  <Route path="/try-advanced-ai" element={<TryAdvancedAI />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/featured-agents" element={<FeaturedAgents />} />
+                  <Route path="/ai-workflows" element={<AIWorkflows />} />
+                  <Route path="/api-reference" element={<APIReference />} />
+                  <Route path="/design-system" element={<DesignSystemPage />} />
+                  <Route path="/enterprise" element={<Enterprise />} />
+                  <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
+                  <Route path="/enterprise/compliance-control" element={<ComplianceControl />} />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin" element={<AdminPanel />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/admin/users" element={<UserManagement />} />
+                  <Route path="/admin/security" element={<SecurityOverview />} />
+                  <Route path="/admin/security/framework" element={<EnhancedSecurityFramework />} />
+                  <Route path="/admin/settings" element={<SystemSettings />} />
+                  <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
+                  
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <Toaster />
+              </div>
             </Router>
-          </VoiceAssistantProvider>
-        </RoleProvider>
-      </HelmetProvider>
-    </ThemeProvider>
+          </RoleProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 

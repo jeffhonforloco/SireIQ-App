@@ -1,7 +1,6 @@
 
 import React, { ReactElement } from 'react';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
-import { screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -10,8 +9,9 @@ import { RoleProvider } from '@/contexts/RoleContext';
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 
-// Explicitly export screen and fireEvent to ensure they're available
-export { screen, fireEvent };
+// Import screen and fireEvent from their correct modules
+export { screen } from '@testing-library/react';
+export { fireEvent } from '@testing-library/dom';
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
