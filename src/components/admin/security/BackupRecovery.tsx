@@ -305,7 +305,7 @@ const BackupRecovery = () => {
                 </div>
                 <div>
                   <span className="text-sireiq-light/60">RPO (Recovery Point):</span>
-                  <p className="font-medium text-sireiq-cyan">< 1 hour</p>
+                  <p className="font-medium text-sireiq-cyan">&lt; 1 hour</p>
                 </div>
               </div>
             </div>
