@@ -5,7 +5,9 @@
 @layer components {
   /* Enhanced glass effect */
   .glass-effect {
-    @apply bg-background-glass backdrop-blur-xl border border-border-accent shadow-xl;
+    @apply backdrop-blur-xl border shadow-xl;
+    background: rgba(17, 17, 17, 0.8);
+    border-color: rgba(0, 212, 255, 0.3);
   }
 
   /* Enhanced text gradient */
@@ -29,58 +31,120 @@
 
   /* Enhanced button variants */
   .btn-primary {
-    @apply bg-gradient-to-r from-brand-primary to-brand-accent text-text-inverse hover:shadow-glow-strong px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    background: linear-gradient(to right, #00D4FF, #6366F1);
+    color: #0A0A0A;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
   }
   
   .btn-secondary {
-    @apply bg-background-secondary border border-brand-primary text-brand-primary hover:bg-brand-primary/10 hover:shadow-glow px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    background: #111111;
+    border: 1px solid #00D4FF;
+    color: #00D4FF;
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(0, 212, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
   }
   
   .btn-ghost {
-    @apply bg-transparent text-text-secondary hover:bg-background-secondary hover:text-text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply bg-transparent px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    color: #B4B4B4;
+  }
+  
+  .btn-ghost:hover {
+    background: #111111;
+    color: #FFFFFF;
   }
   
   .btn-danger {
-    @apply bg-transparent border border-error/50 hover:bg-error/10 text-error px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply bg-transparent px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #EF4444;
+  }
+  
+  .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.1);
   }
 
   /* Enhanced card variants */
   .card-primary {
-    @apply bg-background-secondary border border-border-primary rounded-xl p-6 transition-all duration-300;
+    @apply rounded-xl p-6 transition-all duration-300;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .card-interactive {
-    @apply card-primary hover:border-brand-primary/50 hover:shadow-glow hover:scale-[1.02] cursor-pointer;
+    @apply rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] cursor-pointer;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .card-interactive:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
   }
   
   .card-glass {
-    @apply glass-effect rounded-xl p-6;
+    @apply rounded-xl p-6 backdrop-blur-xl shadow-xl;
+    background: rgba(17, 17, 17, 0.8);
+    border: 1px solid rgba(0, 212, 255, 0.3);
   }
   
   .card-hero {
-    @apply bg-background-secondary border border-brand-primary/30 rounded-2xl p-8 shadow-glow-accent relative overflow-hidden;
+    @apply rounded-2xl p-8 relative overflow-hidden;
+    background: #111111;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
   }
 
   /* Enhanced input variants */
   .input-primary {
-    @apply bg-background-secondary border border-border-primary rounded-lg px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all duration-200;
+    @apply rounded-lg px-4 py-3 transition-all duration-200;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+  }
+  
+  .input-primary::placeholder {
+    color: #737373;
+  }
+  
+  .input-primary:focus {
+    outline: none;
+    border-color: #00D4FF;
+    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
   }
 
   /* Enhanced badge variants */
   .badge-primary {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-primary/20 text-brand-primary border border-brand-primary/30;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: rgba(0, 212, 255, 0.2);
+    color: #00D4FF;
+    border: 1px solid rgba(0, 212, 255, 0.3);
   }
   
   .badge-success {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/20 text-success border border-success/30;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
   
   .badge-warning {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warning/20 text-warning border border-warning/30;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: rgba(245, 158, 11, 0.2);
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.3);
   }
   
   .badge-error {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/20 text-error border border-error/30;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
   }
 
   /* Enhanced layout utilities */
@@ -94,15 +158,29 @@
 
   /* Enhanced chat interface styles */
   .chat-bubble-user {
-    @apply bg-brand-primary/20 border border-brand-primary/30 rounded-2xl rounded-tr-sm p-4 shadow-glow;
+    @apply rounded-2xl rounded-tr-sm p-4;
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
   }
   
   .chat-bubble-assistant {
-    @apply bg-background-secondary border border-border-primary rounded-2xl rounded-tl-sm p-4;
+    @apply rounded-2xl rounded-tl-sm p-4;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .chat-input {
-    @apply input-primary rounded-full py-3 px-4 text-text-primary focus:shadow-glow;
+    @apply rounded-full py-3 px-4 transition-all duration-200;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+  }
+  
+  .chat-input:focus {
+    outline: none;
+    border-color: #00D4FF;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
   }
 
   /* Enhanced animation utilities */
@@ -120,8 +198,8 @@
   }
   
   @keyframes glow-pulse {
-    0%, 100% { box-shadow: var(--glow-primary); }
-    50% { box-shadow: var(--glow-strong); }
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); }
   }
 
   /* Remove navbar borders completely */
@@ -178,6 +256,8 @@
   
   /* Enhanced focus indicators */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-background-primary;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    --tw-ring-color: #00D4FF;
+    --tw-ring-offset-color: #0A0A0A;
   }
 }
