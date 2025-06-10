@@ -5,10 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
 
-// Import from @testing-library/user-event
-import userEvent from '@testing-library/user-event';
-
-// Re-export everything from testing-library including screen and fireEvent
+// Import and re-export everything from @testing-library/react
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 

@@ -91,14 +91,14 @@
   }
 
   body {
-    @apply bg-background-primary text-text-primary font-sans overflow-x-hidden;
+    @apply bg-[#0A0A0A] text-[#FFFFFF] font-sans overflow-x-hidden;
     background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
                       radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold tracking-tight text-text-primary;
+    @apply font-display font-bold tracking-tight text-[#FFFFFF];
   }
   
   h1 {
@@ -118,7 +118,7 @@
   }
   
   p {
-    @apply text-text-secondary leading-relaxed;
+    @apply text-[#B4B4B4] leading-relaxed;
   }
   
   /* Enhanced scrollbar styling */

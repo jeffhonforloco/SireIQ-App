@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { colors, typography, spacing, borderRadius, shadows } from '@/styles/design-tokens';
 
@@ -7,7 +6,7 @@ const DesignSystem = () => {
     <div className="container mx-auto py-8 px-4 space-y-12">
       <section>
         <h1 className="text-4xl font-bold mb-8 text-gradient">SireIQ Design System</h1>
-        <p className="text-lg text-sireiq-light/70 max-w-3xl">
+        <p className="text-lg text-[#B4B4B4] max-w-3xl">
           A comprehensive collection of design tokens, components, and guidelines to ensure consistency across the SireIQ platform.
         </p>
       </section>
@@ -20,12 +19,12 @@ const DesignSystem = () => {
         <div>
           <h3 className="text-xl mb-3">Brand Colors</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <ColorSwatch name="Primary" color={colors.brand.primary} className="bg-sireiq-cyan" />
-            <ColorSwatch name="Secondary" color={colors.brand.secondary} className="bg-sireiq-cyan2" />
-            <ColorSwatch name="Accent" color={colors.brand.accent} className="bg-[#7134FA]" />
+            <ColorSwatch name="Primary" color={colors.brand.primary} className="bg-[#00D4FF]" />
+            <ColorSwatch name="Secondary" color={colors.brand.secondary} className="bg-[#0099CC]" />
+            <ColorSwatch name="Accent" color={colors.brand.accent} className="bg-[#6366F1]" />
             <div className="aspect-square rounded-md p-3 flex flex-col justify-between" style={{ background: colors.brand.gradient }}>
-              <span className="text-sireiq-darker font-medium">Gradient</span>
-              <span className="text-xs text-sireiq-darker opacity-75">{colors.brand.gradient}</span>
+              <span className="text-[#0A0A0A] font-medium">Gradient</span>
+              <span className="text-xs text-[#0A0A0A] opacity-75">{colors.brand.gradient}</span>
             </div>
           </div>
         </div>
@@ -34,9 +33,9 @@ const DesignSystem = () => {
         <div>
           <h3 className="text-xl mb-3">Background Colors</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <ColorSwatch name="Dark" color={colors.background.dark} className="bg-sireiq-dark" />
-            <ColorSwatch name="Darker" color={colors.background.darker} className="bg-sireiq-darker" />
-            <ColorSwatch name="Light" color={colors.background.light} className="bg-sireiq-light" textClass="text-gray-800" />
+            <ColorSwatch name="Primary" color={colors.background.primary} className="bg-[#0A0A0A]" />
+            <ColorSwatch name="Secondary" color={colors.background.secondary} className="bg-[#111111]" />
+            <ColorSwatch name="Tertiary" color={colors.background.tertiary} className="bg-[#1A1A1A]" />
           </div>
         </div>
         
@@ -44,9 +43,9 @@ const DesignSystem = () => {
         <div>
           <h3 className="text-xl mb-3">Text Colors</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <ColorSwatch name="Light" color={colors.text.light} className="bg-sireiq-light" textClass="text-gray-800" />
-            <ColorSwatch name="Muted" color={colors.text.muted} className="bg-[#9EA3AE]" textClass="text-gray-800" />
-            <ColorSwatch name="Dark" color={colors.text.dark} className="bg-[#1A1F2C]" />
+            <ColorSwatch name="Primary" color={colors.text.primary} className="bg-[#FFFFFF]" textClass="text-gray-800" />
+            <ColorSwatch name="Secondary" color={colors.text.secondary} className="bg-[#B4B4B4]" textClass="text-gray-800" />
+            <ColorSwatch name="Tertiary" color={colors.text.tertiary} className="bg-[#737373]" />
           </div>
         </div>
         
@@ -88,7 +87,7 @@ const DesignSystem = () => {
             <h3 className="text-xl mb-4">Font Families</h3>
             <div className="space-y-4">
               <div className="p-4 border border-gray-700 rounded-lg">
-                <p className="text-sm text-gray-400 mb-2">Display (Montserrat)</p>
+                <p className="text-sm text-gray-400 mb-2">Display (SF Pro Display)</p>
                 <p className="font-display text-4xl">The quick brown fox jumps over the lazy dog.</p>
               </div>
               <div className="p-4 border border-gray-700 rounded-lg">
@@ -178,17 +177,17 @@ const DesignSystem = () => {
         <div>
           <h3 className="text-xl mb-4">Cards</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="card-base">
+            <div className="card-primary">
               <h4 className="text-lg font-semibold mb-2">Basic Card</h4>
-              <p className="text-sireiq-light/70">Standard card component with base styling.</p>
+              <p className="text-[#B4B4B4]">Standard card component with base styling.</p>
             </div>
             <div className="card-interactive">
               <h4 className="text-lg font-semibold mb-2">Interactive Card</h4>
-              <p className="text-sireiq-light/70">Card with hover effects for interactive elements.</p>
+              <p className="text-[#B4B4B4]">Card with hover effects for interactive elements.</p>
             </div>
             <div className="card-glass">
               <h4 className="text-lg font-semibold mb-2">Glass Card</h4>
-              <p className="text-sireiq-light/70">Card with glassmorphism effect for modern UI.</p>
+              <p className="text-[#B4B4B4]">Card with glassmorphism effect for modern UI.</p>
             </div>
           </div>
         </div>
@@ -223,7 +222,7 @@ const DesignSystem = () => {
             {[1, 2, 4, 6, 8, 10, 12, 16, 20].map((size) => (
               <div key={size} className="flex flex-col items-center">
                 <div 
-                  className="bg-sireiq-accent/30 border border-sireiq-accent/50 rounded" 
+                  className="bg-[#6366F1]/30 border border-[#6366F1]/50 rounded" 
                   style={{ width: `${size/4}rem`, height: `${size/4}rem` }}
                 ></div>
                 <span className="text-xs mt-2">{size}</span>
