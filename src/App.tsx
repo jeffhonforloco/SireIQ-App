@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -20,7 +19,7 @@ import SignIn from '@/pages/SignIn';
 import ForgotPassword from '@/pages/ForgotPassword';
 import AccountSettings from '@/pages/AccountSettings';
 import Marketplace from '@/pages/Marketplace';
-import FeaturedAgents from '@/pages/FeaturedAgents';  // Add the new FeaturedAgents import
+import FeaturedAgents from '@/pages/FeaturedAgents';
 
 // Company pages
 import AboutUs from '@/pages/AboutUs';
@@ -37,6 +36,7 @@ import Community from '@/pages/Community';
 import Integrations from '@/pages/enterprise/Integrations';
 
 // Import admin pages
+import AdminPanel from '@/pages/admin/AdminPanel';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import UserManagement from '@/pages/admin/UserManagement';
 import AnalyticsDashboard from '@/pages/admin/AnalyticsDashboard';
@@ -116,7 +116,8 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/features" element={<Features />} />
                 <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/featured-agents" element={<FeaturedAgents />} />  {/* Add the new route */}
+                <Route path="/featured-agents" element={<FeaturedAgents />} />
+                
                 <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                 <Route path="/features/personality-engine" element={<PersonalityEngine />} />
                 <Route path="/features/customize-personality" element={<CustomizePersonality />} />
@@ -137,6 +138,7 @@ function App() {
                 <Route path="/features/neural-composer" element={<NeuralComposer />} />
                 <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                 <Route path="/enterprise" element={<Enterprise />} />
+                
                 <Route path="/enterprise/team-management" element={<TeamManagement />} />
                 <Route path="/enterprise/team-collaboration" element={<TeamCollaboration />} />
                 <Route path="/enterprise/private-knowledge-base" element={<PrivateKnowledgeBase />} />
@@ -147,6 +149,7 @@ function App() {
                 <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
                 <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
                 <Route path="/enterprise/integrations" element={<Integrations />} />
+                
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/account/settings" element={<AccountSettings />} />
@@ -163,8 +166,9 @@ function App() {
                 <Route path="/api-reference" element={<APIReference />} />
                 <Route path="/community" element={<Community />} />
 
-                {/* Admin Routes */}
-                <Route path="/admin" element={<AdminDashboard />} />
+                {/* Enhanced Admin Routes */}
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/users" element={<UserManagement />} />
                 <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
                 <Route path="/admin/settings" element={<SystemSettings />} />
