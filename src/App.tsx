@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -6,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
 import { RoleProvider } from '@/contexts/RoleContext';
 import { ThemeProvider } from '@/components/ui/theme-provider';
+import { VoiceAssistantProvider } from '@/hooks/useVoiceAssistant';
 
 // Pages
 import Index from '@/pages/Index';
@@ -59,56 +59,58 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <RoleProvider>
-            <Router>
-              <div className="App">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/landing" element={<LandingPage />} />
-                  <Route path="/get-started" element={<GetStarted />} />
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/features/*" element={<Features />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/how-it-works" element={<HowItWorks />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/careers" element={<Careers />} />
-                  <Route path="/press" element={<Press />} />
-                  <Route path="/docs" element={<Documentation />} />
-                  <Route path="/community" element={<Community />} />
-                  <Route path="/settings" element={<AccountSettings />} />
-                  <Route path="/settings/*" element={<AccountSettings />} />
-                  <Route path="/trust-compliance" element={<TrustAndCompliance />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/integrations" element={<Integrations />} />
-                  <Route path="/tutorials" element={<Tutorials />} />
-                  <Route path="/try-advanced-ai" element={<TryAdvancedAI />} />
-                  <Route path="/marketplace" element={<Marketplace />} />
-                  <Route path="/featured-agents" element={<FeaturedAgents />} />
-                  <Route path="/ai-workflows" element={<AIWorkflows />} />
-                  <Route path="/api-reference" element={<APIReference />} />
-                  <Route path="/design-system" element={<DesignSystemPage />} />
-                  <Route path="/enterprise" element={<Enterprise />} />
-                  <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
-                  <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
-                  
-                  {/* Admin Routes */}
-                  <Route path="/admin" element={<AdminPanel />} />
-                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                  <Route path="/admin/users" element={<UserManagement />} />
-                  <Route path="/admin/security" element={<SecurityOverview />} />
-                  <Route path="/admin/security/framework" element={<EnhancedSecurityFramework />} />
-                  <Route path="/admin/settings" element={<SystemSettings />} />
-                  <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
-                  
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-                <Toaster />
-              </div>
-            </Router>
+            <VoiceAssistantProvider>
+              <Router>
+                <div className="App">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/landing" element={<LandingPage />} />
+                    <Route path="/get-started" element={<GetStarted />} />
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/features" element={<Features />} />
+                    <Route path="/features/*" element={<Features />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/careers" element={<Careers />} />
+                    <Route path="/press" element={<Press />} />
+                    <Route path="/docs" element={<Documentation />} />
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/settings" element={<AccountSettings />} />
+                    <Route path="/settings/*" element={<AccountSettings />} />
+                    <Route path="/trust-compliance" element={<TrustAndCompliance />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/integrations" element={<Integrations />} />
+                    <Route path="/tutorials" element={<Tutorials />} />
+                    <Route path="/try-advanced-ai" element={<TryAdvancedAI />} />
+                    <Route path="/marketplace" element={<Marketplace />} />
+                    <Route path="/featured-agents" element={<FeaturedAgents />} />
+                    <Route path="/ai-workflows" element={<AIWorkflows />} />
+                    <Route path="/api-reference" element={<APIReference />} />
+                    <Route path="/design-system" element={<DesignSystemPage />} />
+                    <Route path="/enterprise" element={<Enterprise />} />
+                    <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
+                    <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
+                    
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<AdminPanel />} />
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin/users" element={<UserManagement />} />
+                    <Route path="/admin/security" element={<SecurityOverview />} />
+                    <Route path="/admin/security/framework" element={<EnhancedSecurityFramework />} />
+                    <Route path="/admin/settings" element={<SystemSettings />} />
+                    <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
+                    
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                  <Toaster />
+                </div>
+              </Router>
+            </VoiceAssistantProvider>
           </RoleProvider>
         </ThemeProvider>
       </QueryClientProvider>
