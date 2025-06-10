@@ -1,8 +1,7 @@
 /**
- * SireIQ Design System - Tailwind Extensions
+ * SireIQ Design System - Enhanced Tailwind Extensions
  * 
- * This file contains the Tailwind extensions for the SireIQ design system.
- * It transforms our design tokens into Tailwind-compatible format.
+ * This file contains the enhanced Tailwind extensions for the SireIQ design system.
  */
 
 import { colors, typography, spacing, borderRadius, shadows, animations } from './design-tokens';
@@ -10,125 +9,181 @@ import { colors, typography, spacing, borderRadius, shadows, animations } from '
 export const tailwindThemeExtensions = {
   extend: {
     colors: {
+      // Enhanced brand colors
+      brand: {
+        primary: colors.brand.primary,
+        secondary: colors.brand.secondary,
+        accent: colors.brand.accent,
+        purple: colors.brand.purple,
+      },
+      
+      // Enhanced background system
+      background: {
+        primary: colors.background.primary,
+        secondary: colors.background.secondary,
+        tertiary: colors.background.tertiary,
+        glass: colors.background.glass,
+        overlay: colors.background.overlay,
+      },
+      
+      // Enhanced text system
+      text: {
+        primary: colors.text.primary,
+        secondary: colors.text.secondary,
+        tertiary: colors.text.tertiary,
+        accent: colors.text.accent,
+        inverse: colors.text.inverse,
+      },
+      
+      // Enhanced border system
+      border: {
+        primary: colors.border.primary,
+        secondary: colors.border.secondary,
+        accent: colors.border.accent,
+        focus: colors.border.focus,
+      },
+      
+      // Enhanced state colors
+      success: colors.state.success,
+      error: colors.state.error,
+      warning: colors.state.warning,
+      info: colors.state.info,
+      
+      // Keep legacy sireiq colors for backward compatibility
       sireiq: {
-        dark: colors.background.dark,
-        darker: colors.background.darker,
-        light: colors.text.light,
-        accent: colors.brand.primary,
+        dark: colors.background.primary,
+        darker: colors.background.secondary,
+        light: colors.text.primary,
+        accent: colors.brand.accent,
         cyan: colors.brand.primary,
         cyan2: colors.brand.secondary,
-        purple: colors.brand.accent,
+        purple: colors.brand.purple,
       },
+      
       // Add all neutral colors
       neutral: colors.neutral,
     },
+    
     fontFamily: typography.fontFamily,
-    fontSize: {
-      // Keep existing font sizes if needed
-    },
+    fontSize: typography.fontSize,
+    fontWeight: typography.fontWeight,
+    
     boxShadow: {
       ...shadows,
       glow: shadows.glow,
       'glow-strong': shadows['glow-strong'],
+      'glow-purple': shadows['glow-purple'],
+      'glow-accent': shadows['glow-accent'],
     },
+    
     keyframes: animations.keyframes,
     animation: animations.animation,
-    zIndex: {
-      // Add any custom z-indices
+    
+    backgroundImage: {
+      'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      'gradient-brand': colors.brand.gradient,
+      'gradient-brand-subtle': colors.brand.gradientSubtle,
+    },
+    
+    backdropBlur: {
+      xs: '2px',
+      sm: '4px',
+      md: '8px',
+      lg: '12px',
+      xl: '16px',
+      '2xl': '24px',
+      '3xl': '32px',
     },
   },
 };
 
 /**
- * Custom component class definitions
- * These can be used in the @layer components section of your CSS
+ * Enhanced component class definitions
  */
 export const tailwindComponentClasses = {
-  // Glass effect styling
+  // Enhanced glass effect
   '.glass-effect': {
-    '@apply': 'bg-opacity-10 backdrop-blur-lg border border-white/10 bg-white/5',
+    '@apply': 'bg-background-glass backdrop-blur-xl border border-border-accent',
   },
 
-  // Text gradient effect
+  // Enhanced text gradient
   '.text-gradient': {
-    '@apply': 'bg-clip-text text-transparent bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2',
+    '@apply': 'bg-clip-text text-transparent',
+    'background-image': colors.brand.gradient,
   },
 
-  // Glow effect
+  // Enhanced glow effects
   '.glow': {
-    'text-shadow': '0 0 15px rgba(60, 223, 255, 0.5)',
+    'filter': `drop-shadow(0 0 8px ${colors.brand.primary}80)`,
+  },
+  
+  '.glow-strong': {
+    'filter': `drop-shadow(0 0 16px ${colors.brand.primary}CC)`,
   },
 
-  // Glow effect for images
-  '.glow-image': {
-    'filter': 'drop-shadow(0 0 8px rgba(60, 223, 255, 0.5))',
-  },
-
-  // Gradient border effect
-  '.gradient-border': {
-    'position': 'relative',
-    '&::after': {
-      'content': '""',
-      'position': 'absolute',
-      'inset': '0',
-      'border-radius': 'inherit',
-      'padding': '1px',
-      'background': 'linear-gradient(90deg, #3CDFFF, #00A3C4)',
-      'mask': 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-      'mask-composite': 'exclude',
-      'pointer-events': 'none',
-    }
-  },
-
-  // Button variants
+  // Enhanced button variants
   '.btn-primary': {
-    '@apply': 'bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 px-6 py-2 rounded-md transition-colors',
+    '@apply': 'bg-gradient-to-r from-brand-primary to-brand-accent text-text-inverse hover:shadow-glow-strong px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105',
   },
   
   '.btn-secondary': {
-    '@apply': 'border border-sireiq-cyan text-sireiq-cyan bg-transparent hover:bg-sireiq-cyan/10 px-6 py-2 rounded-md transition-colors',
+    '@apply': 'bg-background-secondary border border-brand-primary text-brand-primary hover:bg-brand-primary/10 hover:shadow-glow px-6 py-3 rounded-lg font-medium transition-all duration-300',
   },
   
-  '.btn-danger': {
-    '@apply': 'bg-transparent border border-red-500/50 hover:bg-red-500/10 text-red-400 px-6 py-2 rounded-md transition-colors',
+  '.btn-ghost': {
+    '@apply': 'bg-transparent text-text-secondary hover:bg-background-secondary hover:text-text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300',
   },
 
-  // Card variants
-  '.card-base': {
-    '@apply': 'bg-sireiq-darker border border-sireiq-accent/30 rounded-xl p-6',
+  // Enhanced card variants
+  '.card-primary': {
+    '@apply': 'bg-background-secondary border border-border-primary rounded-xl p-6 transition-all duration-300',
   },
   
   '.card-interactive': {
-    '@apply': 'card-base hover:border-sireiq-cyan/50 transition-all hover:shadow-[0_0_15px_rgba(60,223,255,0.15)]',
+    '@apply': 'card-primary hover:border-brand-primary/50 hover:shadow-glow hover:scale-[1.02] cursor-pointer',
   },
   
   '.card-glass': {
-    '@apply': 'glass-effect rounded-xl p-6',
-  },
-
-  // Badge variants
-  '.badge': {
-    '@apply': 'inline-block px-2 py-1 rounded-full text-xs font-medium',
+    '@apply': 'glass-effect rounded-xl p-6 shadow-xl',
   },
   
+  '.card-hero': {
+    '@apply': 'bg-background-secondary border border-brand-primary/30 rounded-2xl p-8 shadow-glow-accent relative overflow-hidden',
+  },
+
+  // Enhanced input variants
+  '.input-primary': {
+    '@apply': 'bg-background-secondary border border-border-primary rounded-lg px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all duration-200',
+  },
+
+  // Enhanced badge variants
   '.badge-primary': {
-    '@apply': 'badge bg-sireiq-accent/20 text-sireiq-cyan',
+    '@apply': 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-primary/20 text-brand-primary border border-brand-primary/30',
   },
   
-  '.badge-secondary': {
-    '@apply': 'badge bg-gray-700/50 text-gray-300',
+  '.badge-success': {
+    '@apply': 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/20 text-success border border-success/30',
+  },
+  
+  '.badge-warning': {
+    '@apply': 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warning/20 text-warning border border-warning/30',
   },
 
-  // Chat interface specific styles
-  '.chat-bubble-user': {
-    '@apply': 'bg-sireiq-accent/30 rounded-2xl rounded-tr-sm p-4',
+  // Layout utilities
+  '.container-fluid': {
+    '@apply': 'w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
   },
   
-  '.chat-bubble-assistant': {
-    '@apply': 'bg-gray-800 rounded-2xl rounded-tl-sm p-4',
+  '.section-padding': {
+    '@apply': 'py-16 md:py-24 lg:py-32',
   },
   
-  '.chat-input': {
-    '@apply': 'bg-gray-800 border border-gray-700 rounded-full py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-sireiq-accent',
+  // Animation utilities
+  '.animate-float': {
+    '@apply': 'animate-bounce',
+  },
+  
+  '.animate-glow': {
+    '@apply': 'animate-glow',
   },
 };

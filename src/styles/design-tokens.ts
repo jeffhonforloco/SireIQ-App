@@ -1,77 +1,97 @@
-
 /**
- * SireIQ Design System - Design Tokens
+ * SireIQ Design System - Enhanced Design Tokens
  * 
  * This file contains all the design tokens used throughout the application.
- * These tokens ensure consistency in the UI and make it easier to maintain
- * the design system.
+ * Enhanced with a more sophisticated color palette and better design consistency.
  */
 
 export const colors = {
-  // Primary brand colors
+  // Enhanced brand colors with more depth
   brand: {
-    primary: '#3CDFFF',      // Cyan - Primary brand color
-    secondary: '#00A3C4',    // Darker cyan - Secondary brand color
-    accent: '#7134FA',       // Purple - Accent color for highlights
-    gradient: 'linear-gradient(90deg, #3CDFFF 0%, #00A3C4 100%)',
+    primary: '#00D4FF',        // Bright cyan - Primary brand color
+    secondary: '#0099CC',      // Deeper cyan - Secondary brand color
+    accent: '#6366F1',         // Indigo - Accent color for highlights
+    purple: '#8B5CF6',         // Purple variant
+    gradient: 'linear-gradient(135deg, #00D4FF 0%, #6366F1 50%, #8B5CF6 100%)',
+    gradientSubtle: 'linear-gradient(135deg, #00D4FF/10 0%, #6366F1/10 50%, #8B5CF6/10 100%)',
   },
   
-  // Background colors
+  // Enhanced background system
   background: {
-    dark: '#0d1117',         // Primary dark background
-    darker: '#080a0f',       // Darker background for cards/sections
-    light: '#f3f6fc',        // Light background (for potential light mode)
+    primary: '#0A0A0A',        // Pure dark background
+    secondary: '#111111',      // Card background
+    tertiary: '#1A1A1A',      // Elevated elements
+    glass: 'rgba(17, 17, 17, 0.8)', // Glass effect background
+    overlay: 'rgba(0, 0, 0, 0.9)',  // Modal overlays
   },
   
-  // Text colors
+  // Enhanced text hierarchy
   text: {
-    light: '#f3f6fc',        // Primary text on dark backgrounds
-    muted: '#9EA3AE',        // Secondary/muted text
-    dark: '#1A1F2C',         // Dark text (for potential light mode)
+    primary: '#FFFFFF',        // Primary text
+    secondary: '#B4B4B4',      // Secondary text
+    tertiary: '#737373',       // Muted text
+    accent: '#00D4FF',         // Accent text
+    inverse: '#0A0A0A',        // Text on light backgrounds
   },
   
-  // UI element states
+  // Enhanced state colors
   state: {
-    success: '#10B981',      // Success state
-    error: '#EF4444',        // Error/danger state
-    warning: '#F59E0B',      // Warning state
-    info: '#3B82F6',         // Info state
+    success: '#10B981',        // Success state
+    error: '#EF4444',          // Error/danger state
+    warning: '#F59E0B',        // Warning state
+    info: '#3B82F6',           // Info state
+    successBg: 'rgba(16, 185, 129, 0.1)',
+    errorBg: 'rgba(239, 68, 68, 0.1)',
+    warningBg: 'rgba(245, 158, 11, 0.1)',
+    infoBg: 'rgba(59, 130, 246, 0.1)',
   },
   
-  // Neutral palette
+  // Enhanced neutral palette with better contrast
   neutral: {
-    50: '#f3f6fc',
-    100: '#e6e9ef',
-    200: '#c5cad3',
-    300: '#9EA3AE',
-    400: '#767C89',
-    500: '#5A6072',
-    600: '#434857',
-    700: '#2C303C',
-    800: '#1A1F2C',
-    900: '#080a0f',
+    50: '#FAFAFA',
+    100: '#F5F5F5',
+    200: '#E5E5E5',
+    300: '#D4D4D4',
+    400: '#A3A3A3',
+    500: '#737373',
+    600: '#525252',
+    700: '#404040',
+    800: '#262626',
+    900: '#171717',
+    950: '#0A0A0A',
+  },
+  
+  // Border system
+  border: {
+    primary: 'rgba(255, 255, 255, 0.1)',
+    secondary: 'rgba(255, 255, 255, 0.05)',
+    accent: 'rgba(0, 212, 255, 0.3)',
+    focus: 'rgba(0, 212, 255, 0.5)',
   },
 };
 
 export const typography = {
-  // Font families
+  // Enhanced font families
   fontFamily: {
-    sans: ['Inter', 'sans-serif'],
-    display: ['Montserrat', 'sans-serif'],
+    sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+    display: ['"SF Pro Display"', 'Inter', 'system-ui', 'sans-serif'],
+    mono: ['"JetBrains Mono"', 'Consolas', 'Monaco', 'monospace'],
   },
   
-  // Font sizes (in rem)
+  // Enhanced font sizes with better scale
   fontSize: {
-    xs: '0.75rem',     // 12px
-    sm: '0.875rem',    // 14px
-    base: '1rem',      // 16px
-    lg: '1.125rem',    // 18px
-    xl: '1.25rem',     // 20px
-    '2xl': '1.5rem',   // 24px
-    '3xl': '1.875rem', // 30px
-    '4xl': '2.25rem',  // 36px
-    '5xl': '3rem',     // 48px
-    '6xl': '3.75rem',  // 60px
+    xs: '0.75rem',      // 12px
+    sm: '0.875rem',     // 14px
+    base: '1rem',       // 16px
+    lg: '1.125rem',     // 18px
+    xl: '1.25rem',      // 20px
+    '2xl': '1.5rem',    // 24px
+    '3xl': '1.875rem',  // 30px
+    '4xl': '2.25rem',   // 36px
+    '5xl': '3rem',      // 48px
+    '6xl': '3.75rem',   // 60px
+    '7xl': '4.5rem',    // 72px
+    '8xl': '6rem',      // 96px
   },
   
   // Font weights
@@ -145,13 +165,13 @@ export const spacing = {
 
 export const borderRadius = {
   none: '0',
-  sm: '0.125rem',     // 2px
-  DEFAULT: '0.25rem', // 4px
-  md: '0.375rem',     // 6px
-  lg: '0.5rem',       // 8px
-  xl: '0.75rem',      // 12px
-  '2xl': '1rem',      // 16px
-  '3xl': '1.5rem',    // 24px
+  sm: '0.25rem',      // 4px
+  DEFAULT: '0.5rem',  // 8px
+  md: '0.75rem',      // 12px
+  lg: '1rem',         // 16px
+  xl: '1.5rem',       // 24px
+  '2xl': '2rem',      // 32px
+  '3xl': '3rem',      // 48px
   full: '9999px',     // Fully rounded
 };
 
@@ -163,8 +183,10 @@ export const shadows = {
   xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
   '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
   inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-  glow: '0 0 15px rgba(60, 223, 255, 0.3)',
-  'glow-strong': '0 0 20px rgba(60, 223, 255, 0.5)',
+  glow: '0 0 20px rgba(0, 212, 255, 0.4)',
+  'glow-strong': '0 0 30px rgba(0, 212, 255, 0.6)',
+  'glow-purple': '0 0 20px rgba(139, 92, 246, 0.4)',
+  'glow-accent': '0 0 20px rgba(99, 102, 241, 0.4)',
 };
 
 export const animations = {
@@ -189,6 +211,10 @@ export const animations = {
       '0%': { transform: 'translateX(0)' },
       '100%': { transform: 'translateX(100%)' },
     },
+    glow: {
+      '0%, 100%': { boxShadow: '0 0 20px rgba(0, 212, 255, 0.4)' },
+      '50%': { boxShadow: '0 0 30px rgba(0, 212, 255, 0.8)' },
+    },
   },
   animation: {
     pulse: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -196,6 +222,7 @@ export const animations = {
     fadeOut: 'fadeOut 0.5s ease-out forwards',
     slideInFromRight: 'slideInFromRight 0.3s ease-out',
     slideOutToRight: 'slideOutToRight 0.3s ease-out',
+    glow: 'glow 2s ease-in-out infinite',
   },
 };
 
@@ -213,49 +240,54 @@ export const effects = {
   // CSS utility classes for common effects
   glassEffect: 'bg-opacity-10 backdrop-blur-lg border border-white/10 bg-white/5',
   textGradient: 'bg-clip-text text-transparent bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2',
-  glow: 'text-shadow: 0 0 15px rgba(60, 223, 255, 0.5)',
+  glow: 'text-shadow: 0 0 15px rgba(60, 223, 255, 0.3)',
   glowImage: 'filter: drop-shadow(0 0 8px rgba(60, 223, 255, 0.5))',
 };
 
-// Design system semantic tokens
+// Enhanced semantic tokens
 export const semanticTokens = {
   // Mapping semantic meaning to design tokens
   
   // Components
   button: {
     primary: {
-      bg: 'bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2',
-      text: 'text-sireiq-darker',
-      hover: 'hover:opacity-90',
+      bg: 'bg-gradient-to-r from-brand-primary to-brand-accent',
+      text: 'text-text-inverse',
+      hover: 'hover:shadow-glow transition-all duration-300',
+      border: 'border-brand-primary',
     },
     secondary: {
-      bg: 'bg-transparent',
-      border: 'border border-sireiq-cyan',
-      text: 'text-sireiq-cyan',
-      hover: 'hover:bg-sireiq-cyan/10',
+      bg: 'bg-background-secondary',
+      border: 'border-brand-primary',
+      text: 'text-brand-primary',
+      hover: 'hover:bg-brand-primary/10 hover:shadow-glow-strong',
     },
-    danger: {
+    ghost: {
       bg: 'bg-transparent',
-      border: 'border border-red-500/50',
-      text: 'text-red-400',
-      hover: 'hover:bg-red-500/10',
+      text: 'text-text-secondary',
+      hover: 'hover:bg-background-secondary hover:text-text-primary',
     },
   },
   
   card: {
-    bg: 'bg-sireiq-darker',
-    border: 'border border-sireiq-accent/30',
-    hover: 'hover:border-sireiq-cyan/50 transition-all hover:shadow-[0_0_15px_rgba(60,223,255,0.15)]',
-    glass: 'glass-effect',
+    primary: {
+      bg: 'bg-background-secondary',
+      border: 'border-border-primary',
+      hover: 'hover:border-brand-primary/50 hover:shadow-glow',
+    },
+    glass: {
+      bg: 'bg-background-glass backdrop-blur-xl',
+      border: 'border-border-accent',
+      shadow: 'shadow-xl',
+    },
   },
   
   input: {
-    bg: 'bg-gray-800',
-    border: 'border border-gray-700',
-    focusBorder: 'focus:border-sireiq-accent',
-    focusRing: 'focus:ring-2 focus:ring-sireiq-accent/50',
-    text: 'text-white',
-    placeholder: 'placeholder:text-gray-400',
+    bg: 'bg-background-secondary',
+    border: 'border-border-primary',
+    focusBorder: 'focus:border-brand-primary',
+    focusRing: 'focus:ring-2 focus:ring-brand-primary/20',
+    text: 'text-text-primary',
+    placeholder: 'placeholder:text-text-tertiary',
   },
 };
-

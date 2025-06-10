@@ -8,8 +8,9 @@ import { RoleProvider } from '@/contexts/RoleContext';
 // Import from @testing-library/user-event
 import userEvent from '@testing-library/user-event';
 
-// Re-export everything from testing-library
+// Re-export everything from testing-library including screen and fireEvent
 export * from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -27,5 +28,5 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>
 ) => rtlRender(ui, { wrapper: AllTheProviders, ...options });
 
-// Export the customized render method and userEvent
-export { customRender as render, userEvent };
+// Export the customized render method
+export { customRender as render };

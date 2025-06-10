@@ -1,166 +1,183 @@
 
 @tailwind utilities;
 
-/* Custom utilities */
+/* Enhanced custom utilities */
 @layer components {
-  /* Glass effect styling */
+  /* Enhanced glass effect */
   .glass-effect {
-    @apply bg-opacity-10 backdrop-blur-lg border border-white/10 bg-white/5;
+    @apply bg-background-glass backdrop-blur-xl border border-border-accent shadow-xl;
   }
 
-  /* Text gradient effect */
+  /* Enhanced text gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500;
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #00D4FF 0%, #6366F1 50%, #8B5CF6 100%);
   }
 
-  /* Glow effect */
+  /* Enhanced glow effects */
   .glow {
-    text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-  }
-
-  /* Glow effect for images */
-  .glow-image {
-    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
-  }
-
-  /* Gradient border */
-  .gradient-border {
-    position: relative;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6));
   }
   
-  .gradient-border::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(90deg, #38bdf8, #0284c7);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
+  .glow-strong {
+    filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.8));
+  }
+  
+  .glow-purple {
+    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
   }
 
-  /* Button variants */
+  /* Enhanced button variants */
   .btn-primary {
-    @apply bg-gradient-to-r from-sky-400 to-blue-500 text-white hover:opacity-90 px-6 py-2 rounded-md transition-colors;
+    @apply bg-gradient-to-r from-brand-primary to-brand-accent text-text-inverse hover:shadow-glow-strong px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
   }
   
   .btn-secondary {
-    @apply border border-sky-400 text-sky-400 bg-transparent hover:bg-sky-400/10 px-6 py-2 rounded-md transition-colors;
+    @apply bg-background-secondary border border-brand-primary text-brand-primary hover:bg-brand-primary/10 hover:shadow-glow px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent text-text-secondary hover:bg-background-secondary hover:text-text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
   }
   
   .btn-danger {
-    @apply bg-transparent border border-red-500/50 hover:bg-red-500/10 text-red-400 px-6 py-2 rounded-md transition-colors;
+    @apply bg-transparent border border-error/50 hover:bg-error/10 text-error px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95;
   }
 
-  /* Card variants */
-  .card-base {
-    @apply bg-card border border-gray-700 rounded-xl p-6;
+  /* Enhanced card variants */
+  .card-primary {
+    @apply bg-background-secondary border border-border-primary rounded-xl p-6 transition-all duration-300;
   }
   
   .card-interactive {
-    @apply card-base hover:border-sky-400/50 transition-all hover:shadow-[0_0_15px_rgba(56,189,248,0.15)];
+    @apply card-primary hover:border-brand-primary/50 hover:shadow-glow hover:scale-[1.02] cursor-pointer;
   }
   
   .card-glass {
     @apply glass-effect rounded-xl p-6;
   }
   
-  /* Remove ALL borders from nav elements on desktop */
+  .card-hero {
+    @apply bg-background-secondary border border-brand-primary/30 rounded-2xl p-8 shadow-glow-accent relative overflow-hidden;
+  }
+
+  /* Enhanced input variants */
+  .input-primary {
+    @apply bg-background-secondary border border-border-primary rounded-lg px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all duration-200;
+  }
+
+  /* Enhanced badge variants */
+  .badge-primary {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-primary/20 text-brand-primary border border-brand-primary/30;
+  }
+  
+  .badge-success {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success/20 text-success border border-success/30;
+  }
+  
+  .badge-warning {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warning/20 text-warning border border-warning/30;
+  }
+  
+  .badge-error {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-error/20 text-error border border-error/30;
+  }
+
+  /* Enhanced layout utilities */
+  .container-fluid {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* Enhanced chat interface styles */
+  .chat-bubble-user {
+    @apply bg-brand-primary/20 border border-brand-primary/30 rounded-2xl rounded-tr-sm p-4 shadow-glow;
+  }
+  
+  .chat-bubble-assistant {
+    @apply bg-background-secondary border border-border-primary rounded-2xl rounded-tl-sm p-4;
+  }
+  
+  .chat-input {
+    @apply input-primary rounded-full py-3 px-4 text-text-primary focus:shadow-glow;
+  }
+
+  /* Enhanced animation utilities */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: var(--glow-primary); }
+    50% { box-shadow: var(--glow-strong); }
+  }
+
+  /* Remove navbar borders completely */
   @media (min-width: 768px) {
     .navbar-links, 
-    .navbar-links * {
-      @apply border-0 border-none !important;
-    }
-    
+    .navbar-links *,
     nav, 
-    nav * {
-      @apply border-0 border-none !important;
-    }
-    
+    nav *,
     header,
     header *,
     header nav,
-    header nav * {
-      @apply border-0 border-none !important;
-    }
-
-    /* Extremely specific selector to override the menubar bottom border */
+    header nav *,
     header .menubar-root,
     header [data-radix-menubar-root],
-    header div[role="menubar"] {
-      @apply border-0 border-none border-b-0 !important;
-    }
-
-    /* Target any horizontal separators that might be causing the line */
+    header div[role="menubar"],
     .separator[data-orientation="horizontal"],
     header hr,
-    header .separator {
-      @apply hidden !important;
+    header .separator,
+    .NavigationMenu,
+    .NavigationMenuList,
+    .NavigationMenuItem,
+    .NavigationMenuLink {
+      @apply border-0 border-none !important;
+      border: none !important;
+      border-bottom: none !important;
+      border-top: none !important;
     }
     
-    /* Remove dividing line between header and page content */
-    header + * {
-      @apply border-t-0 border-0 border-none !important;
-      margin-top: 0 !important;
+    header + *,
+    header + *:before,
+    header::after,
+    header::before,
+    body > div > header + div {
+      @apply border-0 border-none border-t-0 !important;
       border-top: none !important;
-      border-bottom: none !important;
+      margin-top: 0 !important;
+      box-shadow: none !important;
     }
   }
-
-  /* Force remove all borders from specific UI elements that may be in the navbar */
-  header .menubar-root,
-  [data-radix-menubar-root],
-  [role="menubar"],
-  [data-orientation="horizontal"] {
-    @apply border-0 border-b-0 border-none !important;
-    border-bottom: none !important;
-    border: none !important;
-  }
-
-  /* Override any separator that might be causing the line */
-  header + *:before,
-  header + * {
-    @apply border-t-0 !important;
+  
+  /* Enhanced responsive utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
   }
   
-  /* Additional explicit rule to hide the border between header and content */
-  header::after {
-    content: none !important;
-    display: none !important;
-    border: none !important;
-    border-bottom: none !important;
-    border-top: none !important;
+  .responsive-flex {
+    @apply flex flex-col md:flex-row gap-4 md:gap-6;
   }
   
-  /* Target the navigation menu directly */
-  .NavigationMenu,
-  .NavigationMenuList,
-  .NavigationMenuItem,
-  .NavigationMenuLink {
-    @apply border-0 border-none !important;
-    border-bottom: none !important;
+  /* Enhanced accessibility */
+  .sr-only {
+    @apply absolute w-px h-px p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0;
   }
   
-  /* Add specific styles for index page to remove border line */
-  body > div > header + div {
-    @apply border-0 border-none border-t-0 !important;
-    border-top: none !important;
-    margin-top: 0 !important;
-    position: relative;
-  }
-  
-  /* Target pseudo-elements that might be creating the line */
-  header:after,
-  header:before {
-    display: none !important;
-    content: none !important;
-  }
-  
-  /* Remove all possible box shadows */
-  header, 
-  header + div,
-  header + * {
-    box-shadow: none !important;
+  /* Enhanced focus indicators */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-background-primary;
   }
 }
