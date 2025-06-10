@@ -25,13 +25,6 @@ const PerformanceAnalytics = () => {
     { name: 'Jun', value: 29 },
   ];
   
-  // Metrics data
-  const metricsData = [
-    { label: "Engagement", value: "12,495", change: "+23%", isPositive: true },
-    { label: "Conversion Rate", value: "3.2%", change: "+0.5%", isPositive: true },
-    { label: "Avg. Session Time", value: "2:34", change: "-0:12", isPositive: false },
-  ];
-  
   // Top content data
   const topContentData = [
     { title: "10 Ways to Boost Productivity", views: 3245, change: 1 },
@@ -93,7 +86,7 @@ const PerformanceAnalytics = () => {
           
           <div className="flex justify-center">
             <div className="glass-effect rounded-2xl p-6 border border-sireiq-accent/30 max-w-4xl w-full">
-              <MetricsPanel initialMetrics={metricsData} />
+              <MetricsPanel />
               
               <PerformanceChart initialData={monthlyData} title="Content Performance" />
               

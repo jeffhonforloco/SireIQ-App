@@ -49,7 +49,7 @@ import EnhancedSecurityFramework from '@/pages/admin/EnhancedSecurityFramework';
 
 // Enterprise Pages
 import AdvancedAnalytics from '@/pages/enterprise/AdvancedAnalytics';
-import ComplianceControl from '@/pages/enterprise/ComplianceControl';
+import ComplianceControls from '@/pages/enterprise/ComplianceControls';
 
 const queryClient = new QueryClient();
 
@@ -93,7 +93,7 @@ function App() {
                   <Route path="/design-system" element={<DesignSystemPage />} />
                   <Route path="/enterprise" element={<Enterprise />} />
                   <Route path="/enterprise/advanced-analytics" element={<AdvancedAnalytics />} />
-                  <Route path="/enterprise/compliance-control" element={<ComplianceControl />} />
+                  <Route path="/enterprise/compliance-controls" element={<ComplianceControls />} />
                   
                   {/* Admin Routes */}
                   <Route path="/admin" element={<AdminPanel />} />
