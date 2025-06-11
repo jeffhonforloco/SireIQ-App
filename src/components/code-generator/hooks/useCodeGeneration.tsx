@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { CodeExample } from '../types';
-import { codeTemplates } from '../codeTemplates';
+import { codeTemplates } from '../templates';
 import { generateCustomCode } from '../codeGenerationUtils';
 import { updatePreview } from '../previewUtils';
 
