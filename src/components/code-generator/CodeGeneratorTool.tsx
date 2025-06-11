@@ -34,10 +34,10 @@ const CodeGeneratorTool = () => {
         onTogglePreview={togglePreview}
       />
 
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 h-full">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8 h-full">
           {/* Left Panel - Input */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <ConfigurationPanel
               selectedLanguage={selectedLanguage}
               setSelectedLanguage={setSelectedLanguage}
@@ -52,7 +52,7 @@ const CodeGeneratorTool = () => {
           </div>
 
           {/* Right Panel - Output */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <OutputPanel
               generatedCode={generatedCode}
               canShowPreview={canShowPreview}
