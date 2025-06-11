@@ -99,19 +99,7 @@ const Index = () => {
                 <ArrowRight className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} group-hover:translate-x-1 transition-transform`} />
               </Link>
               
-              {isMobile && (
-                <button
-                  onClick={() => setShowFullFeatures(!showFullFeatures)}
-                  className="inline-flex items-center gap-2 text-brand-primary text-sm hover:text-brand-accent transition-colors"
-                >
-                  <span>{showFullFeatures ? 'Show Less' : 'Explore More'}</span>
-                  {showFullFeatures ? (
-                    <ChevronUp className="w-4 h-4" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4" />
-                  )}
-                </button>
-              )}
+              {/* Removed "Show More / Show Less" button on mobile */}
 
               {/* Desktop CTA buttons */}
               {!isMobile && (
@@ -141,17 +129,15 @@ const Index = () => {
             </div>
           </motion.div>
           
-          {/* Collapsible Featured Agents Section - Always visible on desktop, collapsible on mobile */}
+          {/* Featured Agents Section - Always visible on desktop, always hidden on mobile */}
           <AnimatePresence>
-            {(showFullFeatures || !isMobile) && (
+            {!isMobile && (
               <motion.div
-                initial={isMobile ? { opacity: 0, height: 0 } : false}
-                animate={isMobile ? { opacity: 1, height: 'auto' } : {}}
-                exit={isMobile ? { opacity: 0, height: 0 } : {}}
-                transition={{ duration: 0.3 }}
+                initial={false}
+                animate={{}}
                 className="overflow-hidden"
               >
-                <FeaturedAgents containerClassName={isMobile ? "mt-4" : "mt-8"} />
+                <FeaturedAgents containerClassName="mt-8" />
               </motion.div>
             )}
           </AnimatePresence>
