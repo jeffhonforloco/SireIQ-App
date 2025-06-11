@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '@/src/__tests__/test-utils';
+import { render, screen, fireEvent } from '@/__tests__/test-utils';
 import GetStarted from '@/pages/GetStarted';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 

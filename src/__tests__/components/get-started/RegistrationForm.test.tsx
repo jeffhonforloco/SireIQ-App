@@ -1,9 +1,6 @@
 
 import React from 'react';
-import { render, screen } from '@/src/__tests__/test-utils';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { RoleProvider } from '@/contexts/RoleContext';
+import { render, screen } from '@/__tests__/test-utils';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 

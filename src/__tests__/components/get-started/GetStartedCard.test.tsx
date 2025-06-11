@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, screen } from '@/src/__tests__/test-utils';
+import { render, screen } from '@/__tests__/test-utils';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
