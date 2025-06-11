@@ -258,7 +258,7 @@ const CodeGeneratorTool = () => {
                     placeholder="E.g., Create a React component for user authentication, Build a Python function to process CSV files, Generate HTML for a landing page..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="min-h-[120px] resize-none bg-background-primary border-border-primary text-text-primary placeholder:text-text-tertiary focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                    className="min-h-[120px] resize-none bg-background-secondary border-border-primary text-text-primary placeholder:text-text-tertiary focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
                   />
                   <div className="text-xs text-text-secondary">
                     Be specific about functionality, styling, and any special requirements.
