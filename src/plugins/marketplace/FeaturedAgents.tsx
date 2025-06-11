@@ -95,29 +95,32 @@ const FeaturedAgents: React.FC<FeaturedAgentsProps> = ({ containerClassName = ""
 
   return (
     <div className={`w-full px-4 py-6 bg-sireiq-darker ${containerClassName}`}>
-      <div className="container mx-auto">
-        {/* Header - Always visible */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold flex items-center gap-2">
-            <Star className="h-5 w-5 text-sireiq-cyan" />
-            Featured Agents
-          </h2>
+      <div className="container mx-auto max-w-7xl">
+        {/* Header - Always visible with improved spacing */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-3">
+            <Star className="h-6 w-6 text-sireiq-cyan" />
+            <h2 className="text-xl md:text-2xl font-bold text-white">
+              Featured AI Agents
+            </h2>
+          </div>
           
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-3 items-center">
             <Button 
-              variant="link" 
-              className="text-sireiq-cyan"
+              variant="outline" 
+              className="text-sireiq-cyan border-sireiq-cyan/30 hover:bg-sireiq-cyan/10 hidden sm:flex"
               onClick={handleExploreMarketplace}
             >
-              Explore Marketplace <ArrowUpRight className="ml-1 h-4 w-4" />
+              Explore Marketplace <ArrowUpRight className="ml-2 h-4 w-4" />
             </Button>
             
             <Button 
               variant="ghost" 
               size="sm"
               onClick={toggleExpand}
-              className="text-sireiq-cyan"
+              className="text-sireiq-cyan hover:bg-sireiq-cyan/10 p-2"
               aria-expanded={isExpanded}
+              aria-label={isExpanded ? "Hide featured agents" : "Show featured agents"}
             >
               {isExpanded ? (
                 <ChevronUp className="h-5 w-5" />
@@ -128,73 +131,112 @@ const FeaturedAgents: React.FC<FeaturedAgentsProps> = ({ containerClassName = ""
           </div>
         </div>
 
-        {/* Content - Conditionally visible based on expanded state */}
-        {isExpanded && (
-          <div className="relative">
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
-              {featuredAgents.map((agent) => (
-                <motion.div
-                  key={agent.id}
-                  className="min-w-[280px] snap-start"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <Card className="border-sireiq-accent/30 bg-black/30 h-full">
-                    <CardContent className="p-4">
-                      <div className="mb-2">
-                        <div className="flex justify-between items-start">
-                          <h3 className="font-medium">{agent.name}</h3>
-                          <div className="bg-sireiq-accent/20 text-xs px-2 py-1 rounded">v{agent.version}</div>
+        {/* Mobile Explore Button */}
+        <div className="sm:hidden mb-4">
+          <Button 
+            variant="outline" 
+            className="w-full text-sireiq-cyan border-sireiq-cyan/30 hover:bg-sireiq-cyan/10"
+            onClick={handleExploreMarketplace}
+          >
+            Explore Marketplace <ArrowUpRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Content - Conditionally visible with enhanced animations */}
+        <motion.div
+          initial={false}
+          animate={{ 
+            height: isExpanded ? 'auto' : 0,
+            opacity: isExpanded ? 1 : 0
+          }}
+          transition={{ 
+            duration: 0.3,
+            ease: 'easeInOut'
+          }}
+          className="overflow-hidden"
+        >
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="relative"
+            >
+              {/* Enhanced grid layout for better responsiveness */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
+                {featuredAgents.map((agent, index) => (
+                  <motion.div
+                    key={agent.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="w-full"
+                  >
+                    <Card className="border-sireiq-accent/30 bg-gradient-to-br from-black/50 to-sireiq-darker/50 h-full hover:border-sireiq-cyan/50 transition-all duration-300 backdrop-blur-sm">
+                      <CardContent className="p-4 h-full flex flex-col">
+                        {/* Header with version */}
+                        <div className="mb-3">
+                          <div className="flex justify-between items-start mb-1">
+                            <h3 className="font-semibold text-white text-sm lg:text-base line-clamp-1">
+                              {agent.name}
+                            </h3>
+                            <div className="bg-sireiq-accent/20 text-xs px-2 py-1 rounded text-sireiq-cyan font-mono">
+                              v{agent.version}
+                            </div>
+                          </div>
+                          <div className="text-xs text-sireiq-light/60">by {agent.author}</div>
                         </div>
-                        <div className="text-xs text-sireiq-light/60">by {agent.author}</div>
-                      </div>
-                      
-                      <p className="text-sm text-sireiq-light/80 mb-3 line-clamp-2">
-                        {agent.description}
-                      </p>
-                      
-                      <div className="flex gap-1 mb-3">
-                        {agent.tags.map((tag) => (
-                          <div 
-                            key={tag} 
-                            className={`text-[10px] px-1.5 py-0.5 rounded-full 
-                              ${tag === 'verified' ? 
-                                'bg-green-500/20 text-green-400' : 
-                                'bg-sireiq-accent/20 text-sireiq-light/60'
-                              }`}
+                        
+                        {/* Description */}
+                        <p className="text-sm text-sireiq-light/80 mb-4 flex-grow line-clamp-2 leading-relaxed">
+                          {agent.description}
+                        </p>
+                        
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {agent.tags.slice(0, 3).map((tag) => (
+                            <div 
+                              key={tag} 
+                              className={`text-[10px] px-2 py-1 rounded-full font-medium
+                                ${tag === 'verified' ? 
+                                  'bg-green-500/20 text-green-300 border border-green-500/30' : 
+                                  'bg-sireiq-accent/20 text-sireiq-light/70 border border-sireiq-accent/30'
+                                }`}
+                            >
+                              {tag}
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Stats and Install */}
+                        <div className="flex justify-between items-center mt-auto">
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1 text-xs">
+                              <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                              <span className="text-white font-medium">{agent.upvotes.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-1 text-xs text-sireiq-light/60">
+                              <DownloadIcon className="h-3 w-3" />
+                              <span>{agent.downloads.toLocaleString()}</span>
+                            </div>
+                          </div>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="h-7 text-xs border-sireiq-cyan/30 text-sireiq-cyan hover:bg-sireiq-cyan/10 hover:border-sireiq-cyan/50"
                           >
-                            {tag}
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1 text-xs">
-                            <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-                            <span>{agent.upvotes.toLocaleString()}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-sireiq-light/60">
-                            <DownloadIcon className="h-3 w-3" />
-                            <span>{agent.downloads.toLocaleString()}</span>
-                          </div>
+                            <Download className="h-3 w-3 mr-1" /> Install
+                          </Button>
                         </div>
-                        <Button variant="outline" size="sm" className="h-7">
-                          <Download className="h-3 w-3 mr-1" /> Install
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* Fade effect at the edges */}
-            <div className="absolute top-0 right-0 h-full w-20 bg-gradient-to-l from-sireiq-darker to-transparent pointer-events-none" />
-          </div>
-        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
     </div>
   );
