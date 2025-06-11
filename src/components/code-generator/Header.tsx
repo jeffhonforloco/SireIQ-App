@@ -3,6 +3,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Code, Sparkles, Eye, EyeOff, Brain, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import Logo from '@/components/Logo';
 
 interface HeaderProps {
   canShowPreview: boolean;
@@ -11,6 +13,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ canShowPreview, showPreview, onTogglePreview }) => {
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="border-b border-border-primary bg-background-glass backdrop-blur-xl relative overflow-hidden">
       {/* Modern gradient overlay */}
@@ -19,6 +27,14 @@ const Header: React.FC<HeaderProps> = ({ canShowPreview, showPreview, onTogglePr
       <div className="container mx-auto px-6 py-4 relative">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
+            {/* Clickable SireIQ Logo */}
+            <div 
+              onClick={handleLogoClick}
+              className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            >
+              <Logo size="sm" showText={true} />
+            </div>
+            
             <div className="relative">
               <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-brand-primary to-brand-accent shadow-lg">
                 <Brain className="h-6 w-6 text-text-inverse" />
