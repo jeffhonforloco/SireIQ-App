@@ -8,7 +8,6 @@ import { RoleProvider } from '@/contexts/RoleContext';
 // Import and re-export everything from @testing-library/react
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
-export { fireEvent, screen } from '@testing-library/react';
 
 // Import testing utilities
 import '@testing-library/jest-dom';
