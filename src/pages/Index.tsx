@@ -91,14 +91,24 @@ const Index = () => {
             </div>
           </motion.div>
           
-          {/* Enhanced bottom features */}
+          {/* Enhanced bottom features - Powered by Vytreon */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.8 }}
-            className="text-center mt-12 text-sm text-text-tertiary"
+            className="text-center mt-12"
           >
-            <p>Trusted by <span className="text-brand-primary font-medium">10,000+</span> innovators worldwide</p>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-sm text-text-tertiary mb-2">Powered by</p>
+              <div className="flex items-center space-x-2">
+                <img 
+                  src="/lovable-uploads/ca3d5628-293b-4717-a737-0eacfb84f9ea.png" 
+                  alt="Vytreon Logo" 
+                  className="h-8" 
+                />
+                <span className="text-brand-primary font-medium">Vytreon</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
