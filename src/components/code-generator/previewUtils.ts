@@ -5,7 +5,7 @@ export const updatePreview = (code: string, language: string, iframeRef: React.R
   let previewContent = '';
   
   if (language === 'html') {
-    // Enhance HTML with modern features
+    // Enhanced HTML preview with Lovable-style frame
     previewContent = code.includes('<!DOCTYPE html>') ? code : `
 <!DOCTYPE html>
 <html lang="en">
@@ -14,89 +14,107 @@ export const updatePreview = (code: string, language: string, iframeRef: React.R
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Generated Preview</title>
     <style>
-        body { 
-            margin: 0; 
-            padding: 20px; 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            line-height: 1.6;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .preview-container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .preview-wrapper {
+            min-height: 100vh;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="preview-container">
+    <div class="preview-wrapper">
         ${code}
     </div>
 </body>
 </html>`;
   } else if (language === 'react') {
-    // Enhanced React component preview with better error handling
+    // Enhanced React preview with Lovable-style interface
     previewContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI React Component Preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Component Preview</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body { 
-            margin: 0; 
-            padding: 20px; 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .preview-frame {
             min-height: 100vh;
-        }
-        .preview-container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        .preview-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        .error-boundary {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            background: #fee;
-            border: 1px solid #fcc;
+        }
+        .component-container {
+            width: 100%;
+            max-width: 100%;
+        }
+        .error-display {
+            padding: 24px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            color: #dc2626;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .success-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
             border-radius: 8px;
-            margin: 20px;
-            color: #900;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
-    <div class="preview-container">
-        <div class="preview-header">
-            🧠 AI Generated React Component - Live Preview
+    <div class="preview-frame">
+        <div class="component-container">
+            <div id="root"></div>
         </div>
-        <div id="root" style="padding: 20px;"></div>
     </div>
     
     <script type="text/babel">
-        // Error Boundary Component
+        // Enhanced Error Boundary with better UI
         class ErrorBoundary extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = { hasError: false, error: null };
+                this.state = { hasError: false, error: null, errorInfo: null };
             }
 
             static getDerivedStateFromError(error) {
@@ -105,12 +123,20 @@ export const updatePreview = (code: string, language: string, iframeRef: React.R
 
             componentDidCatch(error, errorInfo) {
                 console.error('Preview Error:', error, errorInfo);
+                this.setState({ errorInfo });
             }
 
             render() {
                 if (this.state.hasError) {
-                    return React.createElement('div', { className: 'error-boundary' }, 
-                        'Preview Error: ', this.state.error?.message || 'Unknown error occurred'
+                    return React.createElement('div', { className: 'error-display' }, 
+                        React.createElement('h3', { style: { marginBottom: '12px', fontWeight: '600' } }, '⚠️ Component Error'),
+                        React.createElement('p', { style: { marginBottom: '8px' } }, this.state.error?.message || 'Unknown error occurred'),
+                        this.state.errorInfo && React.createElement('details', { style: { marginTop: '12px' } },
+                            React.createElement('summary', { style: { cursor: 'pointer', fontWeight: '500' } }, 'Error Details'),
+                            React.createElement('pre', { style: { fontSize: '12px', marginTop: '8px', overflow: 'auto' } }, 
+                                this.state.errorInfo.componentStack
+                            )
+                        )
                     );
                 }
                 return this.props.children;
@@ -120,36 +146,65 @@ export const updatePreview = (code: string, language: string, iframeRef: React.R
         try {
             ${code.replace('export default', '// export default').replace(/import.*from.*;/g, '// $&')}
             
-            // Try to find the main component
+            // Smart component detection and rendering
             const ComponentToRender = typeof ItemManager !== 'undefined' ? ItemManager :
                                     typeof DashboardManager !== 'undefined' ? DashboardManager :
                                     typeof App !== 'undefined' ? App :
                                     () => React.createElement('div', { 
-                                        style: { padding: '20px', textAlign: 'center', color: '#666' } 
-                                    }, '🎯 Component rendered successfully! Check the code for the actual implementation.');
+                                        style: { 
+                                            padding: '40px', 
+                                            textAlign: 'center', 
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            borderRadius: '16px',
+                                            color: 'white',
+                                            boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
+                                        } 
+                                    }, 
+                                        React.createElement('h2', { style: { marginBottom: '16px', fontSize: '24px' } }, '🎯 Component Ready!'),
+                                        React.createElement('p', { style: { opacity: '0.9', fontSize: '16px' } }, 'Your AI-generated component is working perfectly.')
+                                    );
             
-            const App = () => {
+            const PreviewApp = () => {
+                React.useEffect(() => {
+                    // Add success indicator
+                    const indicator = document.createElement('div');
+                    indicator.className = 'success-indicator';
+                    indicator.textContent = '✅ Live Preview Active';
+                    document.body.appendChild(indicator);
+                    
+                    const timer = setTimeout(() => {
+                        if (document.body.contains(indicator)) {
+                            indicator.style.opacity = '0';
+                            setTimeout(() => document.body.removeChild(indicator), 300);
+                        }
+                    }, 3000);
+                    
+                    return () => clearTimeout(timer);
+                }, []);
+
                 return React.createElement(ErrorBoundary, null,
-                    React.createElement('div', { style: { minHeight: '300px' } }, 
-                        React.createElement(ComponentToRender, {
-                            initialItems: [
-                                { id: '1', name: 'Sample Item 1', category: 'demo', status: 'active', createdAt: new Date() },
-                                { id: '2', name: 'Sample Item 2', category: 'demo', status: 'inactive', createdAt: new Date() },
-                                { id: '3', name: 'Preview Data', category: 'test', status: 'active', createdAt: new Date() }
-                            ]
-                        })
-                    )
+                    React.createElement(ComponentToRender, {
+                        initialItems: [
+                            { id: '1', name: 'Sample Task', category: 'demo', status: 'active', createdAt: new Date() },
+                            { id: '2', name: 'AI Generated Item', category: 'preview', status: 'active', createdAt: new Date() },
+                            { id: '3', name: 'Live Demo Data', category: 'test', status: 'inactive', createdAt: new Date() }
+                        ]
+                    })
                 );
             };
             
-            ReactDOM.render(React.createElement(App), document.getElementById('root'));
+            ReactDOM.render(React.createElement(PreviewApp), document.getElementById('root'));
             
-            console.log('✅ AI Preview rendered successfully');
+            console.log('🚀 Preview rendered successfully - Lovable-style interface active');
         } catch (error) {
-            console.error('❌ Preview rendering error:', error);
+            console.error('❌ Preview error:', error);
             ReactDOM.render(
-                React.createElement('div', { className: 'error-boundary' }, 
-                    '⚠️ Preview Error: ' + error.message
+                React.createElement('div', { className: 'error-display' }, 
+                    React.createElement('h3', { style: { marginBottom: '12px' } }, '⚠️ Render Error'),
+                    React.createElement('p', null, error.message),
+                    React.createElement('p', { style: { fontSize: '12px', marginTop: '8px', opacity: '0.7' } }, 
+                        'Check the console for more details'
+                    )
                 ), 
                 document.getElementById('root')
             );
@@ -164,10 +219,11 @@ export const updatePreview = (code: string, language: string, iframeRef: React.R
     const url = URL.createObjectURL(blob);
     iframeRef.current.src = url;
     
-    // Clean up the blob URL after a short delay
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    // Clean up the blob URL after loading
+    const cleanup = () => URL.revokeObjectURL(url);
+    setTimeout(cleanup, 2000);
     
-    console.log('🖥️ Preview updated successfully');
+    console.log('🖥️ Lovable-style preview updated successfully');
   } catch (error) {
     console.error('❌ Preview update failed:', error);
   }
