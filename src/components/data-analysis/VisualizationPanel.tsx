@@ -71,7 +71,7 @@ const VisualizationPanel: React.FC = () => {
 
     // Revenue trend analysis
     if (numericColumns.includes('revenue')) {
-      const revenues = activeData.map(d => Number(d.revenue));
+      const revenues = activeData.map(d => Number(d.revenue) || 0);
       const avgGrowth = revenues.reduce((acc, curr, idx) => 
         idx === 0 ? acc : acc + ((curr - revenues[idx - 1]) / revenues[idx - 1] * 100), 0
       ) / (revenues.length - 1);
