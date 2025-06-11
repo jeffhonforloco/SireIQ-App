@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
+import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Users, Rocket } from 'lucide-react';
@@ -36,7 +37,7 @@ const Index = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            {/* Enhanced featured badge */}
+            {/* Enhanced featured badge with better text wrapping */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -45,11 +46,14 @@ const Index = () => {
             >
               <Link 
                 to="/featured-agents" 
-                className="group inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 hover:from-brand-primary/30 hover:to-brand-accent/30 border border-brand-primary/30 text-brand-primary text-sm rounded-full transition-all duration-300 hover:scale-105 hover:shadow-glow"
+                className="group inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 hover:from-brand-primary/30 hover:to-brand-accent/30 border border-brand-primary/30 text-brand-primary text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-105 hover:shadow-glow max-w-[90%] text-center"
               >
-                <Sparkles className="w-5 h-5 animate-pulse" />
-                <span className="font-medium">Explore Featured AI Agents</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse flex-shrink-0" />
+                <span className="font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+                  <span className="hidden sm:inline">Explore Featured AI Agents</span>
+                  <span className="sm:hidden">Featured AI Agents</span>
+                </span>
+                <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
               </Link>
             </motion.div>
             
@@ -90,6 +94,9 @@ const Index = () => {
               <HomeChatExperience />
             </div>
           </motion.div>
+          
+          {/* Featured Agents Section */}
+          <FeaturedAgents containerClassName="mt-8" />
           
           {/* Enhanced bottom features - Powered by Vytreon */}
           <motion.div 
