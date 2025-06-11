@@ -51,6 +51,7 @@ import ContentSummarizer from '@/pages/features/ContentSummarizer';
 import CodeGenerator from '@/pages/features/CodeGenerator';
 import ImageEnhancer from '@/pages/features/ImageEnhancer';
 import AIAssistant from '@/pages/features/AIAssistant';
+import DataAnalysis from '@/pages/features/DataAnalysis';
 
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
@@ -95,7 +96,7 @@ function App() {
                     <Route path="/features/code-generator" element={<CodeGenerator />} />
                     <Route path="/features/image-enhancer" element={<ImageEnhancer />} />
                     <Route path="/features/ai-assistant" element={<AIAssistant />} />
-                    <Route path="/features/data-analysis" element={<FeatureDetail />} />
+                    <Route path="/features/data-analysis" element={<DataAnalysis />} />
                     <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
                     <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
                     

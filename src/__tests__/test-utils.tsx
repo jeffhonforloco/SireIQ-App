@@ -1,6 +1,6 @@
 
 import React, { ReactElement } from 'react';
-import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import { render as rtlRender, RenderOptions, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -31,5 +31,5 @@ const customRender = (
 // Export the customized render method
 export { customRender as render };
 
-// Explicitly export screen and fireEvent to fix import errors
-export { screen, fireEvent } from '@testing-library/react';
+// Re-export screen and fireEvent that were already imported
+export { screen, fireEvent };
