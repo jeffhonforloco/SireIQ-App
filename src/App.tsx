@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -46,6 +45,7 @@ import VoiceAssistant from '@/pages/features/VoiceAssistant';
 import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
 import PersonalityEngine from '@/pages/features/PersonalityEngine';
 import CustomizePersonality from '@/pages/features/CustomizePersonality';
+import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
 
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
@@ -84,7 +84,7 @@ function App() {
                     <Route path="/features/idea-generation" element={<IdeaGeneration />} />
                     <Route path="/features/personality-engine" element={<PersonalityEngine />} />
                     <Route path="/features/customize-personality" element={<CustomizePersonality />} />
-                    <Route path="/features/seo-analyzer" element={<FeatureDetail />} />
+                    <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
                     <Route path="/features/content-summarizer" element={<FeatureDetail />} />
                     <Route path="/features/code-generator" element={<FeatureDetail />} />
                     <Route path="/features/image-enhancer" element={<FeatureDetail />} />
