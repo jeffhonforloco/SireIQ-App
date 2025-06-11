@@ -9,9 +9,6 @@ import { RoleProvider } from '@/contexts/RoleContext';
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 
-// Explicitly export screen and fireEvent to fix import errors
-export { screen, fireEvent } from '@testing-library/react';
-
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
