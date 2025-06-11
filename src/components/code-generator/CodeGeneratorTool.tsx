@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,6 +15,7 @@ import { generateCustomCode } from './codeGenerationUtils';
 import { updatePreview } from './previewUtils';
 import CodeDisplay from './CodeDisplay';
 import CodePreview from './CodePreview';
+import FileUpload from './FileUpload';
 
 const CodeGeneratorTool = () => {
   const [prompt, setPrompt] = useState('');
@@ -23,14 +23,23 @@ const CodeGeneratorTool = () => {
   const [generatedCode, setGeneratedCode] = useState<CodeExample | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
+  const [uploadedImage, setUploadedImage] = useState<{ file: File; data: string } | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { toast } = useToast();
 
+  const handleFileUpload = (file: File, imageData: string) => {
+    setUploadedImage({ file, data: imageData });
+    
+    // Auto-suggest prompt based on file
+    const suggestedPrompt = `Convert this UI design to ${selectedLanguage} code. Create a responsive layout that matches the design, including colors, spacing, typography, and interactive elements.`;
+    setPrompt(suggestedPrompt);
+  };
+
   const generateCode = async () => {
-    if (!prompt.trim()) {
+    if (!prompt.trim() && !uploadedImage) {
       toast({
-        title: "Empty prompt",
-        description: "Please describe what code you want to generate.",
+        title: "Missing input",
+        description: "Please describe what code you want to generate or upload a design image.",
         variant: "destructive"
       });
       return;
@@ -39,8 +48,15 @@ const CodeGeneratorTool = () => {
     setIsGenerating(true);
 
     try {
-      // Simulate AI processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Simulate AI processing with longer time for image analysis
+      const processingTime = uploadedImage ? 3000 : 2000;
+      await new Promise(resolve => setTimeout(resolve, processingTime));
+
+      // Enhanced prompt for image uploads
+      let enhancedPrompt = prompt;
+      if (uploadedImage) {
+        enhancedPrompt = `${prompt}\n\nBased on the uploaded design image (${uploadedImage.file.name}), create code that replicates the visual design, layout, and styling shown in the image.`;
+      }
 
       // For demo purposes, use template based on language or create custom code
       let generatedExample: CodeExample;
@@ -48,14 +64,18 @@ const CodeGeneratorTool = () => {
       if (codeTemplates[selectedLanguage]) {
         generatedExample = {
           ...codeTemplates[selectedLanguage],
-          description: `Generated ${selectedLanguage} code based on: "${prompt}"`
+          description: uploadedImage 
+            ? `Generated ${selectedLanguage} code based on uploaded design: "${uploadedImage.file.name}" and prompt: "${prompt}"`
+            : `Generated ${selectedLanguage} code based on: "${prompt}"`
         };
       } else {
         // Generate custom code for other languages
         generatedExample = {
           language: selectedLanguage,
-          description: `Generated ${selectedLanguage} code for: "${prompt}"`,
-          code: generateCustomCode(selectedLanguage, prompt)
+          description: uploadedImage
+            ? `Generated ${selectedLanguage} code for uploaded design and prompt: "${prompt}"`
+            : `Generated ${selectedLanguage} code for: "${prompt}"`,
+          code: generateCustomCode(selectedLanguage, enhancedPrompt)
         };
       }
 
@@ -67,12 +87,14 @@ const CodeGeneratorTool = () => {
       }
 
       toast({
-        title: "Code generated successfully!",
-        description: `Generated ${selectedLanguage} code based on your prompt.`,
+        title: "Code built successfully!",
+        description: uploadedImage
+          ? `Generated ${selectedLanguage} code based on your design and requirements.`
+          : `Generated ${selectedLanguage} code based on your prompt.`,
       });
     } catch (error) {
       toast({
-        title: "Generation failed",
+        title: "Build failed",
         description: "Failed to generate code. Please try again.",
         variant: "destructive"
       });
@@ -139,6 +161,7 @@ const CodeGeneratorTool = () => {
   const clearAll = () => {
     setPrompt('');
     setGeneratedCode(null);
+    setUploadedImage(null);
     if (iframeRef.current) {
       iframeRef.current.src = 'about:blank';
     }
@@ -183,12 +206,16 @@ const CodeGeneratorTool = () => {
               Programming Language
             </label>
             <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full bg-background border-brand-accent/50 hover:border-brand-primary/50">
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background border border-brand-accent/50 shadow-lg z-50">
                 {languages.map((lang) => (
-                  <SelectItem key={lang.value} value={lang.value}>
+                  <SelectItem 
+                    key={lang.value} 
+                    value={lang.value}
+                    className="hover:bg-brand-primary/10 focus:bg-brand-primary/10"
+                  >
                     {lang.label}
                   </SelectItem>
                 ))}
@@ -196,6 +223,8 @@ const CodeGeneratorTool = () => {
             </Select>
           </div>
         </div>
+
+        <FileUpload onFileUpload={handleFileUpload} />
 
         <div className="space-y-2">
           <label htmlFor="code-prompt" className="block text-sm font-medium">
@@ -216,18 +245,18 @@ const CodeGeneratorTool = () => {
         <div className="flex gap-3">
           <Button 
             onClick={generateCode}
-            disabled={isGenerating || !prompt.trim()} 
+            disabled={isGenerating || (!prompt.trim() && !uploadedImage)} 
             className="btn-primary flex-1"
           >
             {isGenerating ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Generating Code...
+                Building Code...
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4 mr-2" />
-                Generate Code
+                Build
               </>
             )}
           </Button>
