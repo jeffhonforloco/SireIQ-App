@@ -1,9 +1,10 @@
+
 import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Code, Loader2, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { Code, Loader2, Sparkles, Eye, EyeOff, Zap, Play, Download, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -177,136 +178,213 @@ const CodeGeneratorTool = () => {
   const canShowPreview = selectedLanguage === 'html' || selectedLanguage === 'react';
 
   return (
-    <Card className="bg-card-gradient border border-brand-accent/30">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Code className="h-5 w-5 text-brand-primary" />
-          AI Code Generator
-          <Badge variant="secondary" className="ml-2">
-            <Sparkles className="h-3 w-3 mr-1" />
-            AI Powered
-          </Badge>
-          {canShowPreview && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={togglePreview}
-              className="ml-auto"
-            >
-              {showPreview ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
-              {showPreview ? 'Hide Preview' : 'Show Preview'}
-            </Button>
-          )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label htmlFor="language-select" className="block text-sm font-medium">
-              Programming Language
-            </label>
-            <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-              <SelectTrigger className="w-full bg-background border-brand-accent/50 hover:border-brand-primary/50">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent className="bg-background border border-brand-accent/50 shadow-lg z-50">
-                {languages.map((lang) => (
-                  <SelectItem 
-                    key={lang.value} 
-                    value={lang.value}
-                    className="hover:bg-brand-primary/10 focus:bg-brand-primary/10"
-                  >
-                    {lang.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <FileUpload onFileUpload={handleFileUpload} />
-
-        <div className="space-y-2">
-          <label htmlFor="code-prompt" className="block text-sm font-medium">
-            Describe what you want to build
-          </label>
-          <Textarea 
-            id="code-prompt"
-            placeholder="E.g., Create a React component for user authentication, Build a Python function to process CSV files, Generate HTML for a landing page..."
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            className="min-h-[120px] resize-none bg-background/50"
-          />
-          <div className="text-xs text-text-secondary">
-            Be specific about functionality, styling, and any special requirements.
-          </div>
-        </div>
-        
-        <div className="flex gap-3">
-          <Button 
-            onClick={generateCode}
-            disabled={isGenerating || (!prompt.trim() && !uploadedImage)} 
-            className="btn-primary flex-1"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Building Code...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-4 h-4 mr-2" />
-                Build
-              </>
-            )}
-          </Button>
-          
-          <Button 
-            variant="outline"
-            onClick={clearAll}
-            disabled={isGenerating}
-            className="border-brand-accent/50 hover:border-brand-primary/50"
-          >
-            Clear
-          </Button>
-        </div>
-        
-        {generatedCode && (
-          <div className="space-y-4 animate-fade-in">
-            <Tabs defaultValue="code" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="code">Generated Code</TabsTrigger>
-                {canShowPreview && showPreview && (
-                  <TabsTrigger value="preview">Live Preview</TabsTrigger>
-                )}
-              </TabsList>
-              
-              <TabsContent value="code" className="space-y-4">
-                <CodeDisplay 
-                  generatedCode={generatedCode}
-                  onCopy={copyToClipboard}
-                  onDownload={downloadCode}
-                />
-              </TabsContent>
-              
-              {canShowPreview && showPreview && (
-                <TabsContent value="preview" className="space-y-4">
-                  <CodePreview 
-                    generatedCode={generatedCode}
-                    iframeRef={iframeRef}
-                  />
-                </TabsContent>
+    <div className="min-h-screen bg-gradient-to-br from-background-primary via-background-secondary to-background-tertiary">
+      {/* Modern Header */}
+      <div className="border-b border-border-primary bg-background-glass backdrop-blur-xl">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-brand-primary to-brand-accent">
+                <Code className="h-5 w-5 text-text-inverse" />
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold text-text-primary">AI Code Generator</h1>
+                <p className="text-sm text-text-secondary">Build anything with AI</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="bg-brand-primary/20 text-brand-primary border-brand-primary/30">
+                <Sparkles className="h-3 w-3 mr-1" />
+                AI Powered
+              </Badge>
+              {canShowPreview && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={togglePreview}
+                  className="border-border-primary hover:border-brand-primary/50 hover:bg-brand-primary/10"
+                >
+                  {showPreview ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
+                  {showPreview ? 'Hide Preview' : 'Show Preview'}
+                </Button>
               )}
-            </Tabs>
-            
-            <div className="flex justify-between text-xs text-text-secondary">
-              <span>Language: {generatedCode.language}</span>
-              <span>Generated: {new Date().toLocaleTimeString()}</span>
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 h-full">
+          {/* Left Panel - Input */}
+          <div className="space-y-6">
+            <Card className="border-0 bg-background-glass backdrop-blur-xl shadow-xl">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-2 text-text-primary">
+                  <Zap className="h-5 w-5 text-brand-primary" />
+                  Configuration
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="language-select" className="block text-sm font-medium text-text-primary">
+                    Programming Language
+                  </label>
+                  <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                    <SelectTrigger className="w-full bg-background-secondary border-border-primary hover:border-brand-primary/50 text-text-primary">
+                      <SelectValue placeholder="Select language" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background-secondary border border-border-primary shadow-xl backdrop-blur-xl z-[9999]">
+                      {languages.map((lang) => (
+                        <SelectItem 
+                          key={lang.value} 
+                          value={lang.value}
+                          className="hover:bg-brand-primary/10 focus:bg-brand-primary/10 text-text-primary cursor-pointer"
+                        >
+                          {lang.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <FileUpload onFileUpload={handleFileUpload} />
+
+                <div className="space-y-2">
+                  <label htmlFor="code-prompt" className="block text-sm font-medium text-text-primary">
+                    Describe what you want to build
+                  </label>
+                  <Textarea 
+                    id="code-prompt"
+                    placeholder="E.g., Create a React component for user authentication, Build a Python function to process CSV files, Generate HTML for a landing page..."
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    className="min-h-[120px] resize-none bg-background-secondary border-border-primary text-text-primary placeholder:text-text-tertiary focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                  />
+                  <div className="text-xs text-text-secondary">
+                    Be specific about functionality, styling, and any special requirements.
+                  </div>
+                </div>
+                
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={generateCode}
+                    disabled={isGenerating || (!prompt.trim() && !uploadedImage)} 
+                    className="bg-gradient-to-r from-brand-primary to-brand-accent hover:shadow-glow-strong text-text-inverse flex-1 h-12"
+                  >
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Building...
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        Build
+                      </>
+                    )}
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    onClick={clearAll}
+                    disabled={isGenerating}
+                    className="border-border-primary hover:border-brand-primary/50 hover:bg-brand-primary/10 text-text-primary"
+                  >
+                    Clear
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right Panel - Output */}
+          <div className="space-y-6">
+            {generatedCode ? (
+              <Card className="border-0 bg-background-glass backdrop-blur-xl shadow-xl h-full">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-text-primary">
+                      <Code className="h-5 w-5 text-brand-primary" />
+                      Generated Code
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={copyToClipboard}
+                        className="border-border-primary hover:border-brand-primary/50 hover:bg-brand-primary/10"
+                      >
+                        <Copy className="h-4 w-4 mr-1" /> 
+                        Copy
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={downloadCode}
+                        className="border-border-primary hover:border-brand-primary/50 hover:bg-brand-primary/10"
+                      >
+                        <Download className="h-4 w-4 mr-1" /> 
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="h-full">
+                  <Tabs defaultValue="code" className="w-full h-full">
+                    <TabsList className="grid w-full grid-cols-2 bg-background-secondary">
+                      <TabsTrigger value="code" className="data-[state=active]:bg-brand-primary/20 data-[state=active]:text-brand-primary">
+                        Code
+                      </TabsTrigger>
+                      {canShowPreview && showPreview && (
+                        <TabsTrigger value="preview" className="data-[state=active]:bg-brand-primary/20 data-[state=active]:text-brand-primary">
+                          Live Preview
+                        </TabsTrigger>
+                      )}
+                    </TabsList>
+                    
+                    <TabsContent value="code" className="space-y-4 h-full">
+                      <CodeDisplay 
+                        generatedCode={generatedCode}
+                        onCopy={copyToClipboard}
+                        onDownload={downloadCode}
+                      />
+                    </TabsContent>
+                    
+                    {canShowPreview && showPreview && (
+                      <TabsContent value="preview" className="space-y-4 h-full">
+                        <CodePreview 
+                          generatedCode={generatedCode}
+                          iframeRef={iframeRef}
+                        />
+                      </TabsContent>
+                    )}
+                  </Tabs>
+                  
+                  <div className="flex justify-between text-xs text-text-secondary mt-4 pt-4 border-t border-border-primary">
+                    <span>Language: {generatedCode.language}</span>
+                    <span>Generated: {new Date().toLocaleTimeString()}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="border-0 bg-background-glass backdrop-blur-xl shadow-xl h-96 flex items-center justify-center">
+                <div className="text-center space-y-4">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-brand-primary to-brand-accent mx-auto">
+                    <Code className="h-8 w-8 text-text-inverse" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-text-primary mb-2">Ready to build</h3>
+                    <p className="text-text-secondary max-w-md">
+                      Describe what you want to create or upload a design, and we'll generate the code for you.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
