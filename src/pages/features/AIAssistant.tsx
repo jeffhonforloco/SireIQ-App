@@ -64,7 +64,7 @@ const AIAssistant = () => {
         "Custom workflows",
         "Intelligent routing"
       ],
-      onTryNow: () => navigate('/agents')
+      onTryNow: () => navigate('/chat')
     }
   ];
 
