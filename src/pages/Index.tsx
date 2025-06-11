@@ -5,7 +5,7 @@ import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Users, Zap, Shield, Bot, Brain, Rocket } from 'lucide-react';
+import { Sparkles, ArrowRight, Users, Rocket } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -85,36 +85,11 @@ const Index = () => {
               <span className="text-brand-primary font-medium">next-generation creators</span> who demand excellence.
             </motion.p>
             
-            {/* Enhanced feature highlights */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-wrap justify-center gap-8 mb-12 text-sm"
-            >
-              <div className="flex items-center gap-3 badge-primary">
-                <Zap className="w-5 h-5 text-warning" />
-                <span>Lightning Fast Processing</span>
-              </div>
-              <div className="flex items-center gap-3 badge-primary">
-                <Shield className="w-5 h-5 text-success" />
-                <span>Enterprise Security</span>
-              </div>
-              <div className="flex items-center gap-3 badge-primary">
-                <Brain className="w-5 h-5 text-brand-accent" />
-                <span>Advanced Neural Networks</span>
-              </div>
-              <div className="flex items-center gap-3 badge-primary">
-                <Bot className="w-5 h-5 text-brand-purple" />
-                <span>Intelligent Automation</span>
-              </div>
-            </motion.div>
-            
             {/* Enhanced CTA buttons */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.8 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
             >
               <Link 
@@ -139,7 +114,7 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            transition={{ delay: 1.0, duration: 0.8 }}
             className="relative"
           >
             <div className="absolute -inset-2 bg-gradient-to-r from-brand-primary via-brand-accent to-brand-purple rounded-2xl blur-lg opacity-20 animate-glow-pulse"></div>
@@ -152,7 +127,7 @@ const Index = () => {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             className="text-center mt-12 text-sm text-text-tertiary"
           >
             <p>Trusted by <span className="text-brand-primary font-medium">10,000+</span> innovators worldwide</p>
