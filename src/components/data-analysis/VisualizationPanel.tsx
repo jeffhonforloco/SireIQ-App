@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart3, LineChart, PieChart, TrendingUp, Target } from 'lucide-react';
@@ -35,10 +34,7 @@ const VisualizationPanel: React.FC = () => {
     selectedChart
   );
 
-  const { generatePieData, processDataForChart, getAdvancedStats, colors } = useChartData(
-    activeData,
-    chartConfig
-  );
+  const { generatePieData, processDataForChart, getAdvancedStats, colors } = useChartData();
 
   const chartTypes: ChartType[] = [
     { value: 'line', label: 'Line Chart', icon: LineChart, description: 'Perfect for trends over time' },
@@ -69,9 +65,18 @@ const VisualizationPanel: React.FC = () => {
     toast.success('Analysis exported successfully!');
   };
 
-  const processedData = processDataForChart(activeData);
+  const processedData = processDataForChart(activeData, selectedChart);
   const pieData = generatePieData(activeData);
-  const advancedStats = getAdvancedStats();
+  const rawStats = getAdvancedStats(activeData);
+  
+  // Convert numbers to strings for AdvancedStats type
+  const advancedStats = {
+    mean: rawStats.mean.toFixed(2),
+    median: rawStats.median.toFixed(2),
+    stdDev: rawStats.stdDev.toFixed(2),
+    variance: rawStats.variance.toFixed(2),
+    range: rawStats.range.toFixed(2)
+  };
 
   return (
     <div className="space-y-6">
