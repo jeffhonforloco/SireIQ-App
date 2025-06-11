@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu, Database } from 'lucide-react';
+import { Menu, Database, Layers, Sparkles, BarChart3, Users, Mic, Code, Image, Brain } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import MobileAuthButtons from './MobileAuthButtons';
 import NavLinks from './NavLinks';
 import BuildInfoSection from './BuildInfoSection';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import MemoryBrowser from '@/plugins/memory';
+import { useRole } from '@/contexts/RoleContext';
 
 interface MobileMenuProps {
   isSheetOpen: boolean;
@@ -17,6 +19,16 @@ interface MobileMenuProps {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) => {
   const [showMemory, setShowMemory] = useState(false);
+  const { role } = useRole();
+  
+  const features = [
+    { name: 'AI Assistant', icon: Sparkles, path: '/features/ai-assistant', description: 'Intelligent AI conversations' },
+    { name: 'Data Analysis', icon: BarChart3, path: '/features/data-analysis', description: 'Advanced analytics tools' },
+    { name: 'Voice Assistant', icon: Mic, path: '/features/voice-assistant', description: 'Voice-powered interactions' },
+    { name: 'Code Generator', icon: Code, path: '/features/code-generator', description: 'Generate code instantly' },
+    { name: 'Image Enhancer', icon: Image, path: '/features/image-enhancer', description: 'AI-powered image editing' },
+    { name: 'Idea Generation', icon: Brain, path: '/features/idea-generation', description: 'Creative brainstorming' },
+  ];
   
   return (
     <div className="flex md:hidden items-center">
@@ -29,12 +41,70 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
         <SheetContent side="left" className="bg-black border-gray-800 flex flex-col p-0 pt-4 px-4 w-[85vw] overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             <Logo size="md" />
-            {/* Removed the duplicate X button here since SheetContent already has a built-in close button */}
           </div>
           
           <div className="mt-6 flex flex-col gap-6">
             <NavLinks orientation="vertical" />
           </div>
+
+          {/* Features Section */}
+          <div className="mt-6">
+            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3">
+              Features
+            </h3>
+            <div className="space-y-2">
+              {features.map((feature) => {
+                const IconComponent = feature.icon;
+                return (
+                  <Link
+                    key={feature.name}
+                    to={feature.path}
+                    onClick={() => setIsSheetOpen(false)}
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-sireiq-cyan/20 flex items-center justify-center">
+                      <IconComponent className="w-4 h-4 text-sireiq-cyan" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-white">{feature.name}</div>
+                      <div className="text-xs text-gray-400">{feature.description}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          {role && (
+            <div className="mt-6">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3">
+                Quick Actions
+              </h3>
+              <div className="space-y-2">
+                <Link
+                  to="/chat"
+                  onClick={() => setIsSheetOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-blue-400" />
+                  </div>
+                  <div className="text-sm font-medium text-white">Start New Chat</div>
+                </Link>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setIsSheetOpen(false)}
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+                    <BarChart3 className="w-4 h-4 text-green-400" />
+                  </div>
+                  <div className="text-sm font-medium text-white">View Dashboard</div>
+                </Link>
+              </div>
+            </div>
+          )}
           
           <Button 
             variant="outline" 
@@ -59,7 +129,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
             <MobileAuthButtons />
           </div>
           
-          {/* Add the BuildInfoSection with no extra margin to avoid double borders */}
           <div className="mt-auto -mx-4">
             <BuildInfoSection />
           </div>

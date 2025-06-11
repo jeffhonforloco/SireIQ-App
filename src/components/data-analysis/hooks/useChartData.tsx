@@ -11,7 +11,8 @@ export const useChartData = (activeData: DataPoint[], chartConfig: ChartConfig) 
     // Group data by x-axis and sum y-axis values
     const grouped = data.reduce((acc, item) => {
       const key = String(item[chartConfig.xAxis]);
-      const value = typeof item[chartConfig.yAxis] === 'number' ? item[chartConfig.yAxis] : parseFloat(String(item[chartConfig.yAxis])) || 0;
+      const rawValue = item[chartConfig.yAxis];
+      const value = typeof rawValue === 'number' ? rawValue : parseFloat(String(rawValue)) || 0;
       acc[key] = (acc[key] || 0) + value;
       return acc;
     }, {} as Record<string, number>);
