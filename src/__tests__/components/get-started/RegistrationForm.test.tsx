@@ -7,20 +7,6 @@ import { RoleProvider } from '@/contexts/RoleContext';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
-// Custom wrapper that provides necessary context providers
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <HelmetProvider>
-      <RoleProvider>
-        <BrowserRouter>{children}</BrowserRouter>
-      </RoleProvider>
-    </HelmetProvider>
-  );
-};
-
-const customRender = (ui: React.ReactElement, options = {}) => 
-  render(ui, { wrapper: AllTheProviders, ...options });
-
 describe('RegistrationForm', () => {
   const mockOnSuccess = vi.fn();
   
@@ -29,7 +15,7 @@ describe('RegistrationForm', () => {
   });
   
   test('renders registration form with all fields', () => {
-    customRender(<RegistrationForm onSuccess={mockOnSuccess} />);
+    render(<RegistrationForm onSuccess={mockOnSuccess} />);
     
     expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();

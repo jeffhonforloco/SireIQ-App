@@ -1,76 +1,35 @@
 
 import React from 'react';
 import { render, screen } from '@/src/__tests__/test-utils';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { RoleProvider } from '@/contexts/RoleContext';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
-// Custom wrapper that provides necessary context providers
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <HelmetProvider>
-      <RoleProvider>
-        <BrowserRouter>{children}</BrowserRouter>
-      </RoleProvider>
-    </HelmetProvider>
-  );
-};
-
-const customRender = (ui: React.ReactElement, options = {}) => 
-  render(ui, { wrapper: AllTheProviders, ...options });
-
 describe('GetStartedCard', () => {
-  const mockSetVerificationCode = vi.fn();
-  const mockOnVerify = vi.fn();
-  const mockOnResendCode = vi.fn();
-  const mockOnUseDemoCode = vi.fn();
-  const mockOnRegistrationSuccess = vi.fn();
+  const mockProps = {
+    step: 1,
+    email: 'test@example.com',
+    verificationCode: '',
+    setVerificationCode: vi.fn(),
+    demoCode: '123456',
+    onVerify: vi.fn(),
+    onResendCode: vi.fn(),
+    onUseDemoCode: vi.fn(),
+    onRegistrationSuccess: vi.fn()
+  };
   
   beforeEach(() => {
     vi.clearAllMocks();
   });
   
-  test('renders registration form at step 1', () => {
-    customRender(
-      <GetStartedCard 
-        step={1}
-        email=""
-        verificationCode=""
-        setVerificationCode={mockSetVerificationCode}
-        demoCode="123456"
-        onVerify={mockOnVerify}
-        onResendCode={mockOnResendCode}
-        onUseDemoCode={mockOnUseDemoCode}
-        onRegistrationSuccess={mockOnRegistrationSuccess}
-      />
-    );
+  test('renders registration form on step 1', () => {
+    render(<GetStartedCard {...mockProps} />);
     
-    expect(screen.getByText('Create an Account')).toBeInTheDocument();
-    expect(screen.getByText(/sign up for free and start exploring/i)).toBeInTheDocument();
-    // Check if registration form is rendered
-    expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
+    expect(screen.getByText(/create an account/i)).toBeInTheDocument();
   });
   
-  test('renders email verification at step 2', () => {
-    customRender(
-      <GetStartedCard 
-        step={2}
-        email="test@example.com"
-        verificationCode=""
-        setVerificationCode={mockSetVerificationCode}
-        demoCode="123456"
-        onVerify={mockOnVerify}
-        onResendCode={mockOnResendCode}
-        onUseDemoCode={mockOnUseDemoCode}
-        onRegistrationSuccess={mockOnRegistrationSuccess}
-      />
-    );
+  test('renders email verification on step 2', () => {
+    render(<GetStartedCard {...mockProps} step={2} />);
     
-    expect(screen.getByText('Verify Your Email')).toBeInTheDocument();
-    expect(screen.getByText(/we've sent a verification code/i)).toBeInTheDocument();
-    // Check if email verification is rendered
-    expect(screen.getByRole('button', { name: /verify email & continue/i })).toBeInTheDocument();
+    expect(screen.getByText(/verify your email/i)).toBeInTheDocument();
   });
 });

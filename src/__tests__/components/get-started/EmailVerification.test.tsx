@@ -7,20 +7,6 @@ import { RoleProvider } from '@/contexts/RoleContext';
 import EmailVerification from '@/components/get-started/EmailVerification';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
-// Custom wrapper that provides necessary context providers
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <HelmetProvider>
-      <RoleProvider>
-        <BrowserRouter>{children}</BrowserRouter>
-      </RoleProvider>
-    </HelmetProvider>
-  );
-};
-
-const customRender = (ui: React.ReactElement, options = {}) => 
-  render(ui, { wrapper: AllTheProviders, ...options });
-
 describe('EmailVerification', () => {
   const mockOnVerify = vi.fn();
   const mockOnResendCode = vi.fn();
@@ -32,7 +18,7 @@ describe('EmailVerification', () => {
   });
   
   test('renders email verification form', () => {
-    customRender(
+    render(
       <EmailVerification 
         email="test@example.com"
         verificationCode=""
