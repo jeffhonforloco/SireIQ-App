@@ -30,3 +30,6 @@ const customRender = (
 
 // Export the customized render method
 export { customRender as render };
+
+// Explicitly export screen and fireEvent to fix import errors
+export { screen, fireEvent } from '@testing-library/react';

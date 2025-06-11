@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -38,6 +37,7 @@ import AIWorkflows from '@/pages/AIWorkflows';
 import APIReference from '@/pages/APIReference';
 import DesignSystemPage from '@/pages/DesignSystemPage';
 import Enterprise from '@/pages/Enterprise';
+import Chat from '@/pages/Chat';
 
 // Feature Pages
 import FeatureDetail from '@/pages/features/FeatureDetail';
@@ -83,6 +83,7 @@ function App() {
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/chat" element={<Chat />} />
                     <Route path="/features" element={<Features />} />
                     
                     {/* Feature Detail Routes */}
