@@ -34,6 +34,10 @@ const PersonalityEngineContent = () => {
   
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 
+  const handleTryInChat = () => {
+    navigate('/chat');
+  };
+
   return (
     <div className="min-h-screen bg-sireiq-darker text-sireiq-light">
       <Helmet>
@@ -62,7 +66,11 @@ const PersonalityEngineContent = () => {
               <CustomizeButton 
                 className="bg-sireiq-cyan text-sireiq-darker hover:bg-sireiq-cyan/90" 
               />
-              <Button variant="outline" className="border-sireiq-accent/30 hover:bg-sireiq-accent/10">
+              <Button 
+                variant="outline" 
+                className="border-sireiq-accent/30 hover:bg-sireiq-accent/10"
+                onClick={handleTryInChat}
+              >
                 <MessageSquare className="mr-2 h-4 w-4" />
                 Try in Chat
               </Button>
