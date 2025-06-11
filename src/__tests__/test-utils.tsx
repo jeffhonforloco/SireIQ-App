@@ -1,6 +1,8 @@
 
 import React, { ReactElement } from 'react';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -14,7 +16,7 @@ import '@testing-library/jest-dom';
 
 // Re-export screen and fireEvent - they should be available from the * export above
 // but we'll make them explicit for the test files that need them
-export { screen, fireEvent } from '@testing-library/react';
+export { screen, fireEvent };
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

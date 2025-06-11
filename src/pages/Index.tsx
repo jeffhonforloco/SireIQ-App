@@ -100,14 +100,19 @@ const Index = () => {
           >
             <div className="flex flex-col items-center justify-center">
               <p className="text-sm text-text-tertiary mb-2">Powered by</p>
-              <div className="flex items-center space-x-2">
+              <a 
+                href="https://www.vytreon.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 hover:scale-105 transition-transform duration-200 group"
+              >
                 <img 
                   src="/lovable-uploads/ca3d5628-293b-4717-a737-0eacfb84f9ea.png" 
                   alt="Vytreon Logo" 
                   className="h-8" 
                 />
-                <span className="text-brand-primary font-medium">Vytreon</span>
-              </div>
+                <span className="text-brand-primary font-medium group-hover:text-brand-accent transition-colors">Vytreon</span>
+              </a>
             </div>
           </motion.div>
         </div>
