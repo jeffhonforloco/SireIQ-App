@@ -1,9 +1,26 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { RoleProvider } from '@/contexts/RoleContext';
 import GetStarted from '@/pages/GetStarted';
 import { describe, test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
+
+// Custom wrapper that provides necessary context providers
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <HelmetProvider>
+      <RoleProvider>
+        <BrowserRouter>{children}</BrowserRouter>
+      </RoleProvider>
+    </HelmetProvider>
+  );
+};
+
+const customRender = (ui: React.ReactElement, options = {}) => 
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 // Mock the components since we've tested them individually
 vi.mock('@/components/get-started/GetStartedCard', () => ({
@@ -51,7 +68,7 @@ vi.mock('@/components/ui/sonner', () => ({
 
 describe('GetStarted Page', () => {
   test('renders get started page correctly', () => {
-    render(<GetStarted />);
+    customRender(<GetStarted />);
     
     expect(screen.getByTestId('mock-navbar')).toBeInTheDocument();
     expect(screen.getByTestId('mock-footer')).toBeInTheDocument();
@@ -60,7 +77,7 @@ describe('GetStarted Page', () => {
   });
   
   test('handles registration success and moves to verification step', () => {
-    render(<GetStarted />);
+    customRender(<GetStarted />);
     
     // Trigger the registration success
     fireEvent.click(screen.getByText('Mock Registration Success'));

@@ -1,9 +1,26 @@
 
 import React from 'react';
-import { render, screen } from '../../test-utils';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { RoleProvider } from '@/contexts/RoleContext';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
+
+// Custom wrapper that provides necessary context providers
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <HelmetProvider>
+      <RoleProvider>
+        <BrowserRouter>{children}</BrowserRouter>
+      </RoleProvider>
+    </HelmetProvider>
+  );
+};
+
+const customRender = (ui: React.ReactElement, options = {}) => 
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 describe('GetStartedCard', () => {
   const mockSetVerificationCode = vi.fn();
@@ -17,7 +34,7 @@ describe('GetStartedCard', () => {
   });
   
   test('renders registration form at step 1', () => {
-    render(
+    customRender(
       <GetStartedCard 
         step={1}
         email=""
@@ -38,7 +55,7 @@ describe('GetStartedCard', () => {
   });
   
   test('renders email verification at step 2', () => {
-    render(
+    customRender(
       <GetStartedCard 
         step={2}
         email="test@example.com"

@@ -1,9 +1,26 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../../test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { RoleProvider } from '@/contexts/RoleContext';
 import EmailVerification from '@/components/get-started/EmailVerification';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
+
+// Custom wrapper that provides necessary context providers
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <HelmetProvider>
+      <RoleProvider>
+        <BrowserRouter>{children}</BrowserRouter>
+      </RoleProvider>
+    </HelmetProvider>
+  );
+};
+
+const customRender = (ui: React.ReactElement, options = {}) => 
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 describe('EmailVerification', () => {
   const mockSetVerificationCode = vi.fn();
@@ -19,7 +36,7 @@ describe('EmailVerification', () => {
   });
   
   test('renders verification UI correctly', () => {
-    render(
+    customRender(
       <EmailVerification
         email="test@example.com"
         verificationCode=""
@@ -41,7 +58,7 @@ describe('EmailVerification', () => {
   });
   
   test('calls onVerify when Verify button is clicked', () => {
-    render(
+    customRender(
       <EmailVerification
         email="test@example.com"
         verificationCode="123456"
@@ -58,7 +75,7 @@ describe('EmailVerification', () => {
   });
   
   test('calls onUseDemoCode when Use Demo Code button is clicked', () => {
-    render(
+    customRender(
       <EmailVerification
         email="test@example.com"
         verificationCode=""
@@ -75,7 +92,7 @@ describe('EmailVerification', () => {
   });
   
   test('calls onResendCode when resend link is clicked', () => {
-    render(
+    customRender(
       <EmailVerification
         email="test@example.com"
         verificationCode=""
