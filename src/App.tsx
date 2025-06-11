@@ -47,6 +47,7 @@ import PersonalityEngine from '@/pages/features/PersonalityEngine';
 import CustomizePersonality from '@/pages/features/CustomizePersonality';
 import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
 import ContentSummarizer from '@/pages/features/ContentSummarizer';
+import CodeGenerator from '@/pages/features/CodeGenerator';
 
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
@@ -87,7 +88,7 @@ function App() {
                     <Route path="/features/customize-personality" element={<CustomizePersonality />} />
                     <Route path="/features/seo-analyzer" element={<SEOAnalyzer />} />
                     <Route path="/features/content-summarizer" element={<ContentSummarizer />} />
-                    <Route path="/features/code-generator" element={<FeatureDetail />} />
+                    <Route path="/features/code-generator" element={<CodeGenerator />} />
                     <Route path="/features/image-enhancer" element={<FeatureDetail />} />
                     <Route path="/features/ai-assistant" element={<FeatureDetail />} />
                     <Route path="/features/data-analysis" element={<FeatureDetail />} />
