@@ -230,10 +230,10 @@ const CodeGeneratorTool = () => {
                     Programming Language
                   </label>
                   <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                    <SelectTrigger className="w-full bg-background-secondary border-border-primary hover:border-brand-primary/50 text-text-primary">
+                    <SelectTrigger className="w-full bg-background-primary border-border-primary hover:border-brand-primary/50 text-text-primary">
                       <SelectValue placeholder="Select language" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background-secondary border border-border-primary shadow-xl backdrop-blur-xl z-[9999]">
+                    <SelectContent className="bg-background-primary border border-border-primary shadow-xl backdrop-blur-xl z-[9999]">
                       {languages.map((lang) => (
                         <SelectItem 
                           key={lang.value} 
@@ -258,7 +258,7 @@ const CodeGeneratorTool = () => {
                     placeholder="E.g., Create a React component for user authentication, Build a Python function to process CSV files, Generate HTML for a landing page..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="min-h-[120px] resize-none bg-background-secondary border-border-primary text-text-primary placeholder:text-text-tertiary focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
+                    className="min-h-[120px] resize-none bg-background-primary border-border-primary text-text-primary placeholder:text-text-tertiary focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
                   />
                   <div className="text-xs text-text-secondary">
                     Be specific about functionality, styling, and any special requirements.
