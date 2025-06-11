@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -49,6 +50,7 @@ import SEOAnalyzer from '@/pages/features/SEOAnalyzer';
 import ContentSummarizer from '@/pages/features/ContentSummarizer';
 import CodeGenerator from '@/pages/features/CodeGenerator';
 import ImageEnhancer from '@/pages/features/ImageEnhancer';
+import AIAssistant from '@/pages/features/AIAssistant';
 
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
@@ -91,7 +93,7 @@ function App() {
                     <Route path="/features/content-summarizer" element={<ContentSummarizer />} />
                     <Route path="/features/code-generator" element={<CodeGenerator />} />
                     <Route path="/features/image-enhancer" element={<ImageEnhancer />} />
-                    <Route path="/features/ai-assistant" element={<FeatureDetail />} />
+                    <Route path="/features/ai-assistant" element={<AIAssistant />} />
                     <Route path="/features/data-analysis" element={<FeatureDetail />} />
                     <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
                     <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
