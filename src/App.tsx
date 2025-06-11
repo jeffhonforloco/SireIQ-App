@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -38,6 +39,12 @@ import APIReference from '@/pages/APIReference';
 import DesignSystemPage from '@/pages/DesignSystemPage';
 import Enterprise from '@/pages/Enterprise';
 
+// Feature Pages
+import FeatureDetail from '@/pages/features/FeatureDetail';
+import IdeaGeneration from '@/pages/features/IdeaGeneration';
+import VoiceAssistant from '@/pages/features/VoiceAssistant';
+import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
+
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
@@ -70,7 +77,19 @@ function App() {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/features" element={<Features />} />
-                    <Route path="/features/*" element={<Features />} />
+                    
+                    {/* Feature Detail Routes */}
+                    <Route path="/features/idea-generation" element={<IdeaGeneration />} />
+                    <Route path="/features/personality-engine" element={<FeatureDetail />} />
+                    <Route path="/features/seo-analyzer" element={<FeatureDetail />} />
+                    <Route path="/features/content-summarizer" element={<FeatureDetail />} />
+                    <Route path="/features/code-generator" element={<FeatureDetail />} />
+                    <Route path="/features/image-enhancer" element={<FeatureDetail />} />
+                    <Route path="/features/ai-assistant" element={<FeatureDetail />} />
+                    <Route path="/features/data-analysis" element={<FeatureDetail />} />
+                    <Route path="/features/voice-assistant" element={<VoiceAssistant />} />
+                    <Route path="/features/enterprise-security" element={<EnterpriseSecurity />} />
+                    
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
