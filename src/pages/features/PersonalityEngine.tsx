@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { PersonalityEngineProvider, usePersonalityEngine } from '@/contexts/PersonalityEngineContext';
+import Logo from '@/components/Logo';
 
 // Import components
 import ParameterSlider from '@/components/personality/ParameterSlider';
@@ -38,6 +39,10 @@ const PersonalityEngineContent = () => {
     navigate('/chat');
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-sireiq-darker text-sireiq-light">
       <Helmet>
@@ -50,6 +55,18 @@ const PersonalityEngineContent = () => {
         open={advancedSettingsOpen} 
         onOpenChange={setAdvancedSettingsOpen} 
       />
+
+      {/* Header with Logo */}
+      <div className="border-b border-sireiq-accent/20">
+        <div className="container mx-auto px-4 py-4">
+          <div 
+            onClick={handleLogoClick}
+            className="cursor-pointer hover:opacity-80 transition-opacity duration-200 w-fit"
+          >
+            <Logo size="sm" showText={true} />
+          </div>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
