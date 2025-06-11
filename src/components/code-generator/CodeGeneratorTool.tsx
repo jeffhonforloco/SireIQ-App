@@ -34,10 +34,12 @@ const CodeGeneratorTool = () => {
         onTogglePreview={togglePreview}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-8 h-full">
-          {/* Left Panel - Input */}
-          <div className="space-y-4 sm:space-y-6">
+      {/* Mobile-first responsive layout */}
+      <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-8 max-w-7xl">
+        {/* Mobile: Stack vertically, Desktop: Side by side */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-3 sm:gap-6 lg:gap-8 h-full">
+          {/* Configuration Panel - Full width on mobile */}
+          <div className="w-full order-1">
             <ConfigurationPanel
               selectedLanguage={selectedLanguage}
               setSelectedLanguage={setSelectedLanguage}
@@ -51,8 +53,8 @@ const CodeGeneratorTool = () => {
             />
           </div>
 
-          {/* Right Panel - Output */}
-          <div className="space-y-4 sm:space-y-6">
+          {/* Output Panel - Full width on mobile, appears after config */}
+          <div className="w-full order-2">
             <OutputPanel
               generatedCode={generatedCode}
               canShowPreview={canShowPreview}

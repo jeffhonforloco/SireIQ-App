@@ -40,7 +40,10 @@ export const useChartData = (activeData: DataPoint[], chartConfig: ChartConfig) 
     const values = activeData.map(d => {
       const value = d[chartConfig.yAxis];
       return typeof value === 'number' ? value : parseFloat(String(value)) || 0;
-    });
+    }).filter(val => !isNaN(val));
+    
+    if (values.length === 0) return null;
+    
     const sum = values.reduce((a, b) => a + b, 0);
     const mean = sum / values.length;
     const variance = values.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / values.length;
