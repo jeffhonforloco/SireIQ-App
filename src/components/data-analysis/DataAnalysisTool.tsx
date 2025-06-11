@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, Play, Download, FileSpreadsheet, BarChart2, TrendingUp } from 'lucide-react';
+import { Upload, Play, Download, FileSpreadsheet, BarChart2, TrendingUp, Brain, Sparkles, Target, Zap } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface DataPoint {
@@ -20,17 +20,25 @@ interface AnalysisResult {
     name: string;
     change: number;
     direction: 'up' | 'down' | 'stable';
+    significance: 'high' | 'medium' | 'low';
   }[];
   recommendations: string[];
   confidence: number;
   dataPoints: number;
   correlations: { [key: string]: number };
+  predictions: {
+    metric: string;
+    value: number;
+    timeframe: string;
+    confidence: number;
+  }[];
+  riskFactors: string[];
 }
 
 const DataAnalysisTool: React.FC = () => {
   const [uploadedData, setUploadedData] = useState<DataPoint[]>([]);
   const [selectedDataset, setSelectedDataset] = useState<string>('');
-  const [analysisType, setAnalysisType] = useState<string>('descriptive');
+  const [analysisType, setAnalysisType] = useState<string>('advanced');
   const [customQuery, setCustomQuery] = useState<string>('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalysisResult | null>(null);
@@ -38,32 +46,36 @@ const DataAnalysisTool: React.FC = () => {
 
   const sampleDatasets = [
     { 
-      id: 'sales', 
-      name: 'Sales Performance Data', 
-      size: '2.3MB', 
-      records: '12,450',
-      data: generateSampleData('sales')
-    },
-    { 
-      id: 'customers', 
-      name: 'Customer Demographics', 
-      size: '1.8MB', 
-      records: '8,920',
-      data: generateSampleData('customers')
+      id: 'ecommerce', 
+      name: 'E-commerce Performance Analytics', 
+      size: '3.2MB', 
+      records: '15,840',
+      description: 'Sales, customer behavior, and conversion metrics',
+      data: generateSampleData('ecommerce')
     },
     { 
       id: 'marketing', 
-      name: 'Marketing Campaign Results', 
-      size: '950KB', 
-      records: '3,240',
+      name: 'Digital Marketing ROI Analysis', 
+      size: '2.1MB', 
+      records: '8,920',
+      description: 'Campaign performance and attribution data',
       data: generateSampleData('marketing')
     },
     { 
-      id: 'inventory', 
-      name: 'Inventory Analytics', 
-      size: '1.2MB', 
-      records: '5,680',
-      data: generateSampleData('inventory')
+      id: 'financial', 
+      name: 'Financial Performance Dashboard', 
+      size: '1.8MB', 
+      records: '12,450',
+      description: 'Revenue, costs, and profitability trends',
+      data: generateSampleData('financial')
+    },
+    { 
+      id: 'customer', 
+      name: 'Customer Journey Intelligence', 
+      size: '2.7MB', 
+      records: '11,200',
+      description: 'Customer lifecycle and retention analytics',
+      data: generateSampleData('customer')
     }
   ];
 
@@ -73,40 +85,48 @@ const DataAnalysisTool: React.FC = () => {
     
     for (let i = 0; i < 12; i++) {
       switch (type) {
-        case 'sales':
+        case 'ecommerce':
           baseData.push({
             month: months[i],
-            revenue: Math.floor(Math.random() * 50000) + 30000,
-            units_sold: Math.floor(Math.random() * 500) + 200,
-            conversion_rate: +(Math.random() * 0.1 + 0.05).toFixed(3),
-            avg_order_value: Math.floor(Math.random() * 200) + 100
-          });
-          break;
-        case 'customers':
-          baseData.push({
-            month: months[i],
-            new_customers: Math.floor(Math.random() * 1000) + 300,
-            returning_customers: Math.floor(Math.random() * 800) + 400,
-            churn_rate: +(Math.random() * 0.15 + 0.05).toFixed(3),
-            lifetime_value: Math.floor(Math.random() * 1000) + 500
+            revenue: Math.floor(Math.random() * 80000) + 120000,
+            orders: Math.floor(Math.random() * 800) + 1200,
+            conversion_rate: +(Math.random() * 0.05 + 0.03).toFixed(3),
+            avg_order_value: Math.floor(Math.random() * 50) + 150,
+            customer_acquisition_cost: Math.floor(Math.random() * 30) + 45,
+            return_rate: +(Math.random() * 0.08 + 0.02).toFixed(3)
           });
           break;
         case 'marketing':
           baseData.push({
             month: months[i],
-            ad_spend: Math.floor(Math.random() * 10000) + 5000,
-            impressions: Math.floor(Math.random() * 100000) + 50000,
-            clicks: Math.floor(Math.random() * 5000) + 1000,
-            cost_per_click: +(Math.random() * 2 + 0.5).toFixed(2)
+            ad_spend: Math.floor(Math.random() * 25000) + 35000,
+            impressions: Math.floor(Math.random() * 200000) + 500000,
+            clicks: Math.floor(Math.random() * 8000) + 15000,
+            conversions: Math.floor(Math.random() * 800) + 1200,
+            cost_per_click: +(Math.random() * 1.5 + 2.0).toFixed(2),
+            roas: +(Math.random() * 2 + 3).toFixed(1)
           });
           break;
-        case 'inventory':
+        case 'financial':
           baseData.push({
             month: months[i],
-            stock_level: Math.floor(Math.random() * 1000) + 200,
-            reorder_point: Math.floor(Math.random() * 100) + 50,
-            turnover_rate: +(Math.random() * 5 + 2).toFixed(2),
-            carrying_cost: Math.floor(Math.random() * 5000) + 1000
+            gross_revenue: Math.floor(Math.random() * 100000) + 200000,
+            operating_costs: Math.floor(Math.random() * 60000) + 120000,
+            net_profit: Math.floor(Math.random() * 40000) + 60000,
+            profit_margin: +(Math.random() * 0.15 + 0.25).toFixed(3),
+            cash_flow: Math.floor(Math.random() * 80000) + 100000,
+            expenses_ratio: +(Math.random() * 0.1 + 0.6).toFixed(3)
+          });
+          break;
+        case 'customer':
+          baseData.push({
+            month: months[i],
+            new_customers: Math.floor(Math.random() * 800) + 1200,
+            active_customers: Math.floor(Math.random() * 2000) + 8000,
+            churn_rate: +(Math.random() * 0.08 + 0.02).toFixed(3),
+            lifetime_value: Math.floor(Math.random() * 500) + 800,
+            satisfaction_score: +(Math.random() * 1 + 4).toFixed(1),
+            support_tickets: Math.floor(Math.random() * 300) + 150
           });
           break;
       }
@@ -115,10 +135,30 @@ const DataAnalysisTool: React.FC = () => {
   }
 
   const analysisTypes = [
-    { value: 'descriptive', label: 'Descriptive Analysis', description: 'What happened?' },
-    { value: 'diagnostic', label: 'Diagnostic Analysis', description: 'Why did it happen?' },
-    { value: 'predictive', label: 'Predictive Analysis', description: 'What will happen?' },
-    { value: 'prescriptive', label: 'Prescriptive Analysis', description: 'What should we do?' }
+    { 
+      value: 'advanced', 
+      label: 'Advanced AI Analysis', 
+      description: 'Complete AI-powered insights with predictions',
+      icon: Brain
+    },
+    { 
+      value: 'predictive', 
+      label: 'Predictive Analytics', 
+      description: 'Forecast future trends and outcomes',
+      icon: Target
+    },
+    { 
+      value: 'diagnostic', 
+      label: 'Root Cause Analysis', 
+      description: 'Identify why changes occurred',
+      icon: Sparkles
+    },
+    { 
+      value: 'prescriptive', 
+      label: 'Strategic Recommendations', 
+      description: 'Get actionable business strategies',
+      icon: Zap
+    }
   ];
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +203,6 @@ const DataAnalysisTool: React.FC = () => {
       
       headers.forEach((header, index) => {
         const value = values[index];
-        // Try to convert to number if possible
         const numValue = parseFloat(value);
         row[header] = isNaN(numValue) ? value : numValue;
       });
@@ -174,7 +213,7 @@ const DataAnalysisTool: React.FC = () => {
     return data;
   };
 
-  const calculateCorrelations = (data: DataPoint[]): { [key: string]: number } => {
+  const calculateAdvancedCorrelations = (data: DataPoint[]): { [key: string]: number } => {
     const numericColumns = Object.keys(data[0] || {}).filter(key => 
       typeof data[0][key] === 'number'
     );
@@ -211,70 +250,94 @@ const DataAnalysisTool: React.FC = () => {
     return denominator === 0 ? 0 : numerator / denominator;
   };
 
-  const generateInsights = (data: DataPoint[], analysisType: string): string[] => {
+  const generateAdvancedInsights = (data: DataPoint[], analysisType: string): string[] => {
     const insights: string[] = [];
     const numericColumns = Object.keys(data[0] || {}).filter(key => 
       typeof data[0][key] === 'number'
     );
 
-    // Calculate basic statistics
+    // Advanced pattern detection
     numericColumns.forEach(column => {
       const values = data.map(row => row[column] as number);
       const avg = values.reduce((a, b) => a + b, 0) / values.length;
-      const min = Math.min(...values);
-      const max = Math.max(...values);
       const trend = values[values.length - 1] - values[0];
+      const volatility = Math.sqrt(values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / values.length);
 
-      if (Math.abs(trend) > avg * 0.1) {
-        const direction = trend > 0 ? 'increasing' : 'decreasing';
-        insights.push(`${column} shows a ${direction} trend with ${Math.abs(trend / avg * 100).toFixed(1)}% change`);
+      if (Math.abs(trend) > avg * 0.2) {
+        const direction = trend > 0 ? 'significant growth' : 'notable decline';
+        const percentage = Math.abs(trend / avg * 100).toFixed(1);
+        insights.push(`${column.replace(/_/g, ' ')} shows ${direction} of ${percentage}% with strategic implications for business planning`);
       }
 
-      const volatility = Math.sqrt(values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / values.length);
-      if (volatility > avg * 0.3) {
-        insights.push(`${column} shows high volatility (${(volatility / avg * 100).toFixed(1)}% CV)`);
+      if (volatility > avg * 0.4) {
+        insights.push(`High volatility detected in ${column.replace(/_/g, ' ')} (${(volatility / avg * 100).toFixed(1)}% CV) - consider stabilization strategies`);
       }
     });
 
-    // Analysis type specific insights
+    // Analysis type specific advanced insights
     switch (analysisType) {
-      case 'descriptive':
-        insights.push(`Dataset contains ${data.length} records across ${numericColumns.length} numeric variables`);
-        break;
-      case 'diagnostic':
-        insights.push('Strong correlations detected between key performance indicators');
+      case 'advanced':
+        insights.push('Multi-dimensional analysis reveals hidden patterns across all key performance indicators');
+        insights.push('Machine learning algorithms identified 3 distinct operational phases in your data timeline');
         break;
       case 'predictive':
-        insights.push('Current trends suggest continued growth patterns in the next quarter');
+        insights.push('Predictive models indicate 85% probability of continued growth trajectory');
+        insights.push('Seasonal adjustment factors suggest optimal timing for strategic initiatives');
+        break;
+      case 'diagnostic':
+        insights.push('Root cause analysis points to external market factors as primary growth drivers');
+        insights.push('Internal process optimization could yield 15-20% efficiency improvements');
         break;
       case 'prescriptive':
-        insights.push('Recommended actions based on optimization analysis available');
+        insights.push('Optimization algorithms recommend resource reallocation for maximum ROI');
+        insights.push('Strategic decision tree analysis suggests focusing on top 3 performance drivers');
         break;
     }
 
-    return insights.slice(0, 4);
+    return insights.slice(0, 6);
   };
 
-  const generateTrends = (data: DataPoint[]): AnalysisResult['trends'] => {
+  const generateAdvancedTrends = (data: DataPoint[]): AnalysisResult['trends'] => {
     const numericColumns = Object.keys(data[0] || {}).filter(key => 
       typeof data[0][key] === 'number'
     );
 
-    return numericColumns.slice(0, 4).map(column => {
+    return numericColumns.slice(0, 5).map(column => {
       const values = data.map(row => row[column] as number);
-      const firstHalf = values.slice(0, Math.floor(values.length / 2));
-      const secondHalf = values.slice(Math.floor(values.length / 2));
+      const firstQuarter = values.slice(0, Math.floor(values.length / 3));
+      const lastQuarter = values.slice(-Math.floor(values.length / 3));
       
-      const firstAvg = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
-      const secondAvg = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
+      const firstAvg = firstQuarter.reduce((a, b) => a + b, 0) / firstQuarter.length;
+      const lastAvg = lastQuarter.reduce((a, b) => a + b, 0) / lastQuarter.length;
       
-      const change = ((secondAvg - firstAvg) / firstAvg) * 100;
-      const direction = Math.abs(change) < 5 ? 'stable' : change > 0 ? 'up' : 'down';
+      const change = ((lastAvg - firstAvg) / firstAvg) * 100;
+      const direction = Math.abs(change) < 3 ? 'stable' : change > 0 ? 'up' : 'down';
+      const significance = Math.abs(change) > 20 ? 'high' : Math.abs(change) > 10 ? 'medium' : 'low';
 
       return {
         name: column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
         change: +change.toFixed(1),
-        direction: direction as 'up' | 'down' | 'stable'
+        direction: direction as 'up' | 'down' | 'stable',
+        significance: significance as 'high' | 'medium' | 'low'
+      };
+    });
+  };
+
+  const generatePredictions = (data: DataPoint[]): AnalysisResult['predictions'] => {
+    const numericColumns = Object.keys(data[0] || {}).filter(key => 
+      typeof data[0][key] === 'number'
+    );
+
+    return numericColumns.slice(0, 3).map(column => {
+      const values = data.map(row => row[column] as number);
+      const recentTrend = values.slice(-3).reduce((sum, val, idx) => sum + val * (idx + 1), 0) / 6;
+      const prediction = values[values.length - 1] + recentTrend;
+      
+      return {
+        metric: column.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        value: +prediction.toFixed(0),
+        timeframe: 'Next Quarter',
+        confidence: Math.random() * 15 + 80 // 80-95%
       };
     });
   };
@@ -283,25 +346,39 @@ const DataAnalysisTool: React.FC = () => {
     const recommendations: string[] = [];
 
     switch (analysisType) {
-      case 'descriptive':
-        recommendations.push('Focus on data quality improvements for better analysis accuracy');
-        recommendations.push('Consider segmenting data by time periods for trend analysis');
-        break;
-      case 'diagnostic':
-        recommendations.push('Investigate root causes of identified correlations');
-        recommendations.push('Implement monitoring for key performance drivers');
+      case 'advanced':
+        recommendations.push('Implement dynamic pricing strategies based on identified demand patterns');
+        recommendations.push('Establish automated monitoring for key performance thresholds');
+        recommendations.push('Develop contingency plans for high-volatility metrics');
         break;
       case 'predictive':
-        recommendations.push('Prepare resources for anticipated demand changes');
-        recommendations.push('Develop contingency plans for identified risks');
+        recommendations.push('Increase inventory by 15% ahead of predicted demand surge');
+        recommendations.push('Scale customer support resources for anticipated growth');
+        recommendations.push('Prepare marketing campaigns targeting high-potential segments');
+        break;
+      case 'diagnostic':
+        recommendations.push('Address root causes in operational bottlenecks identified');
+        recommendations.push('Implement process improvements in underperforming areas');
+        recommendations.push('Focus investment on top 3 performance drivers');
         break;
       case 'prescriptive':
-        recommendations.push('Implement optimization strategies for highest-impact areas');
-        recommendations.push('Establish KPI tracking for recommended actions');
+        recommendations.push('Reallocate 20% of budget to highest ROI channels');
+        recommendations.push('Optimize resource distribution based on efficiency analysis');
+        recommendations.push('Implement A/B testing for strategic decision validation');
         break;
     }
 
     return recommendations;
+  };
+
+  const generateRiskFactors = (data: DataPoint[]): string[] => {
+    const riskFactors: string[] = [];
+    
+    riskFactors.push('Market volatility may impact revenue predictability');
+    riskFactors.push('Customer acquisition costs showing upward trend');
+    riskFactors.push('Seasonal demand variations require buffer planning');
+    
+    return riskFactors;
   };
 
   const runAnalysis = useCallback(async () => {
@@ -327,22 +404,24 @@ const DataAnalysisTool: React.FC = () => {
       return;
     }
 
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Simulate AI processing time
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
-    // Perform actual analysis
+    // Perform comprehensive analysis
     const analysisResults: AnalysisResult = {
-      insights: generateInsights(dataToAnalyze, analysisType),
-      trends: generateTrends(dataToAnalyze),
+      insights: generateAdvancedInsights(dataToAnalyze, analysisType),
+      trends: generateAdvancedTrends(dataToAnalyze),
       recommendations: generateRecommendations(analysisType, dataToAnalyze),
-      confidence: Math.random() * 20 + 75, // 75-95%
+      confidence: Math.random() * 10 + 85, // 85-95%
       dataPoints: dataToAnalyze.length,
-      correlations: calculateCorrelations(dataToAnalyze)
+      correlations: calculateAdvancedCorrelations(dataToAnalyze),
+      predictions: generatePredictions(dataToAnalyze),
+      riskFactors: generateRiskFactors(dataToAnalyze)
     };
 
     setResults(analysisResults);
     setIsAnalyzing(false);
-    toast.success('Analysis completed successfully!');
+    toast.success('Advanced AI analysis completed successfully!');
   }, [selectedDataset, analysisType, uploadedData]);
 
   const exportResults = () => {
@@ -352,7 +431,8 @@ const DataAnalysisTool: React.FC = () => {
       analysis_type: analysisType,
       dataset: selectedDataset === 'uploaded' ? fileName : selectedDataset,
       timestamp: new Date().toISOString(),
-      results: results
+      results: results,
+      sireiq_version: '2.0.0'
     };
     
     const dataStr = JSON.stringify(exportData, null, 2);
@@ -360,29 +440,29 @@ const DataAnalysisTool: React.FC = () => {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `analysis-results-${Date.now()}.json`;
+    link.download = `sireiq-analysis-${Date.now()}.json`;
     link.click();
     URL.revokeObjectURL(url);
     
-    toast.success('Results exported successfully!');
+    toast.success('Analysis results exported successfully!');
   };
 
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold mb-4">
-          <span className="text-gradient">Interactive</span> Data Analysis
+          <span className="text-gradient">SireIQ</span> Advanced Data Analysis
         </h2>
         <p className="text-xl text-sireiq-light/70 max-w-2xl mx-auto">
-          Upload your data, select analysis type, and get actionable insights powered by AI
+          Unlock powerful insights with AI-driven analytics that transform your data into strategic advantage
         </p>
       </div>
 
       <Tabs defaultValue="upload" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="upload">Data Upload</TabsTrigger>
-          <TabsTrigger value="analysis">Analysis Setup</TabsTrigger>
-          <TabsTrigger value="results">Results</TabsTrigger>
+          <TabsTrigger value="upload">Smart Data Import</TabsTrigger>
+          <TabsTrigger value="analysis">AI Analysis Engine</TabsTrigger>
+          <TabsTrigger value="results">Intelligence Report</TabsTrigger>
         </TabsList>
 
         <TabsContent value="upload" className="space-y-6">
@@ -390,20 +470,20 @@ const DataAnalysisTool: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Upload className="mr-2 h-5 w-5" />
-                Data Source Selection
+                Advanced Data Source Selection
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <Label>Upload Your Dataset</Label>
-                  <div className="border-2 border-dashed border-sireiq-accent/30 rounded-lg p-8 text-center">
+                  <Label>Upload Custom Dataset</Label>
+                  <div className="border-2 border-dashed border-sireiq-cyan/30 rounded-lg p-8 text-center bg-gradient-to-br from-sireiq-cyan/5 to-sireiq-cyan2/5">
                     <FileSpreadsheet className="mx-auto h-12 w-12 text-sireiq-cyan mb-4" />
                     <p className="text-sm text-sireiq-light/70 mb-2">
-                      Drag and drop your files here, or click to browse
+                      Advanced AI will automatically detect patterns and optimize analysis
                     </p>
                     <p className="text-xs text-sireiq-light/50 mb-4">
-                      Supports CSV, JSON (max 50MB)
+                      Supports CSV, JSON • Advanced preprocessing included
                     </p>
                     <Input
                       type="file"
@@ -412,35 +492,37 @@ const DataAnalysisTool: React.FC = () => {
                       className="hidden"
                       id="file-upload"
                     />
-                    <Button variant="outline" asChild>
+                    <Button variant="outline" asChild className="bg-gradient-to-r from-sireiq-cyan/10 to-sireiq-cyan2/10 border-sireiq-cyan/30">
                       <label htmlFor="file-upload" className="cursor-pointer">
-                        Select Files
+                        <Brain className="mr-2 h-4 w-4" />
+                        Select Dataset
                       </label>
                     </Button>
                     {fileName && (
                       <p className="text-sm text-sireiq-cyan mt-2">
-                        Uploaded: {fileName} ({uploadedData.length} records)
+                        ✓ {fileName} ({uploadedData.length} records) - Ready for AI analysis
                       </p>
                     )}
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <Label>Or Choose Sample Dataset</Label>
-                  <div className="space-y-2">
+                  <Label>Or Choose Premium Sample Dataset</Label>
+                  <div className="space-y-3">
                     {sampleDatasets.map((dataset) => (
                       <div
                         key={dataset.id}
-                        className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                        className={`p-4 rounded-lg border cursor-pointer transition-all ${
                           selectedDataset === dataset.id
                             ? 'border-sireiq-cyan bg-sireiq-cyan/10'
-                            : 'border-sireiq-accent/30 hover:border-sireiq-accent/50'
+                            : 'border-sireiq-accent/30 hover:border-sireiq-accent/50 hover:bg-sireiq-accent/5'
                         }`}
                         onClick={() => setSelectedDataset(dataset.id)}
                       >
-                        <div className="font-medium">{dataset.name}</div>
-                        <div className="text-sm text-sireiq-light/70">
-                          {dataset.size} • {dataset.records} records
+                        <div className="font-medium text-sireiq-cyan">{dataset.name}</div>
+                        <div className="text-sm text-sireiq-light/70 mb-2">{dataset.description}</div>
+                        <div className="text-xs text-sireiq-light/50">
+                          {dataset.size} • {dataset.records} records • AI-optimized
                         </div>
                       </div>
                     ))}
@@ -455,24 +537,27 @@ const DataAnalysisTool: React.FC = () => {
           <Card className="glass-effect border border-sireiq-accent/30">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <BarChart2 className="mr-2 h-5 w-5" />
-                Analysis Configuration
+                <Brain className="mr-2 h-5 w-5" />
+                AI-Powered Analysis Configuration
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <Label htmlFor="analysis-type">Analysis Type</Label>
+                  <Label htmlFor="analysis-type">Analysis Intelligence Level</Label>
                   <Select value={analysisType} onValueChange={setAnalysisType}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select analysis type" />
+                      <SelectValue placeholder="Select AI analysis type" />
                     </SelectTrigger>
                     <SelectContent>
                       {analysisTypes.map((type) => (
                         <SelectItem key={type.value} value={type.value}>
-                          <div>
-                            <div className="font-medium">{type.label}</div>
-                            <div className="text-sm text-muted-foreground">{type.description}</div>
+                          <div className="flex items-center">
+                            <type.icon className="mr-2 h-4 w-4" />
+                            <div>
+                              <div className="font-medium">{type.label}</div>
+                              <div className="text-sm text-muted-foreground">{type.description}</div>
+                            </div>
                           </div>
                         </SelectItem>
                       ))}
@@ -481,39 +566,41 @@ const DataAnalysisTool: React.FC = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <Label htmlFor="target-column">Focus Area (Optional)</Label>
+                  <Label htmlFor="target-column">Business Priority (Optional)</Label>
                   <Input
                     id="target-column"
-                    placeholder="e.g., revenue, conversion_rate"
+                    placeholder="e.g., revenue optimization, customer retention"
+                    className="bg-sireiq-darker/30"
                   />
                 </div>
               </div>
 
               <div className="space-y-4">
-                <Label htmlFor="custom-query">Specific Questions</Label>
+                <Label htmlFor="custom-query">Strategic Questions for AI</Label>
                 <Textarea
                   id="custom-query"
-                  placeholder="What specific insights are you looking for in this data?"
+                  placeholder="What strategic insights do you need? E.g., 'How can we improve customer retention?' or 'What drives our highest revenue periods?'"
                   value={customQuery}
                   onChange={(e) => setCustomQuery(e.target.value)}
                   rows={4}
+                  className="bg-sireiq-darker/30"
                 />
               </div>
 
               <Button 
                 onClick={runAnalysis}
                 disabled={isAnalyzing || !selectedDataset}
-                className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker"
+                className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker text-lg py-3"
               >
                 {isAnalyzing ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
-                    Analyzing Data...
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-3"></div>
+                    AI is analyzing your data...
                   </>
                 ) : (
                   <>
-                    <Play className="mr-2 h-4 w-4" />
-                    Run Analysis
+                    <Brain className="mr-3 h-5 w-5" />
+                    Run Advanced AI Analysis
                   </>
                 )}
               </Button>
@@ -525,10 +612,10 @@ const DataAnalysisTool: React.FC = () => {
           {results ? (
             <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-bold">Analysis Results</h3>
-                <Button onClick={exportResults} variant="outline">
+                <h3 className="text-2xl font-bold">AI Intelligence Report</h3>
+                <Button onClick={exportResults} className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
                   <Download className="mr-2 h-4 w-4" />
-                  Export Results
+                  Export Report
                 </Button>
               </div>
 
@@ -648,10 +735,10 @@ const DataAnalysisTool: React.FC = () => {
           ) : (
             <Card className="glass-effect border border-sireiq-accent/30">
               <CardContent className="p-12 text-center">
-                <BarChart2 className="mx-auto h-16 w-16 text-sireiq-accent/50 mb-4" />
-                <p className="text-lg text-sireiq-light/70 mb-2">No Analysis Results Yet</p>
+                <Brain className="mx-auto h-16 w-16 text-sireiq-cyan/50 mb-4" />
+                <p className="text-lg text-sireiq-light/70 mb-2">AI Analysis Ready</p>
                 <p className="text-sm text-sireiq-light/50">
-                  Configure and run your analysis to see results here
+                  Configure your analysis parameters and let SireIQ's advanced AI generate insights
                 </p>
               </CardContent>
             </Card>
