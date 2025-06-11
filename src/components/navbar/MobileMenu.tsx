@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu, Database, Layers, Sparkles, BarChart3, Users, Mic, Code, Image, Brain } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Menu, Database, Layers, Sparkles, BarChart3, Users, Mic, Code, Image, Brain, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 import MobileAuthButtons from './MobileAuthButtons';
@@ -47,32 +48,52 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isSheetOpen, setIsSheetOpen }) 
             <NavLinks orientation="vertical" />
           </div>
 
-          {/* Features Section */}
+          {/* Features Dropdown */}
           <div className="mt-6">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3">
-              Features
-            </h3>
-            <div className="space-y-2">
-              {features.map((feature) => {
-                const IconComponent = feature.icon;
-                return (
-                  <Link
-                    key={feature.name}
-                    to={feature.path}
-                    onClick={() => setIsSheetOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-sireiq-cyan/20 flex items-center justify-center">
-                      <IconComponent className="w-4 h-4 text-sireiq-cyan" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-white">{feature.name}</div>
-                      <div className="text-xs text-gray-400">{feature.description}</div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-between bg-sireiq-darker border-sireiq-accent/20 hover:bg-sireiq-accent/10"
+                >
+                  <div className="flex items-center gap-2">
+                    <Layers className="w-4 h-4 text-sireiq-cyan" />
+                    <span>Features</span>
+                  </div>
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="w-80 bg-sireiq-darker border-sireiq-accent/20 z-50"
+                align="start"
+                side="bottom"
+              >
+                <DropdownMenuLabel className="text-sireiq-cyan font-semibold">
+                  AI Features
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-sireiq-accent/20" />
+                {features.map((feature) => {
+                  const IconComponent = feature.icon;
+                  return (
+                    <DropdownMenuItem key={feature.name} asChild>
+                      <Link
+                        to={feature.path}
+                        onClick={() => setIsSheetOpen(false)}
+                        className="flex items-center gap-3 p-3 cursor-pointer hover:bg-sireiq-accent/10 focus:bg-sireiq-accent/10"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-sireiq-cyan/20 flex items-center justify-center">
+                          <IconComponent className="w-4 h-4 text-sireiq-cyan" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-white">{feature.name}</div>
+                          <div className="text-xs text-gray-400">{feature.description}</div>
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Quick Actions */}
