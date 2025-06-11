@@ -69,16 +69,17 @@ const Index = () => {
               transition={{ delay: 0.6, duration: 0.8 }}
               className={`space-y-4 ${isMobile ? '' : 'mb-12'}`}
             >
-              <Link 
-                to="/get-started"
-                className={`btn-primary inline-flex items-center gap-2 group ${isMobile ? 'text-base w-full justify-center py-3 px-6 max-w-sm mx-auto' : 'text-lg'}`}
-              >
-                <Rocket className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} />
-                Start Building Now
-                <ArrowRight className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} group-hover:translate-x-1 transition-transform`} />
-              </Link>
-              
-              {/* Removed "Show More / Show Less" button on mobile */}
+              {/* Removed "Start Building Now" button from mobile */}
+              {!isMobile && (
+                <Link 
+                  to="/get-started"
+                  className="btn-primary inline-flex items-center gap-2 group text-lg"
+                >
+                  <Rocket className="w-5 h-5" />
+                  Start Building Now
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
 
               {/* Desktop CTA buttons */}
               {!isMobile && (
