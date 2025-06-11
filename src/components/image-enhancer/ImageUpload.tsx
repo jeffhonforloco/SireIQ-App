@@ -13,16 +13,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, originalDimens
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('File upload triggered');
-    const file = event.target.files?.[0];
-    console.log('Selected file:', file);
+  const processFile = (file: File) => {
+    console.log('Processing file:', file);
     
-    if (!file) {
-      console.log('No file selected');
-      return;
-    }
-
     if (!file.type.startsWith('image/')) {
       console.log('Invalid file type:', file.type);
       toast({
@@ -77,6 +70,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, originalDimens
     reader.readAsDataURL(file);
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('File upload triggered');
+    const file = event.target.files?.[0];
+    console.log('Selected file:', file);
+    
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    processFile(file);
+  };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     console.log('Drag over');
@@ -90,13 +96,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload, originalDimens
     if (files.length > 0) {
       const file = files[0];
       console.log('Dropped file:', file);
-      
-      // Create a synthetic event to reuse the same handler
-      const syntheticEvent = {
-        target: { files: [file] }
-      } as React.ChangeEvent<HTMLInputElement>;
-      
-      handleFileUpload(syntheticEvent);
+      processFile(file);
     }
   };
 
