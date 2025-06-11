@@ -7,6 +7,10 @@ import SavedTemplatesCard from './user/SavedTemplatesCard';
 import AISkillsCard from './user/AISkillsCard';
 import UsageStatsCard from './user/UsageStatsCard';
 import PremiumFeaturesCard from './user/PremiumFeaturesCard';
+import PersonalizedInsights from './user/PersonalizedInsights';
+import QuickStatsCard from './user/QuickStatsCard';
+import WorkflowAutomation from './user/WorkflowAutomation';
+import GoalsTrackingCard from './user/GoalsTrackingCard';
 import { Chat, Template, Skill, UserStats } from './user/types';
 
 const UserDashboard = () => {
@@ -81,17 +85,14 @@ const UserDashboard = () => {
   const categories = ['All', 'Creative', 'Analysis', 'Technical', 'Planning', 'Marketing', 'Research'];
 
   const handleNewChat = () => {
-    // Navigate to new chat
     window.location.href = '/features/ai-assistant';
   };
 
   const handleTemplateUse = (template: Template) => {
-    // Load template in chat
     console.log('Loading template:', template.title);
   };
 
   const handleSkillSelect = (skill: Skill) => {
-    // Activate AI skill
     console.log('Activating skill:', skill.name);
   };
 
@@ -100,35 +101,51 @@ const UserDashboard = () => {
       {/* Welcome section with real suggestions */}
       <WelcomeSection suggestions={suggestions} />
       
+      {/* Personalized insights section */}
+      <PersonalizedInsights />
+      
       {/* Quick actions with real functionality */}
       <QuickActionCards onNewChat={handleNewChat} />
       
-      {/* Recent activity grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <RecentChatsCard 
-          chats={recentChats} 
-          onChatSelect={(chat) => console.log('Opening chat:', chat.title)}
-          onNewChat={handleNewChat}
-        />
+      {/* Main dashboard grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left column - 2 spans */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Recent activity grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <RecentChatsCard 
+              chats={recentChats} 
+              onChatSelect={(chat) => console.log('Opening chat:', chat.title)}
+              onNewChat={handleNewChat}
+            />
+            
+            <SavedTemplatesCard 
+              templates={savedTemplates}
+              onTemplateSelect={handleTemplateUse}
+              onCreateTemplate={() => console.log('Creating new template')}
+            />
+          </div>
+          
+          {/* Goals and workflow section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <GoalsTrackingCard />
+            <WorkflowAutomation />
+          </div>
+          
+          {/* AI Skills section with real categories */}
+          <AISkillsCard 
+            skills={aiSkills} 
+            categories={categories}
+            onSkillSelect={handleSkillSelect}
+          />
+        </div>
         
-        <SavedTemplatesCard 
-          templates={savedTemplates}
-          onTemplateSelect={handleTemplateUse}
-          onCreateTemplate={() => console.log('Creating new template')}
-        />
-      </div>
-      
-      {/* AI Skills section with real categories */}
-      <AISkillsCard 
-        skills={aiSkills} 
-        categories={categories}
-        onSkillSelect={handleSkillSelect}
-      />
-      
-      {/* Sidebar components */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <UsageStatsCard stats={userStats} />
-        <PremiumFeaturesCard onUpgrade={() => console.log('Upgrading to premium')} />
+        {/* Right column - 1 span */}
+        <div className="space-y-6">
+          <QuickStatsCard />
+          <UsageStatsCard stats={userStats} />
+          <PremiumFeaturesCard onUpgrade={() => console.log('Upgrading to premium')} />
+        </div>
       </div>
     </div>
   );
