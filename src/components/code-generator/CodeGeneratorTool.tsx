@@ -1,12 +1,12 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Code, Copy, Download, Play, Loader2, Sparkles } from 'lucide-react';
+import { Code, Copy, Download, Play, Loader2, Sparkles, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface CodeExample {
   language: string;
@@ -19,6 +19,8 @@ const CodeGeneratorTool = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const [generatedCode, setGeneratedCode] = useState<CodeExample | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const { toast } = useToast();
 
   const languages = [
@@ -96,11 +98,6 @@ console.log(processed);`
       language: 'jsx',
       description: 'A modern React component with hooks and TypeScript',
       code: `import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Search, Plus, Trash2 } from 'lucide-react';
 
 interface Item {
   id: string;
@@ -155,181 +152,227 @@ const ItemManager: React.FC<ItemManagerProps> = ({
   }, [items]);
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Search className="h-5 w-5" />
-          Item Manager
-        </CardTitle>
-      </CardHeader>
+    <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Item Manager</h2>
       
-      <CardContent className="space-y-4">
-        <div className="flex gap-2">
-          <Input
-            placeholder="Search items..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1"
-          />
-        </div>
+      <div className="space-y-4">
+        <input
+          type="text"
+          placeholder="Search items..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
         
         <div className="flex gap-2">
-          <Input
+          <input
+            type="text"
             placeholder="Add new item..."
             value={newItemName}
             onChange={(e) => setNewItemName(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && addItem()}
-            className="flex-1"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <Button onClick={addItem} size="sm">
-            <Plus className="h-4 w-4" />
+          <button
+            onClick={addItem}
+            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             Add
-          </Button>
+          </button>
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-96 overflow-y-auto">
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-3 border rounded-lg"
+              className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
             >
               <div className="flex items-center gap-3">
                 <span className="font-medium">{item.name}</span>
-                <Badge 
-                  variant={item.status === 'active' ? 'default' : 'secondary'}
-                >
+                <span className={\`px-2 py-1 text-xs rounded-full \${item.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}\`}>
                   {item.status}
-                </Badge>
+                </span>
               </div>
               
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={() => removeItem(item.id)}
-                className="text-destructive hover:text-destructive"
+                className="px-3 py-1 text-red-600 hover:bg-red-50 rounded-md focus:outline-none"
               >
-                <Trash2 className="h-4 w-4" />
-              </Button>
+                Remove
+              </button>
             </div>
           ))}
           
           {filteredItems.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-gray-500">
               No items found
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
 export default ItemManager;`
     },
-    python: {
-      language: 'python',
-      description: 'A Python class with async functionality and error handling',
-      code: `import asyncio
-import aiohttp
-import json
-from typing import List, Dict, Optional, Any
-from dataclasses import dataclass
-from datetime import datetime
-
-@dataclass
-class APIResponse:
-    status: int
-    data: Any
-    timestamp: datetime
-    
-class DataProcessor:
-    """Advanced data processor with async capabilities."""
-    
-    def __init__(self, base_url: str, timeout: int = 30):
-        self.base_url = base_url
-        self.timeout = timeout
-        self.session: Optional[aiohttp.ClientSession] = None
-    
-    async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=self.timeout)
-        )
-        return self
-    
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
-            await self.session.close()
-    
-    async def fetch_data(self, endpoint: str, params: Dict[str, Any] = None) -> APIResponse:
-        """Fetch data from API endpoint with error handling."""
-        if not self.session:
-            raise RuntimeError("Session not initialized. Use async context manager.")
+    html: {
+      language: 'html',
+      description: 'A complete HTML page with modern styling',
+      code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
-        url = f"{self.base_url}/{endpoint.lstrip('/')}"
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
         
-        try:
-            async with self.session.get(url, params=params) as response:
-                data = await response.json()
-                
-                return APIResponse(
-                    status=response.status,
-                    data=data,
-                    timestamp=datetime.now()
-                )
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
         
-        except aiohttp.ClientError as e:
-            print(f"Client error: {e}")
-            raise
-        except json.JSONDecodeError as e:
-            print(f"JSON decode error: {e}")
-            raise
-    
-    async def process_batch(self, endpoints: List[str]) -> List[APIResponse]:
-        """Process multiple endpoints concurrently."""
-        tasks = [self.fetch_data(endpoint) for endpoint in endpoints]
-        results = await asyncio.gather(*tasks, return_exceptions=True)
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
         
-        # Filter out exceptions and return successful responses
-        successful_results = [
-            result for result in results 
-            if isinstance(result, APIResponse)
-        ]
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
         
-        return successful_results
-    
-    def transform_data(self, data: List[Dict], transform_func=None) -> List[Dict]:
-        """Transform data using provided function or default processing."""
-        if transform_func:
-            return [transform_func(item) for item in data]
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
         
-        # Default transformation
-        return [
-            {
-                **item,
-                'processed_at': datetime.now().isoformat(),
-                'id': f"processed_{i}"
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
             }
-            for i, item in enumerate(data)
-        ]
-
-# Usage example
-async def main():
-    endpoints = ['/users', '/posts', '/comments']
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>Welcome to the Future</h1>
+            <p>Experience the next generation of web development with our cutting-edge platform</p>
+            <a href="#features" class="btn">Get Started</a>
+        </section>
+        
+        <section id="features" class="features">
+            <div class="feature-card">
+                <h3>🚀 Lightning Fast</h3>
+                <p>Built with performance in mind, our platform delivers blazing fast experiences that keep your users engaged.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎨 Beautiful Design</h3>
+                <p>Modern, clean, and responsive designs that look great on every device and screen size.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔧 Easy to Use</h3>
+                <p>Intuitive interface and powerful tools that make building amazing experiences simple and enjoyable.</p>
+            </div>
+        </section>
+    </div>
     
-    async with DataProcessor('https://jsonplaceholder.typicode.com') as processor:
-        # Fetch data from multiple endpoints
-        responses = await processor.process_batch(endpoints)
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
         
-        print(f"Successfully processed {len(responses)} endpoints")
-        
-        for response in responses:
-            print(f"Status: {response.status}, Data length: {len(response.data)}")
-
-# Run the async function
-if __name__ == "__main__":
-    asyncio.run(main())`
+        // Add some interactivity
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.background = 'rgba(255, 255, 255, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.background = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>`
     }
   };
 
@@ -367,6 +410,11 @@ if __name__ == "__main__":
       }
 
       setGeneratedCode(generatedExample);
+      
+      // Update preview if it's HTML/React
+      if ((selectedLanguage === 'html' || selectedLanguage === 'react') && showPreview) {
+        updatePreview(generatedExample.code, selectedLanguage);
+      }
 
       toast({
         title: "Code generated successfully!",
@@ -383,30 +431,58 @@ if __name__ == "__main__":
     }
   };
 
-  const generateCustomCode = (language: string, userPrompt: string): string => {
-    const templates: Record<string, string> = {
-      html: `<!DOCTYPE html>
-<html lang="en">
+  const updatePreview = (code: string, language: string) => {
+    if (!iframeRef.current) return;
+
+    let previewContent = '';
+    
+    if (language === 'html') {
+      previewContent = code;
+    } else if (language === 'react') {
+      // Create a simple HTML wrapper for React component preview
+      previewContent = `
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generated Page</title>
+    <title>React Component Preview</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header { color: #333; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f5f5f5; }
+        .preview-container { max-width: 800px; margin: 0 auto; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="header">Generated Content</h1>
-        <p>This HTML was generated based on: "${userPrompt}"</p>
-        <div id="content">
-            <!-- Your content here -->
-        </div>
-    </div>
+    <div id="root"></div>
+    <script type="text/babel">
+        ${code.replace('export default ItemManager;', '')}
+        
+        const App = () => {
+            return React.createElement('div', { className: 'preview-container' }, 
+                React.createElement(ItemManager, {
+                    initialItems: [
+                        { id: '1', name: 'Sample Item 1', category: 'demo', status: 'active', createdAt: new Date() },
+                        { id: '2', name: 'Sample Item 2', category: 'demo', status: 'inactive', createdAt: new Date() }
+                    ]
+                })
+            );
+        };
+        
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
 </body>
-</html>`,
+</html>`;
+    }
+
+    const blob = new Blob([previewContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    iframeRef.current.src = url;
+  };
+
+  const generateCustomCode = (language: string, userPrompt: string): string => {
+    const templates: Record<string, string> = {
       css: `.generated-component {
   /* Generated CSS for: ${userPrompt} */
   display: flex;
@@ -547,7 +623,19 @@ function generatedFunction() {
   const clearAll = () => {
     setPrompt('');
     setGeneratedCode(null);
+    if (iframeRef.current) {
+      iframeRef.current.src = 'about:blank';
+    }
   };
+
+  const togglePreview = () => {
+    setShowPreview(!showPreview);
+    if (!showPreview && generatedCode && (selectedLanguage === 'html' || selectedLanguage === 'react')) {
+      updatePreview(generatedCode.code, selectedLanguage);
+    }
+  };
+
+  const canShowPreview = selectedLanguage === 'html' || selectedLanguage === 'react';
 
   return (
     <Card className="bg-card-gradient border border-brand-accent/30">
@@ -559,6 +647,17 @@ function generatedFunction() {
             <Sparkles className="h-3 w-3 mr-1" />
             AI Powered
           </Badge>
+          {canShowPreview && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={togglePreview}
+              className="ml-auto"
+            >
+              {showPreview ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
+              {showPreview ? 'Hide Preview' : 'Show Preview'}
+            </Button>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -629,53 +728,94 @@ function generatedFunction() {
         
         {generatedCode && (
           <div className="space-y-4 animate-fade-in">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-medium flex items-center">
-                  <Code className="h-5 w-5 text-brand-primary mr-2" />
-                  Generated {generatedCode.language.toUpperCase()} Code
-                </h3>
-                <p className="text-sm text-text-secondary mt-1">
-                  {generatedCode.description}
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={copyToClipboard}
-                  className="flex items-center gap-1"
-                >
-                  <Copy className="h-4 w-4" /> 
-                  Copy
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={downloadCode}
-                  className="flex items-center gap-1"
-                >
-                  <Download className="h-4 w-4" /> 
-                  Download
-                </Button>
-              </div>
-            </div>
-            
-            <div className="bg-background/50 border border-brand-accent/20 rounded-lg overflow-hidden">
-              <div className="bg-background/30 px-4 py-2 border-b border-brand-accent/20 flex items-center justify-between">
-                <span className="text-xs font-mono text-text-secondary">
-                  {generatedCode.language}
-                </span>
-                <Badge variant="outline" className="text-xs">
-                  {generatedCode.code.split('\n').length} lines
-                </Badge>
-              </div>
-              <pre className="p-4 overflow-x-auto">
-                <code className="text-sm font-mono whitespace-pre-wrap leading-relaxed">
-                  {generatedCode.code}
-                </code>
-              </pre>
-            </div>
+            <Tabs defaultValue="code" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="code">Generated Code</TabsTrigger>
+                {canShowPreview && showPreview && (
+                  <TabsTrigger value="preview">Live Preview</TabsTrigger>
+                )}
+              </TabsList>
+              
+              <TabsContent value="code" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-medium flex items-center">
+                      <Code className="h-5 w-5 text-brand-primary mr-2" />
+                      Generated {generatedCode.language.toUpperCase()} Code
+                    </h3>
+                    <p className="text-sm text-text-secondary mt-1">
+                      {generatedCode.description}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={copyToClipboard}
+                      className="flex items-center gap-1"
+                    >
+                      <Copy className="h-4 w-4" /> 
+                      Copy
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={downloadCode}
+                      className="flex items-center gap-1"
+                    >
+                      <Download className="h-4 w-4" /> 
+                      Download
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="bg-background/50 border border-brand-accent/20 rounded-lg overflow-hidden">
+                  <div className="bg-background/30 px-4 py-2 border-b border-brand-accent/20 flex items-center justify-between">
+                    <span className="text-xs font-mono text-text-secondary">
+                      {generatedCode.language}
+                    </span>
+                    <Badge variant="outline" className="text-xs">
+                      {generatedCode.code.split('\n').length} lines
+                    </Badge>
+                  </div>
+                  <pre className="p-4 overflow-x-auto">
+                    <code className="text-sm font-mono whitespace-pre-wrap leading-relaxed">
+                      {generatedCode.code}
+                    </code>
+                  </pre>
+                </div>
+              </TabsContent>
+              
+              {canShowPreview && showPreview && (
+                <TabsContent value="preview" className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-medium flex items-center">
+                      <Play className="h-5 w-5 text-brand-primary mr-2" />
+                      Live Preview
+                    </h3>
+                    <Badge variant="secondary" className="text-xs">
+                      Real-time rendering
+                    </Badge>
+                  </div>
+                  
+                  <div className="bg-background/50 border border-brand-accent/20 rounded-lg overflow-hidden">
+                    <div className="bg-background/30 px-4 py-2 border-b border-brand-accent/20">
+                      <span className="text-xs text-text-secondary">
+                        Interactive Preview - {generatedCode.language}
+                      </span>
+                    </div>
+                    <div className="relative">
+                      <iframe
+                        ref={iframeRef}
+                        className="w-full h-96 border-0"
+                        title="Code Preview"
+                        sandbox="allow-scripts allow-same-origin"
+                      />
+                    </div>
+                  </div>
+                </TabsContent>
+              )}
+            </Tabs>
             
             <div className="flex justify-between text-xs text-text-secondary">
               <span>Language: {generatedCode.language}</span>
