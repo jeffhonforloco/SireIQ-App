@@ -53,38 +53,6 @@ const Index = () => {
               </Link>
             </motion.div>
             
-            {/* Enhanced main headline */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight"
-            >
-              <span className="text-text-primary">
-                Think it.
-              </span>
-              <br />
-              <span className="text-gradient glow-strong">
-                Build it.
-              </span>
-              <br />
-              <span className="text-text-primary">
-                With{' '}
-                <span className="text-gradient glow">SireIQ</span>.
-              </span>
-            </motion.h1>
-            
-            {/* Enhanced subtitle */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed"
-            >
-              Experience the future of AI-powered creativity. The most advanced platform designed for{' '}
-              <span className="text-brand-primary font-medium">next-generation creators</span> who demand excellence.
-            </motion.p>
-            
             {/* Enhanced CTA buttons */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
