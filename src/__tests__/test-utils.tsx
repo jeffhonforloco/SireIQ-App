@@ -8,6 +8,8 @@ import { RoleProvider } from '@/contexts/RoleContext';
 // Import and re-export everything from @testing-library/react
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
+
+// Re-export screen and fireEvent explicitly to fix import issues
 export { screen, fireEvent };
 
 // Import testing utilities
