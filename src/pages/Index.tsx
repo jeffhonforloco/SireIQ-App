@@ -60,28 +60,7 @@ const Index = () => {
               </Link>
             </motion.div>
 
-            {/* Mobile: Streamlined quick features showcase */}
-            {isMobile && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="grid grid-cols-3 gap-3 mb-6 max-w-sm mx-auto"
-              >
-                <div className="text-center p-3 bg-gradient-to-br from-brand-primary/10 to-brand-accent/10 rounded-lg border border-brand-primary/20">
-                  <Star className="w-5 h-5 text-brand-primary mx-auto mb-1" />
-                  <span className="text-xs text-text-secondary font-medium">AI Powered</span>
-                </div>
-                <div className="text-center p-3 bg-gradient-to-br from-brand-accent/10 to-brand-purple/10 rounded-lg border border-brand-accent/20">
-                  <Zap className="w-5 h-5 text-brand-accent mx-auto mb-1" />
-                  <span className="text-xs text-text-secondary font-medium">Lightning Fast</span>
-                </div>
-                <div className="text-center p-3 bg-gradient-to-br from-brand-purple/10 to-brand-primary/10 rounded-lg border border-brand-purple/20">
-                  <Shield className="w-5 h-5 text-brand-purple mx-auto mb-1" />
-                  <span className="text-xs text-text-secondary font-medium">Enterprise Ready</span>
-                </div>
-              </motion.div>
-            )}
+            {/* Removed mobile quick features showcase section */}
             
             {/* Mobile-optimized CTA section */}
             <motion.div 
