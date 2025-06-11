@@ -4,213 +4,131 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Shield, Users, Key, Lock, AlertCircle, CheckCircle, Clock } from 'lucide-react';
-
-interface SecuritySetting {
-  id: string;
-  title: string;
-  description: string;
-  enabled: boolean;
-  status: 'active' | 'pending' | 'disabled';
-  criticality: 'high' | 'medium' | 'low';
-}
+import { Lock, Shield, Key, Users, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 
 const AuthenticationSecurity = () => {
-  const [settings, setSettings] = useState<SecuritySetting[]>([
+  const [settings, setSettings] = useState({
+    mfaRequired: true,
+    ssoEnabled: true,
+    passwordPolicy: true,
+    sessionTimeout: true,
+    deviceTrust: false,
+    biometricAuth: false
+  });
+
+  const handleToggle = (key: keyof typeof settings) => {
+    setSettings(prev => ({ ...prev, [key]: !prev[key] }));
+    toast.success(`${key} ${settings[key] ? 'disabled' : 'enabled'}`);
+  };
+
+  const securityItems = [
     {
-      id: 'mfa',
-      title: 'Multi-Factor Authentication (MFA)',
+      key: 'mfaRequired' as const,
+      title: 'Multi-Factor Authentication',
       description: 'Require MFA for all admin accounts',
-      enabled: true,
-      status: 'active',
-      criticality: 'high'
+      icon: Shield,
+      critical: true
     },
     {
-      id: 'rbac',
-      title: 'Role-Based Access Control',
-      description: 'Enforce strict role separation: Super Admin, Data Scientist, Annotator, Analyst',
-      enabled: true,
-      status: 'active',
-      criticality: 'high'
+      key: 'ssoEnabled' as const,
+      title: 'Single Sign-On (SSO)',
+      description: 'Enterprise SSO integration',
+      icon: Key,
+      critical: false
     },
     {
-      id: 'oauth',
-      title: 'OAuth/OpenID Connect SSO',
-      description: 'Single Sign-On integration with enterprise identity providers',
-      enabled: false,
-      status: 'pending',
-      criticality: 'medium'
-    },
-    {
-      id: 'brute-force',
-      title: 'Brute Force Protection',
-      description: 'Rate limiting, account lockout, and CAPTCHA after failed attempts',
-      enabled: true,
-      status: 'active',
-      criticality: 'high'
-    },
-    {
-      id: 'session-management',
-      title: 'Secure Session Management',
-      description: 'Short session lifetimes, HTTP-only, same-site cookies',
-      enabled: true,
-      status: 'active',
-      criticality: 'high'
-    },
-    {
-      id: 'password-policy',
+      key: 'passwordPolicy' as const,
       title: 'Strong Password Policy',
-      description: 'Complex passwords with minimum 12 characters, special chars, numbers',
-      enabled: true,
-      status: 'active',
-      criticality: 'high'
+      description: 'Enforce complex password requirements',
+      icon: Lock,
+      critical: true
+    },
+    {
+      key: 'sessionTimeout' as const,
+      title: 'Session Timeout',
+      description: 'Auto-logout after inactivity',
+      icon: Users,
+      critical: false
+    },
+    {
+      key: 'deviceTrust' as const,
+      title: 'Device Trust Management',
+      description: 'Track and manage trusted devices',
+      icon: Shield,
+      critical: false
+    },
+    {
+      key: 'biometricAuth' as const,
+      title: 'Biometric Authentication',
+      description: 'Fingerprint and face recognition',
+      icon: Key,
+      critical: false
     }
-  ]);
-
-  const roles = [
-    { name: 'Super Admin', permissions: 'Full system access', users: 2, color: 'red' },
-    { name: 'Data Scientist', permissions: 'Model management, data access', users: 8, color: 'blue' },
-    { name: 'Annotator', permissions: 'Data labeling, limited dataset access', users: 15, color: 'green' },
-    { name: 'Analyst', permissions: 'Read-only access, reporting', users: 12, color: 'yellow' }
   ];
-
-  const toggleSetting = (id: string) => {
-    setSettings(prev => prev.map(setting => 
-      setting.id === id ? { ...setting, enabled: !setting.enabled } : setting
-    ));
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'active': return <CheckCircle className="w-4 h-4 text-green-400" />;
-      case 'pending': return <Clock className="w-4 h-4 text-yellow-400" />;
-      case 'disabled': return <AlertCircle className="w-4 h-4 text-red-400" />;
-    }
-  };
-
-  const getCriticalityColor = (criticality: string) => {
-    switch (criticality) {
-      case 'high': return 'border-red-500/50 bg-red-500/10';
-      case 'medium': return 'border-yellow-500/50 bg-yellow-500/10';
-      case 'low': return 'border-green-500/50 bg-green-500/10';
-    }
-  };
-
-  const completionRate = Math.round((settings.filter(s => s.enabled).length / settings.length) * 100);
 
   return (
     <div className="space-y-6">
-      {/* Header with completion rate */}
-      <Card className="bg-sireiq-darker border-sireiq-accent/20">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Lock className="w-6 h-6 mr-3 text-sireiq-cyan" />
-              Authentication & Access Control
-            </div>
-            <Badge variant="outline" className="text-sireiq-cyan border-sireiq-cyan/50">
-              {completionRate}% Complete
-            </Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Progress value={completionRate} className="mb-4" />
-          <p className="text-sireiq-light/70">
-            Configure strong authentication mechanisms and role-based access controls to protect admin functionality.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Security Settings */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {settings.map((setting) => (
-          <Card 
-            key={setting.id} 
-            className={`bg-sireiq-darker border ${getCriticalityColor(setting.criticality)}`}
-          >
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center justify-between text-lg">
-                <div className="flex items-center">
-                  {getStatusIcon(setting.status)}
-                  <span className="ml-2">{setting.title}</span>
-                </div>
-                <Switch 
-                  checked={setting.enabled}
-                  onCheckedChange={() => toggleSetting(setting.id)}
-                />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-sireiq-light/70 mb-2">{setting.description}</p>
-              <div className="flex justify-between items-center">
-                <Badge 
-                  variant="outline" 
-                  className={`text-xs ${
-                    setting.criticality === 'high' ? 'border-red-500/50 text-red-400' :
-                    setting.criticality === 'medium' ? 'border-yellow-500/50 text-yellow-400' :
-                    'border-green-500/50 text-green-400'
-                  }`}
-                >
-                  {setting.criticality.toUpperCase()} PRIORITY
-                </Badge>
-                <Button variant="outline" size="sm" className="text-xs">
-                  Configure
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Role-Based Access Control */}
       <Card className="bg-sireiq-darker border-sireiq-accent/20">
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Users className="w-5 h-5 mr-2 text-sireiq-cyan" />
-            Role-Based Access Control (RBAC)
+            <Lock className="w-5 h-5 mr-2 text-sireiq-cyan" />
+            Authentication & Access Control
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {roles.map((role, index) => (
-              <div key={index} className="p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                <h4 className="font-semibold text-sireiq-light mb-2">{role.name}</h4>
-                <p className="text-sm text-sireiq-light/70 mb-3">{role.permissions}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-xs text-sireiq-light/60">{role.users} users</span>
-                  <Button variant="outline" size="sm" className="text-xs">
-                    Manage
-                  </Button>
+        <CardContent className="space-y-4">
+          {securityItems.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <div key={item.key} className="flex items-center justify-between p-4 border border-sireiq-accent/20 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <IconComponent className="w-5 h-5 text-sireiq-cyan" />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium">{item.title}</h4>
+                      {item.critical && (
+                        <Badge variant="destructive" className="text-xs">Critical</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-sireiq-light/70">{item.description}</p>
+                  </div>
                 </div>
+                <Switch
+                  checked={settings[item.key]}
+                  onCheckedChange={() => handleToggle(item.key)}
+                />
+              </div>
+            );
+          })}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-sireiq-darker border-sireiq-accent/20">
+        <CardHeader>
+          <CardTitle>Security Recommendations</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {[
+              { text: "Enable MFA for all administrative accounts", priority: "high" },
+              { text: "Implement regular password rotation policy", priority: "medium" },
+              { text: "Set up automated security monitoring", priority: "high" },
+              { text: "Configure device trust management", priority: "low" }
+            ].map((rec, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 bg-sireiq-accent/5 rounded-lg">
+                <AlertTriangle className={`w-4 h-4 ${
+                  rec.priority === 'high' ? 'text-red-400' : 
+                  rec.priority === 'medium' ? 'text-yellow-400' : 'text-blue-400'
+                }`} />
+                <span className="text-sm">{rec.text}</span>
+                <Badge className={`ml-auto ${
+                  rec.priority === 'high' ? 'bg-red-500/20 text-red-300' :
+                  rec.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-300' : 'bg-blue-500/20 text-blue-300'
+                }`}>
+                  {rec.priority}
+                </Badge>
               </div>
             ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <Card className="bg-sireiq-darker border-sireiq-accent/20">
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Key className="w-5 h-5 mr-2 text-sireiq-cyan" />
-            Quick Security Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3">
-            <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
-              Force Password Reset
-            </Button>
-            <Button variant="outline" className="border-sireiq-accent/30">
-              Audit User Sessions
-            </Button>
-            <Button variant="outline" className="border-sireiq-accent/30">
-              Review Failed Logins
-            </Button>
-            <Button variant="outline" className="border-sireiq-accent/30">
-              Export Security Report
-            </Button>
           </div>
         </CardContent>
       </Card>

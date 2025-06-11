@@ -4,311 +4,196 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Switch } from '@/components/ui/switch';
-import { Database, Shield, Clock, Download, Upload, CheckCircle, AlertTriangle, Play } from 'lucide-react';
-
-interface BackupStatus {
-  id: string;
-  type: 'data' | 'models' | 'configuration' | 'full-system';
-  lastBackup: string;
-  nextBackup: string;
-  status: 'completed' | 'in-progress' | 'failed' | 'scheduled';
-  size: string;
-  encrypted: boolean;
-  retention: string;
-}
+import { Database, HardDrive, Cloud, RefreshCw, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
 
 const BackupRecovery = () => {
-  const [backupStatuses] = useState<BackupStatus[]>([
-    {
-      id: 'backup-001',
-      type: 'data',
-      lastBackup: '2024-01-10 03:00:00',
-      nextBackup: '2024-01-11 03:00:00',
-      status: 'completed',
-      size: '2.4 GB',
-      encrypted: true,
-      retention: '90 days'
-    },
-    {
-      id: 'backup-002',
-      type: 'models',
-      lastBackup: '2024-01-10 04:00:00',
-      nextBackup: '2024-01-11 04:00:00',
-      status: 'completed',
-      size: '8.7 GB',
-      encrypted: true,
-      retention: '1 year'
-    },
-    {
-      id: 'backup-003',
-      type: 'configuration',
-      lastBackup: '2024-01-10 02:30:00',
-      nextBackup: '2024-01-11 02:30:00',
-      status: 'completed',
-      size: '45 MB',
-      encrypted: true,
-      retention: '2 years'
-    },
-    {
-      id: 'backup-004',
-      type: 'full-system',
-      lastBackup: '2024-01-07 01:00:00',
-      nextBackup: '2024-01-14 01:00:00',
-      status: 'scheduled',
-      size: '15.2 GB',
-      encrypted: true,
-      retention: '6 months'
-    }
-  ]);
-
-  const [automatedSettings, setAutomatedSettings] = useState({
-    dailyBackups: true,
-    weeklyFullBackup: true,
-    encryptionEnabled: true,
-    offSiteReplication: true,
-    integrityChecks: true,
-    retentionPolicy: true
+  const [backupStatus, setBackupStatus] = useState({
+    lastBackup: "2024-06-11 02:00:00",
+    nextBackup: "2024-06-12 02:00:00",
+    totalBackups: 30,
+    storageUsed: 85
   });
 
-  const [recoveryTests] = useState([
-    { date: '2024-01-05', type: 'Data Recovery', result: 'Success', duration: '15 minutes' },
-    { date: '2024-01-01', type: 'Model Recovery', result: 'Success', duration: '8 minutes' },
-    { date: '2023-12-28', type: 'Full System', result: 'Success', duration: '45 minutes' },
-    { date: '2023-12-25', type: 'Configuration', result: 'Success', duration: '3 minutes' }
-  ]);
+  const backupSources = [
+    { name: "User Database", lastBackup: "2 hours ago", size: "2.4 GB", status: "completed", encryption: true },
+    { name: "Application Data", lastBackup: "2 hours ago", size: "856 MB", status: "completed", encryption: true },
+    { name: "Configuration Files", lastBackup: "2 hours ago", size: "125 MB", status: "completed", encryption: true },
+    { name: "Security Logs", lastBackup: "1 hour ago", size: "1.2 GB", status: "in-progress", encryption: true },
+    { name: "Media Assets", lastBackup: "4 hours ago", size: "15.7 GB", status: "failed", encryption: false }
+  ];
+
+  const recoveryTests = [
+    { name: "Database Recovery Test", lastTest: "2024-06-08", result: "passed", duration: "12 min" },
+    { name: "Application Recovery Test", lastTest: "2024-06-05", result: "passed", duration: "8 min" },
+    { name: "Full System Recovery Test", lastTest: "2024-06-01", result: "warning", duration: "45 min" },
+    { name: "Configuration Recovery Test", lastTest: "2024-05-28", result: "failed", duration: "N/A" }
+  ];
+
+  const initiateBackup = () => {
+    toast.loading("Starting manual backup...", { duration: 3000 });
+    setTimeout(() => {
+      setBackupStatus({
+        ...backupStatus,
+        lastBackup: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      });
+      toast.success("Manual backup completed successfully");
+    }, 3000);
+  };
+
+  const testRecovery = (testName: string) => {
+    toast.loading(`Running ${testName}...`, { duration: 2000 });
+    setTimeout(() => {
+      toast.success(`${testName} completed successfully`);
+    }, 2000);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-400';
-      case 'in-progress': return 'text-yellow-400';
-      case 'failed': return 'text-red-400';
-      case 'scheduled': return 'text-blue-400';
-      default: return 'text-gray-400';
+      case 'completed': case 'passed': return 'bg-green-500/20 text-green-300';
+      case 'in-progress': return 'bg-blue-500/20 text-blue-300';
+      case 'warning': return 'bg-yellow-500/20 text-yellow-300';
+      case 'failed': return 'bg-red-500/20 text-red-300';
+      default: return 'bg-gray-500/20 text-gray-300';
     }
   };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed': return <CheckCircle className="w-4 h-4 text-green-400" />;
-      case 'in-progress': return <Clock className="w-4 h-4 text-yellow-400" />;
-      case 'failed': return <AlertTriangle className="w-4 h-4 text-red-400" />;
-      case 'scheduled': return <Clock className="w-4 h-4 text-blue-400" />;
-      default: return <Clock className="w-4 h-4 text-gray-400" />;
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'data': return <Database className="w-4 h-4 text-sireiq-cyan" />;
-      case 'models': return <Upload className="w-4 h-4 text-sireiq-cyan" />;
-      case 'configuration': return <Shield className="w-4 h-4 text-sireiq-cyan" />;
-      case 'full-system': return <Download className="w-4 h-4 text-sireiq-cyan" />;
-      default: return <Database className="w-4 h-4 text-sireiq-cyan" />;
-    }
-  };
-
-  const formatBackupType = (type: string) => {
-    return type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  };
-
-  const toggleSetting = (key: keyof typeof automatedSettings) => {
-    setAutomatedSettings(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const completedBackups = backupStatuses.filter(b => b.status === 'completed').length;
-  const backupReliability = Math.round((completedBackups / backupStatuses.length) * 100);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <Card className="bg-sireiq-darker border-sireiq-accent/20">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">
-              <Database className="w-6 h-6 mr-3 text-sireiq-cyan" />
+              <Database className="w-5 h-5 mr-2 text-sireiq-cyan" />
               Backup & Recovery Management
             </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="outline" className="text-green-400 border-green-500/50">
-                {backupReliability}% Reliability
-              </Badge>
-              <Button className="bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker">
-                <Play className="w-4 h-4 mr-2" />
-                Run Backup Now
-              </Button>
-            </div>
+            <Button onClick={initiateBackup} className="bg-sireiq-cyan text-sireiq-darker">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Manual Backup
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-green-400">{completedBackups}</div>
-              <div className="text-sm text-sireiq-light/70">Successful Backups</div>
+              <div className="text-lg font-bold text-sireiq-cyan">{backupStatus.totalBackups}</div>
+              <div className="text-sm text-sireiq-light/70">Total Backups</div>
             </div>
             <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-sireiq-cyan">26.3 GB</div>
-              <div className="text-sm text-sireiq-light/70">Total Backup Size</div>
+              <div className="text-lg font-bold text-green-400">{backupStatus.storageUsed}%</div>
+              <div className="text-sm text-sireiq-light/70">Storage Used</div>
             </div>
             <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-green-400">100%</div>
-              <div className="text-sm text-sireiq-light/70">Encryption Rate</div>
+              <div className="text-lg font-bold text-sireiq-light">2 hours</div>
+              <div className="text-sm text-sireiq-light/70">Last Backup</div>
             </div>
             <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-sireiq-cyan">15 min</div>
-              <div className="text-sm text-sireiq-light/70">Avg Recovery Time</div>
+              <div className="text-lg font-bold text-sireiq-light">22 hours</div>
+              <div className="text-sm text-sireiq-light/70">Next Backup</div>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <h4 className="font-medium mb-2">Storage Usage</h4>
+            <Progress value={backupStatus.storageUsed} className="h-3" />
+            <div className="flex justify-between text-sm text-sireiq-light/70 mt-1">
+              <span>Used: {backupStatus.storageUsed}%</span>
+              <span>Available: {100 - backupStatus.storageUsed}%</span>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Backup Status Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {backupStatuses.map((backup) => (
-          <Card key={backup.id} className="bg-sireiq-darker border-sireiq-accent/20">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center justify-between text-lg">
-                <div className="flex items-center">
-                  {getTypeIcon(backup.type)}
-                  <span className="ml-2">{formatBackupType(backup.type)}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {getStatusIcon(backup.status)}
-                  {backup.encrypted && <Shield className="w-4 h-4 text-green-400" />}
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-sireiq-light/60">Last Backup:</span>
-                    <p className="font-medium">{backup.lastBackup}</p>
-                  </div>
-                  <div>
-                    <span className="text-sireiq-light/60">Next Backup:</span>
-                    <p className="font-medium text-sireiq-cyan">{backup.nextBackup}</p>
-                  </div>
-                  <div>
-                    <span className="text-sireiq-light/60">Size:</span>
-                    <p className="font-medium">{backup.size}</p>
-                  </div>
-                  <div>
-                    <span className="text-sireiq-light/60">Retention:</span>
-                    <p className="font-medium">{backup.retention}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <Badge variant="outline" className={getStatusColor(backup.status)}>
-                    {backup.status.toUpperCase()}
-                  </Badge>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="text-xs">
-                      Download
-                    </Button>
-                    <Button variant="outline" size="sm" className="text-xs">
-                      Restore
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Automated Backup Settings */}
       <Card className="bg-sireiq-darker border-sireiq-accent/20">
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Shield className="w-5 h-5 mr-2 text-sireiq-cyan" />
-            Automated Backup Configuration
-          </CardTitle>
+          <CardTitle>Backup Sources Status</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(automatedSettings).map(([key, value]) => (
-              <div key={key} className="flex items-center justify-between p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                <div>
-                  <h4 className="font-semibold text-sireiq-light">
-                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                  </h4>
-                  <p className="text-sm text-sireiq-light/70">
-                    {key === 'dailyBackups' && 'Automatic daily incremental backups'}
-                    {key === 'weeklyFullBackup' && 'Complete system backup every week'}
-                    {key === 'encryptionEnabled' && 'AES-256 encryption for all backups'}
-                    {key === 'offSiteReplication' && 'Replicate backups to secondary location'}
-                    {key === 'integrityChecks' && 'Verify backup integrity automatically'}
-                    {key === 'retentionPolicy' && 'Automatic cleanup based on retention rules'}
-                  </p>
+          <div className="space-y-3">
+            {backupSources.map((source, index) => (
+              <div key={index} className="flex items-center justify-between p-3 border border-sireiq-accent/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <HardDrive className="w-4 h-4 text-sireiq-cyan" />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium">{source.name}</h4>
+                      {source.encryption && (
+                        <Badge className="bg-green-500/20 text-green-300 text-xs">Encrypted</Badge>
+                      )}
+                      {!source.encryption && (
+                        <Badge className="bg-red-500/20 text-red-300 text-xs">Unencrypted</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-sireiq-light/70">
+                      {source.size} • Last backup: {source.lastBackup}
+                    </p>
+                  </div>
                 </div>
-                <Switch 
-                  checked={value}
-                  onCheckedChange={() => toggleSetting(key as keyof typeof automatedSettings)}
-                />
+                <Badge className={getStatusColor(source.status)}>
+                  {source.status}
+                </Badge>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Recovery Testing */}
       <Card className="bg-sireiq-darker border-sireiq-accent/20">
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Play className="w-5 h-5 mr-2 text-sireiq-cyan" />
-              Recovery Testing & Validation
-            </div>
-            <Button variant="outline" className="border-sireiq-accent/30">
-              Schedule Test
-            </Button>
-          </CardTitle>
+          <CardTitle>Recovery Testing</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <p className="text-sireiq-light/70 mb-4">
-              Regular recovery testing ensures backup integrity and validates restoration procedures.
-            </p>
-            
-            <div className="space-y-3">
-              {recoveryTests.map((test, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <div>
-                      <h4 className="font-semibold text-sireiq-light">{test.type}</h4>
-                      <p className="text-sm text-sireiq-light/70">Tested on {test.date}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant="outline" className="text-green-400 border-green-500/50 mb-1">
-                      {test.result.toUpperCase()}
-                    </Badge>
-                    <p className="text-xs text-sireiq-light/60">{test.duration}</p>
+          <div className="space-y-3">
+            {recoveryTests.map((test, index) => (
+              <div key={index} className="flex items-center justify-between p-3 border border-sireiq-accent/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Cloud className="w-4 h-4 text-sireiq-cyan" />
+                  <div>
+                    <h4 className="font-medium">{test.name}</h4>
+                    <p className="text-sm text-sireiq-light/70">
+                      Last test: {test.lastTest} • Duration: {test.duration}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-            
-            <div className="mt-6 p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-              <h4 className="font-semibold text-sireiq-light mb-3">Recovery Metrics</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <span className="text-sireiq-light/60">Recovery Success Rate:</span>
-                  <p className="font-medium text-green-400">100%</p>
-                </div>
-                <div>
-                  <span className="text-sireiq-light/60">Average RTO (Recovery Time):</span>
-                  <p className="font-medium text-sireiq-cyan">15 minutes</p>
-                </div>
-                <div>
-                  <span className="text-sireiq-light/60">RPO (Recovery Point):</span>
-                  <p className="font-medium text-sireiq-cyan">&lt; 1 hour</p>
+                <div className="flex items-center gap-2">
+                  <Badge className={getStatusColor(test.result)}>
+                    {test.result}
+                  </Badge>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => testRecovery(test.name)}
+                    className="border-sireiq-accent/30"
+                  >
+                    Test Now
+                  </Button>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-sireiq-darker border-sireiq-accent/20">
+        <CardHeader>
+          <CardTitle>Backup Policies</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { title: "Retention Policy", value: "30 days", description: "Daily backups kept for 30 days" },
+              { title: "Encryption Standard", value: "AES-256", description: "Military-grade encryption" },
+              { title: "Backup Frequency", value: "Daily", description: "Automated daily backups at 2 AM" },
+              { title: "Geographic Redundancy", value: "3 Regions", description: "Backups stored in multiple regions" }
+            ].map((policy, index) => (
+              <div key={index} className="p-4 border border-sireiq-accent/20 rounded-lg">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium">{policy.title}</h4>
+                  <span className="font-bold text-sireiq-cyan">{policy.value}</span>
+                </div>
+                <p className="text-sm text-sireiq-light/70">{policy.description}</p>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

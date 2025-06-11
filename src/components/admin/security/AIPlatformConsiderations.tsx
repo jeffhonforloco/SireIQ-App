@@ -4,408 +4,225 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Bot, Eye, Shield, Users, AlertTriangle, CheckCircle, FileText, Lock } from 'lucide-react';
-
-interface ModelExplainability {
-  modelId: string;
-  modelName: string;
-  explainabilityScore: number;
-  features: string[];
-  decisionLogging: boolean;
-  auditTrail: boolean;
-}
-
-interface PrivacyMeasure {
-  id: string;
-  name: string;
-  description: string;
-  implemented: boolean;
-  effectiveness: number;
-  complianceStandards: string[];
-}
+import { Progress } from '@/components/ui/progress';
+import { Bot, Brain, Eye, Users, AlertTriangle, Shield } from 'lucide-react';
+import { toast } from 'sonner';
 
 const AIPlatformConsiderations = () => {
-  const [modelExplainability] = useState<ModelExplainability[]>([
-    {
-      modelId: 'model-001',
-      modelName: 'Content Generation Model v2.1',
-      explainabilityScore: 85,
-      features: ['SHAP values', 'Feature importance', 'Decision trees'],
-      decisionLogging: true,
-      auditTrail: true
-    },
-    {
-      modelId: 'model-002',
-      modelName: 'Data Analysis Model v1.8',
-      explainabilityScore: 92,
-      features: ['LIME', 'Counterfactuals', 'Feature attribution'],
-      decisionLogging: true,
-      auditTrail: true
-    },
-    {
-      modelId: 'model-003',
-      modelName: 'Classification Model v3.0',
-      explainabilityScore: 78,
-      features: ['Attention maps', 'Gradient analysis'],
-      decisionLogging: false,
-      auditTrail: true
-    }
-  ]);
+  const [aiGovernanceSettings, setAiGovernanceSettings] = useState({
+    explainability: true,
+    biasDetection: true,
+    privacyByDesign: true,
+    humanOversight: true,
+    transparentDecisions: false,
+    ethicalGuidelines: true
+  });
 
-  const [privacyMeasures, setPrivacyMeasures] = useState<PrivacyMeasure[]>([
-    {
-      id: 'anonymization',
-      name: 'Data Anonymization',
-      description: 'Remove or mask personally identifiable information',
-      implemented: true,
-      effectiveness: 95,
-      complianceStandards: ['GDPR', 'CCPA', 'HIPAA']
-    },
-    {
-      id: 'pseudonymization',
-      name: 'Data Pseudonymization',
-      description: 'Replace identifying information with artificial identifiers',
-      implemented: true,
-      effectiveness: 88,
-      complianceStandards: ['GDPR', 'CCPA']
-    },
-    {
-      id: 'differential-privacy',
-      name: 'Differential Privacy',
-      description: 'Add statistical noise to protect individual privacy',
-      implemented: false,
-      effectiveness: 0,
-      complianceStandards: ['GDPR', 'CCPA', 'Research Ethics']
-    },
-    {
-      id: 'federated-learning',
-      name: 'Federated Learning',
-      description: 'Train models without centralizing sensitive data',
-      implemented: false,
-      effectiveness: 0,
-      complianceStandards: ['GDPR', 'HIPAA', 'Financial Regulations']
-    }
-  ]);
-
-  const [thirdPartyIntegrations] = useState([
-    {
-      name: 'OpenAI API',
-      securityLevel: 'High',
-      authentication: 'API Key + OAuth',
-      dataSharing: 'Encrypted',
-      complianceStatus: 'SOC 2 Type II',
-      lastAudit: '2024-01-01'
-    },
-    {
-      name: 'AWS ML Services',
-      securityLevel: 'High',
-      authentication: 'IAM + MFA',
-      dataSharing: 'Encrypted',
-      complianceStatus: 'SOC 1/2/3, ISO 27001',
-      lastAudit: '2024-01-05'
-    },
-    {
-      name: 'Hugging Face Models',
-      securityLevel: 'Medium',
-      authentication: 'API Token',
-      dataSharing: 'Public Models Only',
-      complianceStatus: 'SOC 2',
-      lastAudit: '2023-12-15'
-    }
-  ]);
-
-  const togglePrivacyMeasure = (id: string) => {
-    setPrivacyMeasures(prev => prev.map(measure => 
-      measure.id === id 
-        ? { 
-            ...measure, 
-            implemented: !measure.implemented,
-            effectiveness: !measure.implemented ? 90 : 0
-          }
-        : measure
-    ));
+  const handleToggle = (key: keyof typeof aiGovernanceSettings) => {
+    setAiGovernanceSettings(prev => ({ ...prev, [key]: !prev[key] }));
+    toast.success(`AI ${key} ${aiGovernanceSettings[key] ? 'disabled' : 'enabled'}`);
   };
 
-  const getExplainabilityColor = (score: number) => {
-    if (score >= 85) return 'text-green-400';
-    if (score >= 70) return 'text-yellow-400';
+  const aiEthicsMetrics = [
+    { label: "Fairness Score", value: 92, threshold: 85, status: "good" },
+    { label: "Transparency Index", value: 88, threshold: 80, status: "good" },
+    { label: "Privacy Compliance", value: 95, threshold: 90, status: "excellent" },
+    { label: "Bias Detection", value: 76, threshold: 80, status: "warning" }
+  ];
+
+  const aiGovernanceFeatures = [
+    {
+      key: 'explainability' as const,
+      title: 'AI Explainability',
+      description: 'Provide clear explanations for AI decisions',
+      icon: Eye,
+      critical: true
+    },
+    {
+      key: 'biasDetection' as const,
+      title: 'Bias Detection & Mitigation',
+      description: 'Monitor and reduce algorithmic bias',
+      icon: Shield,
+      critical: true
+    },
+    {
+      key: 'privacyByDesign' as const,
+      title: 'Privacy by Design',
+      description: 'Built-in privacy protections in AI systems',
+      icon: Bot,
+      critical: true
+    },
+    {
+      key: 'humanOversight' as const,
+      title: 'Human Oversight',
+      description: 'Human review and control of AI decisions',
+      icon: Users,
+      critical: false
+    },
+    {
+      key: 'transparentDecisions' as const,
+      title: 'Transparent Decision Making',
+      description: 'Clear audit trails for all AI decisions',
+      icon: Brain,
+      critical: false
+    },
+    {
+      key: 'ethicalGuidelines' as const,
+      title: 'Ethical Guidelines Compliance',
+      description: 'Adherence to AI ethics frameworks',
+      icon: AlertTriangle,
+      critical: true
+    }
+  ];
+
+  const getMetricColor = (value: number, threshold: number) => {
+    if (value >= threshold + 10) return 'text-green-400';
+    if (value >= threshold) return 'text-yellow-400';
     return 'text-red-400';
   };
 
-  const getSecurityLevelColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case 'high': return 'text-green-400 border-green-500/50';
-      case 'medium': return 'text-yellow-400 border-yellow-500/50';
-      case 'low': return 'text-red-400 border-red-500/50';
-      default: return 'text-gray-400 border-gray-500/50';
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'excellent': return 'bg-green-500/20 text-green-300';
+      case 'good': return 'bg-blue-500/20 text-blue-300';
+      case 'warning': return 'bg-yellow-500/20 text-yellow-300';
+      case 'critical': return 'bg-red-500/20 text-red-300';
+      default: return 'bg-gray-500/20 text-gray-300';
     }
   };
 
-  const averageExplainability = Math.round(
-    modelExplainability.reduce((acc, model) => acc + model.explainabilityScore, 0) / modelExplainability.length
-  );
-
-  const implementedPrivacyMeasures = privacyMeasures.filter(m => m.implemented).length;
-
   return (
     <div className="space-y-6">
-      {/* Header */}
       <Card className="bg-sireiq-darker border-sireiq-accent/20">
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Bot className="w-6 h-6 mr-3 text-sireiq-cyan" />
-            AI Platform Security Considerations
+            <Brain className="w-5 h-5 mr-2 text-sireiq-cyan" />
+            AI Platform Governance & Ethics
           </CardTitle>
         </CardHeader>
+        <CardContent className="space-y-4">
+          {aiGovernanceFeatures.map((feature) => {
+            const IconComponent = feature.icon;
+            return (
+              <div key={feature.key} className="flex items-center justify-between p-4 border border-sireiq-accent/20 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <IconComponent className="w-5 h-5 text-sireiq-cyan" />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-medium">{feature.title}</h4>
+                      {feature.critical && (
+                        <Badge variant="destructive" className="text-xs">Critical</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-sireiq-light/70">{feature.description}</p>
+                  </div>
+                </div>
+                <Switch
+                  checked={aiGovernanceSettings[feature.key]}
+                  onCheckedChange={() => handleToggle(feature.key)}
+                />
+              </div>
+            );
+          })}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-sireiq-darker border-sireiq-accent/20">
+        <CardHeader>
+          <CardTitle>AI Ethics & Fairness Metrics</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {aiEthicsMetrics.map((metric, index) => (
+            <div key={index} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="font-medium">{metric.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`font-bold ${getMetricColor(metric.value, metric.threshold)}`}>
+                    {metric.value}%
+                  </span>
+                  <Badge className={getStatusColor(metric.status)}>
+                    {metric.status}
+                  </Badge>
+                </div>
+              </div>
+              <Progress value={metric.value} className="h-2" />
+              <div className="text-xs text-sireiq-light/50">
+                Threshold: {metric.threshold}% • Current: {metric.value}%
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-sireiq-darker border-sireiq-accent/20">
+        <CardHeader>
+          <CardTitle>Responsible AI Framework</CardTitle>
+        </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className={`text-2xl font-bold ${getExplainabilityColor(averageExplainability)}`}>
-                {averageExplainability}%
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              {
+                category: "Ethical Principles",
+                items: ["Human dignity respect", "Fairness and non-discrimination", "Transparency and accountability"]
+              },
+              {
+                category: "Technical Safeguards",
+                items: ["Algorithmic auditing", "Bias testing and mitigation", "Performance monitoring"]
+              },
+              {
+                category: "Governance Framework",
+                items: ["AI oversight committee", "Regular ethics reviews", "Stakeholder engagement"]
+              },
+              {
+                category: "Risk Management",
+                items: ["Impact assessments", "Continuous monitoring", "Incident response procedures"]
+              }
+            ].map((framework, index) => (
+              <div key={index} className="p-4 border border-sireiq-accent/20 rounded-lg">
+                <h4 className="font-medium mb-3">{framework.category}</h4>
+                <div className="space-y-2">
+                  {framework.items.map((item, itemIndex) => (
+                    <div key={itemIndex} className="flex items-center gap-2 text-sm">
+                      <div className="w-2 h-2 bg-sireiq-cyan rounded-full"></div>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="text-sm text-sireiq-light/70">Model Explainability</div>
-            </div>
-            <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-green-400">
-                {implementedPrivacyMeasures}/{privacyMeasures.length}
-              </div>
-              <div className="text-sm text-sireiq-light/70">Privacy Measures</div>
-            </div>
-            <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-sireiq-cyan">3</div>
-              <div className="text-sm text-sireiq-light/70">Third-party Integrations</div>
-            </div>
-            <div className="text-center p-4 bg-sireiq-accent/5 rounded-lg">
-              <div className="text-2xl font-bold text-green-400">100%</div>
-              <div className="text-sm text-sireiq-light/70">Compliance Coverage</div>
-            </div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="explainability" className="space-y-6">
-        <TabsList className="grid grid-cols-3 w-full bg-sireiq-darker">
-          <TabsTrigger value="explainability">Model Explainability</TabsTrigger>
-          <TabsTrigger value="privacy">Privacy by Design</TabsTrigger>
-          <TabsTrigger value="integrations">Third-party Security</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="explainability" className="space-y-4">
-          <Card className="bg-sireiq-darker border-sireiq-accent/20">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Eye className="w-5 h-5 mr-2 text-sireiq-cyan" />
-                Model Explainability & Decision Logging
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {modelExplainability.map((model) => (
-                  <div key={model.modelId} className="p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h4 className="font-semibold text-sireiq-light">{model.modelName}</h4>
-                        <p className="text-sm text-sireiq-light/70">ID: {model.modelId}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className={`text-lg font-bold ${getExplainabilityColor(model.explainabilityScore)}`}>
-                          {model.explainabilityScore}%
-                        </div>
-                        <p className="text-xs text-sireiq-light/60">Explainability Score</p>
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                      <div>
-                        <span className="text-xs text-sireiq-light/60">Features:</span>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {model.features.map((feature, index) => (
-                            <Badge key={index} variant="outline" className="text-xs border-sireiq-cyan/50 text-sireiq-cyan">
-                              {feature}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-xs text-sireiq-light/60">Decision Logging:</span>
-                        <div className="flex items-center gap-1 mt-1">
-                          {model.decisionLogging ? (
-                            <CheckCircle className="w-4 h-4 text-green-400" />
-                          ) : (
-                            <AlertTriangle className="w-4 h-4 text-red-400" />
-                          )}
-                          <span className={`text-sm ${model.decisionLogging ? 'text-green-400' : 'text-red-400'}`}>
-                            {model.decisionLogging ? 'Enabled' : 'Disabled'}
-                          </span>
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-xs text-sireiq-light/60">Audit Trail:</span>
-                        <div className="flex items-center gap-1 mt-1">
-                          {model.auditTrail ? (
-                            <CheckCircle className="w-4 h-4 text-green-400" />
-                          ) : (
-                            <AlertTriangle className="w-4 h-4 text-red-400" />
-                          )}
-                          <span className={`text-sm ${model.auditTrail ? 'text-green-400' : 'text-red-400'}`}>
-                            {model.auditTrail ? 'Active' : 'Inactive'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="text-xs">
-                        View Explanations
-                      </Button>
-                      <Button variant="outline" size="sm" className="text-xs">
-                        Decision Logs
-                      </Button>
-                      {!model.decisionLogging && (
-                        <Button variant="outline" size="sm" className="text-xs border-yellow-500/50 text-yellow-400">
-                          Enable Logging
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="privacy" className="space-y-4">
-          <Card className="bg-sireiq-darker border-sireiq-accent/20">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Shield className="w-5 h-5 mr-2 text-sireiq-cyan" />
-                Privacy by Design Implementation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {privacyMeasures.map((measure) => (
-                  <div key={measure.id} className="p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          {measure.implemented ? (
-                            <CheckCircle className="w-4 h-4 text-green-400" />
-                          ) : (
-                            <AlertTriangle className="w-4 h-4 text-red-400" />
-                          )}
-                          <h4 className="font-semibold text-sireiq-light">{measure.name}</h4>
-                        </div>
-                        <p className="text-sm text-sireiq-light/70 mb-2">{measure.description}</p>
-                        <div className="flex flex-wrap gap-1">
-                          {measure.complianceStandards.map((standard, index) => (
-                            <Badge key={index} variant="outline" className="text-xs border-blue-500/50 text-blue-400">
-                              {standard}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <div className={`text-lg font-bold ${measure.implemented ? 'text-green-400' : 'text-red-400'}`}>
-                            {measure.effectiveness}%
-                          </div>
-                          <p className="text-xs text-sireiq-light/60">Effectiveness</p>
-                        </div>
-                        <Switch 
-                          checked={measure.implemented}
-                          onCheckedChange={() => togglePrivacyMeasure(measure.id)}
-                        />
-                      </div>
-                    </div>
-                    
-                    {!measure.implemented && (
-                      <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                        <p className="text-sm text-yellow-400">
-                          <AlertTriangle className="w-4 h-4 inline mr-1" />
-                          This privacy measure is not yet implemented. Consider enabling it to enhance data protection.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="integrations" className="space-y-4">
-          <Card className="bg-sireiq-darker border-sireiq-accent/20">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Lock className="w-5 h-5 mr-2 text-sireiq-cyan" />
-                Third-party Integration Security
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {thirdPartyIntegrations.map((integration, index) => (
-                  <div key={index} className="p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h4 className="font-semibold text-sireiq-light">{integration.name}</h4>
-                        <Badge variant="outline" className={getSecurityLevelColor(integration.securityLevel)}>
-                          {integration.securityLevel.toUpperCase()} SECURITY
-                        </Badge>
-                      </div>
-                      <Button variant="outline" size="sm" className="text-xs">
-                        Review Integration
-                      </Button>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="text-sireiq-light/60">Authentication:</span>
-                        <p className="font-medium text-sireiq-cyan">{integration.authentication}</p>
-                      </div>
-                      <div>
-                        <span className="text-sireiq-light/60">Data Sharing:</span>
-                        <p className="font-medium">{integration.dataSharing}</p>
-                      </div>
-                      <div>
-                        <span className="text-sireiq-light/60">Compliance:</span>
-                        <p className="font-medium">{integration.complianceStatus}</p>
-                      </div>
-                      <div>
-                        <span className="text-sireiq-light/60">Last Audit:</span>
-                        <p className="font-medium">{integration.lastAudit}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-6 p-4 bg-sireiq-accent/5 rounded-lg border border-sireiq-accent/20">
-                <h4 className="font-semibold text-sireiq-light mb-3">Integration Security Guidelines</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
-                    <span>All integrations use encrypted connections (TLS 1.3+)</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
-                    <span>API keys are rotated automatically every 90 days</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
-                    <span>Data sharing agreements reviewed quarterly</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5" />
-                    <span>Compliance certifications verified annually</span>
+      <Card className="bg-sireiq-darker border-sireiq-accent/20">
+        <CardHeader>
+          <CardTitle>AI Model Lifecycle Management</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              { phase: "Development", status: "In Progress", compliance: 88, description: "Model training with ethical guidelines" },
+              { phase: "Testing & Validation", status: "Completed", compliance: 95, description: "Bias testing and performance validation" },
+              { phase: "Deployment", status: "Active", compliance: 92, description: "Production deployment with monitoring" },
+              { phase: "Monitoring", status: "Ongoing", compliance: 90, description: "Continuous performance and ethics monitoring" }
+            ].map((phase, index) => (
+              <div key={index} className="p-4 bg-sireiq-accent/5 rounded-lg">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium">{phase.phase}</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sireiq-cyan">{phase.compliance}%</span>
+                    <Badge className={getStatusColor(phase.status === 'Completed' ? 'excellent' : 'good')}>
+                      {phase.status}
+                    </Badge>
                   </div>
                 </div>
+                <p className="text-sm text-sireiq-light/70 mb-2">{phase.description}</p>
+                <Progress value={phase.compliance} className="h-2" />
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

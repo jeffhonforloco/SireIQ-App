@@ -11,7 +11,7 @@ export const useChartData = (activeData: DataPoint[], chartConfig: ChartConfig) 
     // Group data by x-axis and sum y-axis values
     const grouped = data.reduce((acc, item) => {
       const key = String(item[chartConfig.xAxis]);
-      const value = typeof item[chartConfig.yAxis] === 'number' ? item[chartConfig.yAxis] : Number(item[chartConfig.yAxis]) || 0;
+      const value = typeof item[chartConfig.yAxis] === 'number' ? item[chartConfig.yAxis] : parseFloat(String(item[chartConfig.yAxis])) || 0;
       acc[key] = (acc[key] || 0) + value;
       return acc;
     }, {} as Record<string, number>);
@@ -29,14 +29,17 @@ export const useChartData = (activeData: DataPoint[], chartConfig: ChartConfig) 
     return data.map(item => ({
       ...item,
       x: item[chartConfig.xAxis],
-      y: Number(item[chartConfig.yAxis]) || 0
+      y: typeof item[chartConfig.yAxis] === 'number' ? item[chartConfig.yAxis] : parseFloat(String(item[chartConfig.yAxis])) || 0
     }));
   };
 
   const getAdvancedStats = (): AdvancedStats | null => {
     if (!chartConfig.yAxis || activeData.length === 0) return null;
     
-    const values = activeData.map(d => Number(d[chartConfig.yAxis]) || 0);
+    const values = activeData.map(d => {
+      const value = d[chartConfig.yAxis];
+      return typeof value === 'number' ? value : parseFloat(String(value)) || 0;
+    });
     const sum = values.reduce((a, b) => a + b, 0);
     const mean = sum / values.length;
     const variance = values.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / values.length;
