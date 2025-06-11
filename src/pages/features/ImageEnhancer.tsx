@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
@@ -47,11 +46,13 @@ const ImageEnhancer = () => {
   }, [history, historyIndex]);
 
   const handleImageUpload = (imageUrl: string, dimensions: { width: number; height: number }) => {
+    console.log('handleImageUpload called with:', { imageUrl: imageUrl.substring(0, 50) + '...', dimensions });
     setOriginalDimensions(dimensions);
     setUploadedImage(imageUrl);
     setEnhancedImage(null);
     setHistory([]);
     setHistoryIndex(-1);
+    console.log('Image upload state updated');
   };
 
   const handlePresetSelect = (preset: string) => {
