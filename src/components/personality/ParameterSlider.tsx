@@ -21,9 +21,12 @@ const ParameterSlider: React.FC<ParameterSliderProps> = ({
 
   return (
     <div className="space-y-2">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <span className="font-medium">{name}</span>
-        <span className="text-sireiq-light/50 text-sm">{range}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-sireiq-light/50 text-sm">{range}</span>
+          <span className="text-sireiq-cyan font-medium text-sm min-w-[3rem] text-right">{value}%</span>
+        </div>
       </div>
       <Slider
         defaultValue={[value]}
