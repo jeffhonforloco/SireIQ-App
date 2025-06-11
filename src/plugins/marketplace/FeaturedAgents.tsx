@@ -7,71 +7,7 @@ import { ArrowUpRight, Star, Download, Download as DownloadIcon, ChevronDown, Ch
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-type Agent = {
-  id: string;
-  name: string;
-  description: string;
-  author: string;
-  upvotes: number;
-  version: string;
-  downloads: number;
-  tags: string[];
-};
-
-// Sample agents - in a real app would be fetched from an API
-const featuredAgents: Agent[] = [
-  {
-    id: 'agent1',
-    name: 'Research Assistant',
-    description: 'Helps with academic research and paper summarization',
-    author: 'SireIQ',
-    upvotes: 4289,
-    version: '2.4.0',
-    downloads: 24500,
-    tags: ['research', 'academic', 'verified'],
-  },
-  {
-    id: 'agent2',
-    name: 'Code Reviewer',
-    description: 'Reviews code for security and performance issues',
-    author: 'DevTeam',
-    upvotes: 3150,
-    version: '1.8.5',
-    downloads: 18200,
-    tags: ['coding', 'security', 'verified'],
-  },
-  {
-    id: 'agent3',
-    name: 'Meeting Summarizer',
-    description: 'Creates concise summaries from meeting transcripts',
-    author: 'Productivity+',
-    upvotes: 2780,
-    version: '3.1.2',
-    downloads: 15600,
-    tags: ['productivity', 'business'],
-  },
-  {
-    id: 'agent4',
-    name: 'Data Visualizer',
-    description: 'Creates charts and graphs from your data',
-    author: 'DataLabs',
-    upvotes: 2105,
-    version: '2.0.1',
-    downloads: 9800,
-    tags: ['data', 'visualization'],
-  },
-  {
-    id: 'agent5',
-    name: 'Email Assistant',
-    description: 'Drafts and manages emails with smart suggestions',
-    author: 'CommunicateAI',
-    upvotes: 1850,
-    version: '1.5.0',
-    downloads: 12300,
-    tags: ['email', 'communication'],
-  },
-];
+import { agents } from '@/registry/agents';
 
 interface FeaturedAgentsProps {
   containerClassName?: string;
@@ -92,6 +28,26 @@ const FeaturedAgents: React.FC<FeaturedAgentsProps> = ({ containerClassName = ""
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const getAgentIcon = (iconName: string) => {
+    // Map icon names to actual icon components or return a default
+    switch (iconName) {
+      case 'search':
+        return '🔍';
+      case 'file-text':
+        return '📄';
+      case 'chart-bar':
+        return '📊';
+      default:
+        return '🤖';
+    }
+  };
+
+  const getRandomStats = () => ({
+    upvotes: Math.floor(Math.random() * 5000) + 1000,
+    downloads: Math.floor(Math.random() * 50000) + 5000,
+    version: `${Math.floor(Math.random() * 3) + 1}.${Math.floor(Math.random() * 9)}.${Math.floor(Math.random() * 9)}`
+  });
 
   return (
     <div className={`w-full px-4 py-6 bg-sireiq-darker ${containerClassName}`}>
@@ -163,76 +119,80 @@ const FeaturedAgents: React.FC<FeaturedAgentsProps> = ({ containerClassName = ""
               className="relative"
             >
               {/* Enhanced grid layout for better responsiveness */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
-                {featuredAgents.map((agent, index) => (
-                  <motion.div
-                    key={agent.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="w-full"
-                  >
-                    <Card className="border-sireiq-accent/30 bg-gradient-to-br from-black/50 to-sireiq-darker/50 h-full hover:border-sireiq-cyan/50 transition-all duration-300 backdrop-blur-sm">
-                      <CardContent className="p-4 h-full flex flex-col">
-                        {/* Header with version */}
-                        <div className="mb-3">
-                          <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-white text-sm lg:text-base line-clamp-1">
-                              {agent.name}
-                            </h3>
-                            <div className="bg-sireiq-accent/20 text-xs px-2 py-1 rounded text-sireiq-cyan font-mono">
-                              v{agent.version}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                {agents.map((agent, index) => {
+                  const stats = getRandomStats();
+                  return (
+                    <motion.div
+                      key={agent.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      className="w-full"
+                    >
+                      <Card className="border-sireiq-accent/30 bg-gradient-to-br from-black/50 to-sireiq-darker/50 h-full hover:border-sireiq-cyan/50 transition-all duration-300 backdrop-blur-sm">
+                        <CardContent className="p-4 h-full flex flex-col">
+                          {/* Header with version */}
+                          <div className="mb-3">
+                            <div className="flex justify-between items-start mb-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-lg">{getAgentIcon(agent.icon)}</span>
+                                <h3 className="font-semibold text-white text-sm lg:text-base line-clamp-1">
+                                  {agent.name}
+                                </h3>
+                              </div>
+                              <div className="bg-sireiq-accent/20 text-xs px-2 py-1 rounded text-sireiq-cyan font-mono">
+                                v{stats.version}
+                              </div>
+                            </div>
+                            <div className="text-xs text-sireiq-light/60">by SireIQ</div>
+                          </div>
+                          
+                          {/* Description */}
+                          <p className="text-sm text-sireiq-light/80 mb-4 flex-grow line-clamp-2 leading-relaxed">
+                            {agent.description}
+                          </p>
+                          
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            <div className="bg-green-500/20 text-green-300 border border-green-500/30 text-[10px] px-2 py-1 rounded-full font-medium">
+                              verified
+                            </div>
+                            <div className="bg-sireiq-accent/20 text-sireiq-light/70 border border-sireiq-accent/30 text-[10px] px-2 py-1 rounded-full font-medium">
+                              {agent.category}
+                            </div>
+                            <div className={`text-[10px] px-2 py-1 rounded-full font-medium bg-sireiq-accent/20 text-sireiq-light/70 border border-sireiq-accent/30`}>
+                              {agent.status}
                             </div>
                           </div>
-                          <div className="text-xs text-sireiq-light/60">by {agent.author}</div>
-                        </div>
-                        
-                        {/* Description */}
-                        <p className="text-sm text-sireiq-light/80 mb-4 flex-grow line-clamp-2 leading-relaxed">
-                          {agent.description}
-                        </p>
-                        
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {agent.tags.slice(0, 3).map((tag) => (
-                            <div 
-                              key={tag} 
-                              className={`text-[10px] px-2 py-1 rounded-full font-medium
-                                ${tag === 'verified' ? 
-                                  'bg-green-500/20 text-green-300 border border-green-500/30' : 
-                                  'bg-sireiq-accent/20 text-sireiq-light/70 border border-sireiq-accent/30'
-                                }`}
+                          
+                          {/* Stats and Install */}
+                          <div className="flex justify-between items-center mt-auto">
+                            <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-1 text-xs">
+                                <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                                <span className="text-white font-medium">{stats.upvotes.toLocaleString()}</span>
+                              </div>
+                              <div className="flex items-center gap-1 text-xs text-sireiq-light/60">
+                                <DownloadIcon className="h-3 w-3" />
+                                <span>{stats.downloads.toLocaleString()}</span>
+                              </div>
+                            </div>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="h-7 text-xs border-sireiq-cyan/30 text-sireiq-cyan hover:bg-sireiq-cyan/10 hover:border-sireiq-cyan/50"
+                              onClick={() => navigate('/featured-agents')}
                             >
-                              {tag}
-                            </div>
-                          ))}
-                        </div>
-                        
-                        {/* Stats and Install */}
-                        <div className="flex justify-between items-center mt-auto">
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1 text-xs">
-                              <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-                              <span className="text-white font-medium">{agent.upvotes.toLocaleString()}</span>
-                            </div>
-                            <div className="flex items-center gap-1 text-xs text-sireiq-light/60">
-                              <DownloadIcon className="h-3 w-3" />
-                              <span>{agent.downloads.toLocaleString()}</span>
-                            </div>
+                              <Download className="h-3 w-3 mr-1" /> Use
+                            </Button>
                           </div>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="h-7 text-xs border-sireiq-cyan/30 text-sireiq-cyan hover:bg-sireiq-cyan/10 hover:border-sireiq-cyan/50"
-                          >
-                            <Download className="h-3 w-3 mr-1" /> Install
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
           )}

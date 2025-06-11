@@ -29,7 +29,20 @@ export const useChartData = () => {
   };
 
   const getAdvancedStats = (rawData: any[]) => {
-    if (!rawData.length) return {};
+    if (!rawData.length) {
+      return {
+        sum: 0,
+        avg: 0,
+        max: 0,
+        min: 0,
+        count: 0,
+        mean: 0,
+        median: 0,
+        stdDev: 0,
+        variance: 0,
+        range: 0
+      };
+    }
     
     const values = rawData.map(item => 
       typeof item.value === 'string' ? parseFloat(item.value) || 0 : (item.value || 0)
@@ -39,8 +52,29 @@ export const useChartData = () => {
     const avg = sum / values.length;
     const max = Math.max(...values);
     const min = Math.min(...values);
+    const mean = avg;
     
-    return { sum, avg, max, min, count: values.length };
+    const sortedValues = [...values].sort((a, b) => a - b);
+    const median = sortedValues.length % 2 === 0
+      ? (sortedValues[sortedValues.length / 2 - 1] + sortedValues[sortedValues.length / 2]) / 2
+      : sortedValues[Math.floor(sortedValues.length / 2)];
+    
+    const variance = values.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / values.length;
+    const stdDev = Math.sqrt(variance);
+    const range = max - min;
+    
+    return { 
+      sum, 
+      avg, 
+      max, 
+      min, 
+      count: values.length, 
+      mean, 
+      median, 
+      stdDev, 
+      variance, 
+      range 
+    };
   };
 
   const colors = [
