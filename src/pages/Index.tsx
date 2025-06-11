@@ -1,14 +1,17 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
 import FeaturedAgents from '@/plugins/marketplace/FeaturedAgents';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Users, Rocket } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, ArrowRight, Users, Rocket, ChevronDown, ChevronUp } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Index = () => {
+  const isMobile = useIsMobile();
+  const [showFullFeatures, setShowFullFeatures] = useState(!isMobile);
+
   return (
     <div className="min-h-screen w-full bg-background-primary flex flex-col overflow-hidden relative">
       <Helmet>
@@ -35,51 +38,82 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-12"
           >
             {/* Enhanced featured badge with better text wrapping */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="flex justify-center mb-8"
+              className="flex justify-center mb-6 md:mb-8"
             >
               <Link 
                 to="/featured-agents" 
-                className="group inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 hover:from-brand-primary/30 hover:to-brand-accent/30 border border-brand-primary/30 text-brand-primary text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-105 hover:shadow-glow max-w-[90%] text-center"
+                className="group inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 hover:from-brand-primary/30 hover:to-brand-accent/30 border border-brand-primary/30 text-brand-primary text-xs sm:text-sm rounded-full transition-all duration-300 hover:scale-105 hover:shadow-glow max-w-[90%] text-center"
               >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse flex-shrink-0" />
-                <span className="font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+                <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 animate-pulse flex-shrink-0" />
+                <span className="font-medium">
                   <span className="hidden sm:inline">Explore Featured AI Agents</span>
-                  <span className="sm:hidden">Featured AI Agents</span>
+                  <span className="sm:hidden">Featured Agents</span>
                 </span>
                 <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
               </Link>
             </motion.div>
             
-            {/* Enhanced CTA buttons */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-            >
-              <Link 
-                to="/get-started"
-                className="btn-primary inline-flex items-center gap-3 text-lg"
+            {/* Mobile-optimized CTA section */}
+            {isMobile ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="space-y-4"
               >
-                <Rocket className="w-5 h-5" />
-                Start Building Now
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link 
-                to="/features"
-                className="btn-secondary inline-flex items-center gap-3 text-lg"
+                <Link 
+                  to="/get-started"
+                  className="btn-primary inline-flex items-center gap-2 text-base w-full justify-center py-3"
+                >
+                  <Rocket className="w-4 h-4" />
+                  Start Building Now
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                
+                <button
+                  onClick={() => setShowFullFeatures(!showFullFeatures)}
+                  className="inline-flex items-center gap-2 text-brand-primary text-sm hover:text-brand-accent transition-colors"
+                >
+                  <span>{showFullFeatures ? 'Show Less' : 'Explore Features'}</span>
+                  {showFullFeatures ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </button>
+              </motion.div>
+            ) : (
+              // Desktop CTA buttons (unchanged)
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
               >
-                <Users className="w-5 h-5" />
-                Explore Features
-              </Link>
-            </motion.div>
+                <Link 
+                  to="/get-started"
+                  className="btn-primary inline-flex items-center gap-3 text-lg"
+                >
+                  <Rocket className="w-5 h-5" />
+                  Start Building Now
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link 
+                  to="/features"
+                  className="btn-secondary inline-flex items-center gap-3 text-lg"
+                >
+                  <Users className="w-5 h-5" />
+                  Explore Features
+                </Link>
+              </motion.div>
+            )}
           </motion.div>
           
           {/* Enhanced chat interface */}
@@ -87,7 +121,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.8 }}
-            className="relative"
+            className="relative mb-6 md:mb-8"
           >
             <div className="absolute -inset-2 bg-gradient-to-r from-brand-primary via-brand-accent to-brand-purple rounded-2xl blur-lg opacity-20 animate-glow-pulse"></div>
             <div className="relative card-glass border-2 border-brand-primary/20 shadow-glow-strong">
@@ -95,15 +129,27 @@ const Index = () => {
             </div>
           </motion.div>
           
-          {/* Featured Agents Section */}
-          <FeaturedAgents containerClassName="mt-8" />
+          {/* Collapsible Featured Agents Section for Mobile */}
+          <AnimatePresence>
+            {(showFullFeatures || !isMobile) && (
+              <motion.div
+                initial={isMobile ? { opacity: 0, height: 0 } : false}
+                animate={isMobile ? { opacity: 1, height: 'auto' } : {}}
+                exit={isMobile ? { opacity: 0, height: 0 } : {}}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <FeaturedAgents containerClassName={isMobile ? "mt-4" : "mt-8"} />
+              </motion.div>
+            )}
+          </AnimatePresence>
           
           {/* Enhanced bottom features - Powered by Vytreon */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.8 }}
-            className="text-center mt-12"
+            className={`text-center ${isMobile ? 'mt-6' : 'mt-12'}`}
           >
             <div className="flex flex-col items-center justify-center">
               <p className="text-sm text-text-tertiary mb-2">Powered by</p>
@@ -116,9 +162,9 @@ const Index = () => {
                 <img 
                   src="/lovable-uploads/ca3d5628-293b-4717-a737-0eacfb84f9ea.png" 
                   alt="Vytreon Logo" 
-                  className="h-8" 
+                  className="h-6 md:h-8" 
                 />
-                <span className="text-brand-primary font-medium group-hover:text-brand-accent transition-colors">Vytreon</span>
+                <span className="text-brand-primary font-medium group-hover:text-brand-accent transition-colors text-sm md:text-base">Vytreon</span>
               </a>
             </div>
           </motion.div>

@@ -1,8 +1,6 @@
 
 import React, { ReactElement } from 'react';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
-import { screen } from '@testing-library/react';
-import { fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { RoleProvider } from '@/contexts/RoleContext';
@@ -13,6 +11,9 @@ export { default as userEvent } from '@testing-library/user-event';
 
 // Import testing utilities
 import '@testing-library/jest-dom';
+
+// Re-export screen and fireEvent from their correct modules
+export { screen, fireEvent } from '@testing-library/dom';
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -32,6 +33,3 @@ const customRender = (
 
 // Export the customized render method
 export { customRender as render };
-
-// Re-export screen and fireEvent
-export { screen, fireEvent };
