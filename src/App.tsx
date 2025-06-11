@@ -44,6 +44,8 @@ import FeatureDetail from '@/pages/features/FeatureDetail';
 import IdeaGeneration from '@/pages/features/IdeaGeneration';
 import VoiceAssistant from '@/pages/features/VoiceAssistant';
 import EnterpriseSecurity from '@/pages/features/EnterpriseSecurity';
+import PersonalityEngine from '@/pages/features/PersonalityEngine';
+import CustomizePersonality from '@/pages/features/CustomizePersonality';
 
 // Admin Pages
 import AdminPanel from '@/pages/admin/AdminPanel';
@@ -80,7 +82,8 @@ function App() {
                     
                     {/* Feature Detail Routes */}
                     <Route path="/features/idea-generation" element={<IdeaGeneration />} />
-                    <Route path="/features/personality-engine" element={<FeatureDetail />} />
+                    <Route path="/features/personality-engine" element={<PersonalityEngine />} />
+                    <Route path="/features/customize-personality" element={<CustomizePersonality />} />
                     <Route path="/features/seo-analyzer" element={<FeatureDetail />} />
                     <Route path="/features/content-summarizer" element={<FeatureDetail />} />
                     <Route path="/features/code-generator" element={<FeatureDetail />} />

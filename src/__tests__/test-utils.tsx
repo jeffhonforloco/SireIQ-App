@@ -9,12 +9,8 @@ import { RoleProvider } from '@/contexts/RoleContext';
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 
-// Import screen and fireEvent from @testing-library/react for direct export
-import { screen, fireEvent } from '@testing-library/react';
+// Import testing utilities
 import '@testing-library/jest-dom';
-
-// Re-export screen and fireEvent explicitly
-export { screen, fireEvent };
 
 // Custom wrapper that provides necessary context providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
