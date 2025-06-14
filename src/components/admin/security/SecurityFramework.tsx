@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,6 +11,7 @@ import InfrastructureSecurity from './InfrastructureSecurity';
 import BackupRecovery from './BackupRecovery';
 import AIPlatformConsiderations from './AIPlatformConsiderations';
 import DocumentationTraining from './DocumentationTraining';
+import { Modal } from '@/components/ui/modal';
 
 interface SecurityMetrics {
   overallScore: number;
@@ -31,7 +31,28 @@ const SecurityFramework = () => {
     lastAudit: new Date().toLocaleDateString()
   });
 
-  const securityCategories = [
+  // Add state for showing the generated code security modal
+  const [showCodeSecModal, setShowCodeSecModal] = useState(false);
+
+  // Dummy code security stats (replace with real data if integrated!)
+  const codeSecurityStats = {
+    issuesFound: 0,
+    lastScan: null,
+    autoFixes: 0,
+    mostCommonIssue: null,
+  };
+
+  // Insert a security category for "Generated Code Security" at the top of the list for visibility in overview
+  const categoriesWithCodeSec = [
+    {
+      id: 'code-security',
+      title: 'Generated Code Security',
+      icon: Shield,
+      score: 100, // Placeholder, can be dynamic if needed
+      status: 'monitoring',
+      description: 'Tracks security issues found in generated code',
+      special: true
+    },
     {
       id: 'authentication',
       title: 'Authentication & Access Control',
@@ -178,8 +199,41 @@ const SecurityFramework = () => {
 
         <TabsContent value="overview">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {securityCategories.map((category) => {
+            {categoriesWithCodeSec.map((category) => {
               const IconComponent = category.icon;
+              if (category.special) {
+                // Render the new Generated Code Security card with placeholder or real stats
+                return (
+                  <Card
+                    key={category.id}
+                    className="bg-sireiq-darker border-sireiq-accent/20 hover:border-sireiq-cyan/50 transition-colors cursor-pointer"
+                    onClick={() => setShowCodeSecModal(true)}
+                  >
+                    <CardHeader className="pb-2">
+                      <CardTitle className="flex items-center justify-between text-lg">
+                        <div className="flex items-center">
+                          <IconComponent className="w-5 h-5 mr-2 text-yellow-400" />
+                          {category.title}
+                        </div>
+                        <div className={`text-sm font-bold text-blue-400`}>
+                          {codeSecurityStats.issuesFound ?? 0} issues
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-sireiq-light/70 mb-2">
+                        {category.description}
+                      </p>
+                      <div className="text-xs font-medium text-yellow-400">
+                        {codeSecurityStats.lastScan
+                          ? `Last Scan: ${codeSecurityStats.lastScan}`
+                          : 'No code scans yet.'}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              }
+              // ... keep the old card logic for other items the same ...
               return (
                 <Card 
                   key={category.id}
@@ -207,6 +261,54 @@ const SecurityFramework = () => {
               );
             })}
           </div>
+          {/* Modal or panel for Generated Code Security details */}
+          {showCodeSecModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+              <div className="bg-sireiq-dark border border-sireiq-accent/40 rounded-lg shadow-lg p-8 w-full max-w-lg">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-yellow-400" />
+                  Generated Code Security Overview
+                </h3>
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-sireiq-light/60">Total Issues:</span>
+                    <span className="text-base font-bold text-yellow-400">{codeSecurityStats.issuesFound ?? 0}</span>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-sireiq-light/60">Auto-Fixed:</span>
+                    <span className="text-base font-bold text-sireiq-cyan">{codeSecurityStats.autoFixes ?? 0}</span>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-sireiq-light/60">Most Common Issue:</span>
+                    <span className="text-base font-bold text-gray-300">
+                      {codeSecurityStats.mostCommonIssue ?? 'N/A'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-sireiq-light/60">Last Review:</span>
+                    <span className="text-base font-bold text-gray-300">
+                      {codeSecurityStats.lastScan ?? 'No review yet'}
+                    </span>
+                  </div>
+                </div>
+                <div className="text-sm text-sireiq-light/70 mb-4">
+                  <p>
+                    This area will give an overview of all security issues found in user-generated code,
+                    helping admins monitor trends, auto-fix rates, and ensure ongoing secure code generation.
+                  </p>
+                  <p className="mt-2">
+                    <span className="font-semibold">No data?</span> This panel will auto-populate as more code is generated and reviewed.
+                  </p>
+                </div>
+                <button
+                  className="mt-4 px-4 py-2 rounded bg-yellow-400 text-sireiq-dark font-semibold hover:bg-yellow-300"
+                  onClick={() => setShowCodeSecModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="authentication">
