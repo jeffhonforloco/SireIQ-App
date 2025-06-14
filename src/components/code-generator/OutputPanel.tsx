@@ -1,12 +1,12 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Code, Copy, Download } from 'lucide-react';
+import { Code, Copy, Download, ShieldCheck } from 'lucide-react';
 import { CodeExample } from './types';
 import CodeDisplay from './CodeDisplay';
 import CodePreview from './CodePreview';
+import SecurityReviewPanel from './SecurityReviewPanel';
 
 interface OutputPanelProps {
   generatedCode: CodeExample | null;
@@ -17,6 +17,70 @@ interface OutputPanelProps {
   onDownload: () => void;
 }
 
+// Simple security analyzer: returns issue objects
+function analyzeSecurity(code: string, language: string) {
+  const issues: { message: string; suggestion?: string; line?: number }[] = [];
+
+  const lines = code.split('\n');
+
+  // Basic checks per language
+  if (['javascript', 'react'].includes(language.toLowerCase())) {
+    lines.forEach((line, idx) => {
+      if (line.includes('eval(')) {
+        issues.push({
+          message: "Use of 'eval' detected.",
+          suggestion: 'Avoid using eval() as it can run arbitrary code.',
+          line: idx + 1,
+        });
+      }
+      if (line.match(/document\.write|innerHTML\s*=/)) {
+        issues.push({
+          message: "'document.write' or direct 'innerHTML' assignment detected.",
+          suggestion: 'Avoid document.write/innerHTML. Use safe DOM APIs or frameworks.',
+          line: idx + 1,
+        });
+      }
+      if (line.match(/dangerouslySetInnerHTML/)) {
+        issues.push({
+          message: "Use of 'dangerouslySetInnerHTML' detected.",
+          suggestion:
+            'Avoid using dangerouslySetInnerHTML except when absolutely necessary. Ensure you sanitize inputs.',
+          line: idx + 1,
+        });
+      }
+      if (line.match(/on\w+=".+"/)) {
+        issues.push({
+          message: "Inline JavaScript event detected.",
+          suggestion:
+            'Always use event handlers in your framework instead of HTML attributes (onClick, etc).',
+          line: idx + 1,
+        });
+      }
+    });
+  }
+  if (language === 'html') {
+    lines.forEach((line, idx) => {
+      if (line.match(/on\w+=".+"/)) {
+        issues.push({
+          message: "Inline JavaScript event found (e.g. onclick).",
+          suggestion: 'Move scripts into separate JS files and avoid inline handlers.',
+          line: idx + 1,
+        });
+      }
+      if (line.match(/<script[\s>]/i)) {
+        issues.push({
+          message: 'Inline <script> tag detected.',
+          suggestion:
+            'Avoid inline scripts where possible. Use external files, and never inject untrusted content.',
+          line: idx + 1,
+        });
+      }
+    });
+  }
+
+  return issues;
+}
+
 const OutputPanel: React.FC<OutputPanelProps> = ({
   generatedCode,
   canShowPreview,
@@ -25,6 +89,9 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
   onCopy,
   onDownload
 }) => {
+  const [showSecurityReview, setShowSecurityReview] = useState(false);
+  const [securityIssues, setSecurityIssues] = useState<any[]>([]);
+
   if (!generatedCode) {
     return (
       <Card className="border-0 bg-background-glass backdrop-blur-xl shadow-xl h-96 flex items-center justify-center">
@@ -42,6 +109,14 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
       </Card>
     );
   }
+
+  // Handler to trigger security review
+  const handleSecurityReview = () => {
+    const language = generatedCode.language.toLowerCase();
+    const issues = analyzeSecurity(generatedCode.code, language);
+    setSecurityIssues(issues);
+    setShowSecurityReview(true);
+  };
 
   return (
     <Card className="border-0 bg-background-glass backdrop-blur-xl shadow-xl h-full">
@@ -69,6 +144,15 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
             >
               <Download className="h-4 w-4 mr-1" /> 
               Download
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSecurityReview}
+              className="border-yellow-500 text-yellow-700 hover:border-yellow-600 hover:bg-yellow-100 flex items-center ml-1"
+              title="Review for Security Issues"
+            >
+              <ShieldCheck className="h-4 w-4 mr-1 text-yellow-700" /> Security Review
             </Button>
           </div>
         </div>
@@ -108,6 +192,14 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
           <span>Language: {generatedCode.language}</span>
           <span>Generated: {new Date().toLocaleTimeString()}</span>
         </div>
+        {/* Security Review Panel */}
+        {showSecurityReview && (
+          <SecurityReviewPanel
+            issues={securityIssues}
+            language={generatedCode.language}
+            onClose={() => setShowSecurityReview(false)}
+          />
+        )}
       </CardContent>
     </Card>
   );
