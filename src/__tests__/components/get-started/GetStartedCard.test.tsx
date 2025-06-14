@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { render } from '../../test-utils';
-import { screen } from '@testing-library/react';
+import { render, screen } from '../../test-utils';
 import GetStartedCard from '@/components/get-started/GetStartedCard';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
@@ -34,3 +33,4 @@ describe('GetStartedCard', () => {
     expect(screen.getByText(/verify your email/i)).toBeInTheDocument();
   });
 });
+

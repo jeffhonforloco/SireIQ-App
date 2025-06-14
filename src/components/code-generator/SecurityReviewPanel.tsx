@@ -7,6 +7,8 @@ interface Issue {
   suggestion?: string;
   line?: number;
   canFix?: boolean;
+  fixDescription?: string;
+  fixLabel?: string;
 }
 
 interface SecurityReviewPanelProps {
@@ -48,6 +50,11 @@ const SecurityReviewPanel: React.FC<SecurityReviewPanelProps> = ({
                   <span className="font-medium">Suggestion:</span> {issue.suggestion}
                 </div>
               )}
+              {issue.fixDescription && (
+                <div className="ml-1 text-xs text-yellow-700">
+                  <span className="font-medium">Best Practice:</span> {issue.fixDescription}
+                </div>
+              )}
               {issue.line !== undefined && (
                 <div className="text-xs text-yellow-600">Line: {issue.line}</div>
               )}
@@ -55,10 +62,10 @@ const SecurityReviewPanel: React.FC<SecurityReviewPanelProps> = ({
                 <button
                   onClick={() => onFix(i)}
                   className="w-fit mt-1 text-xs border rounded border-green-500 px-2 py-1 text-green-700 hover:bg-green-50 transition"
-                  title="Auto-fix this issue"
+                  title={issue.fixLabel || "Auto-fix this issue"}
                 >
                   <Bug className="inline-block mr-1 h-3 w-3" />
-                  Fix
+                  {issue.fixLabel ? issue.fixLabel : "Fix"}
                 </button>
               )}
             </li>

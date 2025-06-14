@@ -7,6 +7,7 @@ import { CodeExample } from './types';
 import CodeDisplay from './CodeDisplay';
 import CodePreview from './CodePreview';
 import SecurityReviewPanel from './SecurityReviewPanel';
+import { useSecurityReview } from './hooks/useSecurityReview';
 
 interface OutputPanelProps {
   generatedCode: CodeExample | null;
@@ -15,111 +16,6 @@ interface OutputPanelProps {
   iframeRef: React.RefObject<HTMLIFrameElement>;
   onCopy: () => void;
   onDownload: () => void;
-}
-
-// Simple security analyzer: returns issue objects
-function analyzeSecurity(code: string, language: string) {
-  const issues: { message: string; suggestion?: string; line?: number; canFix?: boolean }[] = [];
-
-  const lines = code.split('\n');
-
-  if (['javascript', 'react'].includes(language.toLowerCase())) {
-    lines.forEach((line, idx) => {
-      if (line.includes('eval(')) {
-        issues.push({
-          message: "Use of 'eval' detected.",
-          suggestion: 'Avoid using eval() as it can run arbitrary code.',
-          line: idx + 1,
-          canFix: true,
-        });
-      }
-      if (line.match(/document\.write|innerHTML\s*=/)) {
-        issues.push({
-          message: "'document.write' or direct 'innerHTML' assignment detected.",
-          suggestion: 'Avoid document.write/innerHTML. Use safe DOM APIs or frameworks.',
-          line: idx + 1,
-          canFix: true,
-        });
-      }
-      if (line.match(/dangerouslySetInnerHTML/)) {
-        issues.push({
-          message: "Use of 'dangerouslySetInnerHTML' detected.",
-          suggestion:
-            'Avoid using dangerouslySetInnerHTML except when absolutely necessary. Ensure you sanitize inputs.',
-          line: idx + 1,
-          canFix: true,
-        });
-      }
-      if (line.match(/on\w+=".+"/)) {
-        issues.push({
-          message: "Inline JavaScript event detected.",
-          suggestion:
-            'Always use event handlers in your framework instead of HTML attributes (onClick, etc).',
-          line: idx + 1,
-          canFix: false,
-        });
-      }
-    });
-  }
-  if (language === 'html') {
-    lines.forEach((line, idx) => {
-      if (line.match(/on\w+=".+"/)) {
-        issues.push({
-          message: "Inline JavaScript event found (e.g. onclick).",
-          suggestion: 'Move scripts into separate JS files and avoid inline handlers.',
-          line: idx + 1,
-          canFix: false,
-        });
-      }
-      if (line.match(/<script[\s>]/i)) {
-        issues.push({
-          message: 'Inline <script> tag detected.',
-          suggestion:
-            'Avoid inline scripts where possible. Use external files, and never inject untrusted content.',
-          line: idx + 1,
-          canFix: false,
-        });
-      }
-    });
-  }
-
-  return issues;
-}
-
-/** Attempts to auto-fix simple security issues. */
-function autoFixCode(code: string, issues: ReturnType<typeof analyzeSecurity>, issueIndex: number) {
-  let lines = code.split('\n');
-  const issue = issues[issueIndex];
-  if (!issue) return code;
-
-  // Fix eval()
-  if (issue.message.includes('eval')) {
-    lines = lines.map(line =>
-      line.includes('eval(')
-        ? '// [SECURITY REMEDIATION] eval() removed for safety.\n//'+line
-        : line
-    );
-  }
-
-  // Fix document.write or innerHTML
-  if (issue.message.includes('document.write') || issue.message.includes('innerHTML')) {
-    lines = lines.map(line =>
-      line.match(/document\.write|innerHTML\s*=/)
-        ? line.replace(/document\.write|innerHTML\s*=/g, '// [SECURITY REMEDIATION] REMOVED usage. Safe alternatives required.\n//')
-        : line
-    );
-  }
-
-  // Remove dangerouslySetInnerHTML
-  if (issue.message.includes('dangerouslySetInnerHTML')) {
-    lines = lines.map(line =>
-      line.includes('dangerouslySetInnerHTML')
-        ? '// [SECURITY REMEDIATION] dangerouslySetInnerHTML removed for safety.\n//' + line
-        : line
-    );
-  }
-
-  return lines.join('\n');
 }
 
 const OutputPanel: React.FC<OutputPanelProps> = ({
@@ -131,12 +27,23 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
   onDownload
 }) => {
   const [showSecurityReview, setShowSecurityReview] = useState(false);
-  const [securityIssues, setSecurityIssues] = useState<any[]>([]);
+
   // Store the potentially edited/generated code locally for applying security fixes
   const [displayedCode, setDisplayedCode] = useState(generatedCode);
 
+  // Use the new security review hook
+  const {
+    issues: securityIssues,
+    runReview,
+    fixIssue,
+    setIssues,
+    analyzeSecurity
+  } = useSecurityReview(displayedCode?.code || '', displayedCode?.language || '');
+
   React.useEffect(() => {
     setDisplayedCode(generatedCode);
+    setIssues([]);
+    // ... clear the security issues if code changes
   }, [generatedCode]);
 
   if (!displayedCode) {
@@ -159,22 +66,21 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
 
   // Handler to trigger security review
   const handleSecurityReview = () => {
-    const language = displayedCode.language.toLowerCase();
-    const issues = analyzeSecurity(displayedCode.code, language);
-    setSecurityIssues(issues);
+    runReview();
     setShowSecurityReview(true);
   };
 
   // Handler to fix security issues
   const handleFixSecurityIssue = (index: number) => {
-    const fixedCode = autoFixCode(displayedCode.code, securityIssues, index);
-    // Reanalyze new code for issues for iterative fixes
-    const newIssues = analyzeSecurity(fixedCode, displayedCode.language.toLowerCase());
+    // Fix the code for a specific issue
+    const fixedCode = fixIssue(displayedCode.code, index);
+
+    // Update displayedCode and rerun review
     setDisplayedCode({
       ...displayedCode,
       code: fixedCode
     });
-    setSecurityIssues(newIssues);
+    // The security review panel will update due to hook state
   };
 
   return (
@@ -266,3 +172,5 @@ const OutputPanel: React.FC<OutputPanelProps> = ({
 };
 
 export default OutputPanel;
+
+// NOTE: OutputPanel.tsx is now quite long (> 200 lines). Consider refactoring into multiple files for maintainability!
