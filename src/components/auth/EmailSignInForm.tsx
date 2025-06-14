@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
+import { sanitizeInput, isValidEmail, checkRateLimit } from '@/utils/security';
 import { Mail } from 'lucide-react';
 
 interface EmailSignInFormProps {
@@ -13,17 +14,58 @@ interface EmailSignInFormProps {
 const EmailSignInForm: React.FC<EmailSignInFormProps> = ({ onSignIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simple validation
-    if (!email || !password) {
+    if (isSubmitting) return;
+    
+    // Rate limiting check
+    if (!checkRateLimit('signin_form', 3, 60000)) {
+      toast.error("Too many sign-in attempts. Please wait a minute.");
+      return;
+    }
+    
+    // Input validation and sanitization
+    const sanitizedEmail = sanitizeInput(email.toLowerCase().trim());
+    const sanitizedPassword = password.trim();
+    
+    if (!sanitizedEmail || !sanitizedPassword) {
       toast.error("Please enter both email and password");
       return;
     }
     
-    onSignIn(email, password);
+    if (!isValidEmail(sanitizedEmail)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    
+    if (sanitizedPassword.length < 8) {
+      toast.error("Password must be at least 8 characters long");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      await onSignIn(sanitizedEmail, sanitizedPassword);
+    } catch (error) {
+      console.error('Sign in error:', error);
+      toast.error("An error occurred during sign in");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = sanitizeInput(e.target.value);
+    setEmail(value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Don't sanitize password input to preserve special characters
+    setPassword(e.target.value);
   };
 
   return (
@@ -34,9 +76,13 @@ const EmailSignInForm: React.FC<EmailSignInFormProps> = ({ onSignIn }) => {
           id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
           className="w-full px-4 py-2 rounded-md border border-sireiq-accent/30 bg-sireiq-dark/60 text-sireiq-light focus:border-sireiq-cyan focus:ring-1 focus:ring-sireiq-cyan/50 outline-none"
           placeholder="your@email.com"
+          required
+          maxLength={100}
+          autoComplete="email"
+          disabled={isSubmitting}
         />
       </div>
       
@@ -46,9 +92,14 @@ const EmailSignInForm: React.FC<EmailSignInFormProps> = ({ onSignIn }) => {
           id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           className="w-full px-4 py-2 rounded-md border border-sireiq-accent/30 bg-sireiq-dark/60 text-sireiq-light focus:border-sireiq-cyan focus:ring-1 focus:ring-sireiq-cyan/50 outline-none"
           placeholder="••••••••"
+          required
+          minLength={8}
+          maxLength={128}
+          autoComplete="current-password"
+          disabled={isSubmitting}
         />
       </div>
       
@@ -61,8 +112,9 @@ const EmailSignInForm: React.FC<EmailSignInFormProps> = ({ onSignIn }) => {
       <Button 
         type="submit" 
         className="w-full bg-gradient-to-r from-sireiq-cyan to-sireiq-cyan2 text-sireiq-darker hover:opacity-90 shadow-md"
+        disabled={isSubmitting}
       >
-        Sign In with Email
+        {isSubmitting ? 'Signing In...' : 'Sign In with Email'}
       </Button>
     </form>
   );

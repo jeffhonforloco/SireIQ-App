@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRole } from '@/contexts/RoleContext';
 import { hasAccess, getFeatureDisplayName } from '@/utils/rolePermissions';
+import { verifyFeatureAccess } from '@/utils/roleVerification';
 import { toast } from '@/components/ui/sonner';
 import { Navigate } from 'react-router-dom';
 import { Lock, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { authService } from '@/services/authService';
 
 interface RoleGuardProps {
   children: React.ReactNode;
@@ -15,7 +17,7 @@ interface RoleGuardProps {
 }
 
 /**
- * A component that restricts access based on user role and required feature
+ * A component that restricts access based on secure user role verification
  */
 export const RoleGuard: React.FC<RoleGuardProps> = ({
   children,
@@ -24,7 +26,41 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
   redirectTo
 }) => {
   const { role } = useRole();
-  const hasPermission = hasAccess(role, requiredFeature);
+  const [isVerifying, setIsVerifying] = useState(true);
+  const [hasPermission, setHasPermission] = useState(false);
+
+  useEffect(() => {
+    const verifyAccess = async () => {
+      // First check if user is authenticated
+      if (!authService.isTokenValid()) {
+        setHasPermission(false);
+        setIsVerifying(false);
+        return;
+      }
+
+      try {
+        // Verify feature access with server-side validation
+        const hasAccess = await verifyFeatureAccess(requiredFeature);
+        setHasPermission(hasAccess);
+      } catch (error) {
+        console.error('Error verifying feature access:', error);
+        setHasPermission(false);
+      } finally {
+        setIsVerifying(false);
+      }
+    };
+
+    verifyAccess();
+  }, [requiredFeature, role]);
+
+  // Show loading state while verifying
+  if (isVerifying) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sireiq-cyan"></div>
+      </div>
+    );
+  }
 
   // If user has access, render the children
   if (hasPermission) {
@@ -48,11 +84,11 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
       ? 'Enterprise'
       : 'Premium';
 
-  // Default fallback
+  // Default fallback with security messaging
   return (
     <div className="flex flex-col items-center justify-center p-8 rounded-lg border border-sireiq-accent/20 bg-sireiq-darker">
       <Lock className="w-12 h-12 text-sireiq-accent mb-4" />
-      <h3 className="text-xl font-bold mb-2">Feature Restricted</h3>
+      <h3 className="text-xl font-bold mb-2">Access Restricted</h3>
       <p className="text-sireiq-light/70 text-center mb-4">
         {getFeatureDisplayName(requiredFeature)} requires a {requiredPlan} account.
       </p>
@@ -67,7 +103,7 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({
 };
 
 /**
- * Higher-order component that wraps a component with role-based protection
+ * Higher-order component that wraps a component with secure role-based protection
  */
 export const withRoleGuard = (
   Component: React.ComponentType<any>,
