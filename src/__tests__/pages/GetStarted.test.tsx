@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { render, screen, fireEvent } from '@/__tests__/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
 import GetStarted from '@/pages/GetStarted';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
@@ -17,10 +18,10 @@ describe('GetStarted', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
-  
+
   test('renders get started page', () => {
     render(<GetStarted />);
-    
+
     expect(screen.getByText(/get started with sireiq/i)).toBeInTheDocument();
   });
 });

@@ -1,5 +1,7 @@
+
 import React from 'react';
-import { render, screen, fireEvent } from '@/__tests__/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
+import EmailVerification from '@/components/get-started/EmailVerification';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
 describe('EmailVerification', () => {
@@ -7,11 +9,11 @@ describe('EmailVerification', () => {
   const mockOnResendCode = vi.fn();
   const mockOnUseDemoCode = vi.fn();
   const mockSetVerificationCode = vi.fn();
-  
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
-  
+
   test('renders email verification form', () => {
     render(
       <EmailVerification 
@@ -24,7 +26,7 @@ describe('EmailVerification', () => {
         onUseDemoCode={mockOnUseDemoCode}
       />
     );
-    
+
     expect(screen.getByText(/verify your email/i)).toBeInTheDocument();
     expect(screen.getByText(/test@example.com/)).toBeInTheDocument();
   });

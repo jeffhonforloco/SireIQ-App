@@ -6,11 +6,7 @@ import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import and re-export everything from @testing-library/react
 export * from '@testing-library/react';
-export { screen, fireEvent } from '@testing-library/react'; // Proper re-export for tests
 export { default as userEvent } from '@testing-library/user-event';
-
-// Remove the direct named exports of screen and fireEvent as they are not available for re-export.
-// They should be used by importing from '@testing-library/react' in tests directly.
 
 // Import testing utilities
 import '@testing-library/jest-dom';

@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import HomeChatExperience from '@/components/chat/HomeChatExperience';
 import Navbar from '@/components/Navbar';
@@ -8,10 +7,20 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ArrowRight, Users, Rocket, ChevronDown, ChevronUp, Star, Zap, Shield } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import ChatCardSkeleton from '@/components/chat/ChatCardSkeleton';
 
 const Index = () => {
   const isMobile = useIsMobile();
   const [showFullFeatures, setShowFullFeatures] = useState(!isMobile);
+
+  // Added: manage chat skeleton visibility for perceived loading
+  const [chatLoading, setChatLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate brief loading for skeleton; real app may check data/session
+    const timer = setTimeout(() => setChatLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen w-full bg-background-primary flex flex-col overflow-hidden relative">
@@ -105,7 +114,8 @@ const Index = () => {
           >
             <div className="absolute -inset-2 bg-gradient-to-r from-brand-primary via-brand-accent to-brand-purple rounded-2xl blur-lg opacity-20 animate-glow-pulse"></div>
             <div className="relative card-glass border-2 border-brand-primary/20 shadow-glow-strong">
-              <HomeChatExperience />
+              {/* NEW: Display skeleton loader until chat loads */}
+              {chatLoading ? <ChatCardSkeleton /> : <HomeChatExperience />}
             </div>
           </motion.div>
           
