@@ -11,6 +11,8 @@ import InfrastructureSecurity from './InfrastructureSecurity';
 import BackupRecovery from './BackupRecovery';
 import AIPlatformConsiderations from './AIPlatformConsiderations';
 import DocumentationTraining from './DocumentationTraining';
+import GeneratedCodeSecurityModal from "./GeneratedCodeSecurityModal";
+import SecurityOverviewGrid from "./SecurityOverviewGrid";
 
 interface SecurityMetrics {
   overallScore: number;
@@ -43,101 +45,105 @@ const SecurityFramework = () => {
 
   const categoriesWithCodeSec = [
     {
-      id: 'code-security',
-      title: 'Generated Code Security',
+      id: "code-security",
+      title: "Generated Code Security",
       icon: Shield,
-      score: 100, // Placeholder, can be dynamic if needed
-      status: 'monitoring',
-      description: 'Tracks security issues found in generated code',
-      special: true
+      score: 100,
+      status: "monitoring",
+      description: "Tracks security issues found in generated code",
+      special: true,
     },
     {
-      id: 'authentication',
-      title: 'Authentication & Access Control',
+      id: "authentication",
+      title: "Authentication & Access Control",
       icon: Lock,
       score: 90,
-      status: 'completed',
-      description: 'MFA, RBAC, OAuth integration'
+      status: "completed",
+      description: "MFA, RBAC, OAuth integration"
     },
     {
-      id: 'url-structure',
-      title: 'URL Structure & Access',
+      id: "url-structure",
+      title: "URL Structure & Access",
       icon: Globe,
       score: 95,
-      status: 'completed',
-      description: 'HTTPS, HSTS, IP whitelisting'
+      status: "completed",
+      description: "HTTPS, HSTS, IP whitelisting"
     },
     {
-      id: 'ai-security',
-      title: 'AI-Specific Security',
+      id: "ai-security",
+      title: "AI-Specific Security",
       icon: Bot,
       score: 80,
-      status: 'in-progress',
-      description: 'Model access controls, PII masking'
+      status: "in-progress",
+      description: "Model access controls, PII masking"
     },
     {
-      id: 'application',
-      title: 'Application Security',
+      id: "application",
+      title: "Application Security",
       icon: Shield,
       score: 88,
-      status: 'completed',
-      description: 'CSRF, XSS, SQL injection protection'
+      status: "completed",
+      description: "CSRF, XSS, SQL injection protection"
     },
     {
-      id: 'logging',
-      title: 'Logging & Monitoring',
+      id: "logging",
+      title: "Logging & Monitoring",
       icon: AlertTriangle,
       score: 92,
-      status: 'completed',
-      description: 'Audit logs, anomaly detection'
+      status: "completed",
+      description: "Audit logs, anomaly detection"
     },
     {
-      id: 'infrastructure',
-      title: 'Infrastructure Hardening',
+      id: "infrastructure",
+      title: "Infrastructure Hardening",
       icon: Database,
       score: 85,
-      status: 'completed',
-      description: 'Container security, encryption'
+      status: "completed",
+      description: "Container security, encryption"
     },
     {
-      id: 'backup',
-      title: 'Backup & Recovery',
+      id: "backup",
+      title: "Backup & Recovery",
       icon: FileText,
       score: 78,
-      status: 'needs-attention',
-      description: 'Encrypted backups, restore procedures'
+      status: "needs-attention",
+      description: "Encrypted backups, restore procedures"
     },
     {
-      id: 'ai-platform',
-      title: 'AI Platform Considerations',
+      id: "ai-platform",
+      title: "AI Platform Considerations",
       icon: Bot,
       score: 82,
-      status: 'completed',
-      description: 'Model explainability, privacy by design'
+      status: "completed",
+      description: "Model explainability, privacy by design"
     },
     {
-      id: 'documentation',
-      title: 'Documentation & Training',
+      id: "documentation",
+      title: "Documentation & Training",
       icon: Users,
       score: 75,
-      status: 'needs-attention',
-      description: 'Procedures, incident response, training'
+      status: "needs-attention",
+      description: "Procedures, incident response, training"
     }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-400';
-      case 'in-progress': return 'text-yellow-400';
-      case 'needs-attention': return 'text-red-400';
-      default: return 'text-gray-400';
+      case "completed":
+        return "text-green-400";
+      case "in-progress":
+        return "text-yellow-400";
+      case "needs-attention":
+        return "text-red-400";
+      default:
+        return "text-gray-400";
     }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return 'text-green-400';
-    if (score >= 80) return 'text-yellow-400';
-    return 'text-red-400';
+    if (score >= 90) return "text-green-400";
+    if (score >= 80) return "text-yellow-400";
+    return "text-red-400";
   };
 
   return (
@@ -196,124 +202,24 @@ const SecurityFramework = () => {
         </TabsList>
 
         <TabsContent value="overview">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categoriesWithCodeSec.map((category) => {
-              const IconComponent = category.icon;
-              if (category.special) {
-                // Render the new Generated Code Security card with placeholder or real stats
-                return (
-                  <Card
-                    key={category.id}
-                    className="bg-sireiq-darker border-sireiq-accent/20 hover:border-sireiq-cyan/50 transition-colors cursor-pointer"
-                    onClick={() => setShowCodeSecModal(true)}
-                  >
-                    <CardHeader className="pb-2">
-                      <CardTitle className="flex items-center justify-between text-lg">
-                        <div className="flex items-center">
-                          <IconComponent className="w-5 h-5 mr-2 text-yellow-400" />
-                          {category.title}
-                        </div>
-                        <div className={`text-sm font-bold text-blue-400`}>
-                          {codeSecurityStats.issuesFound ?? 0} issues
-                        </div>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-sireiq-light/70 mb-2">
-                        {category.description}
-                      </p>
-                      <div className="text-xs font-medium text-yellow-400">
-                        {codeSecurityStats.lastScan
-                          ? `Last Scan: ${codeSecurityStats.lastScan}`
-                          : 'No code scans yet.'}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              }
-              
-              return (
-                <Card 
-                  key={category.id}
-                  className="bg-sireiq-darker border-sireiq-accent/20 hover:border-sireiq-cyan/50 transition-colors cursor-pointer"
-                  onClick={() => setActiveTab(category.id)}
-                >
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center justify-between text-lg">
-                      <div className="flex items-center">
-                        <IconComponent className="w-5 h-5 mr-2 text-sireiq-cyan" />
-                        {category.title}
-                      </div>
-                      <div className={`text-sm font-bold ${getScoreColor(category.score)}`}>
-                        {category.score}%
-                      </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-sireiq-light/70 mb-2">{category.description}</p>
-                    <div className={`text-xs font-medium ${getStatusColor(category.status)}`}>
-                      {category.status.replace('-', ' ').toUpperCase()}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          {/* Modal or panel for Generated Code Security details */}
-          {showCodeSecModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-              <div className="bg-sireiq-dark border border-sireiq-accent/40 rounded-lg shadow-lg p-8 w-full max-w-lg relative animate-fade-in">
-                <button
-                  className="absolute top-2 right-2 text-xl text-sireiq-cyan hover:text-sireiq-light focus:outline-none"
-                  onClick={() => setShowCodeSecModal(false)}
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-yellow-400" />
-                  Generated Code Security Overview
-                </h3>
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-sireiq-light/60">Total Issues:</span>
-                    <span className="text-base font-bold text-yellow-400">{codeSecurityStats.issuesFound ?? 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-sireiq-light/60">Auto-Fixed:</span>
-                    <span className="text-base font-bold text-sireiq-cyan">{codeSecurityStats.autoFixes ?? 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-sireiq-light/60">Most Common Issue:</span>
-                    <span className="text-base font-bold text-gray-300">
-                      {codeSecurityStats.mostCommonIssue ?? 'N/A'}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-sireiq-light/60">Last Review:</span>
-                    <span className="text-base font-bold text-gray-300">
-                      {codeSecurityStats.lastScan ?? 'No review yet'}
-                    </span>
-                  </div>
-                </div>
-                <div className="text-sm text-sireiq-light/70 mb-4">
-                  <p>
-                    This area will give an overview of all security issues found in user-generated code,
-                    helping admins monitor trends, auto-fix rates, and ensure ongoing secure code generation.
-                  </p>
-                  <p className="mt-2">
-                    <span className="font-semibold">No data?</span> This panel will auto-populate as more code is generated and reviewed.
-                  </p>
-                </div>
-                <button
-                  className="mt-4 px-4 py-2 rounded bg-yellow-400 text-sireiq-dark font-semibold hover:bg-yellow-300"
-                  onClick={() => setShowCodeSecModal(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
+          <SecurityOverviewGrid
+            categories={categoriesWithCodeSec}
+            codeSecurityStats={codeSecurityStats}
+            onCodeSecModal={() => setShowCodeSecModal(true)}
+            onCategoryClick={setActiveTab}
+            getStatusColor={getStatusColor}
+            getScoreColor={getScoreColor}
+          />
+          <GeneratedCodeSecurityModal
+            open={showCodeSecModal}
+            onClose={() => setShowCodeSecModal(false)}
+            stats={{
+              issuesFound: codeSecurityStats.issuesFound,
+              autoFixes: codeSecurityStats.autoFixes,
+              mostCommonIssue: codeSecurityStats.mostCommonIssue,
+              lastScan: codeSecurityStats.lastScan,
+            }}
+          />
         </TabsContent>
 
         <TabsContent value="authentication">
