@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { render, screen, fireEvent } from '../../test-utils';
+import { render } from '../../test-utils';
+import { screen, fireEvent } from '@testing-library/react';
 import EmailVerification from '@/components/get-started/EmailVerification';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 

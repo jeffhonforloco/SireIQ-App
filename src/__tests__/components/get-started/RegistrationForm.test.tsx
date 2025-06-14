@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { render, screen } from '../../test-utils';
+import { render } from '../../test-utils';
+import { screen } from '@testing-library/react';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 

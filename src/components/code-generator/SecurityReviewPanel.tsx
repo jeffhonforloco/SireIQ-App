@@ -1,23 +1,26 @@
 
 import React from "react";
-import { AlertTriangle, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ShieldCheck, Bug } from "lucide-react";
 
 interface Issue {
   message: string;
   suggestion?: string;
   line?: number;
+  canFix?: boolean;
 }
 
 interface SecurityReviewPanelProps {
   issues: Issue[];
   language: string;
   onClose?: () => void;
+  onFix?: (index: number) => void;
 }
 
 const SecurityReviewPanel: React.FC<SecurityReviewPanelProps> = ({
   issues,
   language,
   onClose,
+  onFix,
 }) => {
   return (
     <div className="mt-6 rounded-lg border border-yellow-400 bg-yellow-50/50 p-4 text-yellow-900 relative">
@@ -34,10 +37,12 @@ const SecurityReviewPanel: React.FC<SecurityReviewPanelProps> = ({
         )}
       </div>
       {issues.length ? (
-        <ul className="list-disc ml-6 space-y-1">
+        <ul className="list-disc ml-6 space-y-2">
           {issues.map((issue, i) => (
-            <li key={i}>
-              <span className="font-semibold">Issue:</span> {issue.message}
+            <li key={i} className="flex flex-col gap-1">
+              <span>
+                <span className="font-semibold">Issue:</span> {issue.message}
+              </span>
               {issue.suggestion && (
                 <div className="ml-1 text-sm text-yellow-800">
                   <span className="font-medium">Suggestion:</span> {issue.suggestion}
@@ -45,6 +50,16 @@ const SecurityReviewPanel: React.FC<SecurityReviewPanelProps> = ({
               )}
               {issue.line !== undefined && (
                 <div className="text-xs text-yellow-600">Line: {issue.line}</div>
+              )}
+              {onFix && issue.canFix && (
+                <button
+                  onClick={() => onFix(i)}
+                  className="w-fit mt-1 text-xs border rounded border-green-500 px-2 py-1 text-green-700 hover:bg-green-50 transition"
+                  title="Auto-fix this issue"
+                >
+                  <Bug className="inline-block mr-1 h-3 w-3" />
+                  Fix
+                </button>
               )}
             </li>
           ))}
