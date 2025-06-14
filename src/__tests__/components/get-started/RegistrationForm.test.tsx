@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { render, screen } from '@/__tests__/test-utils';
+import { render } from '@/__tests__/test-utils';
+import { screen } from '@testing-library/react';
 import RegistrationForm from '@/components/get-started/RegistrationForm';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
@@ -20,3 +21,4 @@ describe('RegistrationForm', () => {
     expect(screen.getByRole('button', { name: /create account/i })).toBeInTheDocument();
   });
 });
+
