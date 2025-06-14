@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { render } from '../test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../test-utils';
 import GetStarted from '@/pages/GetStarted';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 

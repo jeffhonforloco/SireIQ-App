@@ -11,7 +11,6 @@ import InfrastructureSecurity from './InfrastructureSecurity';
 import BackupRecovery from './BackupRecovery';
 import AIPlatformConsiderations from './AIPlatformConsiderations';
 import DocumentationTraining from './DocumentationTraining';
-import { Modal } from '@/components/ui/modal';
 
 interface SecurityMetrics {
   overallScore: number;
@@ -42,7 +41,6 @@ const SecurityFramework = () => {
     mostCommonIssue: null,
   };
 
-  // Insert a security category for "Generated Code Security" at the top of the list for visibility in overview
   const categoriesWithCodeSec = [
     {
       id: 'code-security',
@@ -233,7 +231,7 @@ const SecurityFramework = () => {
                   </Card>
                 );
               }
-              // ... keep the old card logic for other items the same ...
+              
               return (
                 <Card 
                   key={category.id}
@@ -264,7 +262,14 @@ const SecurityFramework = () => {
           {/* Modal or panel for Generated Code Security details */}
           {showCodeSecModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-              <div className="bg-sireiq-dark border border-sireiq-accent/40 rounded-lg shadow-lg p-8 w-full max-w-lg">
+              <div className="bg-sireiq-dark border border-sireiq-accent/40 rounded-lg shadow-lg p-8 w-full max-w-lg relative animate-fade-in">
+                <button
+                  className="absolute top-2 right-2 text-xl text-sireiq-cyan hover:text-sireiq-light focus:outline-none"
+                  onClick={() => setShowCodeSecModal(false)}
+                  aria-label="Close"
+                >
+                  ×
+                </button>
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                   <Shield className="w-5 h-5 text-yellow-400" />
                   Generated Code Security Overview
