@@ -1,8 +1,5 @@
-
 import React from 'react';
-import { render } from '@/__tests__/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
-import EmailVerification from '@/components/get-started/EmailVerification';
+import { render, screen, fireEvent } from '@/__tests__/test-utils';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
 describe('EmailVerification', () => {
@@ -32,4 +29,3 @@ describe('EmailVerification', () => {
     expect(screen.getByText(/test@example.com/)).toBeInTheDocument();
   });
 });
-

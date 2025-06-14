@@ -1,4 +1,3 @@
-
 import React, { ReactElement } from 'react';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { RoleProvider } from '@/contexts/RoleContext';
 
 // Import and re-export everything from @testing-library/react
 export * from '@testing-library/react';
+export { screen, fireEvent } from '@testing-library/react'; // Proper re-export for tests
 export { default as userEvent } from '@testing-library/user-event';
 
 // Remove the direct named exports of screen and fireEvent as they are not available for re-export.
