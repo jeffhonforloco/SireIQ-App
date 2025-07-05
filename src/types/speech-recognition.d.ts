@@ -54,4 +54,4 @@ interface SpeechRecognitionStatic {
 }
 
 declare var SpeechRecognition: SpeechRecognitionStatic | undefined;
-declare var webkitSpeechRecognition: SpeechRecognitionStatic | undefined;
+declare let webkitSpeechRecognition: SpeechRecognitionStatic | undefined;
